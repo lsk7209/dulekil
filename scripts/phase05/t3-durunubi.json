@@ -1,0 +1,9 @@
+{
+  "course_total": 260,
+  "route_total": 4,
+  "course_fields": ["routeIdx","crsIdx","crsKorNm","crsDstnc","crsTotlRqrmHour","crsLevel","crsCycle","crsContents","crsSummary","crsTourInfo","travelerinfo","sigun","brdDiv","gpxpath","createdtime","modifiedtime"],
+  "route_fields": ["routeIdx","themeNm","linemsg","themedescs","brdDiv","createdtime","modifiedtime"],
+  "license": "이용허락범위 제한 없음 (data.go.kr 개발계정, 2026-06-03~2028-06-03)",
+  "kill": false,
+  "notes": "courseList.gpxpath 필드로 GPX URL 직접 제공. 260개 코스, 4개 길 테마(남파랑길/서해랑길 등). 라이선스 이용허락범위 제한 없음 = 상업이용·DB저장 OK"
+}

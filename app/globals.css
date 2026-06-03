@@ -1,0 +1,382 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;600;700&display=swap");
+
+/* ============================================================
+   둘레길 · 100대 명산 챌린지 — 디자인 시스템
+   자연·아웃도어 / 모바일 퍼스트 / 잡지형 정보 사이트
+   ============================================================ */
+
+:root {
+  /* ---- 색 (Color) ---- */
+  --forest:      #2F4A3C;
+  --forest-deep: #1F3329;
+  --forest-700:  #284033;
+  --sage:        #8AA396;
+  --sage-soft:   #C4D1C7;
+  --mist:        #EAE6DC;
+  --mist-deep:   #DED8C8;
+  --clay:        #C9763D;
+  --clay-deep:   #A85C29;
+  --clay-soft:   #F2E1D2;
+  --charcoal:    #23291F;
+  --ink-soft:    #3D4738;
+  --ink-faint:   #6B7665;
+  --bg:          #FAF8F3;
+  --bg-warm:     #F4F0E7;
+  --card:        #FFFFFF;
+  --line:        #E4DFD3;
+  --line-soft:   #EFEBE0;
+
+  /* ---- 난이도 색 코드 (색만으로 구분 금지 — 라벨·아이콘 병기) ---- */
+  --diff-low:    #5E7E63;
+  --diff-low-bg: #E7EEE6;
+  --diff-mid:    #B58A22;
+  --diff-mid-bg: #F5ECD2;
+  --diff-high:   #C9763D;
+  --diff-high-bg:#F4E2D2;
+  --diff-max:    #6B4226;
+  --diff-max-bg: #EBDFD4;
+
+  /* ---- 형태 ---- */
+  --r-sm:  8px;
+  --r:     12px;
+  --r-lg:  16px;
+  --r-xl:  22px;
+  --r-pill:999px;
+
+  /* ---- 그림자 (얕고 따뜻한 그린-틴트) ---- */
+  --sh-1: 0 1px 2px rgba(47,74,60,.06), 0 1px 1px rgba(47,74,60,.04);
+  --sh-2: 0 2px 6px rgba(47,74,60,.07), 0 8px 22px rgba(47,74,60,.07);
+  --sh-3: 0 6px 14px rgba(47,74,60,.10), 0 18px 40px rgba(47,74,60,.10);
+
+  /* ---- 타이포 ---- */
+  --sans:  "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --serif: "Noto Serif KR", "Pretendard", serif;
+
+  /* ---- 광고 슬롯 ---- */
+  --ad-line: #D9D2C2;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--charcoal);
+  font-size: 16px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.tnum { font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1; }
+
+/* ============================================================
+   타이포그래피
+   ============================================================ */
+.eyebrow {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--clay-deep);
+}
+.eyebrow--sage { color: var(--sage); }
+
+.display {
+  font-family: var(--sans);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -.02em;
+  color: var(--forest);
+  margin: 0;
+  text-wrap: balance;
+}
+.h1 { font-size: clamp(30px, 7vw, 56px); font-weight: 800; line-height: 1.1; letter-spacing: -.02em; color: var(--forest); margin: 0; text-wrap: balance; }
+.h2 { font-size: clamp(24px, 4.5vw, 34px); font-weight: 800; line-height: 1.15; letter-spacing: -.015em; color: var(--forest); margin: 0; text-wrap: balance; }
+.h3 { font-size: clamp(19px, 3vw, 23px); font-weight: 700; line-height: 1.25; letter-spacing: -.01em; color: var(--forest-700); margin: 0; }
+.lead { font-size: clamp(16px, 2.4vw, 19px); line-height: 1.65; color: var(--ink-soft); margin: 0; }
+.body { font-size: 16px; line-height: 1.7; color: var(--ink-soft); margin: 0; }
+.cap  { font-size: 13.5px; line-height: 1.5; color: var(--ink-faint); margin: 0; }
+
+a { color: inherit; }
+
+/* ============================================================
+   버튼
+   ============================================================ */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  font-family: var(--sans); font-weight: 700; font-size: 16px;
+  border: 0; border-radius: var(--r-pill);
+  padding: 14px 24px; min-height: 48px;
+  cursor: pointer; text-decoration: none;
+  transition: transform .12s ease, box-shadow .2s ease, background .2s ease;
+  white-space: nowrap;
+}
+.btn:active { transform: translateY(1px); }
+.btn--primary { background: var(--clay); color: #fff; box-shadow: var(--sh-2); }
+.btn--primary:hover { background: var(--clay-deep); box-shadow: var(--sh-3); }
+.btn--forest { background: var(--forest); color: #fff; box-shadow: var(--sh-2); }
+.btn--forest:hover { background: var(--forest-deep); }
+.btn--ghost { background: transparent; color: var(--forest); box-shadow: inset 0 0 0 1.5px var(--sage); }
+.btn--ghost:hover { background: #fff; box-shadow: inset 0 0 0 1.5px var(--forest); }
+.btn--sm { min-height: 40px; padding: 9px 16px; font-size: 14.5px; }
+.btn--block { width: 100%; }
+
+/* ============================================================
+   난이도 배지 (색 + 라벨 + 아이콘)
+   ============================================================ */
+.diff {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-weight: 700; font-size: 13px; line-height: 1;
+  padding: 6px 11px 6px 9px; border-radius: var(--r-pill);
+  white-space: nowrap;
+}
+.diff svg { width: 13px; height: 13px; display: block; }
+.diff--low  { background: var(--diff-low-bg);  color: #3C5742; }
+.diff--mid  { background: var(--diff-mid-bg);  color: #785A12; }
+.diff--high { background: var(--diff-high-bg); color: #8C4E22; }
+.diff--max  { background: var(--diff-max-bg);  color: #4E2F1B; }
+
+/* 일반 배지 / 태그 */
+.tag {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-weight: 600; font-size: 12.5px; line-height: 1;
+  padding: 6px 10px; border-radius: var(--r-pill);
+  background: var(--bg-warm); color: var(--ink-soft);
+  border: 1px solid var(--line);
+  white-space: nowrap;
+}
+.tag svg { width: 13px; height: 13px; }
+.tag--gpx    { background: var(--forest); color: #fff; border-color: var(--forest); }
+.tag--season { background: #fff; color: var(--forest-700); }
+.tag--100    { background: var(--clay-soft); color: var(--clay-deep); border-color: #E7CDB4; font-weight: 700; }
+
+/* ============================================================
+   칩 필터
+   ============================================================ */
+.chip {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-family: var(--sans); font-weight: 600; font-size: 15px;
+  padding: 10px 16px; min-height: 44px;
+  border-radius: var(--r-pill);
+  background: #fff; color: var(--ink-soft);
+  border: 1.5px solid var(--line);
+  cursor: pointer; transition: all .15s ease; white-space: nowrap;
+}
+.chip:hover { border-color: var(--sage); color: var(--forest); }
+.chip[aria-pressed="true"],
+.chip.is-on {
+  background: var(--forest); color: #fff; border-color: var(--forest);
+}
+.chip svg { width: 16px; height: 16px; }
+
+/* ============================================================
+   카드
+   ============================================================ */
+.card {
+  background: var(--card);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--r-lg);
+  box-shadow: var(--sh-1);
+  overflow: hidden;
+}
+.card--pad { padding: 20px; }
+.card--hover { transition: transform .18s ease, box-shadow .22s ease, border-color .2s; }
+.card--hover:hover { transform: translateY(-3px); box-shadow: var(--sh-3); border-color: var(--mist-deep); }
+
+/* 스탯 바 */
+.statbar { display: grid; grid-template-columns: repeat(4, 1fr); }
+.stat { padding: 14px 12px; text-align: center; border-right: 1px solid var(--line-soft); }
+.stat:last-child { border-right: 0; }
+.stat__k { font-size: 11.5px; letter-spacing: .04em; color: var(--ink-faint); font-weight: 600; margin-bottom: 4px; text-transform: uppercase; }
+.stat__v { font-size: 22px; font-weight: 800; color: var(--forest); line-height: 1; }
+.stat__u { font-size: 12px; font-weight: 600; color: var(--ink-faint); margin-left: 2px; }
+
+/* ============================================================
+   안전 고지 블록
+   ============================================================ */
+.safety {
+  display: flex; gap: 14px; align-items: flex-start;
+  background: linear-gradient(180deg, #FBF4EC, #F8EFE4);
+  border: 1px solid #E9D6C2;
+  border-left: 4px solid var(--clay);
+  border-radius: var(--r);
+  padding: 16px 18px;
+}
+.safety__icon {
+  flex: none; width: 38px; height: 38px; border-radius: 50%;
+  background: #fff; display: grid; place-items: center; color: var(--clay-deep);
+  box-shadow: var(--sh-1);
+}
+.safety__icon svg { width: 21px; height: 21px; }
+.safety h4 { margin: 0 0 4px; font-size: 15.5px; font-weight: 800; color: var(--clay-deep); }
+.safety p  { margin: 0; font-size: 14px; line-height: 1.55; color: #6E4D33; }
+
+/* ============================================================
+   광고 슬롯
+   ============================================================ */
+.ad {
+  display: grid; place-items: center;
+  border: 1px dashed var(--ad-line);
+  border-radius: var(--r);
+  background: repeating-linear-gradient(135deg, #fff, #fff 9px, #FBF9F3 9px, #FBF9F3 18px);
+  color: #B6AE9C; font-size: 12px; font-weight: 600; letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.ad__label { display: inline-flex; align-items: center; gap: 6px; padding: 4px 0; }
+.ad--leaderboard { min-height: 90px; }
+.ad--infeed      { min-height: 120px; }
+.ad--anchor      { min-height: 60px; }
+
+/* ============================================================
+   진행률 바
+   ============================================================ */
+.progress { height: 12px; border-radius: var(--r-pill); background: var(--mist); overflow: hidden; }
+.progress__fill { height: 100%; border-radius: var(--r-pill); background: linear-gradient(90deg, var(--sage), var(--forest)); }
+
+/* ============================================================
+   레이아웃 헬퍼
+   ============================================================ */
+.wrap { width: 100%; max-width: 1140px; margin: 0 auto; padding-left: 20px; padding-right: 20px; }
+.wrap--narrow { max-width: 760px; }
+.divider-contour { height: 22px; background-repeat: repeat-x; background-position: center; opacity: .5; }
+
+/* 등고선 워터마크 */
+.contour-bg { position: relative; }
+.contour-bg > .contour-svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+
+/* 스크롤 가로 칩 줄 */
+.chiprow { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 4px; -ms-overflow-style: none; scrollbar-width: none; }
+.chiprow::-webkit-scrollbar { display: none; }
+
+/* 포커스 가시성 (접근성) */
+:focus-visible { outline: 3px solid var(--clay); outline-offset: 2px; border-radius: 4px; }
+
+/* 유틸 */
+.sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0; }
+
+/* ============================================================
+   사이트 크롬 (헤더·푸터)
+   ============================================================ */
+.navlink {
+  font-weight: 600; font-size: 15px; color: var(--ink-soft);
+  text-decoration: none; padding: 8px 12px; border-radius: var(--r-pill);
+  transition: background .15s, color .15s;
+}
+.navlink:hover { background: var(--bg-warm); color: var(--forest); }
+.navlink--on { background: var(--forest); color: #fff; }
+.navlink--on:hover { background: var(--forest-deep); color: #fff; }
+
+.seemore {
+  display: inline-flex; align-items: center; gap: 3px;
+  font-weight: 700; font-size: 14.5px; color: var(--clay-deep);
+  text-decoration: none; white-space: nowrap;
+}
+.seemore:hover { color: var(--clay); }
+
+.guide-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+.guide-card { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+.guide-ic { flex: none; width: 46px; height: 46px; border-radius: var(--r); background: var(--mist); color: var(--forest); display: grid; place-items: center; }
+.guide-card > svg:last-child { color: var(--sage); margin-left: auto; }
+
+.footer-grid { display: grid; grid-template-columns: 1fr; gap: 28px; }
+.foot-links  { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+.foot-a { display: block; color: #A9B7AE; text-decoration: none; font-size: 14px; padding: 5px 0; }
+.foot-a:hover { color: #fff; }
+
+.hide-xs { display: none; }
+
+/* ============================================================
+   블로그 — 포스트 그리드 & 피처드
+   ============================================================ */
+.post-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+.featured-post {
+  display: grid;
+  grid-template-columns: 1fr;
+  overflow: hidden;
+}
+.featured-cover { min-height: 200px; }
+.featured-body {
+  padding: 26px;
+  display: flex;
+  flex-direction: column;
+}
+.featured-body > * { flex: none; }
+
+/* ============================================================
+   반응형
+   ============================================================ */
+@media (min-width: 680px) {
+  .post-grid { grid-template-columns: 1fr 1fr; }
+  .guide-grid { grid-template-columns: 1fr 1fr; }
+  .hide-xs { display: inline; }
+}
+
+@media (min-width: 940px) {
+  .post-grid { grid-template-columns: repeat(3, 1fr); }
+  .featured-post { grid-template-columns: 1.05fr .95fr; }
+  .featured-cover { height: 100%; }
+  .featured-cover > div { height: 100% !important; }
+  .featured-body { padding: 40px; justify-content: center; }
+  .footer-grid { grid-template-columns: 1.2fr 1fr; }
+}
+
+@media (max-width: 560px) {
+  .hide-sm { display: none; }
+}
+
+/* ============================================================
+   홈 페이지
+   ============================================================ */
+
+/* 히어로 그리드 */
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 28px;
+  align-items: start;
+}
+
+/* 산 카드 그리드 */
+.card-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+
+/* 완등 트래커 카드 */
+.tracker-card { background: var(--forest); border: none; }
+.tracker-inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 28px;
+  padding: 28px;
+}
+.tracker-grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 4px;
+  width: 220px;
+}
+
+@media (min-width: 520px) {
+  .card-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (min-width: 760px) {
+  .hero-grid { grid-template-columns: 1.1fr .9fr; }
+  .tracker-inner { grid-template-columns: 1fr auto; align-items: start; }
+  .tracker-grid { width: 240px; }
+}
+
+@media (min-width: 900px) {
+  .card-grid { grid-template-columns: repeat(3, 1fr); }
+}

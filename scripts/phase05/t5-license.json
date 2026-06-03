@@ -1,0 +1,23 @@
+{
+  "sources": [
+    {
+      "name": "전국등산로표준데이터 (data.go.kr)",
+      "id": "15029184",
+      "license_type": "공공누리 제1유형 (출처표시)",
+      "commercial_ok": true,
+      "storage_ok": true,
+      "notes": "출처: data.go.kr, 산림청. 상업적 이용·변경·DB 저장 모두 허용. 출처 표기 필수."
+    },
+    {
+      "name": "공간정보 오픈플랫폼 등산로 API (vworld)",
+      "id": "LT_L_FRSTCLIMB",
+      "license_type": "공간정보 오픈플랫폼 이용약관 (별도)",
+      "commercial_ok": false,
+      "storage_ok": false,
+      "notes": "제10조7항: 상업적 이용 시 별도 허락 필요. 제12조4항: 사전 승낙 없이 DB 저장 금지. 현재 개발키만 보유.",
+      "action_required": "운영키 발급 신청 + 상업적 이용 허락 신청 (vworld 운영기관). 취득 전까지 실시간 조회 전용으로만 사용."
+    }
+  ],
+  "recommended_primary": "전국등산로표준데이터 (data.go.kr, mountain.zip)",
+  "kill": false
+}

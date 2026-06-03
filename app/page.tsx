@@ -1,0 +1,19 @@
+import type { Metadata } from 'next'
+import { SiteHeader } from '@/components/site-header'
+import { SiteFooter } from '@/components/site-footer'
+import { HomeClient } from './home-client'
+
+export const metadata: Metadata = {
+  title: '둘레길 — 100대 명산 챌린지 도우미',
+  description: '완등 챌린지의 다음 한 걸음을 고르는 곳. 코스 난이도·거리·들머리 교통을 비교해 나에게 맞는 산을 찾으세요.',
+}
+
+export default function HomePage() {
+  return (
+    <div id="top">
+      <SiteHeader active="explore" />
+      <HomeClient />
+      <SiteFooter />
+    </div>
+  )
+}

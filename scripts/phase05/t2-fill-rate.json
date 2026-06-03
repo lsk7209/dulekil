@@ -1,0 +1,19 @@
+{
+  "total_sampled": 500,
+  "difficulty_fill": 1,
+  "distance_fill": 0.986,
+  "uphill_time_fill": 1,
+  "downhill_time_fill": 0.51,
+  "any_time_fill": 1,
+  "kill": false,
+  "difficulty_values": {
+    "쉬움": 498,
+    "중간": 2
+  },
+  "sample_mountains": [
+    "북악산",
+    "아차산",
+    "배봉산",
+    "답십리공원"
+  ]
+}

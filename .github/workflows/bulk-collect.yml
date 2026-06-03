@@ -1,0 +1,52 @@
+name: Bulk Collect
+
+on:
+  workflow_dispatch:
+    inputs:
+      source:
+        description: 'Data source to collect'
+        required: true
+        default: 'all'
+        type: choice
+        options: ['all', 'mountain_zip', 'durunubi', 'forest_api']
+  schedule:
+    - cron: '0 2 * * 0'   # 매주 일요일 02:00 UTC (한국 11:00)
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - run: npm ci
+
+      - name: Seed 100대 명산
+        if: ${{ inputs.source == 'all' || inputs.source == 'mountain_zip' }}
+        run: npx tsx scripts/collect/seed-top100.ts
+        env:
+          TURSO_DATABASE_URL: ${{ secrets.TURSO_DATABASE_URL }}
+          TURSO_AUTH_TOKEN:   ${{ secrets.TURSO_AUTH_TOKEN }}
+
+      - name: Collect Durunubi
+        if: ${{ inputs.source == 'all' || inputs.source == 'durunubi' }}
+        run: npx tsx scripts/collect/collect-durunubi.ts
+        env:
+          TURSO_DATABASE_URL:    ${{ secrets.TURSO_DATABASE_URL }}
+          TURSO_AUTH_TOKEN:      ${{ secrets.TURSO_AUTH_TOKEN }}
+          DURUNUBI_API_KEY_ENC:  ${{ secrets.DURUNUBI_API_KEY_ENC }}
+
+      - name: Collect Forest API (KR server required)
+        if: ${{ inputs.source == 'forest_api' }}
+        run: npx tsx scripts/collect/collect-forest-api.ts
+        env:
+          TURSO_DATABASE_URL:  ${{ secrets.TURSO_DATABASE_URL }}
+          TURSO_AUTH_TOKEN:    ${{ secrets.TURSO_AUTH_TOKEN }}
+          FOREST_API_KEY_ENC:  ${{ secrets.FOREST_API_KEY_ENC }}
+          FOREST_API_BASE:     ${{ secrets.FOREST_API_BASE }}

@@ -1,0 +1,25 @@
+{
+  "outer_zip": "D:\\web\\dulekil\\docs\\mountain.zip",
+  "stats": {
+    "total_entries": 8802,
+    "base_zips": 2932,
+    "geojson_zips": 2932,
+    "gpx_zips": 2932
+  },
+  "sample_base_zip": "mountain/111100101.zip",
+  "inner_files": [
+    "PMNTN_SPOT_�Ͼǻ�_111100101.dbf",
+    "PMNTN_SPOT_�Ͼǻ�_111100101.prj",
+    "PMNTN_SPOT_�Ͼǻ�_111100101.shp",
+    "PMNTN_SPOT_�Ͼǻ�_111100101.shx",
+    "PMNTN_�Ͼǻ�_111100101.dbf",
+    "PMNTN_�Ͼǻ�_111100101.prj",
+    "PMNTN_�Ͼǻ�_111100101.shp",
+    "PMNTN_�Ͼǻ�_111100101.shx",
+    "�� �о����.txt"
+  ],
+  "detected_format": "shapefile",
+  "columns": [],
+  "sample_rows": [],
+  "gpx_sample": "mountain/111100101_gpx.zip"
+}

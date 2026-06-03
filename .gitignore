@@ -1,0 +1,40 @@
+# dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# next.js
+.next/
+out/
+
+# env files (NEVER commit)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# turso embedded replica cache
+.turso-local.db
+.turso-local.db-shm
+.turso-local.db-wal
+
+# large data files
+docs/mountain.zip
+docs/*.zip
+docs/*.csv
+
+# drizzle generated
+drizzle/
+
+# phase05 extracted data
+scripts/phase05/_tmp_extract/
+scripts/phase05/*.bin
+
+# build
+dist/
+
+# misc
+.DS_Store
+*.pem
+npm-debug.log*
