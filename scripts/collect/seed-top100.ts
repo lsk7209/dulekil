@@ -50,6 +50,7 @@ const TOP100: { name: string; region: string; sigun?: string; elev?: number; pal
   { name: '불암산',      region: '서울',  sigun: '서울',    elev: 509,  pal: 'sage'    },
   { name: '비슬산',      region: '대구',  sigun: '달성',    elev: 1084, pal: 'autumn'  },
   { name: '사량도지리산', region: '경남', sigun: '통영',    elev: 398,  pal: 'valley'  },
+  { name: '설악산',      region: '강원',  sigun: '속초/인제', elev: 1708, pal: 'winter'  },
   { name: '소백산',      region: '충북',  sigun: '단양',    elev: 1439, pal: 'winter'  },
   { name: '속리산',      region: '충북',  sigun: '보은',    elev: 1058, pal: 'forest'  },
   { name: '수락산',      region: '서울',  sigun: '서울',    elev: 638,  pal: 'sage'    },
