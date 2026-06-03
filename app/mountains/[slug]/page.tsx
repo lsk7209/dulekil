@@ -13,11 +13,11 @@ export const revalidate = 86400
 interface Props { params: { slug: string } }
 
 export function generateStaticParams() {
-  return MOUNTAINS.map(m => ({ slug: encodeURIComponent(m.name) }))
+  return MOUNTAINS.map(m => ({ slug: m.name }))
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const m = MOUNTAINS.find(x => encodeURIComponent(x.name) === params.slug)
+  const m = MOUNTAINS.find(x => x.name === decodeURIComponent(params.slug))
   if (!m) return {}
   return {
     title: `${m.name} 등산 코스 — 난이도·거리·소요시간`,
@@ -40,7 +40,7 @@ function RidgeCoverImg({ seed, pal, sun, height }: { seed: string; pal: string; 
 }
 
 export default function MountainDetailPage({ params }: Props) {
-  const m = MOUNTAINS.find(x => encodeURIComponent(x.name) === params.slug)
+  const m = MOUNTAINS.find(x => x.name === decodeURIComponent(params.slug))
   if (!m) notFound()
 
   const diff = DIFF_META[m.diff]
