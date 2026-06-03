@@ -22,6 +22,12 @@ export const metadata: Metadata = {
   alternates: {
     canonical: 'https://dulekil.vercel.app',
   },
+  verification: {
+    google: 'F4MlP2TwGNrutz6uvY5BhPRqbdgAA5QXvuVhg0KbFg0',
+    other: {
+      'naver-site-verification': '43567d5a8e06ca7e10fa1d706c858b086a85ff4f',
+    },
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
