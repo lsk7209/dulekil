@@ -12,7 +12,9 @@
     "db:generate": "drizzle-kit generate",
     "collect:seed": "tsx scripts/collect/seed-top100.ts",
     "collect:mountain": "tsx scripts/collect/parse-mountain-zip.ts",
-    "collect:durunubi": "tsx scripts/collect/collect-durunubi.ts"
+    "collect:durunubi": "tsx scripts/collect/collect-durunubi.ts",
+    "enrich": "tsx scripts/collect/enrich-mountains.ts",
+    "collect:forest": "tsx scripts/collect/collect-forest-api.ts"
   },
   "dependencies": {
     "@libsql/client": "^0.17.3",
