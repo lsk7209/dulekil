@@ -1,5 +1,7 @@
 'use client'
 
+declare const window: Window & { gtag?: (...args: unknown[]) => void }
+
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Icon } from '@/components/icon'
@@ -164,7 +166,11 @@ function TrackerCard({ m, done, onToggle }: { m: StaticMountain; done: boolean; 
         <button
           className={'btn btn--sm ' + (done ? 'btn--forest' : 'btn--ghost')}
           style={{ width: '100%', marginTop: 'auto' }}
-          onClick={() => onToggle(m.id)}
+          onClick={() => {
+            const next = !done
+            onToggle(m.id)
+            window.gtag?.('event', 'tracker_toggle', { mountain_name: m.name, completed: next })
+          }}
           aria-pressed={done}
         >
           <Icon name="check" size={15} stroke={2.4} />

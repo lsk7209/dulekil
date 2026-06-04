@@ -1,5 +1,7 @@
 'use client'
 
+declare const window: Window & { gtag?: (...args: unknown[]) => void }
+
 import { useState, useMemo, useEffect } from 'react'
 import Link from 'next/link'
 import { Icon } from '@/components/icon'
@@ -73,7 +75,8 @@ function MountainCard({ m, done, onToggle, compact }: {
         <div>
           <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, flexWrap: 'wrap' }}>
             <Link href={`/mountains/${encodeURIComponent(m.name)}`} className="h3"
-              style={{ fontSize: compact ? 19 : 21, whiteSpace: 'nowrap', textDecoration: 'none' }}>
+              style={{ fontSize: compact ? 19 : 21, whiteSpace: 'nowrap', textDecoration: 'none' }}
+              onClick={() => window.gtag?.('event', 'select_content', { content_type: 'mountain', item_id: m.name })}>
               {m.name}
             </Link>
             <span className="cap" style={{ fontWeight: 600 }}>{m.peak !== m.name ? m.peak : ''}</span>
@@ -99,7 +102,10 @@ function MountainCard({ m, done, onToggle, compact }: {
         <button
           className={'btn btn--sm ' + (done ? 'btn--forest' : 'btn--ghost')}
           style={{ width: '100%', marginTop: 2 }}
-          onClick={() => onToggle(m.name)}
+          onClick={() => {
+            onToggle(m.name)
+            window.gtag?.('event', 'unlock_achievement', { mountain_name: m.name })
+          }}
           aria-pressed={done}
         >
           <Icon name="check" size={16} stroke={2.4} />{done ? '완등함' : '완등 체크'}
@@ -162,7 +168,8 @@ function Hero({ query, setQuery, goResults, doneCount, featured, total }: {
 
           {/* 커버 스토리 카드 */}
           <Link href={`/mountains/${encodeURIComponent(featured.name)}`} className="card card--hover"
-            style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column' }}>
+            style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column' }}
+            onClick={() => window.gtag?.('event', 'select_content', { content_type: 'mountain', item_id: featured.name })}>
             <RidgeCover seed={featured.name} pal={featured.pal} sun={featured.sun} height={208}>
               <div style={{ position: 'absolute', left: 16, top: 16 }}>
                 <span className="tag tag--season" style={{ fontFamily: 'var(--serif)', fontWeight: 600, letterSpacing: '.1em' }}>COVER · 이 달의 산</span>
@@ -227,8 +234,12 @@ function Explore({ mountains, query, active, setActive, done, toggle }: {
   setActive: (fn: (p: Set<string>) => Set<string>) => void
   done: Set<string>; toggle: (key: string) => void
 }) {
-  const toggleChip = (key: string) =>
+  const toggleChip = (key: string) => {
     setActive(p => { const n = new Set(p); n.has(key) ? n.delete(key) : n.add(key); return n })
+    const [t, v] = key.split(':')
+    const typeMap: Record<string, string> = { g: 'region', d: 'difficulty', s: 'season', t: 'transit' }
+    window.gtag?.('event', 'filter_apply', { filter_type: typeMap[t] ?? t, filter_value: v })
+  }
 
   const list = useMemo(() => {
     const q = query.trim()
@@ -398,6 +409,7 @@ export function HomeClient({ mountains }: { mountains: HubMountain[] }) {
   const seasonal   = mountains.filter(m => m.seasons.includes('여름') || m.seasons.includes('봄')).slice(0, 8)
 
   const goResults = () => {
+    window.gtag?.('event', 'search', { search_term: query })
     const el = document.getElementById('explore')
     if (el) window.scrollTo({ top: el.offsetTop - 70, behavior: 'smooth' })
   }

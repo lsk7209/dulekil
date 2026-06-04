@@ -1,5 +1,7 @@
 'use client'
 
+declare const window: Window & { gtag?: (...args: unknown[]) => void }
+
 import { useState, useMemo, useEffect } from 'react'
 import Link from 'next/link'
 import { Icon } from '@/components/icon'
@@ -106,7 +108,10 @@ export function MountainsClient({ mountains }: Props) {
               <Icon name="search" size={18} />
               <input
                 value={query}
-                onChange={e => setQuery(e.target.value)}
+                onChange={e => {
+                  setQuery(e.target.value)
+                  window.gtag?.('event', 'search', { search_term: e.target.value })
+                }}
                 placeholder="산 이름 또는 지역으로 검색"
                 style={{ flex: 1, border: 0, outline: 'none', background: 'transparent', fontFamily: 'var(--sans)', fontSize: 15, minWidth: 0 }}
               />
@@ -124,20 +129,30 @@ export function MountainsClient({ mountains }: Props) {
       <div className="wrap" style={{ paddingTop: 20 }}>
         <div className="chiprow" style={{ marginBottom: 10, flexWrap: 'wrap' }}>
           {GROUPS.map(g => (
-            <button key={g} className={'chip' + (group === g ? ' is-on' : '')} onClick={() => setGroup(g)}>{g}</button>
+            <button key={g} className={'chip' + (group === g ? ' is-on' : '')} onClick={() => {
+              setGroup(g)
+              window.gtag?.('event', 'filter_apply', { filter_type: 'region', filter_value: g })
+            }}>{g}</button>
           ))}
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
           <div className="chiprow" style={{ flexWrap: 'wrap' }}>
             {DIFFS.map(d => (
-              <button key={d} className={'chip' + (diff === d ? ' is-on' : '')} onClick={() => setDiff(d)}
+              <button key={d} className={'chip' + (diff === d ? ' is-on' : '')} onClick={() => {
+                setDiff(d)
+                window.gtag?.('event', 'filter_apply', { filter_type: 'difficulty', filter_value: d })
+              }}
                 style={{ minHeight: 38, fontSize: 14, padding: '8px 14px' }}>
                 {d === '전체' ? '전체 난이도' : `난이도 ${d}`}
               </button>
             ))}
             <button
               className={'chip' + (transit ? ' is-on' : '')}
-              onClick={() => setTransit(p => !p)}
+              onClick={() => {
+                const next = !transit
+                setTransit(next)
+                window.gtag?.('event', 'filter_apply', { filter_type: 'transit', filter_value: String(next) })
+              }}
               style={{ minHeight: 38, fontSize: 14, padding: '8px 14px' }}
             >
               <Icon name="bus" size={14} stroke={1.9} />대중교통
@@ -228,7 +243,10 @@ function HubCard({ m, done, onToggle }: { m: HubMountain; done: boolean; onToggl
         <button
           className={'btn btn--sm ' + (done ? 'btn--forest' : 'btn--ghost')}
           style={{ width: '100%', marginTop: 2 }}
-          onClick={() => onToggle(m.name)}
+          onClick={() => {
+            onToggle(m.name)
+            window.gtag?.('event', 'mountain_toggle', { mountain_name: m.name, completed: !done })
+          }}
           aria-pressed={done}
         >
           <Icon name="check" size={16} stroke={2.4} />{done ? '완등함' : '완등 체크'}

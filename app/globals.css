@@ -184,11 +184,12 @@ a { color: inherit; }
   overflow: hidden;
 }
 .card--pad { padding: 20px; }
-.card--hover { transition: transform .18s ease, box-shadow .22s ease, border-color .2s; }
-.card--hover:hover { transform: translateY(-3px); box-shadow: var(--sh-3); border-color: var(--mist-deep); }
+.card--hover { transition: transform .15s ease, box-shadow .18s ease, border-color .2s; cursor: pointer; }
+.card--hover:hover { transform: translateY(-2px); box-shadow: var(--sh-3); border-color: var(--mist-deep); }
 
 /* 스탯 바 */
-.statbar { display: grid; grid-template-columns: repeat(4, 1fr); }
+.statbar { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; }
+@media (min-width: 520px) { .statbar { grid-template-columns: repeat(4, 1fr); } }
 .stat { padding: 14px 12px; text-align: center; border-right: 1px solid var(--line-soft); }
 .stat:last-child { border-right: 0; }
 .stat__k { font-size: 11.5px; letter-spacing: .04em; color: var(--ink-faint); font-weight: 600; margin-bottom: 4px; text-transform: uppercase; }
@@ -253,7 +254,7 @@ a { color: inherit; }
 .chiprow::-webkit-scrollbar { display: none; }
 
 /* 포커스 가시성 (접근성) */
-:focus-visible { outline: 3px solid var(--clay); outline-offset: 2px; border-radius: 4px; }
+:focus-visible { outline: 2px solid var(--clay); outline-offset: 3px; border-radius: 3px; }
 
 /* 유틸 */
 .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0; }
@@ -265,6 +266,7 @@ a { color: inherit; }
   font-weight: 600; font-size: 15px; color: var(--ink-soft);
   text-decoration: none; padding: 8px 12px; border-radius: var(--r-pill);
   transition: background .15s, color .15s;
+  min-height: 44px; display: inline-flex; align-items: center;
 }
 .navlink:hover { background: var(--bg-warm); color: var(--forest); }
 .navlink--on { background: var(--forest); color: #fff; }

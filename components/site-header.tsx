@@ -1,3 +1,5 @@
+'use client'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 
 type NavKey = 'explore' | 'tracker' | 'blog' | 'guide'
@@ -20,9 +22,23 @@ const NAV_LINKS = [
 ]
 
 export function SiteHeader({ active }: SiteHeaderProps) {
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const fn = () => setScrolled(window.scrollY > 10)
+    window.addEventListener('scroll', fn, { passive: true })
+    return () => window.removeEventListener('scroll', fn)
+  }, [])
+
   return (
     <header style={{ position: 'sticky', top: 0, zIndex: 50 }}>
-      <div style={{ background: 'rgba(250,248,243,.86)', backdropFilter: 'blur(10px)', borderBottom: '1px solid var(--line)' }}>
+      <div style={{
+        background: 'rgba(250,248,243,.86)',
+        backdropFilter: 'blur(10px)',
+        borderBottom: '1px solid var(--line)',
+        boxShadow: scrolled ? 'var(--sh-2)' : 'none',
+        transition: 'box-shadow .2s ease',
+      }}>
         <div className="wrap" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 60 }}>
           <Link href="/#top" style={{ display: 'flex', alignItems: 'center', gap: 9, textDecoration: 'none' }}>
             <span style={{ width: 30, height: 30, borderRadius: 9, background: 'var(--forest)', display: 'grid', placeItems: 'center', color: '#fff' }}>

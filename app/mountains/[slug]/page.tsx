@@ -90,6 +90,9 @@ export default async function MountainDetailPage({ params }: Props) {
         name: mountain.name,
         description: mountain.description ?? `${mountain.region}에 위치한 해발 ${mountain.elev}m의 명산.`,
         address: { '@type': 'PostalAddress', addressRegion: mountain.region ?? '', addressCountry: 'KR' },
+        ...(mountain.lat && mountain.lng ? {
+          geo: { '@type': 'GeoCoordinates', latitude: mountain.lat, longitude: mountain.lng }
+        } : {}),
       },
       {
         '@type': 'BreadcrumbList',
@@ -192,7 +195,7 @@ export default async function MountainDetailPage({ params }: Props) {
               <section>
                 <h2 className="h3" style={{ marginBottom: 16 }}>등산로 목록 ({courses.length}개)</h2>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                  {courses.slice(0, 10).map(c => (
+                  {courses.slice(0, 20).map(c => (
                     <div key={c.id} className="card card--pad" style={{ display: 'flex', gap: 16, alignItems: 'center', flexWrap: 'wrap' }}>
                       <div style={{ flex: 1, minWidth: 140 }}>
                         <div style={{ fontWeight: 700, fontSize: 15, color: 'var(--forest)' }}>{c.name ?? '코스'}</div>
@@ -222,6 +225,12 @@ export default async function MountainDetailPage({ params }: Props) {
                   ))}
                 </div>
               </section>
+            )}
+
+            {courses.length === 0 && (
+              <div className="card card--pad" style={{ textAlign: 'center', color: 'var(--ink-faint)', padding: 32 }}>
+                <p>등산로 데이터를 준비 중입니다.</p>
+              </div>
             )}
 
             {/* 인피드 광고 */}
