@@ -1,6 +1,28 @@
 import type { Metadata } from 'next'
 import Script from 'next/script'
+import localFont from 'next/font/local'
+import { Noto_Serif_KR } from 'next/font/google'
 import './globals.css'
+
+const pretendard = localFont({
+  src: [
+    { path: '../node_modules/pretendard/dist/web/static/woff2/Pretendard-Regular.woff2',   weight: '400', style: 'normal' },
+    { path: '../node_modules/pretendard/dist/web/static/woff2/Pretendard-SemiBold.woff2',  weight: '600', style: 'normal' },
+    { path: '../node_modules/pretendard/dist/web/static/woff2/Pretendard-Bold.woff2',      weight: '700', style: 'normal' },
+    { path: '../node_modules/pretendard/dist/web/static/woff2/Pretendard-ExtraBold.woff2', weight: '800', style: 'normal' },
+  ],
+  variable: '--font-pretendard',
+  display: 'swap',
+  preload: false,
+})
+
+const notoSerifKR = Noto_Serif_KR({
+  weight: ['500', '600', '700'],
+  subsets: ['latin'],
+  variable: '--font-noto-serif',
+  display: 'swap',
+  preload: false,
+})
 
 const GA_ID      = process.env.NEXT_PUBLIC_GA_ID
 const ADSENSE_ID = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID
@@ -19,6 +41,9 @@ export const metadata: Metadata = {
     locale: 'ko_KR',
     type: 'website',
   },
+  twitter: {
+    card: 'summary_large_image',
+  },
   alternates: {
     canonical: 'https://dullegilgogo.kr',
   },
@@ -32,9 +57,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ko">
+    <html lang="ko" className={`${pretendard.variable} ${notoSerifKR.variable}`}>
       <head>
-        {/* Google AdSense — 승인 후 NEXT_PUBLIC_ADSENSE_CLIENT_ID 설정 */}
         {ADSENSE_ID && (
           <Script
             async
@@ -47,7 +71,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         {children}
 
-        {/* Google Analytics — NEXT_PUBLIC_GA_ID 설정 후 활성화 */}
         {GA_ID && (
           <>
             <Script

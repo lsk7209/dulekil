@@ -1,12 +1,14 @@
 /**
  * P5 — 드립피드 발행
  * 품질 게이트 통과(quality_passed) 페이지를 최대 20건/일 published로 전환
- * GitHub Actions quality-gate.yml + Vercel Cron /api/cron/publish에서 호출
+ * 발행 완료 후 IndexNow 자동 전송 (Bing/Naver)
  */
 import { db, schema } from '../collect/db-client'
 import { eq, and } from 'drizzle-orm'
+import { notifyIndexNow } from '../../lib/indexnow'
 
 const DAILY_LIMIT = 20
+const BASE        = 'https://dullegilgogo.kr'
 
 async function main() {
   console.log('[drip-feed] 발행 대기 확인...')
@@ -27,6 +29,7 @@ async function main() {
 
   console.log(`발행 대기: ${toPublish.length}건`)
   const now = new Date()
+  const publishedUrls: string[] = []
 
   for (const page of toPublish) {
     await db
@@ -36,9 +39,19 @@ async function main() {
 
     await db.insert(schema.publishLog).values({ page_id: page.id, channel: 'actions' })
     console.log(`  ✓ ${page.slug}`)
+
+    if (page.slug) {
+      publishedUrls.push(`${BASE}/mountains/${encodeURIComponent(page.slug)}`)
+    }
   }
 
   console.log(`\n✅ ${toPublish.length}건 발행 완료`)
+
+  // IndexNow 자동 전송
+  if (publishedUrls.length > 0) {
+    await notifyIndexNow(publishedUrls)
+  }
+
   process.exit(0)
 }
 

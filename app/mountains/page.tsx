@@ -4,7 +4,7 @@ import { SiteFooter } from '@/components/site-footer'
 import { MountainsClient } from './mountains-client'
 import { getMountainsForHub } from '@/lib/db/queries'
 
-export const revalidate = 3600  // 1시간 ISR
+export const revalidate = 3600
 
 export const metadata: Metadata = {
   title: '100대 명산 허브 — 난이도·지역·계절로 찾기',
@@ -14,11 +14,31 @@ export const metadata: Metadata = {
 export default async function MountainsPage() {
   const mountains = await getMountainsForHub()
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: '한국 100대 명산 허브',
+    description: '산림청 선정 한국 100대 명산 전체 목록. 난이도·지역·대중교통·계절별로 필터링 가능.',
+    url: 'https://dullegilgogo.kr/mountains',
+    mainEntity: {
+      '@type': 'ItemList',
+      name: '100대 명산 목록',
+      numberOfItems: mountains.length,
+      itemListElement: mountains.slice(0, 10).map((m, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        name: m.name,
+        url: `https://dullegilgogo.kr/mountains/${encodeURIComponent(m.name)}`,
+      })),
+    },
+  }
+
   return (
     <div id="top">
       <SiteHeader active="explore" />
       <MountainsClient mountains={mountains} />
       <SiteFooter />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
     </div>
   )
 }

@@ -14,6 +14,6 @@ export default function robots(): MetadataRoute.Robots {
       { userAgent: 'PerplexityBot', allow: '/' },
       { userAgent: 'Googlebot',     allow: '/' },
     ],
-    sitemap: 'https://dulekil.com/sitemap.xml',
+    sitemap: 'https://dullegilgogo.kr/sitemap.xml',
   }
 }

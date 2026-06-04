@@ -1,5 +1,4 @@
-@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css");
-@import url("https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;600;700&display=swap");
+/* 폰트: next/font/local (Pretendard) + next/font/google (Noto Serif KR) — layout.tsx에서 주입 */
 
 /* ============================================================
    둘레길 · 100대 명산 챌린지 — 디자인 시스템
@@ -50,8 +49,8 @@
   --sh-3: 0 6px 14px rgba(47,74,60,.10), 0 18px 40px rgba(47,74,60,.10);
 
   /* ---- 타이포 ---- */
-  --sans:  "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-  --serif: "Noto Serif KR", "Pretendard", serif;
+  --sans:  var(--font-pretendard), -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --serif: var(--font-noto-serif), var(--font-pretendard), serif;
 
   /* ---- 광고 슬롯 ---- */
   --ad-line: #D9D2C2;
@@ -99,7 +98,7 @@ body {
 .h2 { font-size: clamp(24px, 4.5vw, 34px); font-weight: 800; line-height: 1.15; letter-spacing: -.015em; color: var(--forest); margin: 0; text-wrap: balance; }
 .h3 { font-size: clamp(19px, 3vw, 23px); font-weight: 700; line-height: 1.25; letter-spacing: -.01em; color: var(--forest-700); margin: 0; }
 .lead { font-size: clamp(16px, 2.4vw, 19px); line-height: 1.65; color: var(--ink-soft); margin: 0; }
-.body { font-size: 16px; line-height: 1.7; color: var(--ink-soft); margin: 0; }
+.body { font-size: 16.5px; line-height: 1.85; color: var(--ink-soft); margin: 0; letter-spacing: -0.01em; }
 .cap  { font-size: 13.5px; line-height: 1.5; color: var(--ink-faint); margin: 0; }
 
 a { color: inherit; }

@@ -1,6 +1,8 @@
 import type { MetadataRoute } from 'next'
 import { POSTS } from '@/lib/posts'
 
+const GUIDE_SLUGS = ['beginner-100', 'transit-mountains']
+
 const BASE = 'https://dullegilgogo.kr'
 const NOW  = new Date().toISOString()
 
@@ -38,5 +40,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // DB 연결 실패 시 빈 목록
   }
 
-  return [...staticPages, ...blogPages, ...mountainPages]
+  const guidePages: MetadataRoute.Sitemap = GUIDE_SLUGS.map(slug => ({
+    url:             `${BASE}/guide/${slug}`,
+    lastModified:    NOW,
+    changeFrequency: 'monthly' as const,
+    priority:        0.7,
+  }))
+
+  return [...staticPages, ...blogPages, ...mountainPages, ...guidePages]
 }
