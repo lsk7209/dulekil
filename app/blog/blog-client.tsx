@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { Icon } from '@/components/icon'
 import { ridgeCover, contour } from '@/lib/motif'
-import { POSTS, CATS, type Post, type CatKey } from '@/lib/posts'
+import { CATS, type Post, type CatKey } from '@/lib/posts'
 
 const ALL_CATS = ['전체', ...Object.keys(CATS)] as const
 type FilterCat = '전체' | CatKey
@@ -102,11 +102,12 @@ function PostCard({ p }: { p: Post }) {
 }
 
 /* ---- 메인 클라이언트 컴포넌트 ---- */
-export function BlogClient() {
+export function BlogClient({ posts }: { posts: Post[] }) {
   const [cat, setCat] = useState<FilterCat>('전체')
 
-  const featured = POSTS.find((p) => p.featured) ?? POSTS[0]
-  const rest = POSTS.filter((p) => p.id !== featured.id)
+  const featured = posts.find((p) => p.featured) ?? posts[0]
+  const rest = posts.filter((p) => p.id !== featured?.id)
+  if (!featured) return null
   const filtered = cat === '전체' ? rest : rest.filter((p) => p.cat === cat)
   const showFeatured = cat === '전체'
 

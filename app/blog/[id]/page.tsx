@@ -9,7 +9,10 @@ import { POSTS, CATS } from '@/lib/posts'
 interface Props { params: { id: string } }
 
 export function generateStaticParams() {
-  return POSTS.map(p => ({ id: p.id }))
+  const now = new Date()
+  return POSTS
+    .filter(p => !p.publishAt || new Date(p.publishAt) <= now)
+    .map(p => ({ id: p.id }))
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -25,6 +28,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default function BlogDetailPage({ params }: Props) {
   const post = POSTS.find(p => p.id === params.id)
   if (!post) notFound()
+  if (post.publishAt && new Date(post.publishAt) > new Date()) notFound()
 
   const cat = CATS[post.cat]
   const relatedPosts = POSTS.filter(p => p.id !== post.id && p.cat === post.cat).slice(0, 3)
@@ -85,18 +89,22 @@ export default function BlogDetailPage({ params }: Props) {
           <div className="ad ad--leaderboard"><span className="ad__label">광고 · 리더보드</span></div>
         </div>
 
-        {/* 아티클 본문 (현재는 요약 표시, P3 Gemini 보강 후 교체) */}
+        {/* 아티클 본문 */}
         <article className="wrap wrap--narrow" style={{ paddingTop: 28, paddingBottom: 12 }}>
-          <div style={{ fontSize: 17, lineHeight: 1.8, color: 'var(--ink-soft)' }}>
-            <p style={{ marginTop: 0 }}>{post.excerpt}</p>
-            <div className="safety" style={{ margin: '28px 0' }}>
-              <div className="safety__icon"><Icon name="warn" size={21} stroke={2} /></div>
-              <div>
-                <h4>코스 정보는 참고용입니다</h4>
-                <p>본 글의 코스·소요시간은 공공데이터를 가공한 추정치이며 일부는 AI 보조로 작성되었습니다. 산행 전 날씨·체력·장비를 점검하고 산림청·국립공원 공식 통제정보를 반드시 확인하세요.</p>
+          {post.body ? (
+            <div className="prose" dangerouslySetInnerHTML={{ __html: post.body }} />
+          ) : (
+            <div style={{ fontSize: 17, lineHeight: 1.8, color: 'var(--ink-soft)' }}>
+              <p style={{ marginTop: 0 }}>{post.excerpt}</p>
+              <div className="safety" style={{ margin: '28px 0' }}>
+                <div className="safety__icon"><Icon name="warn" size={21} stroke={2} /></div>
+                <div>
+                  <h4>코스 정보는 참고용입니다</h4>
+                  <p>본 글의 코스·소요시간은 공공데이터를 가공한 추정치이며 일부는 AI 보조로 작성되었습니다. 산행 전 날씨·체력·장비를 점검하고 산림청·국립공원 공식 통제정보를 반드시 확인하세요.</p>
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </article>
 
         {/* 광고 슬롯 — 인피드 */}

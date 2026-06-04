@@ -15,6 +15,8 @@ export interface Post {
   pal: string
   title: string
   excerpt: string
+  body?: string      // HTML 본문 (없으면 excerpt로 폴백)
+  publishAt?: string // ISO datetime — 미래면 목록·색인 숨김, ISR로 자동 공개
   read: number
   date: string
   featured?: boolean
@@ -169,5 +171,2325 @@ export const POSTS: Post[] = [
     excerpt: '매년 10월이면 100대 명산 단풍 검색이 폭증합니다. 단풍 절정 시기와 추천 코스를 지역별로 정리했습니다. 설악산 중청봉부터 내장산 단풍길까지, 올가을 어느 산을 먼저 오를지 계획을 세워 보세요.',
     read: 9, date: '2026.05.24',
     badges: ['가을', '단풍'],
+  },
+
+  // ── 추가 포스트 p21~p40 ─────────────────────────────────
+  {
+    id: 'p21',
+    cat: '코스추천',
+    pal: 'forest',
+    title: '한라산 성판악 코스 완전 가이드',
+    excerpt: '한라산 성판악 탐방로는 왕복 19.2km, 백록담까지 편도 9.6km의 국내 최장 탐방로입니다. 탐방예약제 운영 방식과 구간별 소요시간, 핵심 체크포인트를 단계별로 정리했습니다.',
+    body: `<h2>성판악 코스 개요 — 거리·고도·시간 수치 먼저</h2><p>한라산 성판악 탐방로는 편도 9.6km, 왕복 19.2km로 백록담 정상(해발 1,950m)에 오를 수 있는 한라산 탐방로 중 가장 긴 루트입니다. 국립공원공단이 공식 고시한 편도 소요시간은 4시간 30분이며, 왕복 기준 약 9시간이 필요합니다. 성판악 탐방안내소(해발 750m)에서 출발해 해발 차 1,200m를 오르는 코스입니다.</p><p>탐방로 전 구간이 국립공원 보호구역이며, 백록담 분화구 접근은 탐방예약제를 통해서만 가능합니다. 성판악~진달래밭 구간(6.8km)과 진달래밭~백록담 구간(2.8km)으로 나뉘며, 진달래밭 대피소에서 중간 휴식이 가능합니다.</p><h2>탐방예약제 신청 절차 — 단계별 안내</h2><p>성판악 코스는 하루 탐방 인원이 1,000명으로 제한됩니다. 예약은 국립공원공단 예약통합시스템(reservation.knps.or.kr)에서 진행하며, 탐방 희망일 1개월 전 오전 8시부터 선착순 접수됩니다. 비회원 예약은 불가능하므로 사전 회원가입이 필수입니다.</p><p>예약 시 성판악 입산통제 시간(오전 5시 30분~오전 9시 30분 이후 입산 불가)을 반드시 확인해야 합니다. 하산 완료 기준은 오후 5시이며, 진달래밭 대피소 통과 마감은 오후 12시입니다. 이 마감 시간을 놓치면 백록담까지 진행이 불가능하므로 오전 7시 이전 출발을 권장합니다.</p><h2>구간별 특성과 트러블슈팅</h2><p>성판악~사라오름 입구(5.8km, 약 2시간 10분) 구간은 경사가 완만하고 포장 탐방로가 이어져 체력 소모가 적습니다. 사라오름 분기점에서 사라오름 정상(1,324m)까지 왕복 약 30분의 추가 코스를 선택할 수 있으며, 분화구 호수를 조망할 수 있습니다.</p><p>진달래밭~백록담(2.8km, 약 1시간 30분) 구간은 해발 1,500m 이상의 암석 지대로, 바람이 강하고 기온 변화가 급격합니다. 특히 기상 악화 시 국립공원 측이 탐방로를 즉시 통제하므로, 출발 당일 오전 6시 기상 예보를 재확인하는 것이 중요합니다. 구름이 낮게 끼는 날에는 백록담 조망이 불가능할 수 있습니다.</p><h2>성판악 vs 관음사 코스 — 어떤 코스를 선택할까</h2><table><thead><tr><th>항목</th><th>성판악</th><th>관음사</th></tr></thead><tbody><tr><td>편도 거리</td><td>9.6km</td><td>8.7km</td></tr><tr><td>편도 소요</td><td>4시간 30분</td><td>5시간</td></tr><tr><td>난이도</td><td>중</td><td>상</td></tr><tr><td>입산 마감</td><td>오전 9시 30분</td><td>오전 10시</td></tr><tr><td>특징</td><td>완만, 탐방객 多</td><td>급경사, 계곡 경관</td></tr></tbody></table><p>성판악은 경사가 완만해 체력 소모를 분산하기 좋고, 진달래밭 대피소에서 휴식이 가능합니다. 관음사 코스는 탐라계곡과 구린굴을 지나는 수려한 경관이 장점이지만 급경사 구간이 많아 체력 부담이 큽니다. 첫 한라산 도전이라면 성판악 코스가 안전하고 예측 가능한 선택입니다.</p><h2>성판악 산행 준비물과 현장 주의사항</h2><ul><li>식수: 성판악 안내소와 진달래밭 대피소 외 중간 보충 불가 — 최소 1.5L 이상 출발</li><li>방풍 재킷: 정상부 체감온도는 평지보다 8~10°C 낮음, 6월에도 방풍층 필수</li><li>등산화: 암석 구간 대비 발목 지지력 있는 미드컷 이상 권장</li><li>간식: 행동식(에너지바, 젤리) 개인 비상식량 별도 준비</li><li>예약 QR: 현장 검사 시 스마트폰 화면 또는 출력본 제시</li></ul><ul><li>정상 근처에서 드론 비행 금지(국립공원법 적용)</li><li>쓰레기 전량 개인이 되가져가야 함 — 현장 수거함 없음</li><li>등산 스틱 사용 시 고무 팁 필수(암반 훼손 방지)</li></ul><h2>자주 묻는 질문 — 탐방예약 FAQ</h2><p>예약 후 취소는 탐방일 2일 전까지 무료이며, 1일 전 취소 시 패널티가 부과됩니다. 당일 기상 통제로 탐방이 불가한 경우에는 별도 환불 절차 없이 예약 취소 처리됩니다. 탐방 당일 현장에서 추가 입장은 취소 잔여분이 발생한 경우에 한해 선착순으로 가능합니다.</p><p>성판악 탐방안내소 주차장은 약 250대 규모이며, 성수기 오전 6시 이전에도 만차가 됩니다. 대중교통 이용 시 제주시에서 시외버스 240번을 이용하면 성판악 탐방안내소 앞에서 하차할 수 있습니다. <a href="/blog/p24">오대산 당일 가이드</a>와 함께 참고하면 원정 산행 계획에 도움이 됩니다.</p><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-04T00:00:00+00:00',
+    read: 9,
+    date: '2026.06.04',
+    badges: ['한라산', '탐방예약'],
+  },
+  {
+    id: 'p22',
+    cat: '코스추천',
+    pal: 'dawn',
+    title: '덕유산 향적봉 겨울 산행 코스',
+    excerpt: '해발 1,614m 향적봉은 덕유산 최고봉입니다. 곤돌라로 1,400m까지 올라 단 1.4km 걸으면 정상에 닿는 겨울 설경 명소를 무주 출발 기준 코스별로 비교했습니다.',
+    body: `<h2>향적봉 세 개 코스 — 거리·난이도·소요시간 비교표</h2><table><thead><tr><th>코스</th><th>거리</th><th>소요시간</th><th>특징</th></tr></thead><tbody><tr><td>구천동 코스</td><td>편도 9.1km</td><td>3시간 30분</td><td>계곡 경관, 여름 인기</td></tr><tr><td>곤돌라+도보 코스</td><td>편도 1.4km</td><td>40분</td><td>겨울 설경 접근 용이</td></tr><tr><td>백련사 코스</td><td>편도 7.3km</td><td>3시간</td><td>완만, 초보자 친화</td></tr></tbody></table><p>겨울철 덕유산을 찾는 탐방객의 약 70%는 무주리조트 곤돌라(설천봉, 해발 1,520m)를 이용합니다. 곤돌라 상부 정류장인 설천봉에서 향적봉까지는 1.4km, 도보 약 40분 거리입니다. 이 구간은 경사가 완만하고 목재 데크가 일부 설치되어 있어 아이젠만 착용하면 대부분의 탐방객이 무리 없이 정상에 도달합니다.</p><p>구천동 코스는 나제통문에서 출발해 백련사, 오수자굴을 거쳐 향적봉에 이르는 9.1km 루트로 편도 3시간 30분이 소요됩니다. 계곡 따라 이어지는 이 코스는 여름과 가을에 특히 수려하지만, 겨울에는 결빙 구간이 많아 아이젠과 스패츠가 필수입니다.</p><h2>겨울 설경 — 상고대가 피는 조건과 시기</h2><p>향적봉의 상고대(수빙, 나뭇가지에 얼음 꽃이 맺히는 현상)는 기온 영하 10°C 이하, 안개 또는 구름이 걸리는 날 새벽에 형성됩니다. 무주 지역 통계 기준으로 12월 중순~2월 말 사이 평균 25~35일 상고대 발생이 관측됩니다. 오전 9시 이후에는 기온 상승과 함께 상고대가 녹기 시작하므로, 설경 촬영을 목적으로 한다면 곤돌라 첫 운행(오전 8시 30분, 동계 기준)에 탑승하는 것이 유리합니다.</p><h2>구간별 특성 — 겨울 결빙 구간 대응</h2><ul><li>아이젠: 10발 이상 크램폰 또는 체인 스파이크 권장</li><li>스패츠: 무릎 아래 적설 구간 대비 필수</li><li>등산 스틱: 두 개 사용 권장</li><li>헤드랜턴: 겨울 일몰 오후 5시 30분 전후, 하산 중 암부 대비</li></ul><p><a href="/blog/p25">태백산 눈꽃 산행 완전 정복</a>에서 비교 참고가 가능합니다.</p><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-04T05:00:00+00:00',
+    read: 8,
+    date: '2026.06.04',
+    badges: ['덕유산', '겨울설경'],
+  },
+  {
+    id: 'p23',
+    cat: '코스추천',
+    pal: 'valley',
+    title: '소백산 연화봉 철쭉 산행 코스',
+    excerpt: '소백산 연화봉(1,394m) 5월 철쭉 군락은 국내 최대 규모 중 하나입니다. 죽령 기점과 희방사 기점 두 코스의 거리·수치·철쭉 개화 시기를 정리했습니다.',
+    body: `<h2>소백산 철쭉 — 개화 시기와 면적 통계</h2><p>소백산 연화봉 일대 철쭉 군락은 약 50만 평 규모로, 국립공원 내 단일 철쭉 군락 면적 기준 전국 최상위권에 해당합니다. 개화 시기는 해발 고도와 해당 연도 기상에 따라 달라지며, 통상 5월 20일~6월 5일 사이에 만개 정점을 맞습니다.</p><h2>코스별 수치 비교 — 죽령 vs 희방사</h2><table><thead><tr><th>항목</th><th>죽령 기점</th><th>희방사 기점</th></tr></thead><tbody><tr><td>편도 거리</td><td>5.7km</td><td>7.2km</td></tr><tr><td>편도 소요</td><td>2시간 30분</td><td>3시간</td></tr><tr><td>출발 고도</td><td>689m</td><td>540m</td></tr><tr><td>고도 상승</td><td>705m</td><td>854m</td></tr><tr><td>특징</td><td>철쭉 군락 직행</td><td>희방폭포 경유</td></tr></tbody></table><p>죽령 기점은 철쭉 군락 밀집 능선(비로봉~연화봉 구간)까지 가장 짧고 직접적인 루트입니다. 희방사 기점은 희방폭포(낙차 28m)를 경유하는 계곡 산행의 매력이 있으며, 봄철 폭포 수량이 풍부해 철쭉과 폭포를 함께 즐기는 탐방에 적합합니다.</p><p><a href="/blog/p28">월악산 영봉 암릉 코스 난이도</a>를 함께 참고하면 충청·경북권 산행 계획 수립에 도움이 됩니다.</p><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-04T10:00:00+00:00',
+    read: 7,
+    date: '2026.06.04',
+    badges: ['소백산', '봄철쭉'],
+  },
+  {
+    id: 'p24',
+    cat: '코스추천',
+    pal: 'forest',
+    title: '오대산 비로봉 당일 등산 가이드',
+    excerpt: '오대산 비로봉(1,563m)은 월정사에서 출발하는 숲길과 상원사 기점 코스 중 선택할 수 있습니다. 당일치기 산행을 위한 코스 선택 근거와 실사용 팁을 정리했습니다.',
+    body: `<h2>비로봉 당일 산행 — 코스 옵션 비교표</h2><table><thead><tr><th>기점</th><th>편도 거리</th><th>소요시간</th><th>고도상승</th><th>당일 적합도</th></tr></thead><tbody><tr><td>월정사</td><td>10.7km</td><td>4시간 30분</td><td>1,021m</td><td>체력상·중</td></tr><tr><td>상원사</td><td>4.6km</td><td>2시간 30분</td><td>498m</td><td>★★★★★</td></tr><tr><td>동피골</td><td>6.4km</td><td>3시간</td><td>720m</td><td>★★★☆☆</td></tr></tbody></table><p>오대산 비로봉(1,563m)은 '완만한 오름'으로 알려져 있지만, 이는 상원사(해발 1,065m) 기점 코스에 한한 평가입니다. 당일 산행 기준 상원사 기점이 합리적인 선택입니다. 오전 8시에 상원사 주차장을 출발하면 정상 도착(약 2시간 30분), 하산 2시간, 여유 시간 포함 오후 2시 전후로 귀환이 가능합니다.</p><p><a href="/blog/p30">강원도 명산 BEST 5 비교</a>를 함께 읽으면 강원도 원정 산행 시 오대산 포함 플랜 수립에 도움이 됩니다.</p><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-04T15:00:00+00:00',
+    read: 7,
+    date: '2026.06.05',
+    badges: ['오대산', '당일치기'],
+  },
+  {
+    id: 'p25',
+    cat: '코스추천',
+    pal: 'autumn',
+    title: '태백산 눈꽃 산행 완전 정복',
+    excerpt: '태백산 천제단(1,567m)은 눈꽃 산행의 대표지로, 당골 기점 왕복 10.4km 코스가 가장 많이 이용됩니다. 눈꽃 생성 조건과 시기, 현장 위험 구간 대응법을 정리했습니다.',
+    body: `<h2>태백산 주요 코스 수치 비교</h2><table><thead><tr><th>코스</th><th>편도 거리</th><th>소요시간</th><th>특징</th></tr></thead><tbody><tr><td>당골 코스</td><td>5.2km</td><td>2시간 30분</td><td>대표 코스, 완만</td></tr><tr><td>유일사 코스</td><td>4.9km</td><td>2시간 20분</td><td>계단 많음, 직등</td></tr><tr><td>백단사 코스</td><td>3.5km</td><td>1시간 50분</td><td>최단 코스, 급경사</td></tr></tbody></table><p>눈꽃(상고대)은 눈이 내린다고 생기는 것이 아니라, 영하의 기온 + 안개 또는 구름 + 바람이 동시에 충족될 때 수목에 물방울이 얼어붙으며 형성되는 현상입니다. 기온이 영하 8°C 이하로 내려가야 정상부 수목에 상고대가 안정적으로 형성됩니다.</p><h2>겨울 산행 안전 — 동상·저체온 위험 구간</h2><p>천제단 정상부는 주변 지형 특성상 사방이 개방된 평지 형태로, 바람이 집중됩니다. 실측 기준 초속 15~20m의 강풍이 빈번하며, 이때 체감온도는 영하 25~30°C까지 떨어집니다.</p><p><a href="/blog/p22">덕유산 향적봉 겨울 산행 코스</a>와 <a href="/mountains/오대산">오대산</a> 겨울 정보도 함께 참고하면 겨울 원정 산행 선택에 도움이 됩니다.</p><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-04T20:00:00+00:00',
+    read: 8,
+    date: '2026.06.05',
+    badges: ['태백산', '눈꽃'],
+  },
+  {
+    id: 'p26',
+    cat: '코스추천',
+    pal: 'forest',
+    title: '속리산 법주사 코스 당일 산행',
+    excerpt: '속리산 천왕봉(1,058m) 법주사 기점 코스는 세계문화유산 사찰과 정상을 하루에 아우르는 산행입니다. 들머리 선택과 코스 흐름, 법주사 관람 연계 방법을 정리했습니다.',
+    body: `<h2>속리산 코스 비교표</h2><table><thead><tr><th>코스</th><th>거리</th><th>소요시간</th><th>특징</th></tr></thead><tbody><tr><td>법주사 기점</td><td>5.9km</td><td>3시간</td><td>문화유산 경유, 관람료</td></tr><tr><td>장각동 기점</td><td>4.8km</td><td>2시간 30분</td><td>최단, 관람료 없음</td></tr><tr><td>화북 기점</td><td>8.6km</td><td>4시간</td><td>문장대 경유 가능</td></tr></tbody></table><p>법주사는 2018년 '산사, 한국의 산지승원' 명칭으로 유네스코 세계문화유산에 등재된 7개 산사 중 하나입니다. 경내 팔상전(목조 5층 탑, 국보)은 현존하는 우리나라 유일의 목탑으로 높이 22.7m입니다.</p><p><a href="/blog/p27">가야산 해인사 코스 오르는 법</a>에서 또 다른 세계유산 사찰 연계 산행 정보를 확인할 수 있습니다.</p><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-05T01:00:00+00:00',
+    read: 7,
+    date: '2026.06.05',
+    badges: ['속리산', '문화유산'],
+  },
+  {
+    id: 'p27',
+    cat: '코스추천',
+    pal: 'sage',
+    title: '가야산 해인사 코스 오르는 법',
+    excerpt: '가야산 상왕봉(1,430m)은 해인사 기점과 성주 백운동 기점 두 갈래로 오를 수 있습니다. 해인사 세계유산 관람과 만물상 암릉의 난이도, 실용 체크리스트를 정리했습니다.',
+    body: `<h2>두 코스 비교 — 해인사 기점 vs 백운동 기점</h2><table><thead><tr><th>항목</th><th>해인사 기점</th><th>백운동 기점</th></tr></thead><tbody><tr><td>편도 거리</td><td>5.8km</td><td>8.2km</td></tr><tr><td>소요시간</td><td>3시간</td><td>4시간</td></tr><tr><td>고도 상승</td><td>942m</td><td>1,030m</td></tr><tr><td>특징</td><td>해인사 경유, 계곡</td><td>만물상 암릉, 경관</td></tr><tr><td>난이도</td><td>중</td><td>상</td></tr></tbody></table><p>팔만대장경(국보 제32호)은 고려 시대 1236~1251년 사이에 제작된 세계 최고 수준의 대장경 목판입니다. 판수 약 81,258개, 글자 수 약 5,200만 자에 달하며, 1995년 유네스코 세계기록유산으로 등재됐습니다.</p><p><a href="/blog/p26">속리산 법주사 코스 당일 산행</a>과 함께 '세계문화유산 사찰 + 명산' 테마 산행 계획 시 참고하기 좋습니다.</p><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-05T06:00:00+00:00',
+    read: 8,
+    date: '2026.06.05',
+    badges: ['가야산', '세계유산'],
+  },
+  {
+    id: 'p28',
+    cat: '코스추천',
+    pal: 'valley',
+    title: '월악산 영봉 암릉 코스 난이도',
+    excerpt: '월악산 영봉(1,097m)은 충청북도 제천·충주에 걸친 암봉 명산입니다. 덕주사 기점과 보덕암 기점 두 루트의 암릉 구간 실제 난이도와 체력 요구 수준을 수치로 정리했습니다.',
+    body: `<h2>덕주사 기점 vs 보덕암 기점 — 코스 수치 비교</h2><table><thead><tr><th>항목</th><th>덕주사 기점</th><th>보덕암 기점</th></tr></thead><tbody><tr><td>편도 거리</td><td>3.5km</td><td>4.3km</td></tr><tr><td>소요시간</td><td>2시간 30분</td><td>3시간</td></tr><tr><td>고도 상승</td><td>717m</td><td>780m</td></tr><tr><td>암릉 구간</td><td>0.8km</td><td>0.5km</td></tr><tr><td>난이도</td><td>상</td><td>중상</td></tr></tbody></table><p>월악산 영봉의 해발 고도는 1,097m로, 100대 명산 중 높은 편이 아닙니다. 그러나 실제 탐방객의 체감 난이도는 1,200~1,300m급 산과 비슷하거나 높게 평가되는 경우가 많습니다. 이는 출발 고도가 낮고(덕주사 기점 380m), 정상부에 수직에 가까운 암릉 구간이 집중되어 있기 때문입니다.</p><p><a href="/blog/p23">소백산 연화봉 철쭉 산행 코스</a>와 함께 충청 이북 권역 산행 계획을 수립할 수 있습니다.</p><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-05T11:00:00+00:00',
+    read: 7,
+    date: '2026.06.05',
+    badges: ['월악산', '암릉'],
+  },
+  {
+    id: 'p29',
+    cat: '코스추천',
+    pal: 'forest',
+    title: '치악산 비로봉 코스 비교',
+    excerpt: '치악산 비로봉(1,288m)은 원주 대표 명산으로 구룡사 코스와 성남 코스 두 가지 주요 루트가 있습니다. 원점회귀 기준 거리·소요시간·난이도를 실수치로 비교했습니다.',
+    body: `<h2>구룡사 코스 vs 성남 코스 — 수치 기반 비교</h2><table><thead><tr><th>항목</th><th>구룡사 코스</th><th>성남 코스</th></tr></thead><tbody><tr><td>원점회귀 거리</td><td>15.2km</td><td>11.4km</td></tr><tr><td>소요시간(왕복)</td><td>7시간</td><td>5시간 30분</td></tr><tr><td>출발 고도</td><td>320m</td><td>520m</td></tr><tr><td>고도 상승</td><td>968m</td><td>768m</td></tr><tr><td>특징</td><td>계곡 수림, 완만</td><td>짧고 가파름</td></tr></tbody></table><p>구룡사 코스는 치악산국립공원 대표 탐방로로, 구룡사(신라 시대 창건 사찰) 경내를 통과해 세렴폭포를 거쳐 비로봉에 이르는 루트입니다. 구룡사에서 비로봉 방향으로 2.8km 지점에 세렴폭포(낙차 약 15m)가 있습니다.</p><p><a href="/blog/p30">강원도 명산 BEST 5 비교</a>에서 오대산·태백산·설악산을 포함한 비교 정보를 확인할 수 있습니다.</p><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-05T16:00:00+00:00',
+    read: 7,
+    date: '2026.06.06',
+    badges: ['치악산', '강원도'],
+  },
+  {
+    id: 'p30',
+    cat: '코스추천',
+    pal: 'dawn',
+    title: '강원도 명산 BEST 5 — 코스 비교',
+    excerpt: '설악산·오대산·태백산·치악산·덕유산(무주 접경)까지 강원도 권역 5대 명산을 거리·고도·접근성 기준으로 비교했습니다. 첫 방문자와 경험자 모두를 위한 선택 가이드입니다.',
+    body: `<h2>강원도 명산 5곳 — 핵심 수치 한눈에 보기</h2><table><thead><tr><th>산</th><th>최고봉(m)</th><th>대표 코스 편도</th><th>소요시간</th><th>난이도</th></tr></thead><tbody><tr><td>설악산</td><td>대청봉 1,708m</td><td>오색 코스 6.2km</td><td>4시간</td><td>상</td></tr><tr><td>오대산</td><td>비로봉 1,563m</td><td>상원사~비로봉 4.6km</td><td>2시간 30분</td><td>중</td></tr><tr><td>태백산</td><td>천제단 1,567m</td><td>당골 코스 5.2km</td><td>2시간 30분</td><td>중</td></tr><tr><td>치악산</td><td>비로봉 1,288m</td><td>구룡사 코스 7.6km</td><td>3시간 30분</td><td>중상</td></tr><tr><td>두타산</td><td>정상 1,353m</td><td>무릉계곡 코스 5.6km</td><td>3시간</td><td>중상</td></tr></tbody></table><p>강원도 내 100대 명산은 설악산·오대산·태백산·치악산·두타산·청옥산·방태산 등 총 7개가 지정되어 있습니다. 강원도 2박 3일 산행 플랜으로는 1일차 태백산, 2일차 오대산, 3일차 설악산 오색 코스 또는 공룡능선 트레일을 조합하는 동선이 검증된 루트입니다.</p><p><a href="/blog/p24">오대산 비로봉 당일 등산 가이드</a>와 <a href="/blog/p25">태백산 눈꽃 산행 완전 정복</a>을 함께 읽으면 계획 수립에 도움이 됩니다.</p><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-05T21:00:00+00:00',
+    read: 8,
+    date: '2026.06.06',
+    badges: ['강원도', '비교'],
+  },
+  {
+    id: 'p31',
+    cat: '코스추천',
+    pal: 'sage',
+    title: '경상도 100대 명산 지역별 가이드',
+    excerpt: '가야산·지리산·덕유산을 포함한 경상도 23개 100대 명산의 지역별 특성과 코스 수치를 비교합니다. 험하다는 통념과 다른 실제 데이터를 확인하세요.',
+    body: `<h2>경상도 대표 100대 명산 수치 비교</h2><table style="width:100%;border-collapse:collapse;font-size:0.95em"><thead><tr style="background:#f5f5f0"><th style="padding:8px;border:1px solid #ddd">산 이름</th><th style="padding:8px;border:1px solid #ddd">고도(m)</th><th style="padding:8px;border:1px solid #ddd">핵심 코스</th><th style="padding:8px;border:1px solid #ddd">거리(왕복)</th><th style="padding:8px;border:1px solid #ddd">소요시간</th><th style="padding:8px;border:1px solid #ddd">난이도</th></tr></thead><tbody><tr><td style="padding:8px;border:1px solid #ddd">지리산</td><td style="padding:8px;border:1px solid #ddd">1,915</td><td style="padding:8px;border:1px solid #ddd">중산리→천왕봉</td><td style="padding:8px;border:1px solid #ddd">9.4km</td><td style="padding:8px;border:1px solid #ddd">6~8시간</td><td style="padding:8px;border:1px solid #ddd">상</td></tr><tr style="background:#f9f9f7"><td style="padding:8px;border:1px solid #ddd">가야산</td><td style="padding:8px;border:1px solid #ddd">1,430</td><td style="padding:8px;border:1px solid #ddd">백운동→상왕봉</td><td style="padding:8px;border:1px solid #ddd">8.4km</td><td style="padding:8px;border:1px solid #ddd">5~6시간</td><td style="padding:8px;border:1px solid #ddd">중상</td></tr><tr><td style="padding:8px;border:1px solid #ddd">덕유산</td><td style="padding:8px;border:1px solid #ddd">1,614</td><td style="padding:8px;border:1px solid #ddd">곤돌라+향적봉</td><td style="padding:8px;border:1px solid #ddd">1.6km</td><td style="padding:8px;border:1px solid #ddd">1시간</td><td style="padding:8px;border:1px solid #ddd">하</td></tr><tr style="background:#f9f9f7"><td style="padding:8px;border:1px solid #ddd">황매산</td><td style="padding:8px;border:1px solid #ddd">1,108</td><td style="padding:8px;border:1px solid #ddd">황매평전</td><td style="padding:8px;border:1px solid #ddd">4km</td><td style="padding:8px;border:1px solid #ddd">3시간</td><td style="padding:8px;border:1px solid #ddd">하</td></tr><tr><td style="padding:8px;border:1px solid #ddd">비슬산</td><td style="padding:8px;border:1px solid #ddd">1,084</td><td style="padding:8px;border:1px solid #ddd">참꽃군락지</td><td style="padding:8px;border:1px solid #ddd">6km</td><td style="padding:8px;border:1px solid #ddd">4~5시간</td><td style="padding:8px;border:1px solid #ddd">하중</td></tr></tbody></table><p>경상도 대부분의 명산은 대구·부산·울산에서 차량 1~2시간 거리입니다. <a href="/mountains/gaya">가야산 코스 전체 안내</a>에서 탐방지원센터 연락처와 주차 정보를 확인할 수 있습니다.</p><div class="safety" style="background:#f0f4f0;border-left:4px solid #6a9a6a;padding:16px;margin-top:24px"><strong>산행 전 반드시 확인하세요</strong><p style="margin:8px 0 0">본 글의 코스 정보는 공공데이터 기반 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-06T02:00:00+00:00',
+    read: 8,
+    date: '2026.06.06',
+    badges: ['경상도', '지역명산'],
+  },
+  {
+    id: 'p32',
+    cat: '코스추천',
+    pal: 'forest',
+    title: '전라도 산행 명소 — 내장산 월출산',
+    excerpt: '내장산 단풍터널 1.8km와 월출산 암릉 60%의 체감 난이도를 실제 수치로 비교합니다. 계절과 체력에 맞는 선택 기준을 제시합니다.',
+    body: `<h2>내장산 vs 월출산 비교표</h2><table style="width:100%;border-collapse:collapse;font-size:0.95em;margin:16px 0"><thead><tr style="background:#f0f4f0"><th style="padding:8px;border:1px solid #ddd">항목</th><th style="padding:8px;border:1px solid #ddd">내장산</th><th style="padding:8px;border:1px solid #ddd">월출산</th></tr></thead><tbody><tr><td style="padding:8px;border:1px solid #ddd">고도</td><td style="padding:8px;border:1px solid #ddd">763m</td><td style="padding:8px;border:1px solid #ddd">809m</td></tr><tr style="background:#f9f9f7"><td style="padding:8px;border:1px solid #ddd">핵심 코스 거리</td><td style="padding:8px;border:1px solid #ddd">9.4km(서래봉)</td><td style="padding:8px;border:1px solid #ddd">5.6km(천황봉)</td></tr><tr><td style="padding:8px;border:1px solid #ddd">소요시간</td><td style="padding:8px;border:1px solid #ddd">5~6시간</td><td style="padding:8px;border:1px solid #ddd">4~5시간</td></tr><tr style="background:#f9f9f7"><td style="padding:8px;border:1px solid #ddd">고도차</td><td style="padding:8px;border:1px solid #ddd">623m</td><td style="padding:8px;border:1px solid #ddd">709m</td></tr><tr><td style="padding:8px;border:1px solid #ddd">암릉 비율</td><td style="padding:8px;border:1px solid #ddd">낮음</td><td style="padding:8px;border:1px solid #ddd">60% 이상</td></tr><tr style="background:#f9f9f7"><td style="padding:8px;border:1px solid #ddd">특화 요소</td><td style="padding:8px;border:1px solid #ddd">단풍터널</td><td style="padding:8px;border:1px solid #ddd">암릉·서남해 조망</td></tr></tbody></table><p>내장산 단풍 절정기 주말 하루 탐방객이 최대 8만 명에 달합니다. 내장산 단풍 평균 절정 시기는 10월 25일~11월 5일입니다. 월출산(809m)은 전체 능선의 70% 이상이 화강암 노출 구간으로 구성되어 있습니다.</p><div class="safety" style="background:#f0f4f0;border-left:4px solid #6a9a6a;padding:16px;margin-top:24px"><strong>산행 전 반드시 확인하세요</strong><p style="margin:8px 0 0">본 글의 코스 정보는 공공데이터 기반 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-06T07:00:00+00:00',
+    read: 7,
+    date: '2026.06.06',
+    badges: ['전라도', '단풍명소'],
+  },
+  {
+    id: 'p33',
+    cat: '코스추천',
+    pal: 'valley',
+    title: '충청도 당일치기 명산 코스 TOP 5',
+    excerpt: '계룡산·속리산·월악산 등 충청도 5대 명산을 당일치기로 오르는 코스 수치와 교통 접근성을 정리했습니다. 준비 부족으로 생기는 사고 패턴도 함께 짚었습니다.',
+    body: `<h2>충청도 당일치기 명산 TOP 5 비교표</h2><table style="width:100%;border-collapse:collapse;font-size:0.95em;margin:16px 0"><thead><tr style="background:#f0f4f0"><th style="padding:8px;border:1px solid #ddd">순위</th><th style="padding:8px;border:1px solid #ddd">산</th><th style="padding:8px;border:1px solid #ddd">고도</th><th style="padding:8px;border:1px solid #ddd">코스 거리</th><th style="padding:8px;border:1px solid #ddd">소요시간</th><th style="padding:8px;border:1px solid #ddd">특징</th></tr></thead><tbody><tr><td style="padding:8px;border:1px solid #ddd">1</td><td style="padding:8px;border:1px solid #ddd">계룡산</td><td style="padding:8px;border:1px solid #ddd">845m</td><td style="padding:8px;border:1px solid #ddd">8.3km</td><td style="padding:8px;border:1px solid #ddd">4~5시간</td><td style="padding:8px;border:1px solid #ddd">접근성 최상</td></tr><tr style="background:#f9f9f7"><td style="padding:8px;border:1px solid #ddd">2</td><td style="padding:8px;border:1px solid #ddd">속리산</td><td style="padding:8px;border:1px solid #ddd">1,058m</td><td style="padding:8px;border:1px solid #ddd">7.2km</td><td style="padding:8px;border:1px solid #ddd">4~5시간</td><td style="padding:8px;border:1px solid #ddd">법주사 연계</td></tr><tr><td style="padding:8px;border:1px solid #ddd">3</td><td style="padding:8px;border:1px solid #ddd">월악산</td><td style="padding:8px;border:1px solid #ddd">1,097m</td><td style="padding:8px;border:1px solid #ddd">8km</td><td style="padding:8px;border:1px solid #ddd">5~6시간</td><td style="padding:8px;border:1px solid #ddd">충주호 조망</td></tr><tr style="background:#f9f9f7"><td style="padding:8px;border:1px solid #ddd">4</td><td style="padding:8px;border:1px solid #ddd">대둔산</td><td style="padding:8px;border:1px solid #ddd">878m</td><td style="padding:8px;border:1px solid #ddd">6km</td><td style="padding:8px;border:1px solid #ddd">4시간</td><td style="padding:8px;border:1px solid #ddd">금강구름다리</td></tr><tr><td style="padding:8px;border:1px solid #ddd">5</td><td style="padding:8px;border:1px solid #ddd">덕산</td><td style="padding:8px;border:1px solid #ddd">677m</td><td style="padding:8px;border:1px solid #ddd">5km</td><td style="padding:8px;border:1px solid #ddd">3시간</td><td style="padding:8px;border:1px solid #ddd">덕산온천 연계</td></tr></tbody></table><p>당일치기 산행 실패의 가장 흔한 원인은 '시간 오판'입니다. 포털 지도 앱의 예상 도착 시간은 평지 보행 속도 기준입니다. 실제 산행 속도는 지형·경사에 따라 이 수치의 40~60%에 불과합니다.</p><div class="safety" style="background:#f0f4f0;border-left:4px solid #6a9a6a;padding:16px;margin-top:24px"><strong>산행 전 반드시 확인하세요</strong><p style="margin:8px 0 0">본 글의 코스 정보는 공공데이터 기반 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-06T12:00:00+00:00',
+    read: 7,
+    date: '2026.06.06',
+    badges: ['충청도', '당일치기'],
+  },
+  {
+    id: 'p34',
+    cat: '코스추천',
+    pal: 'autumn',
+    title: '제주 한라산 어리목 코스 완전 정보',
+    excerpt: '어리목 코스 4.7km, 고도차 730m, 입장 마감 시각과 영실 코스와의 연계 방법까지 체크리스트로 정리했습니다.',
+    body: `<h2>어리목과 영실 — 어느 코스를 선택할까</h2><table style="width:100%;border-collapse:collapse;font-size:0.95em;margin:16px 0"><thead><tr style="background:#f5f0e8"><th style="padding:8px;border:1px solid #ddd">항목</th><th style="padding:8px;border:1px solid #ddd">어리목 코스</th><th style="padding:8px;border:1px solid #ddd">영실 코스</th></tr></thead><tbody><tr><td style="padding:8px;border:1px solid #ddd">출발 고도</td><td style="padding:8px;border:1px solid #ddd">970m</td><td style="padding:8px;border:1px solid #ddd">1,280m</td></tr><tr style="background:#f9f9f7"><td style="padding:8px;border:1px solid #ddd">편도 거리</td><td style="padding:8px;border:1px solid #ddd">4.7km</td><td style="padding:8px;border:1px solid #ddd">3.7km</td></tr><tr><td style="padding:8px;border:1px solid #ddd">고도차</td><td style="padding:8px;border:1px solid #ddd">730m</td><td style="padding:8px;border:1px solid #ddd">420m</td></tr><tr style="background:#f9f9f7"><td style="padding:8px;border:1px solid #ddd">상행 소요</td><td style="padding:8px;border:1px solid #ddd">2시간 30분</td><td style="padding:8px;border:1px solid #ddd">1시간 30분</td></tr><tr><td style="padding:8px;border:1px solid #ddd">입장 마감(하절기)</td><td style="padding:8px;border:1px solid #ddd">오후 12시</td><td style="padding:8px;border:1px solid #ddd">오후 12시</td></tr></tbody></table><p>어리목 코스와 영실 코스는 한라산 정상(백록담, 1,950m)에 도달하지 않습니다. 백록담은 성판악 또는 관음사 코스에서만 접근할 수 있습니다. 어리목 입장 마감 시각은 동절기(11월~3월) 오전 10시, 하절기(4월~9월) 오후 12시입니다.</p><div class="safety" style="background:#f0f4f0;border-left:4px solid #6a9a6a;padding:16px;margin-top:24px"><strong>산행 전 반드시 확인하세요</strong><p style="margin:8px 0 0">본 글의 코스 정보는 공공데이터 기반 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-06T17:00:00+00:00',
+    read: 8,
+    date: '2026.06.07',
+    badges: ['제주', '한라산'],
+  },
+  {
+    id: 'p35',
+    cat: '코스추천',
+    pal: 'forest',
+    title: '혼자 산행 안전하게 즐기는 법',
+    excerpt: '혼자 산행 중 사고 비율 38%, 평균 구조 대기 시간 2시간 48분. 출발 전 5단계 체크리스트와 조난 시 대응 절차를 정리했습니다.',
+    body: `<h2>혼자 산행 중 사고가 더 위험한 구체적인 이유</h2><p>산림청 산악사고 통계에서 혼자 산행 중 발생 사고는 전체 산악 사고의 약 38%를 차지합니다(2022년 기준). 비율 자체보다 중요한 것은 구조 대기 시간입니다. 혼자 산행 중 조난 시 평균 구조 대기 시간은 약 2시간 48분입니다.</p><h2>출발 전 5단계 체크리스트</h2><ul><li><strong>1단계 — 코스 등록</strong>: 산림청 '국민 안심 서비스' 앱에 코스·출발 시각·예상 귀환 시간을 등록합니다.</li><li><strong>2단계 — 비상연락 지정</strong>: 지인 1명에게 귀환 예정 시각을 전달합니다.</li><li><strong>3단계 — 통신 수단 확인</strong>: 소방청 'e-조난신호기' 앱 설치 또는 산악 위성통신기 지참.</li><li><strong>4단계 — 물·비상식량</strong>: 물 2L 이상, 고칼로리 간식.</li><li><strong>5단계 — 출발 시각 설정</strong>: 일몰 기준 2시간 전 하산 시작이 가능한 시각으로 출발합니다.</li></ul><p>조난 상황에서 움직임을 멈추는 것이 첫 번째 행동입니다. 멈춘 후 현재 위치에서 가장 가까운 이정표나 위치 표지판 번호를 확인합니다. 119 신고 후 표지판 번호를 전달하면 구조대가 위치를 특정할 수 있습니다.</p><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-06T22:00:00+00:00',
+    read: 8,
+    date: '2026.06.07',
+    badges: ['솔로산행', '안전'],
+  },
+  {
+    id: 'p36',
+    cat: '코스추천',
+    pal: 'sage',
+    title: '여성 산행 — 체력별 명산 추천',
+    excerpt: '여성 탐방객 42%, 하산 무릎 부상 61%라는 통계를 바탕으로 체력 수준별 코스 선택 기준과 실제 추천 산을 정리했습니다.',
+    body: `<h2>체력 수준별 추천 코스</h2><table style="width:100%;border-collapse:collapse;font-size:0.95em;margin:16px 0"><thead><tr style="background:#f5f5f0"><th style="padding:8px;border:1px solid #ddd">체력 수준</th><th style="padding:8px;border:1px solid #ddd">추천 산</th><th style="padding:8px;border:1px solid #ddd">코스 거리</th><th style="padding:8px;border:1px solid #ddd">고도차</th><th style="padding:8px;border:1px solid #ddd">소요시간</th></tr></thead><tbody><tr><td style="padding:8px;border:1px solid #ddd">입문(체력 하)</td><td style="padding:8px;border:1px solid #ddd">남한산성(경기)</td><td style="padding:8px;border:1px solid #ddd">7km(성곽길)</td><td style="padding:8px;border:1px solid #ddd">200m</td><td style="padding:8px;border:1px solid #ddd">3시간</td></tr><tr style="background:#f9f9f7"><td style="padding:8px;border:1px solid #ddd">초중급(체력 하중)</td><td style="padding:8px;border:1px solid #ddd">관악산(서울)</td><td style="padding:8px;border:1px solid #ddd">7.5km</td><td style="padding:8px;border:1px solid #ddd">482m</td><td style="padding:8px;border:1px solid #ddd">3~4시간</td></tr><tr><td style="padding:8px;border:1px solid #ddd">중급(체력 중)</td><td style="padding:8px;border:1px solid #ddd">북한산(경기)</td><td style="padding:8px;border:1px solid #ddd">8.6km</td><td style="padding:8px;border:1px solid #ddd">660m</td><td style="padding:8px;border:1px solid #ddd">4~5시간</td></tr><tr style="background:#f9f9f7"><td style="padding:8px;border:1px solid #ddd">상급(체력 상)</td><td style="padding:8px;border:1px solid #ddd">지리산 노고단</td><td style="padding:8px;border:1px solid #ddd">성삼재+4.4km</td><td style="padding:8px;border:1px solid #ddd">485m</td><td style="padding:8px;border:1px solid #ddd">3~4시간</td></tr></tbody></table><p>한국등산·트레킹지원센터 2023년 기준으로 여성 산악인 등록 비율은 전체의 42%입니다. 트레킹 폴 2개를 사용하면 하산 시 무릎 하중을 약 30% 경감할 수 있습니다.</p><div class="safety" style="background:#f0f4f0;border-left:4px solid #6a9a6a;padding:16px;margin-top:24px"><strong>산행 전 반드시 확인하세요</strong><p style="margin:8px 0 0">본 글의 코스 정보는 공공데이터 기반 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-07T03:00:00+00:00',
+    read: 7,
+    date: '2026.06.07',
+    badges: ['여성등산', '초중급'],
+  },
+  {
+    id: 'p37',
+    cat: '코스추천',
+    pal: 'valley',
+    title: '50대 시니어 명산 추천 코스',
+    excerpt: '50대가 전체 국립공원 탐방객의 29%로 1위. 근력 감소 데이터와 산악 사고 통계를 기반으로 50대에 맞는 코스 선택 기준과 추천 산을 정리했습니다.',
+    body: `<h2>50대 친화 코스 비교표</h2><table style="width:100%;border-collapse:collapse;font-size:0.95em;margin:16px 0"><thead><tr style="background:#f0f4f0"><th style="padding:8px;border:1px solid #ddd">코스</th><th style="padding:8px;border:1px solid #ddd">거리(왕복)</th><th style="padding:8px;border:1px solid #ddd">고도차</th><th style="padding:8px;border:1px solid #ddd">소요시간</th><th style="padding:8px;border:1px solid #ddd">50대 적합도</th></tr></thead><tbody><tr><td style="padding:8px;border:1px solid #ddd">북한산 진관사</td><td style="padding:8px;border:1px solid #ddd">4.4km</td><td style="padding:8px;border:1px solid #ddd">350m</td><td style="padding:8px;border:1px solid #ddd">3~4시간</td><td style="padding:8px;border:1px solid #ddd">입문</td></tr><tr style="background:#f9f9f7"><td style="padding:8px;border:1px solid #ddd">도봉산 원도봉</td><td style="padding:8px;border:1px solid #ddd">5.8km</td><td style="padding:8px;border:1px solid #ddd">520m</td><td style="padding:8px;border:1px solid #ddd">4~5시간</td><td style="padding:8px;border:1px solid #ddd">중급</td></tr><tr><td style="padding:8px;border:1px solid #ddd">무등산 증심사</td><td style="padding:8px;border:1px solid #ddd">5.2km</td><td style="padding:8px;border:1px solid #ddd">480m</td><td style="padding:8px;border:1px solid #ddd">3~4시간</td><td style="padding:8px;border:1px solid #ddd">입문~중급</td></tr></tbody></table><p>국립공원공단 2023년 연령별 탐방객 통계에서 50대 비율은 29%로 전체 연령 중 1위입니다. 소방청 2023년 자료에서 산악사고 50대 발생 건수는 전체의 31%로 연령대 중 가장 높습니다. 트레킹 폴 2개 사용은 50대 산행에서 가장 효과적인 부상 예방 수단입니다.</p><div class="safety" style="background:#f0f4f0;border-left:4px solid #6a9a6a;padding:16px;margin-top:24px"><strong>산행 전 반드시 확인하세요</strong><p style="margin:8px 0 0">본 글의 코스 정보는 공공데이터 기반 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-07T08:00:00+00:00',
+    read: 8,
+    date: '2026.06.07',
+    badges: ['시니어', '완만코스'],
+  },
+  {
+    id: 'p38',
+    cat: '코스추천',
+    pal: 'dawn',
+    title: '커플 등산 — 로맨틱 명산 코스 5',
+    excerpt: '커플 등산 검색이 봄에 최고조(지수 100)에 달하는 이유와, 힘들다는 통념을 뒤집는 거리 2.8km~6km 전망 명산 5개를 소개합니다.',
+    body: `<h2>전망 좋은 커플 코스 5</h2><table style="width:100%;border-collapse:collapse;font-size:0.95em;margin:16px 0"><thead><tr style="background:#f0e8f0"><th style="padding:8px;border:1px solid #ddd">산</th><th style="padding:8px;border:1px solid #ddd">고도</th><th style="padding:8px;border:1px solid #ddd">거리(왕복)</th><th style="padding:8px;border:1px solid #ddd">소요시간</th><th style="padding:8px;border:1px solid #ddd">전망 특징</th></tr></thead><tbody><tr><td style="padding:8px;border:1px solid #ddd">남해 금산</td><td style="padding:8px;border:1px solid #ddd">681m</td><td style="padding:8px;border:1px solid #ddd">2.8km</td><td style="padding:8px;border:1px solid #ddd">1시간 30분</td><td style="padding:8px;border:1px solid #ddd">한려수도</td></tr><tr style="background:#f9f7f9"><td style="padding:8px;border:1px solid #ddd">덕유산 향적봉</td><td style="padding:8px;border:1px solid #ddd">1,614m</td><td style="padding:8px;border:1px solid #ddd">곤돌라+0.6km</td><td style="padding:8px;border:1px solid #ddd">20분</td><td style="padding:8px;border:1px solid #ddd">고산 능선</td></tr><tr><td style="padding:8px;border:1px solid #ddd">팔공산 갓바위</td><td style="padding:8px;border:1px solid #ddd">850m</td><td style="padding:8px;border:1px solid #ddd">4km</td><td style="padding:8px;border:1px solid #ddd">2시간</td><td style="padding:8px;border:1px solid #ddd">대구 분지</td></tr><tr style="background:#f9f7f9"><td style="padding:8px;border:1px solid #ddd">강화 마니산</td><td style="padding:8px;border:1px solid #ddd">469m</td><td style="padding:8px;border:1px solid #ddd">4km</td><td style="padding:8px;border:1px solid #ddd">2시간 30분</td><td style="padding:8px;border:1px solid #ddd">서해 낙조</td></tr><tr><td style="padding:8px;border:1px solid #ddd">팔공산 비로봉</td><td style="padding:8px;border:1px solid #ddd">1,192m</td><td style="padding:8px;border:1px solid #ddd">6km</td><td style="padding:8px;border:1px solid #ddd">3시간</td><td style="padding:8px;border:1px solid #ddd">대구 야경</td></tr></tbody></table><p>남해 금산(681m)은 커플 코스로 가장 추천하는 산입니다. 왕복 2.8km, 1시간 30분으로 진입 장벽이 낮습니다. 정상 보리암에서 한려수도 바다 조망이 펼쳐집니다.</p><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-07T13:00:00+00:00',
+    read: 7,
+    date: '2026.06.07',
+    badges: ['커플', '전망좋은산'],
+  },
+  {
+    id: 'p39',
+    cat: '코스추천',
+    pal: 'forest',
+    title: '가족 산행 — 아이와 오를 명산',
+    excerpt: '어린이 동반 탐방 비율 22%, 어린이 산악 사고 주 원인 미끄러짐 47%. 나이별 적정 거리 기준과 가족 산행 실패 패턴을 분석했습니다.',
+    body: `<h2>7세 이상 아이와 오를 수 있는 코스</h2><table style="width:100%;border-collapse:collapse;font-size:0.95em;margin:16px 0"><thead><tr style="background:#f0f4f0"><th style="padding:8px;border:1px solid #ddd">산/코스</th><th style="padding:8px;border:1px solid #ddd">거리(왕복)</th><th style="padding:8px;border:1px solid #ddd">고도차</th><th style="padding:8px;border:1px solid #ddd">권장 나이</th><th style="padding:8px;border:1px solid #ddd">특징</th></tr></thead><tbody><tr><td style="padding:8px;border:1px solid #ddd">남산(서울)</td><td style="padding:8px;border:1px solid #ddd">3~5km</td><td style="padding:8px;border:1px solid #ddd">200m</td><td style="padding:8px;border:1px solid #ddd">7세+</td><td style="padding:8px;border:1px solid #ddd">케이블카, 도심 접근</td></tr><tr style="background:#f9f9f7"><td style="padding:8px;border:1px solid #ddd">팔공산 동화사~부도암</td><td style="padding:8px;border:1px solid #ddd">2.8km</td><td style="padding:8px;border:1px solid #ddd">150m</td><td style="padding:8px;border:1px solid #ddd">7세+</td><td style="padding:8px;border:1px solid #ddd">사찰 탐방 연계</td></tr><tr><td style="padding:8px;border:1px solid #ddd">북한산 진관사</td><td style="padding:8px;border:1px solid #ddd">4.4km</td><td style="padding:8px;border:1px solid #ddd">350m</td><td style="padding:8px;border:1px solid #ddd">10세+</td><td style="padding:8px;border:1px solid #ddd">계곡, 자연환경</td></tr></tbody></table><p>국립공원공단 2023년 통계에서 어린이(15세 미만) 동반 탐방 비율은 북한산 기준 22%입니다. 한국청소년활동진흥원이 권장하는 어린이(7~12세) 등산 기준은 왕복 4km 이하, 고도차 300m 이하, 소요 3시간 이내입니다.</p><div class="safety" style="background:#f0f4f0;border-left:4px solid #6a9a6a;padding:16px;margin-top:24px"><strong>산행 전 반드시 확인하세요</strong><p style="margin:8px 0 0">본 글의 코스 정보는 공공데이터 기반 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-07T18:00:00+00:00',
+    read: 7,
+    date: '2026.06.08',
+    badges: ['가족등산', '초보'],
+  },
+  {
+    id: 'p40',
+    cat: '코스추천',
+    pal: 'sage',
+    title: '비 오는 날 등산해도 되는 산',
+    excerpt: '우천 산행 사망·중상 비율은 맑은 날의 2배, 낙석 사고 68%가 강수 후 24시간 이내 발생. 우천 산행 가능 조건과 상대적으로 안전한 코스를 정리했습니다.',
+    body: `<h2>우천 시 상대적으로 안전한 코스 vs 위험한 코스</h2><table style="width:100%;border-collapse:collapse;font-size:0.95em;margin:16px 0"><thead><tr style="background:#f5f5f0"><th style="padding:8px;border:1px solid #ddd">구분</th><th style="padding:8px;border:1px solid #ddd">산/코스</th><th style="padding:8px;border:1px solid #ddd">이유</th></tr></thead><tbody><tr><td style="padding:8px;border:1px solid #ddd">상대적 안전</td><td style="padding:8px;border:1px solid #ddd">남산(서울)</td><td style="padding:8px;border:1px solid #ddd">포장로, 완만, 탈출로 다수</td></tr><tr style="background:#f9f9f7"><td style="padding:8px;border:1px solid #ddd">주의</td><td style="padding:8px;border:1px solid #ddd">북한산 능선부</td><td style="padding:8px;border:1px solid #ddd">암릉 미끄럼</td></tr><tr><td style="padding:8px;border:1px solid #ddd">위험</td><td style="padding:8px;border:1px solid #ddd">설악산 공룡능선</td><td style="padding:8px;border:1px solid #ddd">낙석 고위험 암릉</td></tr><tr style="background:#f9f9f7"><td style="padding:8px;border:1px solid #ddd">위험</td><td style="padding:8px;border:1px solid #ddd">월출산 암릉</td><td style="padding:8px;border:1px solid #ddd">암릉 70%, 우천 미끄럼 치명적</td></tr></tbody></table><p>소방청 2023 기상별 산악 사고 통계에서 우천 시 사고 비율은 전체의 22%입니다. 사망·중상 비율은 우천 시 34%, 맑은 날 18%로 우천 시 약 2배 높습니다. 낙석 사고 68%가 강수 후 24시간 이내 발생한다는 국립공원공단 2021년 통계는 비가 그친 뒤에도 암릉 구간의 위험이 상당 시간 지속됨을 의미합니다.</p><div class="safety" style="background:#f0f4f0;border-left:4px solid #6a9a6a;padding:16px;margin-top:24px"><strong>산행 전 반드시 확인하세요</strong><p style="margin:8px 0 0">본 글의 코스 정보는 공공데이터 기반 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-07T23:00:00+00:00',
+    read: 7,
+    date: '2026.06.08',
+    badges: ['우천산행', '안전주의'],
+  },
+
+  // ── 추가 포스트 p51~p60 ─────────────────────────────────
+  {
+    id: 'p51',
+    cat: '코스추천',
+    pal: 'sage',
+    title: '오대산 선재길 — 걷기 코스 정보',
+    excerpt: '오대산 선재길 9km 전구간 데이터: 고도차 190m, 편도 2시간 30분. 월정사~상원사 탐방로 수치와 계절별 통행 정보를 정리했습니다.',
+    body: `<h2>선재길 기본 수치 — 9km가 의미하는 것</h2><p>오대산 선재길은 강원도 평창군 진부면 오대산 국립공원 내 월정사에서 상원사까지 이어지는 편도 9km 탐방로입니다. 시작점 월정사의 해발고도는 620m, 종점 상원사는 810m로 고도차 190m에 그칩니다. 경사율은 약 2.1%로 완만한 오르막에 해당합니다.</p><h2>계절별 탐방 특성</h2><table style="width:100%;border-collapse:collapse;"><thead><tr style="background:#f5f5f5;"><th style="padding:8px;border:1px solid #ddd;">계절</th><th style="padding:8px;border:1px solid #ddd;">평균기온(℃)</th><th style="padding:8px;border:1px solid #ddd;">특이사항</th></tr></thead><tbody><tr><td style="padding:8px;border:1px solid #ddd;">봄(4~5월)</td><td style="padding:8px;border:1px solid #ddd;">8~18</td><td style="padding:8px;border:1px solid #ddd;">야생화·신록, 탐방객 증가</td></tr><tr><td style="padding:8px;border:1px solid #ddd;">여름(6~8월)</td><td style="padding:8px;border:1px solid #ddd;">20~28</td><td style="padding:8px;border:1px solid #ddd;">계곡 수량 풍부, 오전 탐방 권장</td></tr><tr><td style="padding:8px;border:1px solid #ddd;">가을(9~11월)</td><td style="padding:8px;border:1px solid #ddd;">6~20</td><td style="padding:8px;border:1px solid #ddd;">단풍 절정 10월 중순, 가장 혼잡</td></tr><tr><td style="padding:8px;border:1px solid #ddd;">겨울(12~3월)</td><td style="padding:8px;border:1px solid #ddd;">-12~5</td><td style="padding:8px;border:1px solid #ddd;">적설 시 아이젠 필수, 일부 구간 통제</td></tr></tbody></table><p><a href="/mountains/odaesan">오대산 전체 코스 안내</a>와 <a href="/blog/p58">등산 GPX 트랙 활용법</a>을 함께 참고하면 탐방 계획 수립에 도움이 됩니다.</p><div class="safety" style="background:#fff8e1;border-left:4px solid #f9a825;padding:16px;margin-top:24px;"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-10T06:00:00+00:00',
+    read: 7,
+    date: '2026.06.10',
+    badges: ['오대산', '둘레길'],
+  },
+  {
+    id: 'p52',
+    cat: '코스추천',
+    pal: 'autumn',
+    title: '월출산 암릉 코스 — 천황봉 오르기',
+    excerpt: '월출산 천황봉(809m) 암릉 코스: 통념과 달리 절대 고도가 낮아도 기술 난이도는 상위권. 구름다리·통천문 구간 실제 데이터와 주의사항.',
+    body: `<h2>천황사~천황봉 코스 구간 데이터</h2><table style="width:100%;border-collapse:collapse;"><thead><tr style="background:#f5f5f5;"><th style="padding:8px;border:1px solid #ddd;">구간</th><th style="padding:8px;border:1px solid #ddd;">거리</th><th style="padding:8px;border:1px solid #ddd;">소요시간</th><th style="padding:8px;border:1px solid #ddd;">난이도</th></tr></thead><tbody><tr><td style="padding:8px;border:1px solid #ddd;">천황사~바람폭포</td><td style="padding:8px;border:1px solid #ddd;">1.1km</td><td style="padding:8px;border:1px solid #ddd;">30분</td><td style="padding:8px;border:1px solid #ddd;">보통</td></tr><tr><td style="padding:8px;border:1px solid #ddd;">바람폭포~구름다리</td><td style="padding:8px;border:1px solid #ddd;">0.9km</td><td style="padding:8px;border:1px solid #ddd;">40분</td><td style="padding:8px;border:1px solid #ddd;">어려움</td></tr><tr><td style="padding:8px;border:1px solid #ddd;">구름다리~통천문</td><td style="padding:8px;border:1px solid #ddd;">0.8km</td><td style="padding:8px;border:1px solid #ddd;">30분</td><td style="padding:8px;border:1px solid #ddd;">어려움</td></tr><tr><td style="padding:8px;border:1px solid #ddd;">통천문~천황봉</td><td style="padding:8px;border:1px solid #ddd;">0.9km</td><td style="padding:8px;border:1px solid #ddd;">25분</td><td style="padding:8px;border:1px solid #ddd;">보통</td></tr></tbody></table><p>월출산 천황봉은 해발 809m입니다. 단위 거리당 고도 상승률은 141m/km로, 한라산 성판악 코스(약 60m/km)의 두 배를 넘습니다. 월출산은 전체 능선의 70% 이상이 화강암 노출 구간으로 구성되어 있습니다.</p><div class="safety" style="background:#fff8e1;border-left:4px solid #f9a825;padding:16px;margin-top:24px;"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-10T11:00:00+00:00',
+    read: 7,
+    date: '2026.06.10',
+    badges: ['월출산', '암릉'],
+  },
+  {
+    id: 'p53',
+    cat: '코스추천',
+    pal: 'forest',
+    title: '계룡산 천황봉 코스 — 충남 대표 명산',
+    excerpt: '계룡산 천황봉(845m) 동학사·갑사 코스 비교. 자연성릉 구간 특성과 계절별 주의사항, 충남 대표 국립공원의 탐방 데이터.',
+    body: `<h2>동학사 코스 vs 갑사 코스 비교</h2><table style="width:100%;border-collapse:collapse;"><thead><tr style="background:#f5f5f5;"><th style="padding:8px;border:1px solid #ddd;">구분</th><th style="padding:8px;border:1px solid #ddd;">동학사 코스</th><th style="padding:8px;border:1px solid #ddd;">갑사 코스</th></tr></thead><tbody><tr><td style="padding:8px;border:1px solid #ddd;">편도 거리</td><td style="padding:8px;border:1px solid #ddd;">5.1km</td><td style="padding:8px;border:1px solid #ddd;">5.4km</td></tr><tr><td style="padding:8px;border:1px solid #ddd;">표준 소요</td><td style="padding:8px;border:1px solid #ddd;">2시간 30분~3시간</td><td style="padding:8px;border:1px solid #ddd;">약 3시간</td></tr><tr><td style="padding:8px;border:1px solid #ddd;">주요 경관</td><td style="padding:8px;border:1px solid #ddd;">은선폭포·계곡·암릉</td><td style="padding:8px;border:1px solid #ddd;">단풍길·고찰</td></tr></tbody></table><p>계룡산 천황봉(845m)은 충청도 당일치기 명산 중 접근성이 가장 뛰어납니다. 대전 유성구에서 차량 20분, 서울 용산에서 KTX+버스 조합으로 약 1시간 50분 거리입니다. 연간 탐방객 약 200만 명으로 국립공원 기반 시설이 잘 갖춰져 있습니다.</p><p><a href="/mountains/gyeryongsan">계룡산 탐방로 전체 안내</a>와 <a href="/blog/p59">국립공원 탐방예약 신청법</a>도 참고하면 산행 준비가 수월합니다.</p><div class="safety" style="background:#fff8e1;border-left:4px solid #f9a825;padding:16px;margin-top:24px;"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-10T16:00:00+00:00',
+    read: 7,
+    date: '2026.06.11',
+    badges: ['계룡산', '충남'],
+  },
+  {
+    id: 'p54',
+    cat: '코스추천',
+    pal: 'valley',
+    title: '내장산 단풍 코스 — 11월 최적 루트',
+    excerpt: '내장산 신선봉(763m) 단풍 코스: 절정기 탐방객 1만 명/일 돌파, 주차 대기 2시간 이상 사례. 11월 탐방 실패를 피하는 루트와 타이밍 전략.',
+    body: `<h2>내장사에서 신선봉까지 — 코스 구간 데이터</h2><table style="width:100%;border-collapse:collapse;"><thead><tr style="background:#f5f5f5;"><th style="padding:8px;border:1px solid #ddd;">구간</th><th style="padding:8px;border:1px solid #ddd;">거리</th><th style="padding:8px;border:1px solid #ddd;">소요시간</th><th style="padding:8px;border:1px solid #ddd;">특성</th></tr></thead><tbody><tr><td style="padding:8px;border:1px solid #ddd;">내장사 주차장~내장사</td><td style="padding:8px;border:1px solid #ddd;">1.0km</td><td style="padding:8px;border:1px solid #ddd;">20분</td><td style="padding:8px;border:1px solid #ddd;">단풍 터널(메인 포인트)</td></tr><tr><td style="padding:8px;border:1px solid #ddd;">내장사~케이블카 승강장</td><td style="padding:8px;border:1px solid #ddd;">0.4km</td><td style="padding:8px;border:1px solid #ddd;">10분</td><td style="padding:8px;border:1px solid #ddd;">케이블카 or 도보 선택</td></tr><tr><td style="padding:8px;border:1px solid #ddd;">연자봉~신선봉</td><td style="padding:8px;border:1px solid #ddd;">1.2km</td><td style="padding:8px;border:1px solid #ddd;">30분</td><td style="padding:8px;border:1px solid #ddd;">암릉 구간 포함</td></tr></tbody></table><p>내장산 신선봉(763m)은 매년 10월 하순~11월 초순 단풍 절정기에 일평균 탐방객이 1만 명을 넘습니다. 내장산 단풍 평균 절정 시기는 10월 25일~11월 5일입니다. 혼잡도를 피하는 현실적 방법은 오전 7시 이전 도착입니다.</p><div class="safety" style="background:#fff8e1;border-left:4px solid #f9a825;padding:16px;margin-top:24px;"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-10T21:00:00+00:00',
+    read: 7,
+    date: '2026.06.11',
+    badges: ['내장산', '단풍'],
+  },
+  {
+    id: 'p55',
+    cat: '코스추천',
+    pal: 'dawn',
+    title: '영남알프스 7봉 — 경남 명산 코스',
+    excerpt: '영남알프스 7봉 인증 체크리스트: 가지산(1,241m)·운문산(1,188m) 등 7개 봉우리 각각의 접근 코스와 인증 방법, 완주 전략.',
+    body: `<h2>7봉 각각의 접근 코스 데이터</h2><table style="width:100%;border-collapse:collapse;"><thead><tr style="background:#f5f5f5;"><th style="padding:8px;border:1px solid #ddd;">봉우리</th><th style="padding:8px;border:1px solid #ddd;">고도</th><th style="padding:8px;border:1px solid #ddd;">대표 들머리</th><th style="padding:8px;border:1px solid #ddd;">편도 거리/시간</th></tr></thead><tbody><tr><td style="padding:8px;border:1px solid #ddd;">가지산</td><td style="padding:8px;border:1px solid #ddd;">1,241m</td><td style="padding:8px;border:1px solid #ddd;">석남사</td><td style="padding:8px;border:1px solid #ddd;">4.2km / 2시간30분</td></tr><tr><td style="padding:8px;border:1px solid #ddd;">운문산</td><td style="padding:8px;border:1px solid #ddd;">1,188m</td><td style="padding:8px;border:1px solid #ddd;">운문사</td><td style="padding:8px;border:1px solid #ddd;">4.5km / 2시간30분</td></tr><tr><td style="padding:8px;border:1px solid #ddd;">신불산</td><td style="padding:8px;border:1px solid #ddd;">1,209m</td><td style="padding:8px;border:1px solid #ddd;">배내골</td><td style="padding:8px;border:1px solid #ddd;">3.8km / 2시간</td></tr><tr><td style="padding:8px;border:1px solid #ddd;">영축산</td><td style="padding:8px;border:1px solid #ddd;">1,081m</td><td style="padding:8px;border:1px solid #ddd;">통도사</td><td style="padding:8px;border:1px solid #ddd;">4.0km / 2시간</td></tr><tr><td style="padding:8px;border:1px solid #ddd;">간월산</td><td style="padding:8px;border:1px solid #ddd;">1,069m</td><td style="padding:8px;border:1px solid #ddd;">배내골</td><td style="padding:8px;border:1px solid #ddd;">3.5km / 1시간50분</td></tr><tr><td style="padding:8px;border:1px solid #ddd;">재약산</td><td style="padding:8px;border:1px solid #ddd;">1,108m</td><td style="padding:8px;border:1px solid #ddd;">표충사</td><td style="padding:8px;border:1px solid #ddd;">3.9km / 2시간</td></tr><tr><td style="padding:8px;border:1px solid #ddd;">천황산</td><td style="padding:8px;border:1px solid #ddd;">1,189m</td><td style="padding:8px;border:1px solid #ddd;">얼음골</td><td style="padding:8px;border:1px solid #ddd;">4.1km / 2시간15분</td></tr></tbody></table><p>영남알프스 7봉 인증제는 밀양시 관광과와 울산 배내골 관광안내소가 운영합니다. 각 정상에 무인 스탬프함이 설치되어 있으며, 7개 스탬프 수집 후 인증서를 신청할 수 있습니다. <a href="/blog/p56">100대 명산 완등 순서 짜는 전략</a>과 <a href="/mountains/gajisan">가지산 등산로 안내</a>를 함께 참고하면 계획 수립이 수월합니다.</p><div class="safety" style="background:#fff8e1;border-left:4px solid #f9a825;padding:16px;margin-top:24px;"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-11T02:00:00+00:00',
+    read: 8,
+    date: '2026.06.11',
+    badges: ['영남알프스', '경남'],
+  },
+  {
+    id: 'p56',
+    cat: '가이드',
+    pal: 'forest',
+    title: '100대 명산 완등 순서 짜는 전략',
+    excerpt: '100대 명산을 완등하는 데 평균 4~7년이 걸립니다. 지역 묶음, 난이도 분산, 계절 배분 — 3축으로 순서를 설계하는 절차형 전략.',
+    body: `<h2>완등에 걸리는 시간 — 평균 데이터와 현실</h2><p>완등 인증 신청 통계를 기반으로 한 분석에 따르면 100대 명산 완등에 소요되는 기간은 평균 4~7년입니다. 완등을 목표로 하는 탐방자의 가장 흔한 실패 패턴은 초반 접근 쉬운 수도권 명산에 편중된 후 후반부에 교통·숙박 비용이 높은 오지 산들이 몰리는 구조입니다.</p><h2>난이도 분류 기준</h2><table style="width:100%;border-collapse:collapse;"><thead><tr style="background:#f5f5f5;"><th style="padding:8px;border:1px solid #ddd;">난이도</th><th style="padding:8px;border:1px solid #ddd;">대표 산</th><th style="padding:8px;border:1px solid #ddd;">누적 고도(편도)</th><th style="padding:8px;border:1px solid #ddd;">탐방 거리</th></tr></thead><tbody><tr><td style="padding:8px;border:1px solid #ddd;">하(초급)</td><td style="padding:8px;border:1px solid #ddd;">팔공산, 마이산, 대둔산</td><td style="padding:8px;border:1px solid #ddd;">300m 미만</td><td style="padding:8px;border:1px solid #ddd;">5km 이하</td></tr><tr><td style="padding:8px;border:1px solid #ddd;">중(중급)</td><td style="padding:8px;border:1px solid #ddd;">계룡산, 오대산, 내장산</td><td style="padding:8px;border:1px solid #ddd;">300~600m</td><td style="padding:8px;border:1px solid #ddd;">5~9km</td></tr><tr><td style="padding:8px;border:1px solid #ddd;">상(고급)</td><td style="padding:8px;border:1px solid #ddd;">설악산, 지리산, 한라산</td><td style="padding:8px;border:1px solid #ddd;">600m 이상</td><td style="padding:8px;border:1px solid #ddd;">9km 이상</td></tr></tbody></table><p><a href="/blog/p57">등산 체력 키우는 6주 트레이닝</a>으로 기초 체력을 갖추고, <a href="/blog/p58">등산 GPX 트랙 활용법</a>으로 탐방 기록을 체계화하면 완등 지속성이 높아집니다.</p>`,
+    publishAt: '2026-06-11T07:00:00+00:00',
+    read: 8,
+    date: '2026.06.11',
+    badges: ['완등전략', '계획'],
+  },
+  {
+    id: 'p57',
+    cat: '가이드',
+    pal: 'sage',
+    title: '등산 체력 키우는 6주 트레이닝',
+    excerpt: '등산 체력은 유산소와 하체 근력의 조합입니다. 6주 트레이닝 플랜: 주간 목표 거리·시간 기준으로 설계된 실용 훈련 비교 가이드.',
+    body: `<h2>유산소 vs 근력 — 방법별 효과 비교</h2><table style="width:100%;border-collapse:collapse;"><thead><tr style="background:#f5f5f5;"><th style="padding:8px;border:1px solid #ddd;">훈련 방법</th><th style="padding:8px;border:1px solid #ddd;">주 목표</th><th style="padding:8px;border:1px solid #ddd;">등산 연관 효과</th><th style="padding:8px;border:1px solid #ddd;">주 빈도</th></tr></thead><tbody><tr><td style="padding:8px;border:1px solid #ddd;">계단 오르기</td><td style="padding:8px;border:1px solid #ddd;">유산소 + 근력 복합</td><td style="padding:8px;border:1px solid #ddd;">경사 보행 직결, 심폐 향상</td><td style="padding:8px;border:1px solid #ddd;">3~4회</td></tr><tr><td style="padding:8px;border:1px solid #ddd;">런닝/파워워킹</td><td style="padding:8px;border:1px solid #ddd;">유산소</td><td style="padding:8px;border:1px solid #ddd;">지속 보행 능력, VO2max</td><td style="padding:8px;border:1px solid #ddd;">3회</td></tr><tr><td style="padding:8px;border:1px solid #ddd;">스쿼트·런지</td><td style="padding:8px;border:1px solid #ddd;">하체 근력</td><td style="padding:8px;border:1px solid #ddd;">내리막 충격 흡수, 무릎 보호</td><td style="padding:8px;border:1px solid #ddd;">2~3회</td></tr></tbody></table><h2>6주 트레이닝 플랜 — 주차별 목표</h2><ul><li><strong>1~2주차:</strong> 주 3회 유산소(40분 파워워킹 또는 런닝), 주 2회 하체 근력(스쿼트 3×15회, 런지 3×12회).</li><li><strong>3~4주차:</strong> 유산소 시간 50~60분으로 증가, 경사 구간 추가. 주말 1회 4~5km 배낭 보행(배낭 중량 3~5kg) 시작.</li><li><strong>5~6주차:</strong> 유산소 1회를 인근 낮은 산 실전 산행으로 대체. 배낭 중량 6~8kg으로 증가.</li></ul><p><a href="/blog/p56">100대 명산 완등 순서 짜는 전략</a>에서 체력 단계별 산 선정 방법을 확인하고, <a href="/blog/p58">등산 GPX 트랙 활용법</a>으로 훈련 기록을 체계화할 수 있습니다.</p>`,
+    publishAt: '2026-06-11T12:00:00+00:00',
+    read: 8,
+    date: '2026.06.11',
+    badges: ['체력훈련', '트레이닝'],
+  },
+  {
+    id: 'p58',
+    cat: '가이드',
+    pal: 'valley',
+    title: '등산 GPX 트랙 활용법',
+    excerpt: 'GPX 트랙을 등산에 활용하면 오프라인에서도 정확한 경로 추적이 가능합니다. 파일 구조부터 앱 적용까지 단계별 가이드.',
+    body: `<h2>GPX 트랙 입수 경로 — 주요 소스 비교</h2><table style="width:100%;border-collapse:collapse;"><thead><tr style="background:#f5f5f5;"><th style="padding:8px;border:1px solid #ddd;">소스</th><th style="padding:8px;border:1px solid #ddd;">특징</th><th style="padding:8px;border:1px solid #ddd;">주의사항</th></tr></thead><tbody><tr><td style="padding:8px;border:1px solid #ddd;">국립공원공단(parks.or.kr)</td><td style="padding:8px;border:1px solid #ddd;">공식 탐방로, 통제정보 반영</td><td style="padding:8px;border:1px solid #ddd;">산별 파일 개별 다운로드</td></tr><tr><td style="padding:8px;border:1px solid #ddd;">산림청 숲길(foresttrail.or.kr)</td><td style="padding:8px;border:1px solid #ddd;">둘레길·숲길 GPX 다수</td><td style="padding:8px;border:1px solid #ddd;">등산로와 트레킹로 혼합</td></tr><tr><td style="padding:8px;border:1px solid #ddd;">Wikiloc / AllTrails</td><td style="padding:8px;border:1px solid #ddd;">사용자 업로드, 다양한 루트</td><td style="padding:8px;border:1px solid #ddd;">비공식 트랙 포함, 검증 필요</td></tr></tbody></table><h2>스마트폰 등산 앱에 GPX 적용하는 방법</h2><ul><li><strong>트랭글(Tranggle):</strong> 앱 내 '내 루트' → 'GPX 불러오기' → 파일 선택.</li><li><strong>산길샘:</strong> '트랙 불러오기' 메뉴에서 GPX 파일 import.</li><li><strong>Gaia GPS:</strong> 'Import' → GPX 파일 선택. 오프라인 지형도 다운로드 후 GPX 오버레이.</li></ul><p><a href="/blog/p59">국립공원 탐방예약 신청법</a>과 <a href="/blog/p56">100대 명산 완등 순서 짜는 전략</a>을 함께 참고하면 탐방 준비를 체계화할 수 있습니다.</p>`,
+    publishAt: '2026-06-11T17:00:00+00:00',
+    read: 7,
+    date: '2026.06.12',
+    badges: ['GPX', '등산앱'],
+  },
+  {
+    id: 'p59',
+    cat: '가이드',
+    pal: 'forest',
+    title: '국립공원 탐방예약 신청법',
+    excerpt: '설악산 공룡능선, 지리산 천왕봉 대피소 예약은 2~3개월 전 마감. 국립공원 탐방예약 시스템 이용 절차와 취소·재신청 방법.',
+    body: `<h2>산별 예약 오픈 일정 비교</h2><table style="width:100%;border-collapse:collapse;"><thead><tr style="background:#f5f5f5;"><th style="padding:8px;border:1px solid #ddd;">탐방지</th><th style="padding:8px;border:1px solid #ddd;">예약 오픈 시기</th><th style="padding:8px;border:1px solid #ddd;">일 수용 인원(대략)</th><th style="padding:8px;border:1px solid #ddd;">성수기 마감 속도</th></tr></thead><tbody><tr><td style="padding:8px;border:1px solid #ddd;">설악산 공룡능선</td><td style="padding:8px;border:1px solid #ddd;">탐방 1개월 전</td><td style="padding:8px;border:1px solid #ddd;">500명</td><td style="padding:8px;border:1px solid #ddd;">오픈 당일 30분 이내</td></tr><tr><td style="padding:8px;border:1px solid #ddd;">한라산 백록담</td><td style="padding:8px;border:1px solid #ddd;">탐방 1개월 전</td><td style="padding:8px;border:1px solid #ddd;">성판악·관음사 합산</td><td style="padding:8px;border:1px solid #ddd;">오픈 당일 수시간 내</td></tr><tr><td style="padding:8px;border:1px solid #ddd;">지리산 장터목 대피소</td><td style="padding:8px;border:1px solid #ddd;">탐방 2~3개월 전</td><td style="padding:8px;border:1px solid #ddd;">약 150명</td><td style="padding:8px;border:1px solid #ddd;">오픈 당일 마감 빈번</td></tr><tr><td style="padding:8px;border:1px solid #ddd;">북한산 백운대</td><td style="padding:8px;border:1px solid #ddd;">탐방 1개월 전</td><td style="padding:8px;border:1px solid #ddd;">시간대별 구분</td><td style="padding:8px;border:1px solid #ddd;">주말 오픈 당일 마감</td></tr></tbody></table><p>국립공원 탐방예약은 국립공원공단 공식 예약 시스템(reservation.knps.or.kr)을 통해 신청합니다. 예약 오픈 시점은 이용일 30일 전 오전 9시인 경우가 많습니다. <a href="/blog/p58">등산 GPX 트랙 활용법</a>으로 탐방 루트를 사전에 시뮬레이션하고, <a href="/blog/p56">100대 명산 완등 순서 짜는 전략</a>에서 예약 경쟁이 치열한 산을 일정 초기에 배치하는 방법을 참고하면 완등 계획 효율이 높아집니다.</p><div class="safety" style="background:#fff8e1;border-left:4px solid #f9a825;padding:16px;margin-top:24px;"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-11T22:00:00+00:00',
+    read: 7,
+    date: '2026.06.12',
+    badges: ['탐방예약', '국립공원'],
+  },
+  {
+    id: 'p60',
+    cat: '가이드',
+    pal: 'autumn',
+    title: '등산 지도 읽는 법 — 등고선 이해',
+    excerpt: '등고선 간격 20m가 의미하는 실제 경사도, 계곡·능선·절벽을 지도에서 판독하는 방법. 등산 지도 독해 실전 가이드.',
+    body: `<h2>등고선 간격으로 경사도 계산하는 방법</h2><table style="width:100%;border-collapse:collapse;"><thead><tr style="background:#f5f5f5;"><th style="padding:8px;border:1px solid #ddd;">1:25,000 지도 1cm당 등고선 수</th><th style="padding:8px;border:1px solid #ddd;">경사도 (약)</th><th style="padding:8px;border:1px solid #ddd;">체감 난이도</th></tr></thead><tbody><tr><td style="padding:8px;border:1px solid #ddd;">1개 이하</td><td style="padding:8px;border:1px solid #ddd;">4% 이하</td><td style="padding:8px;border:1px solid #ddd;">완만 (선재길 수준)</td></tr><tr><td style="padding:8px;border:1px solid #ddd;">2~3개</td><td style="padding:8px;border:1px solid #ddd;">8~12%</td><td style="padding:8px;border:1px solid #ddd;">보통 경사</td></tr><tr><td style="padding:8px;border:1px solid #ddd;">4~5개</td><td style="padding:8px;border:1px solid #ddd;">16~20%</td><td style="padding:8px;border:1px solid #ddd;">급경사, 보폭 줄임</td></tr><tr><td style="padding:8px;border:1px solid #ddd;">6개 이상</td><td style="padding:8px;border:1px solid #ddd;">24% 이상</td><td style="padding:8px;border:1px solid #ddd;">절벽급, 기술 구간</td></tr></tbody></table><p>등고선은 지형도에서 같은 고도의 지점을 연결한 선입니다. 국토지리정보원(NGII) 발행 1:25,000 지형도 기준으로 등고선 간격은 10m이며, 주요 등고선(굵은 선)은 50m 간격으로 표시됩니다. <a href="/blog/p58">등산 GPX 트랙 활용법</a>으로 트랙 운용 방법을 익히고, <a href="/blog/p59">국립공원 탐방예약 신청법</a>으로 탐방 준비를 완성할 수 있습니다.</p>`,
+    publishAt: '2026-06-12T03:00:00+00:00',
+    read: 7,
+    date: '2026.06.12',
+    badges: ['지도읽기', '기초'],
+  },
+
+  // ── 추가 포스트 p61~p70 ─────────────────────────────────
+  {
+    id: 'p61',
+    cat: '가이드',
+    pal: 'dawn',
+    title: '산행 속도 관리 — 체력별 페이스',
+    excerpt: '산행 속도 실수가 하산 사고로 이어지는 구조를 수치로 이해하고, 체력 수준별 적정 페이스와 워밍업 3단계 방법을 정리했습니다.',
+    body: `<h2>체력 수준별 적정 속도</h2><table><thead><tr><th>체력 수준</th><th>수평 속도(km/h)</th><th>100m 고도당 추가 시간</th><th>비고</th></tr></thead><tbody><tr><td>초보</td><td>1.5~2.0</td><td>+20분</td><td>경사 30% 이상 시 50% 감속</td></tr><tr><td>중급</td><td>2.5~3.0</td><td>+15분</td><td>국립공원 기준치 근접</td></tr><tr><td>숙련</td><td>3.0~3.5</td><td>+10분</td><td>경사 30% 이상 시 동일하게 50% 감속</td></tr></tbody></table><p>산림청 2023년 산악사고 분석에서 전체 조난 사고의 38%가 무리한 속도 유지에 따른 탈진·부상으로 분류됐습니다. 평균 사고 발생 지점은 정상 이후 하산 구간 40%입니다. 오를 때 이미 체력을 소진한 상태에서 내려오다 사고가 납니다. 정상 도달 시점에 체력의 50% 이상이 남아 있어야 안전한 하산이 가능합니다.</p><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-12T08:00:00+00:00',
+    read: 7,
+    date: '2026.06.12',
+    badges: ['페이스조절', '체력'],
+  },
+  {
+    id: 'p62',
+    cat: '가이드',
+    pal: 'sage',
+    title: '등산 전날 준비 완전 체크리스트',
+    excerpt: '등산 전날 밤 23분 투자가 당일 아침 23분 지연을 막는다. 배낭 패킹부터 수면·식사·배터리까지 빠지면 곤란한 항목 순서로 정리한 실전 체크리스트.',
+    body: `<h2>배낭 패킹 체크리스트 — 빠지면 곤란한 항목 순서로</h2><ol><li><strong>물(최소 500ml/시간 × 예상 산행 시간)</strong>: 더운 날은 1.5배 추가</li><li><strong>여분 상의 1벌</strong>: 땀 흡수 후 능선에서 체온 급강하 대비</li><li><strong>우의 또는 고어텍스 재킷</strong>: 기상 예보와 무관하게 항상 포함</li><li><strong>헤드랜턴 + 여분 배터리</strong>: 일몰 전 하산 계획에도 필수 비상 장비</li><li><strong>응급 키트</strong>: 밴드·소독약·압박붕대 최소 구성</li><li><strong>비상 식량</strong>: 예상 산행 시간 +2시간 분량</li><li><strong>지도 또는 오프라인 지도 앱</strong>: 통신 불가 구간 대비</li></ol><div class="aw-box" style="background:#f0f7f0;border-left:4px solid #4a9;padding:16px 20px;margin:24px 0;border-radius:4px;"><strong>전날 밤 최종 체크리스트 (잠들기 전 5분)</strong><ul style="margin:8px 0 0 0;"><li>□ 기상 앱 확인 (바람 속도 포함)</li><li>□ 등산로 통제 여부 확인 (산림청 앱)</li><li>□ 물 준비 완료</li><li>□ 여분 상의 + 우의 배낭 입력</li><li>□ 스마트폰 + 헤드랜턴 충전 중</li><li>□ 오프라인 지도 다운로드</li><li>□ 알람 2개 설정</li></ul></div><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-12T13:00:00+00:00',
+    read: 6,
+    date: '2026.06.12',
+    badges: ['준비물', '체크리스트'],
+  },
+  {
+    id: 'p63',
+    cat: '가이드',
+    pal: 'forest',
+    title: '산 들머리 찾는 법 — 교통편 총정리',
+    excerpt: '들머리 찾기 4단계 절차와 자가용·대중교통별 주의사항. 설악산 14개, 지리산 12개의 들머리 중 원하는 코스 입구를 정확히 찾아가는 방법을 정리했습니다.',
+    body: `<h2>이동 수단별 특성 비교</h2><table><thead><tr><th>이동 수단</th><th>장점</th><th>주의사항</th></tr></thead><tbody><tr><td>자가용</td><td>이동 유연성 높음</td><td>주말 오전 6시 이전 만차 다수</td></tr><tr><td>대중교통</td><td>주차 스트레스 없음</td><td>마지막 버스 17~18시대 노선 존재</td></tr><tr><td>단체 버스</td><td>왕복 조정 편리</td><td>출발·도착 시간 고정, 유연성 낮음</td></tr></tbody></table><p>산림청 등산로 정보 시스템에는 설악산에만 14개, 지리산에 12개의 등록 들머리가 있습니다. 들머리 확인은 4단계 절차입니다. 산림청 등산로 정보 시스템에서 산 이름 검색 → 들머리 목록 중 코스에 맞는 입구 선택 → 네이버 지도·카카오맵으로 교통편 확인 → 주차 가능 여부와 시간 제한 확인. <a href="/blog/p61">체력별 소요 시간 계산법</a>을 활용해 귀로 시간을 미리 계산하면 놓치는 일을 방지할 수 있습니다.</p><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-12T18:00:00+00:00',
+    read: 6,
+    date: '2026.06.13',
+    badges: ['들머리', '교통'],
+  },
+  {
+    id: 'p64',
+    cat: '가이드',
+    pal: 'valley',
+    title: '100대 명산 완등 기록 앱 비교',
+    excerpt: '트랭글 450만 회원과 산림청 200만 인증 사용자. 공식 완등증을 원한다면 반드시 알아야 할 두 앱 체계의 차이와 목적별 선택 기준을 비교했습니다.',
+    body: `<h2>앱별 핵심 기능 비교표</h2><table><thead><tr><th>앱</th><th>공식 완등증</th><th>GPX 기록</th><th>커뮤니티</th><th>오프라인 지도</th></tr></thead><tbody><tr><td>산림청 앱</td><td>✅ 가능</td><td>기본 수준</td><td>없음</td><td>제한적</td></tr><tr><td>트랭글</td><td>❌ 별도 민간 인증</td><td>✅ 상세</td><td>✅ 활성</td><td>✅ 제공</td></tr><tr><td>나는 자연인</td><td>❌</td><td>기본 수준</td><td>✅ 등산 특화</td><td>일부</td></tr><tr><td>카카오맵</td><td>❌</td><td>❌</td><td>❌</td><td>✅ 제공</td></tr></tbody></table><p>공식 완등증이 목표라면 산림청 앱 인증을 반드시 병행해야 합니다. 트랭글 기록은 산림청 공식 완등증 체계와 별개인 민간 플랫폼 인증입니다. <a href="/blog/p61">산행 페이스 계산</a>에 트랭글의 고도 그래프를 활용하면 다음 산행 계획의 정확도가 높아집니다.</p><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-12T23:00:00+00:00',
+    read: 6,
+    date: '2026.06.13',
+    badges: ['완등앱', '기록'],
+  },
+  {
+    id: 'p65',
+    cat: '가이드',
+    pal: 'winter',
+    title: '등산 식량 계획 — 산에서 뭘 먹을까',
+    excerpt: '6시간 산행에서 소모하는 2,800~3,500kcal를 어떻게 준비할까. 경사도별 칼로리 소모 수치와 무게 대비 에너지 밀도 기준으로 등산 식량을 계획하는 방법을 정리했습니다.',
+    body: `<h2>시간당 칼로리 소모 — 경사도별 수치</h2><table><thead><tr><th>구간 유형</th><th>칼로리 소모(70kg 기준)</th><th>비고</th></tr></thead><tbody><tr><td>평지 걷기</td><td>250 kcal/h</td><td>들머리 접근, 능선 평구간</td></tr><tr><td>일반 경사 등산</td><td>500~700 kcal/h</td><td>대부분의 등산 구간</td></tr><tr><td>급경사 구간</td><td>800 kcal/h 이상</td><td>암릉·계단·급오르막</td></tr></tbody></table><p>체중 70kg 성인이 중급 코스를 6시간 오르내리면 2,800~3,500kcal를 소모합니다. 칼로리 부족은 하산 중 다리 떨림과 판단력 저하로 나타납니다. 등산 중 권장 음수량은 시간당 500ml입니다. 장시간 발한으로 나트륨·칼륨을 다량 잃으면 저나트륨혈증이 발생할 수 있으므로 전해질 보충도 병행해야 합니다.</p><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-13T04:00:00+00:00',
+    read: 6,
+    date: '2026.06.13',
+    badges: ['등산식량', '영양'],
+  },
+  {
+    id: 'p66',
+    cat: '가이드',
+    pal: 'dawn',
+    title: '야간 산행 준비 — 헤드랜턴과 안전',
+    excerpt: '야간 사고는 구조 시간이 주간의 2.3배. 100루멘과 300루멘의 실질적 차이부터 배터리 전략, 야간 산행 안전 수칙까지 수치 기반으로 정리했습니다.',
+    body: `<h2>루멘 수치의 진실 — 100루멘과 300루멘은 다른 세계</h2><table><thead><tr><th>루멘</th><th>조명 거리</th><th>적합 상황</th><th>비고</th></tr></thead><tbody><tr><td>100루멘</td><td>발밑 5m</td><td>텐트 내부, 캠핑장</td><td>야간 산행 부적합</td></tr><tr><td>300루멘</td><td>전방 15m</td><td>일반 야간 산행</td><td>실용 최소값</td></tr><tr><td>500루멘+</td><td>전방 30m+</td><td>암릉·복잡한 코스</td><td>권장 기준</td></tr></tbody></table><p>소방청 2022년 산악구조 통계에서 야간(18시~06시) 산악사고 비율은 23%입니다. 야간 사고는 구조 소요 시간이 주간 대비 평균 2.3배 길어 사고 심각도와 구조 어려움이 야간의 진짜 문제입니다. 충전식 메인 랜턴 + 건전지식 백업 병행이 표준 대비입니다.</p><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-13T09:00:00+00:00',
+    read: 6,
+    date: '2026.06.13',
+    badges: ['야간산행', '헤드랜턴'],
+  },
+  {
+    id: 'p67',
+    cat: '가이드',
+    pal: 'forest',
+    title: '산행 동행 구하는 법',
+    excerpt: '57%가 동행 부재로 등산을 미룬 경험이 있다. 산악회, 온라인 커뮤니티, SNS, 국립공원 프로그램 네 가지 경로의 특성과 첫 온라인 동행 안전 수칙을 정리했습니다.',
+    body: `<h2>동행 경로별 특성 비교</h2><table><thead><tr><th>동행 경로</th><th>장점</th><th>단점</th><th>추천 대상</th></tr></thead><tbody><tr><td>지역 산악회</td><td>체계적, 보험 혜택</td><td>고정 일정, 나이대 편중</td><td>정기 활동 원하는 분</td></tr><tr><td>온라인 커뮤니티</td><td>일정 유연, 코스 선택</td><td>초면 신뢰 구축 필요</td><td>특정 코스·날짜 원하는 분</td></tr><tr><td>SNS 해시태그</td><td>비슷한 연령대</td><td>팔로워 없으면 반응 적음</td><td>2030 입문자</td></tr><tr><td>국립공원 프로그램</td><td>안전, 전문 가이드</td><td>정원 제한, 코스 고정</td><td>완전 초보 입문자</td></tr></tbody></table><p>한국산악회 2023년 조사에서 20~40대 등산 입문자의 57%가 "동행을 구하지 못해 등산을 미루거나 포기한 경험이 있다"고 응답했습니다. 처음 만나는 동행과의 첫 산행은 2~3시간 단거리 코스로 시작해 체력·페이스·안전 인식을 상호 확인하는 것이 권장됩니다.</p><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-13T14:00:00+00:00',
+    read: 7,
+    date: '2026.06.13',
+    badges: ['동행구하기', '커뮤니티'],
+  },
+  {
+    id: 'p68',
+    cat: '가이드',
+    pal: 'sage',
+    title: '고산 등산 — 고도 적응법',
+    excerpt: '한라산 1,947m, 지리산 1,915m — 국내 고산에서도 고산증이 온다. 100대 명산 중 1,500m 이상 봉우리 15개에서 적용할 수 있는 고도 적응 3원칙과 증상별 대응 방법을 정리했습니다.',
+    body: `<h2>고산증 증상 인식 — 경증과 중증의 분기점</h2><p>경증 고산증(AMS) 증상은 두통, 피로감, 식욕 저하, 가벼운 구역감입니다. 이 단계에서는 즉시 멈추고 수분을 보충하며 추가 상승을 멈추는 것이 대응 방법입니다. 중증 증상(협조운동 장애, 의식 혼탁, 고산폐부종)은 즉시 하산과 의료 지원이 필요한 응급 상황입니다.</p><h2>고도 적응 3원칙</h2><ul><li>하루 고도 상승 500m 이내 권고</li><li>고도 100m 상승마다 10~15분 이상 소요하는 천천히 오르는 전략</li><li>수분 보충 평소보다 30% 증가 (고도에서 호흡 증가로 수분 소실 빠름)</li></ul><p><a href="/blog/p61">페이스 계산법</a>으로 진달래밭·장터목 도달 예상 시간을 미리 계산하고, <a href="/blog/p70">1박2일 산행</a>을 계획한다면 대피소 중간 숙박을 통해 Climb High, Sleep Low 원칙을 실제로 적용할 수 있습니다.</p><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-13T19:00:00+00:00',
+    read: 7,
+    date: '2026.06.14',
+    badges: ['고산등산', '고도적응'],
+  },
+  {
+    id: 'p69',
+    cat: '가이드',
+    pal: 'valley',
+    title: '등산로 통제 실시간 확인하는 방법',
+    excerpt: '전국 2,847개 구간이 봄철 통제된다. 국립공원 앱, 산림청 앱, 트랭글 제보, 탐방지원센터 전화까지 — 등산로 통제를 실시간으로 확인하는 4가지 경로와 활용 순서를 정리했습니다.',
+    body: `<h2>정보 경로별 특성 비교</h2><table><thead><tr><th>정보 경로</th><th>강점</th><th>적합한 산 유형</th><th>실시간 알림</th></tr></thead><tbody><tr><td>국립공원 공식 앱</td><td>국립공원 전문, 정확</td><td>국립공원 22개소</td><td>✅ 푸시 알림</td></tr><tr><td>산림청 앱</td><td>전국 커버리지</td><td>도립·군립·국유림</td><td>부분 지원</td></tr><tr><td>trails.forest.go.kr</td><td>지도 기반 시각 확인</td><td>전국</td><td>❌ (수동 조회)</td></tr><tr><td>트랭글 커뮤니티</td><td>사용자 제보 빠름</td><td>전국 (비검증)</td><td>❌</td></tr><tr><td>탐방지원센터 전화</td><td>당일 긴급 통제 확인</td><td>전체</td><td>전화 요청 시</td></tr></tbody></table><p>봄철 산불 예방 기간(2~5월) 중 통제된 등산로 구간이 전국 2,847개입니다(산림청 2023년 기준). 출발 전날 밤과 당일 아침, 두 번 확인하는 습관이 핵심입니다. <a href="/blog/p62">전날 준비 체크리스트</a>에서 탐방지원센터 전화번호 저장을 항목에 포함하면 이 단계가 자연스럽게 루틴이 됩니다.</p><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-14T00:00:00+00:00',
+    read: 6,
+    date: '2026.06.14',
+    badges: ['통제확인', '실시간'],
+  },
+  {
+    id: 'p70',
+    cat: '가이드',
+    pal: 'forest',
+    title: '1박2일 산행 — 산장 예약과 짐 꾸리기',
+    excerpt: '지리산 대피소 성수기 경쟁률 30:1, 예약 오픈 수분 내 마감. 국립공원 대피소 예약 절차와 배낭 무게 기준(대피소 10kg, 텐트 15~20kg)을 중심으로 1박2일 산행 준비법을 정리했습니다.',
+    body: `<h2>대피소 vs 텐트 — 무엇을 선택할까</h2><table><thead><tr><th>항목</th><th>대피소</th><th>지정 야영장 텐트</th></tr></thead><tbody><tr><td>예약 난이도</td><td>높음 (성수기 30:1)</td><td>상대적으로 낮음</td></tr><tr><td>배낭 무게</td><td>8~12kg</td><td>15~20kg</td></tr><tr><td>편의시설</td><td>침구·화장실·식당(일부)</td><td>직접 준비 필요</td></tr><tr><td>비용</td><td>1인 1박 약 1만 원 내외</td><td>야영장 사용료 별도</td></tr></tbody></table><p>지리산 대피소 연간 이용자는 약 8만 명이고, 성수기(7~8월, 10월) 경쟁률은 최대 30:1에 달합니다. 국립공원 탐방예약시스템(reservation.knps.or.kr)에서 대피소 예약이 이루어집니다. 예약 오픈 시점은 이용일 30일 전 오전 09:00입니다. 1박2일 배낭 무게는 대피소 이용 시 8~12kg, 텐트 야영 시 15~20kg이 일반적입니다. <a href="/blog/p62">등산 전날 체크리스트</a>를 1박2일용으로 확장해 사용하면 누락 없이 준비를 완료할 수 있습니다.</p><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-14T05:00:00+00:00',
+    read: 7,
+    date: '2026.06.14',
+    badges: ['1박2일', '산장예약'],
+  },
+
+  // ── 추가 포스트 p91~p105 (장비) ─────────────────────────
+  {
+    id: 'p91',
+    cat: '장비',
+    pal: 'forest',
+    title: '등산 의류 레이어링 — 베이스·미들·아우터',
+    excerpt: '베이스레이어·미들레이어·아우터레이어 3단계 레이어링 시스템의 원리와 소재 선택, 실전 조합법을 단계별로 정리했습니다.',
+    body: `<h2>레이어링 시스템이 체온 관리의 핵심인 이유</h2><p>등산 중 체온 조절에 실패하면 저체온증으로 이어질 수 있습니다. 산림청 산악사고 통계에 따르면 저체온증 관련 사고의 약 60~70%는 잘못된 의류 선택에서 비롯됩니다. 단일 두꺼운 재킷 하나보다 얇은 레이어 3장이 공기층을 형성해 보온 효율이 높고, 상황에 따라 탈착이 가능합니다.</p><h2>미들레이어 소재 비교</h2><table><thead><tr><th>소재</th><th>보온성</th><th>습윤 시 성능</th><th>무게</th><th>적합 환경</th></tr></thead><tbody><tr><td>플리스 200g</td><td>중</td><td>유지됨</td><td>경량</td><td>봄·가을 활동성 필요 시</td></tr><tr><td>다운</td><td>최고</td><td>급격 저하</td><td>초경량</td><td>건조한 겨울 정상 대기</td></tr><tr><td>합성 충전재</td><td>중상</td><td>유지됨</td><td>중간</td><td>우천·습한 환경</td></tr></tbody></table><p>레이어링 시스템을 제대로 갖추면 <a href="/blog/p96">등산 장갑</a>이나 <a href="/blog/p94">등산 배낭 선택</a>과 함께 체온 관리의 완성도가 높아집니다.</p><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 의류 정보는 일반적인 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보 및 기상청 고산 기상 예보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-18T14:00:00+00:00',
+    read: 7,
+    date: '2026.06.18',
+    badges: ['레이어링', '등산의류'],
+  },
+  {
+    id: 'p92',
+    cat: '장비',
+    pal: 'winter',
+    title: '등산 바지 — 소프트쉘 vs 하드쉘',
+    excerpt: '소프트쉘과 하드쉘 등산 바지의 방수성·활동성·투습도를 기준별로 비교해 내 산행 스타일에 맞는 선택 기준을 제시합니다.',
+    body: `<h2>소프트쉘 vs 하드쉘 비교표</h2><table><thead><tr><th>항목</th><th>소프트쉘</th><th>하드쉘</th></tr></thead><tbody><tr><td>내수압</td><td>5,000~8,000mm</td><td>10,000~30,000mm 이상</td></tr><tr><td>투습도</td><td>15,000~20,000g</td><td>20,000~30,000g 이상</td></tr><tr><td>활동성(스트레치)</td><td>우수</td><td>보통~양호</td></tr><tr><td>무게</td><td>경량(350~500g)</td><td>중간(450~700g)</td></tr><tr><td>가격대</td><td>10~20만 원</td><td>20~60만 원</td></tr></tbody></table><p>소프트쉘 바지는 방풍성과 스트레치 활동성을 우선시한 소재입니다. 내수압은 일반적으로 5,000~8,000mm 수준으로 짧은 소나기는 버티지만 장시간 강우에는 방수 한계가 있습니다. 하드쉘은 고어텍스 또는 이와 동급의 멤브레인 소재를 사용해 10,000~30,000mm 이상의 완전 방수를 제공합니다. <a href="/blog/p91">레이어링 시스템</a>과 함께 바지 소재를 맞추면 전체 의류 성능이 최적화됩니다.</p><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 장비 정보는 일반적인 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보 및 기상청 예보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-18T19:00:00+00:00',
+    read: 6,
+    date: '2026.06.19',
+    badges: ['등산바지', '소재'],
+  },
+  {
+    id: 'p93',
+    cat: '장비',
+    pal: 'sage',
+    title: '헤드랜턴 고르는 법 — 루멘과 방수',
+    excerpt: '헤드랜턴 루멘 수치와 방수 등급(IPX), 배터리 종류의 실제 의미를 데이터로 풀어 야간 산행에 맞는 제품 선택 기준을 제시합니다.',
+    body: `<h2>방수 등급 비교표</h2><table><thead><tr><th>등급</th><th>보호 수준</th><th>적합 환경</th></tr></thead><tbody><tr><td>IPX4</td><td>사방 물 튀김</td><td>맑은 날 야간 산행</td></tr><tr><td>IPX6</td><td>강한 물줄기</td><td>우천 야간 산행</td></tr><tr><td>IPX7</td><td>1m 침수 30분</td><td>계곡 접근·동굴</td></tr></tbody></table><p>헤드랜턴의 밝기는 루멘(lm)으로 표기됩니다. 200루멘은 좁은 빔 기준으로 약 30~40m 앞을 비출 수 있고, 400루멘은 60m 이상의 조사 거리를 제공합니다. 야간 등산로 보행에는 150~250루멘으로 충분합니다. 야간 산행 장비는 헤드랜턴 외에도 <a href="/blog/p96">등산 장갑</a>과 <a href="/blog/p91">레이어링 의류</a>가 함께 갖춰져야 안전합니다.</p><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>야간 산행은 주간 대비 위험도가 높습니다. 산림청·국립공원 야간 통제 시간을 반드시 확인하고 단독 야간 산행은 자제하세요.</p></div>`,
+    publishAt: '2026-06-19T00:00:00+00:00',
+    read: 6,
+    date: '2026.06.19',
+    badges: ['헤드랜턴', '야간장비'],
+  },
+  {
+    id: 'p94',
+    cat: '장비',
+    pal: 'valley',
+    title: '등산 배낭 선택 — 용량별 추천',
+    excerpt: '당일 산행용 20~30L부터 1박 이상 45L까지, 배낭 용량과 피팅 방식, 힙벨트 설정까지 실제 선택 기준을 정리했습니다.',
+    body: `<h2>용량별 배낭 선택 기준표</h2><table><thead><tr><th>배낭 용량</th><th>적합 산행 유형</th><th>권장 자체 중량</th><th>힙벨트 패딩</th></tr></thead><tbody><tr><td>20~25L</td><td>단거리 당일</td><td>600g 이하</td><td>얇은 패딩 가능</td></tr><tr><td>28~32L</td><td>장시간 당일</td><td>800g 이하</td><td>중간 패딩</td></tr><tr><td>38~45L</td><td>1박 산행</td><td>1.2kg 이하</td><td>두꺼운 패딩 필수</td></tr><tr><td>50L 이상</td><td>2박 이상</td><td>1.5kg 이하</td><td>프레임 + 두꺼운 패딩</td></tr></tbody></table><p>배낭 선택에서 용량만큼 중요한 것이 피팅입니다. 등 길이(torso length)가 맞지 않으면 배낭 무게가 어깨에 집중됩니다. 힙벨트는 배낭 무게의 약 60~80%를 골반으로 전달하는 핵심 구조입니다. 배낭 선택 후 <a href="/blog/p91">레이어링 의류</a>와 함께 전체 장비 무게를 계산해 총 무게를 9~12kg 이내로 유지하는 것이 안전하고 지속 가능한 산행에 도움이 됩니다.</p><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 장비 정보는 일반적인 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-19T05:00:00+00:00',
+    read: 7,
+    date: '2026.06.19',
+    badges: ['배낭선택', '용량'],
+  },
+  {
+    id: 'p95',
+    cat: '장비',
+    pal: 'forest',
+    title: '등산 스패츠 언제 신어야 할까',
+    excerpt: '눈·비·진흙 환경에서 발목과 등산화를 보호하는 스패츠(게이터)의 종류와 착용 시점, 올바른 사용법을 사례 기반으로 정리했습니다.',
+    body: `<h2>스패츠 종류 비교</h2><table><thead><tr><th>종류</th><th>높이</th><th>적합 환경</th><th>평균 무게</th></tr></thead><tbody><tr><td>하이게이터</td><td>20~35cm</td><td>눈밭·폭우·깊은 진흙</td><td>250~400g</td></tr><tr><td>미드게이터</td><td>15~20cm</td><td>봄 잔설·중간 진흙</td><td>150~250g</td></tr><tr><td>로우게이터</td><td>10~15cm</td><td>모래·자갈·얕은 진흙</td><td>80~150g</td></tr></tbody></table><p>겨울(12월~3월)은 1,000m 이상 산행에서 스패츠 착용이 사실상 필수입니다. 설악산·지리산·덕유산 능선부는 1월 평균 적설 깊이가 30~50cm에 달합니다. 스패츠와 함께 <a href="/blog/p98">등산 양말 선택</a>이 맞춰지면 발 보호 효과가 극대화됩니다.</p><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>겨울 산행 전 산림청·국립공원 공식 통제정보와 적설 정보를 반드시 확인하세요. 스패츠 착용이 미끄럼 방지 효과를 대신하지 않으므로 아이젠과 함께 사용하세요.</p></div>`,
+    publishAt: '2026-06-19T10:00:00+00:00',
+    read: 6,
+    date: '2026.06.19',
+    badges: ['스패츠', '사용법'],
+  },
+  {
+    id: 'p96',
+    cat: '장비',
+    pal: 'autumn',
+    title: '등산 장갑 — 계절별 선택 가이드',
+    excerpt: '봄·여름·가을·겨울 계절별로 달라지는 등산 장갑 소재·두께·방수 요구사항을 정리해 적절한 장갑 선택 기준을 제시합니다.',
+    body: `<h2>계절별 장갑 선택 기준표</h2><table><thead><tr><th>계절</th><th>기온 범위</th><th>권장 장갑 유형</th><th>핵심 기능</th></tr></thead><tbody><tr><td>봄·가을</td><td>0~15도</td><td>소프트쉘 5핑거</td><td>방풍·그립</td></tr><tr><td>여름</td><td>15도 이상</td><td>얇은 트레킹 글러브</td><td>통기·보호</td></tr><tr><td>초겨울</td><td>영하5~0도</td><td>방수 플리스 5핑거</td><td>방수·보온</td></tr><tr><td>겨울</td><td>영하15도 이하</td><td>이너+다운 미턴</td><td>보온·방수 이중</td></tr></tbody></table><p>산림청 산악안전통계에 따르면 동상 사고의 약 15~20%가 손 부위에서 발생합니다. 겨울 등산에서는 이너 장갑 + 아우터 미턴의 2레이어 구조가 표준입니다. 겨울 산행 전체 의류 조합은 <a href="/blog/p91">레이어링 시스템</a>을, 발목 보호와의 연계는 <a href="/blog/p95">스패츠 착용 가이드</a>를 함께 확인하세요.</p><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>겨울 및 고산 산행 전 산림청·국립공원 기상 통제 정보를 확인하고, 동상 예방을 위해 이중 장갑 구성을 권장합니다.</p></div>`,
+    publishAt: '2026-06-19T15:00:00+00:00',
+    read: 6,
+    date: '2026.06.20',
+    badges: ['등산장갑', '계절별'],
+  },
+  {
+    id: 'p97',
+    cat: '장비',
+    pal: 'dawn',
+    title: '등산 워킹폴 길이 맞추는 방법',
+    excerpt: '지형별 워킹폴 길이 설정과 손목 스트랩 착용법, 오르막·내리막 각도 조절까지 실전에서 바로 쓰는 체크리스트를 정리했습니다.',
+    body: `<h2>지형별 워킹폴 길이 설정</h2><table><thead><tr><th>지형</th><th>권장 길이 조절</th><th>폴 사용 방식</th></tr></thead><tbody><tr><td>평지</td><td>기준 길이</td><td>양쪽 교대 리드미컬하게</td></tr><tr><td>오르막</td><td>5~10cm 단축</td><td>폴로 밀어 추진력 보조</td></tr><tr><td>내리막</td><td>5~10cm 연장</td><td>체중 분산, 무릎 보호</td></tr><tr><td>암릉·급사면</td><td>수납</td><td>손으로 바위 직접 접촉</td></tr></tbody></table><p>워킹폴의 기본 길이 설정 기준은 폴을 지면에 수직으로 세웠을 때 팔꿈치 각도가 90도가 되는 지점입니다. 연구에 따르면 워킹폴을 올바르게 사용할 경우 내리막 시 무릎 부하를 최대 25% 감소시킬 수 있습니다. 워킹폴과 함께 <a href="/blog/p96">겨울 등산 장갑</a>을 올바르게 조합하면 폴 조작 효율이 높아집니다.</p><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>워킹폴 사용은 미끄럼 방지 보조 수단입니다. 겨울 빙판 구간에서는 아이젠을 반드시 착용하고, 워킹폴에만 의존하지 마세요.</p></div>`,
+    publishAt: '2026-06-19T20:00:00+00:00',
+    read: 6,
+    date: '2026.06.20',
+    badges: ['워킹폴', '길이설정'],
+  },
+  {
+    id: 'p98',
+    cat: '장비',
+    pal: 'sage',
+    title: '등산 양말 — 물집 예방 선택법',
+    excerpt: '등산 양말 두께와 울·합성 소재 선택이 물집 발생에 미치는 영향, 적절한 쿠셔닝 등급과 방습 관리법을 단계별로 정리했습니다.',
+    body: `<h2>소재별 특성 비교</h2><table><thead><tr><th>소재</th><th>보온성</th><th>건조 속도</th><th>항균성</th><th>내구성</th><th>가격</th></tr></thead><tbody><tr><td>메리노울</td><td>높음</td><td>보통</td><td>우수</td><td>보통(혼방 시 향상)</td><td>높음</td></tr><tr><td>합성(폴리/나일론)</td><td>낮음</td><td>빠름</td><td>보통</td><td>높음</td><td>낮음</td></tr><tr><td>울+합성 혼방</td><td>중상</td><td>보통~빠름</td><td>양호</td><td>높음</td><td>중간</td></tr></tbody></table><p>물집(blister)은 피부와 양말 사이의 반복 마찰로 발생합니다. 등산 양말 교체만으로 장거리 산행 후 물집 발생률이 40~60% 감소한다는 연구 결과가 있습니다. 등산 양말과 함께 <a href="/blog/p95">스패츠</a>를 착용하면 발목 아래 보호 효과를 더할 수 있습니다.</p><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 장비 정보는 일반적인 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-20T01:00:00+00:00',
+    read: 6,
+    date: '2026.06.20',
+    badges: ['등산양말', '물집예방'],
+  },
+  {
+    id: 'p99',
+    cat: '장비',
+    pal: 'forest',
+    title: '등산 모자 — 기능성 vs 가격 선택',
+    excerpt: 'UV 차단 지수(UPF)·통기성·챙 길이를 기준으로 등산 모자의 기능과 가격 차이를 비교해 실제 구매에 필요한 판단 기준을 제시합니다.',
+    body: `<h2>UPF 등급별 차단율</h2><table><thead><tr><th>UPF 등급</th><th>차단율</th><th>산행 적합도</th></tr></thead><tbody><tr><td>UPF 15~24</td><td>93~96%</td><td>저산·짧은 산행</td></tr><tr><td>UPF 25~39</td><td>96~97%</td><td>일반 산행 충분</td></tr><tr><td>UPF 40~50+</td><td>97~98% 이상</td><td>고산·장시간 능선</td></tr></tbody></table><p>고도가 100m 높아질 때마다 자외선 강도는 약 1~2%씩 증가합니다. 지리산 천왕봉(1,915m)에서의 자외선은 해수면 대비 약 20~30% 강합니다. 2만~3만 원대 국내외 아웃도어 브랜드 기능성 모자는 UPF 30~40, 중간 챙, 습기 배출 폴리에스터 소재를 대부분 갖추고 있어 가성비가 좋습니다. 모자와 함께 챙기는 여름 의류는 <a href="/blog/p91">레이어링 시스템</a>을 참고하세요.</p><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 장비 정보는 일반적인 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-20T06:00:00+00:00',
+    read: 6,
+    date: '2026.06.20',
+    badges: ['등산모자', '자외선'],
+  },
+  {
+    id: 'p100',
+    cat: '장비',
+    pal: 'winter',
+    title: '구급키트 꾸리기 — 산행 필수 응급품',
+    excerpt: '등산 구급키트에 반드시 들어가야 할 응급품 목록과 용도별 선택 기준, 무게 최적화 방법을 통계 기반으로 정리했습니다.',
+    body: `<h2>필수 구성품과 무게 기준</h2><table><thead><tr><th>구성품</th><th>용도</th><th>계절 추가</th><th>무게(g)</th></tr></thead><tbody><tr><td>방수 밴드에이드 15장</td><td>찰과상·물집</td><td>연중</td><td>30</td></tr><tr><td>거즈+탄성붕대</td><td>출혈·염좌</td><td>연중</td><td>80</td></tr><tr><td>진통제 6정</td><td>통증·발열</td><td>연중</td><td>15</td></tr><tr><td>은박 비상담요</td><td>저체온 응급</td><td>연중(겨울 필수)</td><td>8</td></tr><tr><td>핫팩 3개</td><td>추위·저체온 보조</td><td>겨울 추가</td><td>90</td></tr></tbody></table><p>산림청 국가산악안전포털 통계에 따르면 국내 산악사고 중 부상으로 인한 구조 요청이 전체의 약 50~60%를 차지합니다. 기본 구급키트는 200~350g으로 구성 가능합니다. 구급키트는 <a href="/blog/p94">배낭</a> 최상단 또는 가장 쉽게 꺼낼 수 있는 위치에 고정하는 것이 응급 시 접근 속도를 높입니다.</p><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 응급처치 정보는 일반적인 참고치입니다. 실제 응급 상황에서는 119에 신고하고 전문가의 지시를 따르세요.</p></div>`,
+    publishAt: '2026-06-20T11:00:00+00:00',
+    read: 7,
+    date: '2026.06.20',
+    badges: ['구급키트', '응급품'],
+  },
+  {
+    id: 'p101',
+    cat: '장비',
+    pal: 'valley',
+    title: '등산 무릎 보호대 효과와 선택',
+    excerpt: '하산 시 무릎 충격을 최대 30% 줄여주는 무릎 보호대, 연골 보호 원리부터 실전 선택 기준까지 정리했습니다.',
+    body: `<h2>보호대 종류 비교</h2><table><thead><tr><th>타입</th><th>구조</th><th>무게(g)</th><th>추천 상황</th></tr></thead><tbody><tr><td>슬리브형</td><td>네오프렌/압박 직물</td><td>80~120</td><td>경미한 통증·예방</td></tr><tr><td>힌지드형</td><td>금속·플라스틱 경첩</td><td>300~500</td><td>인대 손상 후 재활</td></tr><tr><td>인프라파텔라 스트랩</td><td>단일 스트랩</td><td>30~60</td><td>슬개건염 특화</td></tr><tr><td>오픈 패텔라형</td><td>슬개골 홀 개방</td><td>150~250</td><td>슬개골 추적 이상</td></tr></tbody></table><p>체중 70kg 기준으로 평지 보행 시 무릎에 약 210kg(체중의 3배)이 실리지만, 경사 30도 하산 구간에서는 420~560kg(체중의 6~8배)까지 증가합니다. 슬리브형 착용 시 착지 충격력이 평균 28~32% 감소했다는 실험 결과가 있습니다. <a href="/blog/p105">겨울 등산화 선택</a>과 함께 겨울철 관절 보호 세트로 구성하면 시너지 효과가 있습니다.</p><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-20T16:00:00+00:00',
+    read: 7,
+    date: '2026.06.21',
+    badges: ['무릎보호대', '관절'],
+  },
+  {
+    id: 'p102',
+    cat: '장비',
+    pal: 'forest',
+    title: '경량 등산 — 배낭 무게 줄이는 법',
+    excerpt: '1kg 줄이면 체감 피로가 20% 감소합니다. UL 등산의 핵심 원리와 실전 경량화 전략을 항목별로 정리했습니다.',
+    body: `<h2>카테고리별 경량화 전략</h2><table><thead><tr><th>카테고리</th><th>일반 무게</th><th>경량 목표</th><th>절감 가능</th></tr></thead><tbody><tr><td>배낭(당일 20L)</td><td>1,200g</td><td>700g 이하</td><td>약 500g</td></tr><tr><td>방수 재킷</td><td>600g</td><td>250g 이하</td><td>약 350g</td></tr><tr><td>물통 2L</td><td>물 포함 2,100g</td><td>소프트 플라스크 1.5L</td><td>약 350g</td></tr><tr><td>트레킹 폴 1쌍</td><td>700g</td><td>카본 400g</td><td>약 300g</td></tr><tr><td>여분 의류</td><td>500g</td><td>다운 베스트 150g</td><td>약 350g</td></tr></tbody></table><p>배낭 무게와 등산 에너지 소비 관계를 측정한 연구에 따르면, 체중의 10% 추가 하중은 산소 소비량(VO₂)을 약 6~8% 증가시킵니다. 단, 경량화가 안전 장비 생략으로 이어지면 안 됩니다. <a href="/blog/p103">등산 방수 재킷 선택</a>을 참고하면 250g 이하의 가벼운 방수층 옵션을 확인할 수 있습니다.</p><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-20T21:00:00+00:00',
+    read: 8,
+    date: '2026.06.21',
+    badges: ['경량화', '무게줄이기'],
+  },
+  {
+    id: 'p103',
+    cat: '장비',
+    pal: 'dawn',
+    title: '등산 방수 재킷 고르는 기준',
+    excerpt: '고어텍스가 무조건 좋은 게 아닙니다. 방수투습 수치와 레이어 구조를 이해하면 가격 대비 최선의 선택이 보입니다.',
+    body: `<h2>방수투습 수치 기준표</h2><table><thead><tr><th>등급</th><th>방수(mm)</th><th>MVTR(g/m²/day)</th><th>적합 환경</th></tr></thead><tbody><tr><td>기본</td><td>10,000 이하</td><td>5,000 이하</td><td>가벼운 이슬비, 도심</td></tr><tr><td>중급</td><td>10,000~20,000</td><td>10,000~15,000</td><td>일반 등산, 트레킹</td></tr><tr><td>고급</td><td>20,000 이상</td><td>20,000 이상</td><td>알파인, 장시간 강우</td></tr></tbody></table><p>기온 15도에서 비를 맞으면 체감 온도가 5도 이하로 내려가고, 젖은 의류의 보온력은 건조 상태 대비 80~90%까지 손실됩니다. 등산용 방수 재킷은 최소 방수 20,000mm / MVTR 15,000g/m²/24h 이상을 기준으로 삼는 것이 적절합니다. <a href="/blog/p102">배낭 경량화</a>와 연계해 재킷 무게도 250g 이하 목표로 설정하면 전체 베이스 웨이트 관리가 수월해집니다.</p><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-21T02:00:00+00:00',
+    read: 8,
+    date: '2026.06.21',
+    badges: ['방수재킷', '고어텍스'],
+  },
+  {
+    id: 'p104',
+    cat: '장비',
+    pal: 'sage',
+    title: '정수 필터 vs 물통 — 산행 수분 장비',
+    excerpt: '산행 중 물 부족은 빠르게 판단력을 저하시킵니다. 정수 필터와 물통의 차이, 상황별 선택 기준을 체크리스트로 정리했습니다.',
+    body: `<h2>정수 필터 종류 비교</h2><table><thead><tr><th>방식</th><th>무게(g)</th><th>처리 속도(L/분)</th><th>제거 대상</th><th>한계</th></tr></thead><tbody><tr><td>중공사막(소이어 스퀴즈)</td><td>85</td><td>0.5~1.5</td><td>박테리아, 원충</td><td>바이러스 제거 불가</td></tr><tr><td>화학정수(MSR 알약)</td><td>50(30정)</td><td>30분 대기</td><td>박테리아, 바이러스</td><td>맛, 처리 시간</td></tr><tr><td>UV 정수(스테리펜)</td><td>100~150</td><td>1L/90초</td><td>박테리아, 원충, 바이러스</td><td>배터리 의존</td></tr></tbody></table><p>산림청 공식 발표에 따르면, 2022년 기준 국내 산 약수터 수질 검사에서 약 18%가 대장균 초과 검출로 음용 부적합 판정을 받았습니다. 따라서 지정 약수터 이외 계곡수 사용 시 반드시 정수 처리가 필요합니다. <a href="/blog/p102">배낭 경량화</a>와 연계해 수분 장비 무게를 최소화하면 전체 산행 효율이 높아집니다.</p><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-21T07:00:00+00:00',
+    read: 7,
+    date: '2026.06.21',
+    badges: ['정수필터', '물통'],
+  },
+  {
+    id: 'p105',
+    cat: '장비',
+    pal: 'forest',
+    title: '겨울 등산화 — 방수 보온 기능 선택',
+    excerpt: '영하 10도 겨울 산행에서 등산화 선택 실수는 동상과 직결됩니다. 방수·보온·미끄럼방지 기준을 단계별로 정리했습니다.',
+    body: `<h2>보온 등급별 선택 기준</h2><table><thead><tr><th>등급</th><th>표기 온도</th><th>실사용 환경</th><th>대표 제품 예시</th></tr></thead><tbody><tr><td>경량 보온</td><td>-10℃</td><td>한국 일반 겨울 산행</td><td>살로몬 X Ultra 4 Mid GTX</td></tr><tr><td>중간 보온</td><td>-20℃</td><td>백두대간 능선, 한파 시</td><td>라스포르티바 트랑고 TRK</td></tr><tr><td>고보온</td><td>-30℃ 이하</td><td>알파인, 빙벽</td><td>스카르파 몬테 로사 플러스</td></tr></tbody></table><p>겨울 산행에서 발은 지속적으로 눈·얼음과 접촉합니다. 방수 기능이 없는 일반 등산화는 30분 이내에 속감이 젖기 시작하고, 기온 영하 5도에서 젖은 양말의 보온력은 건조 상태 대비 90%까지 손실됩니다. 겨울 등산화는 반드시 고어텍스 또는 동급 멤브레인 라이너가 내장된 제품을 선택해야 합니다. <a href="/blog/p101">무릎 보호대</a>와 함께 겨울 산행 관절 보호 세트로 준비하면 신체 전반의 안전성이 높아집니다.</p><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-21T12:00:00+00:00',
+    read: 7,
+    date: '2026.06.21',
+    badges: ['겨울등산화', '방한'],
+  },
+
+  // ── 추가 포스트 p106~p115 (계절) ─────────────────────────
+  {
+    id: 'p106',
+    cat: '계절',
+    pal: 'sage',
+    title: '봄 진달래 명산 — 4월 산행 추천지',
+    excerpt: '진달래와 철쭉이 피는 4월, 어느 산이 얼마나 피는지 개화 시기와 코스 정보를 지역별로 비교 정리했습니다.',
+    body: `<h2>4월 진달래 추천 명산 비교</h2><table><thead><tr><th>산</th><th>위치</th><th>고도(m)</th><th>진달래 절정</th><th>대표 코스(편도km)</th></tr></thead><tbody><tr><td>비슬산</td><td>경남 달성</td><td>1,084</td><td>4월 15일~25일</td><td>유가사 → 정상 4.8km</td></tr><tr><td>두타산</td><td>강원 동해</td><td>1,352</td><td>4월 25일~5월 5일</td><td>무릉계곡 → 정상 6.2km</td></tr><tr><td>황매산</td><td>경남 합천</td><td>1,108</td><td>4월 20일~30일</td><td>모산재 → 정상 3.5km</td></tr><tr><td>천관산</td><td>전남 장흥</td><td>723</td><td>4월 5일~15일</td><td>탑산사 → 정상 3.2km</td></tr></tbody></table><p>봄 산의 분홍 군락을 보고 '진달래인가 철쭉인가' 헷갈리는 경우가 많습니다. 진달래는 잎이 나오기 전에 꽃이 먼저 피고(3월 하순~4월 중순), 철쭉은 잎이 나온 뒤 꽃이 핍니다(4월 하순~5월). 비슬산 정상부 해발 1,000m 일대에 넓이 약 180만㎡(약 54만 평)의 진달래 군락이 있습니다. <a href="/blog/p109">가을 단풍 절정 시기</a>와 마찬가지로 봄꽃도 기온 편차에 따라 시기가 유동적입니다.</p><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-21T17:00:00+00:00',
+    read: 7,
+    date: '2026.06.22',
+    badges: ['봄진달래', '4월산행'],
+  },
+  {
+    id: 'p107',
+    cat: '계절',
+    pal: 'valley',
+    title: '여름 폭염 피해 오르는 새벽 산행',
+    excerpt: '오전 4시 출발, 오전 10시 하산 완료. 폭염 속 새벽 산행의 일출 타이밍부터 필수 장비까지 실전 데이터로 정리합니다.',
+    body: `<h2>새벽 출발 타임라인 — 산별 일출 시각 역산</h2><table><thead><tr><th>산</th><th>대표 코스(편도)</th><th>소요 시간</th><th>7월 일출</th><th>추천 출발</th></tr></thead><tbody><tr><td>북한산 백운대</td><td>북한산성 탐방지원센터 4.5km</td><td>2시간 20분</td><td>5:20</td><td>03:00</td></tr><tr><td>설악산 대청봉</td><td>오색코스 6.1km</td><td>3시간 30분</td><td>5:10</td><td>01:30</td></tr><tr><td>지리산 노고단</td><td>성삼재 주차장 2.6km</td><td>1시간 20분</td><td>5:25</td><td>04:00</td></tr><tr><td>태백산 천제단</td><td>유일사코스 4.3km</td><td>2시간 10분</td><td>5:15</td><td>03:00</td></tr></tbody></table><p>기상청 데이터에 따르면 2023년 서울 기준 폭염 일수(일최고기온 33도 이상)는 24일을 기록했고, 7~8월 오후 2시 평균 기온은 33.5도였습니다. 반면 새벽 4시~오전 9시 사이는 기온이 22~26도로 유지되어 안전한 산행이 가능합니다. 기상청 낙뢰 통계에 따르면 7~8월 낙뢰 발생의 70% 이상이 오후 12시~5시 사이에 집중되므로 오전 10시 이전 하산 완료가 목표입니다.</p><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-21T22:00:00+00:00',
+    read: 7,
+    date: '2026.06.22',
+    badges: ['새벽산행', '여름'],
+  },
+  {
+    id: 'p108',
+    cat: '계절',
+    pal: 'winter',
+    title: '겨울 산행 필수 준비 — 영하10도 대비',
+    excerpt: '영하 10도 한파 속 산행은 장비 하나의 차이가 생사를 가를 수 있습니다. 보온·방한·겨울 장비의 핵심 체크리스트입니다.',
+    body: `<h2>레이어링 시스템 — 소재 선택 기준</h2><table><thead><tr><th>레이어</th><th>역할</th><th>권장 소재</th><th>비권장 소재</th></tr></thead><tbody><tr><td>베이스(이너)</td><td>수분 이송·체온 유지</td><td>메리노울, 폴리프로필렌</td><td>면(땀 흡수 후 냉각)</td></tr><tr><td>미드(보온층)</td><td>공기층 형성·보온</td><td>다운, 플리스, 합성 보온재</td><td>두꺼운 스웨터</td></tr><tr><td>아우터(쉘)</td><td>방풍·방수</td><td>고어텍스 3L, 하드쉘</td><td>소프트쉘(방수 불충분)</td></tr></tbody></table><h2>영하 10도 대비 필수 장비 체크리스트</h2><ul><li><strong>아이젠:</strong> 12발 스틸 아이젠 또는 마이크로 스파이크. 의무 착용 구간 확인 필수.</li><li><strong>발라클라바:</strong> 얼굴 전체를 감싸는 방풍 소재.</li><li><strong>방한 장갑(이중):</strong> 얇은 이너 글러브 + 두꺼운 아우터 미트.</li><li><strong>핫팩:</strong> 1회용 핫팩 2개 이상.</li><li><strong>보온병(뜨거운 음료):</strong> 정상부에서 따뜻한 음료 섭취는 체온 유지에 직접 기여.</li></ul><p>소방청 산악사고 통계(2022)에 따르면 겨울철(12~2월) 산악사고 중 저체온증·동상 관련 사고가 전체의 약 22%를 차지합니다. <a href="/blog/p105">겨울 등산화</a>와 아이젠의 조합이 하산 안전의 핵심입니다.</p><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-22T03:00:00+00:00',
+    read: 8,
+    date: '2026.06.22',
+    badges: ['겨울준비', '혹한'],
+  },
+  {
+    id: 'p109',
+    cat: '계절',
+    pal: 'forest',
+    title: '가을 단풍 명산 절정 시기 지도 2026',
+    excerpt: '2026년 가을 단풍, 어느 산이 언제 절정을 이룰까? 지역별 기온 데이터와 단풍 예측 모델을 기반으로 정리했습니다.',
+    body: `<h2>2026년 지역별 단풍 절정 예상 시기</h2><table><thead><tr><th>지역</th><th>대표 산</th><th>고도(m)</th><th>단풍 시작(예상)</th><th>절정(예상)</th></tr></thead><tbody><tr><td>강원 북부</td><td>설악산 대청봉</td><td>1,708</td><td>9월 20일</td><td>10월 5일~10일</td></tr><tr><td>강원 남부</td><td>오대산 비로봉</td><td>1,563</td><td>9월 25일</td><td>10월 8일~13일</td></tr><tr><td>경북</td><td>주왕산</td><td>722</td><td>10월 10일</td><td>10월 20일~25일</td></tr><tr><td>전북</td><td>지리산 노고단</td><td>1,507</td><td>10월 5일</td><td>10월 15일~20일</td></tr><tr><td>경기·서울</td><td>북한산 백운대</td><td>836</td><td>10월 15일</td><td>10월 25일~30일</td></tr></tbody></table><p>단풍 절정 시기는 첫서리 날짜와 9월 평균 기온 두 가지 변수로 90% 이상 예측됩니다. 기상청 단풍 예측 모델에 따르면, 일 최저기온이 연속 5일 이상 5도 이하로 내려가면 단풍이 시작되고, 최저기온 0도 전후(첫서리)가 닥치면 7~10일 내 절정을 이룹니다. <a href="/mountains/naejangsan">내장산 단풍</a> 코스 정보에서 연간 탐방 통계를 확인할 수 있습니다.</p><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-22T08:00:00+00:00',
+    read: 8,
+    date: '2026.06.22',
+    badges: ['단풍절정', '가을지도'],
+  },
+  {
+    id: 'p110',
+    cat: '계절',
+    pal: 'dawn',
+    title: '봄철 산불 위험 — 3~5월 등산 주의',
+    excerpt: '3~5월은 국내 산불 발생의 70%가 집중되는 시기입니다. 입산 전 확인 사항과 발견 시 행동 요령을 정리했습니다.',
+    body: `<h2>산불 위험 등급과 입산 통제 기준</h2><table><thead><tr><th>위험 등급</th><th>실효습도(%)</th><th>풍속(m/s)</th><th>조치</th></tr></thead><tbody><tr><td>주의</td><td>35 이하</td><td>7 이상</td><td>흡연·취사 금지, 입산 자제 권고</td></tr><tr><td>경계</td><td>25 이하</td><td>11 이상</td><td>입산 통제, 주요 탐방로 차단</td></tr><tr><td>심각</td><td>20 이하</td><td>14 이상</td><td>전면 입산 금지, 헬기 출동 대기</td></tr></tbody></table><p>산림청 산불 통계(2015~2024년 평균)에 따르면, 봄철(3~5월) 산불 발생 건수는 연간 전체의 약 65~70%를 차지합니다. 2023년 한 해에만 봄철에 434건의 산불이 발생해 6,831ha가 소실됐습니다. 산불을 발견하면 즉시 119 또는 산림청 산불신고 전화(1588-9119)로 신고하고, 불길의 반대 방향·바람이 불어오는 쪽으로 대피해야 합니다.</p><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-22T13:00:00+00:00',
+    read: 7,
+    date: '2026.06.22',
+    badges: ['봄산불', '건조주의'],
+  },
+  {
+    id: 'p111',
+    cat: '계절',
+    pal: 'autumn',
+    title: '여름 장마철 산행 — 언제 가야 안전한가',
+    excerpt: '장마철 산악 조난은 연간 전체의 31.4%가 집중된다. 날씨 판단 기준, 안전한 코스 조건, 출발 전 체크리스트를 정리했다.',
+    body: `<h2>날씨 판단 기준 — 48시간 예보를 읽는 법</h2><table><thead><tr><th>조건</th><th>판단</th><th>비고</th></tr></thead><tbody><tr><td>48h 강수 확률 ≤ 20%</td><td>산행 가능</td><td>능선 낙뢰 확률 별도 확인</td></tr><tr><td>강수 확률 21~40%</td><td>조건부(저지대·짧은 코스만)</td><td>전날 강수량 0mm 필수</td></tr><tr><td>강수 확률 41% 이상</td><td>취소 권고</td><td>특히 계곡 코스 절대 금지</td></tr><tr><td>전날 강수량 30mm 이상</td><td>당일 취소</td><td>하늘 맑아도 지반 위험</td></tr></tbody></table><p>산림청 집계에 따르면 장마·집중호우 기간(6월 20일~7월 31일) 산악 조난 건수는 연간 전체의 31.4%에 달합니다. 장마 종료 선언 후 토양 포화 상태가 3~5일 지속되므로 장마 종료 직후 2~3일 대기가 권고됩니다. 장마철 산행에서 절대 생략할 수 없는 필수 장비는 방수 배낭 커버, 방수 재킷(고어텍스 이상 등급), 트레킹 폴, 여벌 양말·속옷입니다.</p><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-22T18:00:00+00:00',
+    read: 9,
+    date: '2026.06.23',
+    badges: ['장마철', '우기산행'],
+  },
+  {
+    id: 'p112',
+    cat: '계절',
+    pal: 'sage',
+    title: '겨울 눈산 — 설경 최고 타이밍',
+    excerpt: '대관령 연평균 적설일수 54.7일, 한라산 57.3일. 설경 산행의 황금 구간 적설심과 1월 vs 2월 차이를 비교 정리했다.',
+    body: `<h2>1월 vs 2월 — 눈 성질 비교</h2><table><thead><tr><th>구분</th><th>1월(중·하순)</th><th>2월(초·중순)</th></tr></thead><tbody><tr><td>눈 성질</td><td>건설(드라이 스노)</td><td>습설(웨트 스노)</td></tr><tr><td>나뭇가지 설경</td><td>균일·세밀</td><td>두껍고 뭉침, 빙화 발생</td></tr><tr><td>등산로 상태</td><td>딱딱한 압설, 아이젠 필수</td><td>습한 압설, 체인 스파이크도 가능</td></tr><tr><td>일출 시각</td><td>7:30~8:00</td><td>7:00~7:30</td></tr><tr><td>추천 타이밍</td><td>★★★★★</td><td>★★★★☆</td></tr></tbody></table><p>전문 산악인들이 '설경이 가장 아름다운 적설심'으로 꼽는 범위는 15~25cm입니다. 이 범위에서는 나뭇가지마다 눈이 균일하게 얹히고, 등산로 윤곽이 살아있어 발디딤이 가능합니다. 1월 15일~2월 초가 통계적·경험적으로 가장 풍부한 설경 구간입니다. <a href="/mountains/taebaeksan">태백산 천제단 코스 안내</a>와 <a href="/mountains/hallasan">한라산 겨울 탐방로 현황</a>에서 상세 정보를 확인할 수 있습니다.</p><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-22T23:00:00+00:00',
+    read: 8,
+    date: '2026.06.23',
+    badges: ['겨울설경', '눈산'],
+  },
+  {
+    id: 'p113',
+    cat: '계절',
+    pal: 'valley',
+    title: '5월 철쭉 산행 — 지리산 황매산 비교',
+    excerpt: '황매산 철쭉제 방문객 28만 명, 지리산 세석평전 만개 5월 20~28일. 접근성·군락 규모·타이밍 기준으로 두 산을 비교했다.',
+    body: `<h2>두 산의 기본 사양 비교</h2><table><thead><tr><th>항목</th><th>지리산 세석평전</th><th>황매산</th></tr></thead><tbody><tr><td>철쭉 군락 해발</td><td>1,650m</td><td>1,000~1,108m</td></tr><tr><td>만개 평년 시기</td><td>5월 20~28일</td><td>5월 1~15일</td></tr><tr><td>접근 코스(편도)</td><td>9~20km, 4~7시간</td><td>2~2.5km, 1~1.5시간</td></tr><tr><td>당일 완료 가능</td><td>백무동 기점 가능(체력 필요)</td><td>대부분 당일</td></tr><tr><td>혼잡도</td><td>중(탐방 예약 필수)</td><td>매우 높음(철쭉제 기간)</td></tr></tbody></table><p>황매산 철쭉제(5월 초~중순, 합천군 주관) 기간 방문객은 2023년 누계 약 28만 명에 달합니다. 지리산 세석평전은 국립공원 탐방예약이 필수이며, 성수기 주말은 1~2주 전 마감됩니다. 두 곳의 만개 시기가 약 2주 차이 나기 때문에 한 해에 두 곳을 모두 볼 수도 있습니다. <a href="/mountains/jirisan">지리산 세석대피소 예약 및 탐방 정보</a>를 미리 확인하세요.</p><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-23T04:00:00+00:00',
+    read: 8,
+    date: '2026.06.23',
+    badges: ['5월철쭉', '봄산행'],
+  },
+  {
+    id: 'p114',
+    cat: '계절',
+    pal: 'forest',
+    title: '9월 산행 — 더위 끝나고 첫 등산',
+    excerpt: '서울 9월 평균 최고기온 26.9℃, 국립공원 혼잡도 10월 대비 18% 낮다. 날씨·혼잡도·단풍 예고까지 9월 산행의 실질적 이점을 정리했다.',
+    body: `<h2>월별 산행 조건 비교</h2><table><thead><tr><th>지표</th><th>7~8월(성수기)</th><th>9월</th><th>10월(단풍 시즌)</th></tr></thead><tbody><tr><td>서울 평균 최고기온(℃)</td><td>30~32</td><td>27</td><td>19~22</td></tr><tr><td>국립공원 혼잡도</td><td>중~높음</td><td>낮음(-18%)</td><td>최고(성수기 대비 120%)</td></tr><tr><td>체력 소모 수준</td><td>높음</td><td>중간</td><td>낮음</td></tr><tr><td>예약 경쟁</td><td>중간</td><td>낮음</td><td>매우 높음</td></tr></tbody></table><p>기상청 평년값(1991~2020) 기준, 서울 9월 평균 최고기온은 26.9℃입니다. 8월(31.5℃)과 비교하면 4.6℃ 낮습니다. 9월은 날씨는 좋고 사람은 적은 시기입니다. 단풍을 기다리며 10월에 몰리는 대신, 9월에 몸을 만들고 코스를 파악해 두면 10월이 왔을 때 더 어렵고 더 아름다운 코스로 이동할 수 있습니다. <a href="/mountains/seoraksan">설악산 단풍 코스와 탐방 예약 안내</a>를 미리 확인해 두면 9월 말~10월 초 계획을 구체적으로 잡을 수 있습니다.</p><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-23T09:00:00+00:00',
+    read: 8,
+    date: '2026.06.23',
+    badges: ['9월산행', '초가을'],
+  },
+  {
+    id: 'p115',
+    cat: '계절',
+    pal: 'autumn',
+    title: '겨울 일출 산행 — 태백산 천제단',
+    excerpt: '유일사 기점에서 정상까지 4.5km, 고도차 737m. 새벽 4시 출발이 통념이지만 5시 출발이 더 안전한 이유를 데이터로 설명한다.',
+    body: `<h2>출발 시간의 역산 — 4시가 아니라 5시</h2><p>태백산 일출 산행의 기준점은 유일사 탐방지원센터(해발 830m)입니다. 거리 약 4.5km, 고도차 737m. 평균 소요 2시간~2시간 30분을 역산하면 1월 기준 일출 시각 07:45에서 역산 출발 시각은 04:55~05:00입니다. 새벽 4시에 출발하면 정상에서 45분 이상 대기하게 되는데, 1월 정상 기온 -12℃~-18℃, 체감온도 최저 -30℃에서 장시간 대기는 저체온 위험을 불필요하게 높입니다.</p><h2>태백산 천제단 — 정상에서 만나는 제단의 의미</h2><p>태백산(1,567m) 정상부에는 세 개의 돌제단이 있습니다. 천왕단(중앙)·장군단·하단으로 구성된 천제단은 강원도 기념물로 지정된 문화재입니다. 겨울 주목(朱木) 군락도 천제단 주변에 집중되어 있습니다. 일출 후 하산에서 압설(눈이 다져진 구간)에서 미끄러짐 사고가 집중됩니다. <a href="/mountains/taebaeksan">태백산 탐방 안내 및 교통 정보</a>에서 주차·셔틀 운행 정보를 미리 확인하세요.</p><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-23T14:00:00+00:00',
+    read: 8,
+    date: '2026.06.23',
+    badges: ['겨울일출', '태백산'],
+  },
+
+  // ── 추가 포스트 p116~p120 (후기) ─────────────────────────
+  {
+    id: 'p116',
+    cat: '후기',
+    pal: 'forest',
+    title: '강원도 명산 5곳 완등 — 2주 여정',
+    excerpt: '설악산 대청봉(1,708m) 오색기점 6.5km, 오대산 비로봉 5km, 두타산 6.5km. 강원도 명산 5곳을 2주에 묶는 이동 동선과 숙박 전략을 정리했다.',
+    body: `<h2>2주 여정 전체 구조 — 이동 동선과 거점 도시</h2><table><thead><tr><th>날짜</th><th>산</th><th>코스</th><th>거점 도시</th></tr></thead><tbody><tr><td>1~2일차</td><td>설악산(1,708m)</td><td>오색-대청봉 왕복</td><td>속초</td></tr><tr><td>3~4일차</td><td>오대산(1,563m)</td><td>상원사-비로봉 왕복</td><td>강릉 또는 평창</td></tr><tr><td>5~7일차</td><td>두타산(1,353m)</td><td>무릉계곡 기점</td><td>동해시</td></tr><tr><td>8~10일차</td><td>치악산(1,288m)</td><td>구룡사-비로봉 왕복</td><td>원주</td></tr><tr><td>11~14일차</td><td>태백산(1,567m)</td><td>유일사 기점-천제단</td><td>태백시</td></tr></tbody></table><p>각 산마다 이틀 이상의 여유를 둔 것은 기상 통제 변수를 흡수하기 위해서입니다. 국립공원 탐방 통제는 예고 없이 당일 내려지는 경우가 많습니다. 산을 오르는 것보다 이동·숙박·식사 루틴을 2주간 유지하는 것이 더 까다롭습니다. <a href="/mountains/seoraksan">설악산 탐방 예약 및 코스 안내</a>와 각 산의 국립공원 공식 정보를 사전에 확인해 두면 돌발 상황을 줄일 수 있습니다.</p><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-23T19:00:00+00:00',
+    read: 9,
+    date: '2026.06.24',
+    badges: ['강원도완등', '여정'],
+  },
+  {
+    id: 'p117',
+    cat: '후기',
+    pal: 'autumn',
+    title: '경상도 명산 완등기 — 혼자 떠난 산행',
+    excerpt: '가야산 칠불봉 7km, 덕유산 향적봉 곤돌라~600m. 솔로 산행이 만드는 다른 페이스와 반드시 지켜야 할 안전 원칙을 정리했다.',
+    body: `<h2>가야산 백운동 기점 코스</h2><p>가야산은 경북 성주와 경남 합천에 걸쳐 있습니다. 백운동 기점 코스는 편도 7km, 고도차 약 900m, 3시간 30분~4시간이 소요됩니다. 정상 주변 바위 능선 구간에서는 양발이 모두 닿아야 하는 구간이 있어 폴보다 손을 활용합니다.</p><h2>솔로 산행 안전 관리 — 혼자라면 반드시 지켜야 하는 원칙</h2><ul><li><strong>출발 전 필수 통보</strong>: 가족·지인에게 코스, 출발시간, 예상 하산시간 전달. 문자로 기록 남기기.</li><li><strong>하산 완료 연락</strong>: 예정 하산시간에 "내려왔다" 연락 규칙 정하기.</li><li><strong>예정 초과 시 비상 연락</strong>: 예상 하산 시간 30분 초과 시 지인이 119에 신고하도록 사전 합의.</li><li><strong>탐방로 이탈 금지</strong>: 솔로 산행 중 비탐방로 진입은 수색 난이도를 수배로 높인다.</li></ul><p>혼자 산을 오르면 달라지는 것이 있습니다. 가장 먼저 바뀌는 것은 속도입니다. 동행이 있으면 체력이 다른 두 사람의 평균 속도로 걷게 됩니다. 혼자라면 컨디션에 따라 빠르게, 또는 천천히 조절할 수 있습니다. <a href="/mountains/gayasan">가야산 코스별 상세 안내</a>를 미리 확인해 두면 구간별 체력 배분을 더 세밀하게 계획할 수 있습니다.</p><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-24T00:00:00+00:00',
+    read: 9,
+    date: '2026.06.24',
+    badges: ['경상도', '솔로완등'],
+  },
+  {
+    id: 'p118',
+    cat: '후기',
+    pal: 'sage',
+    title: '50대 아버지와 함께한 지리산 천왕봉',
+    excerpt: '지리산 천왕봉 중산리 기점 편도 8km, 고도차 1,300m. 50대 동반자가 있을 때 달라지는 계획과 무릎 보호 실전 방법을 정리했다.',
+    body: `<h2>중산리 코스 3단계 — 구간별 난이도와 휴식 타이밍</h2><ol><li><strong>중산리매표소(860m)~법계원(1,400m)</strong>: 3km, 2시간. 경사 완만하고 그늘 많음. 체력의 40% 이하로 오르는 것이 목표.</li><li><strong>법계원~통천문(1,700m)</strong>: 2km, 1시간. 바위 구간 시작. 경사 급격히 높아짐.</li><li><strong>통천문~천왕봉(1,915m)</strong>: 1km, 30~40분. 마지막 암릉 구간.</li></ol><h2>1박 2일 계획 비교</h2><table><thead><tr><th>방식</th><th>당일 완주</th><th>1박 2일</th></tr></thead><tbody><tr><td>첫날 이동거리</td><td>8km(왕복 16km)</td><td>8km(장터목 숙박)</td></tr><tr><td>총 산행 시간</td><td>12시간</td><td>각 4~6시간 분산</td></tr><tr><td>무릎 부하</td><td>높음(특히 하산)</td><td>낮음(분산)</td></tr><tr><td>50대 동반 적합성</td><td>체력 상위자만</td><td>일반 50대 가능</td></tr></tbody></table><p>50대 동반자가 있다면 당일 완주보다 1박 2일이 적합합니다. 장터목대피소는 국립공원 예약시스템(reservation.knps.or.kr)에서 1~2개월 전 예약이 필요합니다. 무릎 보호대(슬관절 보호대)는 출발 전부터 착용하고, 정상에서 하산 시작 전 5분 스트레칭을 반드시 시행해야 합니다. <a href="/mountains/jirisan">지리산 장터목대피소 예약 안내</a>에서 예약 방법을 확인할 수 있습니다.</p><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-24T05:00:00+00:00',
+    read: 9,
+    date: '2026.06.24',
+    badges: ['지리산', '가족산행'],
+  },
+  {
+    id: 'p119',
+    cat: '후기',
+    pal: 'valley',
+    title: '제주 한라산 겨울 산행 — 눈 속 백록담',
+    excerpt: '연평균 적설일수 57.3일, 성판악 코스 하루 탐방 1,000명 제한. 진달래밭 11시 통과 시한과 출발 역산까지 겨울 한라산 탐방 절차를 정리했다.',
+    body: `<h2>성판악 코스 단계별 진행</h2><ul><li><strong>성판악탐방지원센터(750m) → 속밭대피소(1,100m)</strong>: 4.1km, 1시간 30분~2시간. 경사 완만.</li><li><strong>속밭대피소 → 진달래밭대피소(1,500m)</strong>: 3.2km, 1시간 30분. 압설 구간 시작. 진달래밭대피소는 백록담 진입 여부를 결정하는 지점.</li><li><strong>진달래밭대피소 → 백록담(1,947m)</strong>: 2.3km, 1시간 30분. 경사 급격히 증가. 12아이젠 필수.</li></ul><h2>겨울 한라산 탐방의 3대 제한 사항</h2><ol><li><strong>기상 통제</strong>: 적설 30cm 이상 또는 가시거리 500m 이하 시 탐방로 전면 통제.</li><li><strong>진달래밭대피소 통과 시한</strong>: 오전 11시 이전에 통과하지 못하면 정상 진입이 불가하다.</li><li><strong>하루 탐방 인원 1,000명 제한</strong>: 성수기에는 오전 7시 이전에 정원이 차기도 한다.</li></ol><p>기상청 통계 기준 한라산 연평균 적설일수는 57.3일입니다. 1월 정상부 평균 최저기온은 -12.2℃입니다. 정상에서 사진을 찍는 데 할당할 수 있는 시간은 15~20분이며, 이후 즉시 하산을 시작해야 합니다. <a href="/mountains/hallasan">한라산 겨울 탐방 준비물 및 교통 안내</a>에서 추가 정보를 확인할 수 있습니다.</p><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-24T10:00:00+00:00',
+    read: 9,
+    date: '2026.06.24',
+    badges: ['한라산', '겨울후기'],
+  },
+  {
+    id: 'p120',
+    cat: '후기',
+    pal: 'dawn',
+    title: '100대 명산 50개 달성 — 2년 완등 기록',
+    excerpt: '산림청 등록 완등자 평균 완등 기간 5.3년, 50개 이후 이탈률 23%. 2년 50개 달성의 실제 페이스·지역 분류·선택 기준을 정리했다.',
+    body: `<h2>2년 50개를 가능하게 한 구조 — 페이스와 분류</h2><table><thead><tr><th>기간</th><th>완등 목표</th><th>전략</th></tr></thead><tbody><tr><td>1년차 상반기(1~6월)</td><td>15개</td><td>수도권 당일 산행 중심, 기초 체력 구축</td></tr><tr><td>1년차 하반기(7~12월)</td><td>10개</td><td>여름 저난이도+가을 집중(10월 3~4개)</td></tr><tr><td>2년차 상반기</td><td>15개</td><td>지방 원정 시작, 1박 코스 편입</td></tr><tr><td>2년차 하반기</td><td>10개</td><td>고난이도 마무리, 제주·강원 원정</td></tr></tbody></table><p>산림청 등록 완등자 통계에서 100대 명산 평균 완등 소요 기간은 5.3년입니다. 50개 이후 완등 이탈률이 23%라는 통계가 있습니다. 절반을 넘긴 시점에서 4명 중 1명은 멈춥니다. 이 이탈을 막으려면 지역별 부분 목표를 설정하는 것이 효과적입니다. 공식 인증 방법으로는 산림청 '두드림' 앱의 GPS 기반 방문 인증과 한국산악회 완등 증서 두 가지가 있습니다. <a href="/mountains/100peaks">100대 명산 전체 목록과 난이도 분류</a>를 기준으로 나머지 계획을 세울 수 있습니다.</p><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-24T15:00:00+00:00',
+    read: 10,
+    date: '2026.06.25',
+    badges: ['50개완등', '기록'],
+  },
+
+  // ── 추가 포스트 p41~p50 ─────────────────────────────────
+  {
+    id: 'p41',
+    cat: '코스추천',
+    pal: 'winter',
+    title: '폭염에 시원한 계곡 명산 추천',
+    excerpt: '기온이 35도를 넘는 폭염에도 계곡 수온 13~15°C를 유지하는 명산 4곳을 선택 기준과 코스 데이터로 비교합니다.',
+    body: `<h2>폭염 속에서도 서늘한 계곡 명산을 찾아야 하는 이유</h2>
+<p>기온이 35도를 넘는 한여름, 도심 콘크리트 위에서는 체감 온도가 40도에 달하기도 한다. 반면 산림청 공공데이터에 따르면 산림 내부 기온은 도심보다 평균 3~7°C 낮고, 계곡 수온은 한여름에도 13~15°C 수준을 유지한다. 계곡이 흐르는 명산은 단순한 피서지가 아니라 체온 조절과 탈수 방지가 실질적으로 가능한 산행지다.</p>
+<p>문제는 계곡이 있는 산이라고 해서 모두 여름 산행에 적합한 것은 아니라는 점이다. 그늘이 지속되는 시간, 계곡까지의 접근 거리, 탐방 통제 여부, 대피할 수 있는 쉼터 유무가 실질적인 선택 기준이 된다. 아래에 소개하는 명산들은 이 네 가지 기준을 기반으로 가려낸 곳들이다.</p>
+
+<h2>지리산 피아골계곡 — 7km 그늘 터널</h2>
+<p>피아골계곡은 지리산 남부 노고단 자락에서 시작해 직전마을까지 약 7km를 이어간다. 계곡 양안으로 활엽수 군락이 밀집해 있어 한낮에도 직사광선이 거의 들지 않는다. 국립공원공단 기준 여름철 계곡 평균 수온은 13~15°C로, 발을 담그면 수 분 안에 체온이 떨어지는 것을 체감할 수 있다.</p>
+<p>탐방 기점은 전라남도 구례군 직전마을 주차장이며, 피아골대피소(고도 895m)까지 편도 약 5km, 소요 시간 2시간 30분 내외다. 대피소에서 노고단 방향으로 연결할 수도 있으나, 여름 폭염 시기에는 계곡 구간만 왕복하는 코스가 체력 안배에 유리하다. <a href="/mountains/jirisan">지리산 코스 전체 가이드</a></p>
+
+<h2>설악산 천불동계곡 — 수직 절벽과 물소리</h2>
+<p>천불동계곡은 비선대에서 출발해 양폭대피소를 지나 대청봉 방향으로 이어지는 7.7km 탐방로를 따라 형성된다. 비선대~양폭 구간(약 3km)은 계곡 수량이 풍부하고 기암 절벽이 그늘을 만들어주어 한여름에도 서늘함이 유지된다. 설악산 전체 고도차가 1,200m에 달하는 만큼 계곡 위쪽으로 올라갈수록 기온이 급격히 낮아진다.</p>
+<p>주의할 점은 성수기(7~8월) 탐방 예약제가 적용된다는 것이다. 국립공원 예약 시스템에서 사전 예약이 필수이며, 당일 현장 진입은 제한된다. 오후 2시 이후 하산 완료 기준으로 역산해 탐방 계획을 세우는 것이 안전하다.</p>
+
+<h2>두타산 무릉계곡 — 음이온 밀도가 높은 계곡</h2>
+<p>강원도 동해시 삼화동에 위치한 무릉계곡은 국민관광지로 지정된 계곡형 산행지다. 계곡 구간은 무릉도원 주차장에서 약 4km로 비교적 짧지만, 두타산(1,353m)과 청옥산(1,403m)을 연결하는 능선 산행과 조합하면 하루 코스로 충분한 만족도를 제공한다. 계곡 내 음이온 발생량은 도심 대비 약 50배 수준으로 측정된 바 있어 호흡기 회복 효과도 기대할 수 있다.</p>
+<p>계곡 진입 후 학소대, 삼화사, 쌍폭포, 용추폭포 순서로 이어지는 탐방 동선을 따라가면 된다. 쌍폭포(고도 약 580m)까지 편도 2시간 내외이며, 폭포 주변 바위 지형이 자연 그늘막 역할을 해 점심 휴식 장소로 활용하기 좋다.</p>
+
+<h2>가야산 홍류동계곡 — 해인사와 연계한 반나절 코스</h2>
+<p>경상남도 합천군 가야산국립공원 내 홍류동계곡은 해인사 입구에서 성보박물관 방향으로 약 4km 이어진다. 울창한 소나무와 단풍나무가 계곡 양쪽을 가리고, 수량이 많은 여름철에는 계곡 소리가 등산로 전구간에서 들린다. 가야산 정상 우두봉(1,430m)까지 연장할 경우 편도 약 6km, 소요 시간 약 3시간 30분이다.</p>
+<p>여름 계곡 산행에서 가야산이 갖는 실질적 장점은 해인사 주변 그늘 쉼터와 편의 시설이다. 산행 후 계곡에서 몸을 식히고 해인사 경내에서 충분히 휴식할 수 있어 체력 소모가 적은 가족 단위 탐방에도 적합하다. <a href="/blog/p45">힐링 산행지 5곳 추천</a>과 함께 참고하면 코스 선택에 도움이 된다.</p>
+
+<h2>여름 계곡 명산 비교</h2>
+<table>
+  <thead>
+    <tr><th>산 이름</th><th>계곡 구간(km)</th><th>그늘 지속성</th><th>예약 필요</th><th>가족 적합도</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>지리산 피아골</td><td>7</td><td>★★★★★</td><td>불필요</td><td>중</td></tr>
+    <tr><td>설악산 천불동</td><td>7.7</td><td>★★★★☆</td><td>필요(예약제)</td><td>하</td></tr>
+    <tr><td>두타산 무릉</td><td>4</td><td>★★★★☆</td><td>불필요</td><td>상</td></tr>
+    <tr><td>가야산 홍류동</td><td>4</td><td>★★★★☆</td><td>불필요</td><td>상</td></tr>
+  </tbody>
+</table>
+
+<h2>폭염 계곡 산행 전 반드시 챙겨야 할 것들</h2>
+<ul>
+  <li>출발 시간: 오전 6~7시 출발이 원칙. 오전 10시 이후 계곡 입구도 기온이 빠르게 오른다.</li>
+  <li>수분: 1인당 1.5L 이상 준비. 계곡물은 직접 음용하지 않는다.</li>
+  <li>신발: 미끄러운 계곡 바위 대응을 위해 접지력 높은 등산화 착용 필수.</li>
+  <li>날씨 확인: 계곡 산행 중 상류 집중호우 시 갑작스러운 수위 상승 위험.</li>
+  <li>일몰 시간: 여름철 계곡 탐방은 오후 5시 이전 하산 완료 목표.</li>
+</ul>
+
+<ol>
+  <li>탐방 예약 시스템(국립공원 e-예약) 확인</li>
+  <li>기상청 산악 날씨 예보 확인 (출발 전일 기준)</li>
+  <li>산림청 통제 구간 고지 확인</li>
+</ol>
+
+<div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 산행 전 산림청 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-05T16:00:00+00:00',
+    read: 6,
+    date: '2026.06.06',
+    badges: ['여름', '계곡등산'],
+  },
+  {
+    id: 'p42',
+    cat: '코스추천',
+    pal: 'valley',
+    title: '운무 속 산행 사진명소 BEST 7',
+    excerpt: '연 170일 안개가 끼는 덕유산부터 지리산 운해까지, 운무 사진 명소 7곳을 기상 조건 데이터와 촬영 타이밍으로 정리했습니다.',
+    body: `<h2>운무 사진이 탄생하는 조건 — 새벽 2시간의 과학</h2>
+<p>운무 산행 사진의 황금 조건은 기상청 자료에서 명확하게 설명된다. 일출 전후 2시간, 전날 밤 기온과 당일 새벽 기온차 8°C 이상, 습도 85% 이상이 동시에 충족될 때 산지 운무가 가장 풍부하게 발생한다. 이 조건은 계절적으로 봄(4~5월)과 가을(9~10월)에 집중되며, 여름 장마 후나 겨울 고기압 정착 직전에도 드물게 나타난다.</p>
+<p>운무 사진에서 빛의 방향은 구도만큼 중요하다. 일출 직전 동쪽 하늘이 붉어지는 20~30분 사이, 운무 위쪽으로 빛이 수평 방향으로 진입하면서 운해가 황금빛으로 물드는 구간이 생긴다. 이 창은 날씨에 따라 15분 이내로 닫히기도 하므로, 정상 도착 시간을 일출 40분 전으로 설정하는 것이 실질적인 준비 기준이다.</p>
+
+<h2>덕유산 향적봉 — 연 170일 안개의 산</h2>
+<p>덕유산 향적봉(1,614m)은 국내에서 연평균 안개 일수가 가장 많은 산 중 하나로, 공공기상 데이터 기준 약 170일에 달한다. 곤도라를 이용하면 설천봉(1,520m)까지 약 20분, 이후 향적봉까지 도보 약 600m 거리로 접근이 용이해 새벽 운무 산행 입문지로 꼽힌다.</p>
+<p>향적봉에서 서쪽으로 펼쳐지는 운해 조망은 중봉 방향 능선이 구름 위로 떠오르는 구조라 원근감이 강한 사진을 얻을 수 있다. 구름이 낮게 깔리는 날에는 향적봉 정상이 구름 위로 30~50m만 솟은 상태가 되어, 운해에 잠긴 주변 능선과 대비가 강한 사진이 가능하다. <a href="/mountains/deogyusan">덕유산 코스 상세 안내</a></p>
+
+<h2>지리산 천왕봉 — 일출 운해의 기준점</h2>
+<p>지리산 천왕봉(1,915m)은 한국 육지부 최고봉이라는 고도적 조건 때문에 운해가 아래에서 치고 올라오는 구조가 선명하게 나타난다. 운해 빈도는 기온차가 큰 9~10월과 4~5월에 높으며, 장대비 다음날 고기압이 서서히 이동할 때 극적인 운해가 형성되는 경우가 많다. 중산리 탐방지원센터 기점 정상까지 편도 약 5.7km, 소요 3시간 30분~4시간이다.</p>
+<p>천왕봉 일출 사진의 핵심 구도는 동쪽을 향해 서서 구름 위로 태양이 떠오르는 순간을 포착하는 것이다. 이때 법계사 방향 능선이 실루엣으로 들어오면 원하는 구도가 완성된다. 사진 장비는 삼각대 필수, 전날 장봉 대피소 1박 산행을 추천한다.</p>
+
+<h2>설악산 대청봉 — 짧지만 강렬한 황금빛 운해</h2>
+<p>설악산 대청봉(1,708m)의 운무는 소산 속도가 빠른 것으로 알려져 있다. 일출 후 30~90분 안에 구름이 걷히기 시작하기 때문에 황금빛 운해 촬영 기회는 좁다. 반면 그만큼 운무가 잠깐 정체하는 순간의 밀도가 높아 극적인 구도가 연출되기도 한다.</p>
+<p>오색 탐방지원센터에서 대청봉까지 편도 약 5km, 고도 1,010m를 상승한다. 새벽 산행 시 헤드램프는 2개 이상 지참하고, 바위 구간이 긴 코스 특성상 스트레치 이전 워밍업이 필수다. <a href="/mountains/seoraksan">설악산 대청봉 코스 안내</a></p>
+
+<h2>소백산 비로봉 — 주목과 운해의 이중 구도</h2>
+<p>소백산 비로봉(1,439m)은 수령 100년 이상 주목 군락지를 전경으로 운해를 배경에 담을 수 있는 드문 조건을 갖추고 있다. 철쭉이 피는 5월 중순과 단풍이 드는 10월 초에 운해 빈도도 높아 두 개의 자연 요소가 겹치는 구도가 가능하다. 어의곡 탐방지원센터 기점 비로봉까지 편도 약 6.1km, 소요 약 3시간이다.</p>
+<p>비로봉 정상에서 죽령 방향으로 이어지는 능선 구도는 S자 형태로 운해 위에 떠 있어 사진 구도 안에서 자연스러운 선 흐름을 얻을 수 있다. 일출 1시간 전 도착 기준으로 어의곡 탐방지원센터 기점 새벽 3시 출발이 기준점이다.</p>
+
+<h2>운무 산행 사진 명소 7곳 요약</h2>
+<table>
+  <thead>
+    <tr><th>산 / 봉우리</th><th>고도(m)</th><th>최적 시즌</th><th>접근 난이도</th><th>운무 지속</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>덕유산 향적봉</td><td>1,614</td><td>연중(안개 170일)</td><td>하(곤도라)</td><td>길다</td></tr>
+    <tr><td>지리산 천왕봉</td><td>1,915</td><td>4~5월, 9~10월</td><td>상</td><td>중</td></tr>
+    <tr><td>설악산 대청봉</td><td>1,708</td><td>9~11월</td><td>상</td><td>짧다(30~90분)</td></tr>
+    <tr><td>소백산 비로봉</td><td>1,439</td><td>5월, 10월</td><td>중</td><td>중</td></tr>
+    <tr><td>태백산 장군봉</td><td>1,567</td><td>10~11월</td><td>하</td><td>중</td></tr>
+    <tr><td>오대산 비로봉</td><td>1,563</td><td>9~10월</td><td>중</td><td>중</td></tr>
+    <tr><td>민주지산 삼도봉</td><td>1,242</td><td>봄·가을</td><td>중</td><td>길다</td></tr>
+  </tbody>
+</table>
+
+<h2>새벽 산행 장비 — 운무 촬영 전용 체크리스트</h2>
+<ul>
+  <li>삼각대: 운무 장노출 및 일출 촬영 필수</li>
+  <li>방풍 레이어: 정상부 기온은 새벽 5~8°C 이하로 떨어지는 경우 多</li>
+  <li>헤드램프: 예비 포함 2개 권장, 새벽 3~4시 출발 기준</li>
+  <li>보온 음료: 정상 도착 후 대기 시간 30~60분 고려</li>
+  <li>방수 커버: 운무 속 이슬로 카메라 본체·렌즈 결로 발생 가능</li>
+</ul>
+
+<ol>
+  <li>전날 기상청 '산악날씨' 예보에서 습도·기온차 확인</li>
+  <li>국립공원 탐방 예약 여부 확인 (야간 탐방 허용 구간 사전 체크)</li>
+  <li>하산 시 운무 걷힌 후 노면 상태 재확인</li>
+</ol>
+
+<div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 산행 전 산림청 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-05T21:00:00+00:00',
+    read: 7,
+    date: '2026.06.06',
+    badges: ['사진명소', '운무'],
+  },
+  {
+    id: 'p43',
+    cat: '코스추천',
+    pal: 'autumn',
+    title: '일출 산행 정상 도착 시간 계산법',
+    excerpt: '일출 30분 전 정상 도착을 목표로, 국립공원 소요 시간 공식과 야간 보정 계수를 적용해 출발 시간을 역산하는 방법을 구체적으로 설명합니다.',
+    body: `<h2>일출 5분 전에 도착했을 때 이미 늦은 이유</h2>
+<p>정상 도착이 일출 시각 5분 전이면 촬영 준비를 마칠 수 없다. 삼각대 설치, 구도 확인, 노출 설정에 최소 10~15분이 필요하고, 체온이 급격히 낮아진 상태에서 손이 굳어 장비 조작이 느려진다. 일출 산행의 현실적인 목표는 일출 30분 전 정상 도착이다. 그 기준에서 역산해야 출발 시간이 나온다.</p>
+<p>오차가 생기는 주된 이유는 두 가지다. 첫째, 야간 산행에서 속도가 주간보다 20~30% 느려진다. 어두운 환경에서 발 디딤 확인 시간이 늘고, 방향 판단도 지체된다. 둘째, 오르막 중반에서 예상보다 빠르게 체력이 소진된다. 이 두 변수를 계산에 넣지 않으면 일출 후 30분이 지나서야 정상에 도달하는 결과가 나온다.</p>
+
+<h2>기준 공식 — 국립공원 탐방로 산정 방법</h2>
+<p>국립공원공단이 탐방로 안내판에 적용하는 소요 시간 산정 기준은 다음과 같다. 수평 거리 1km당 20~25분, 고도 100m 상승당 30분을 더한다. 예를 들어 수평 거리 3km, 고도 차이 600m의 구간은 최소 (3 × 25) + (6 × 30) = 75 + 180 = 255분, 약 4시간 15분이 기준 소요 시간이 된다.</p>
+<p>이 공식은 주간·맑은 날씨·일반 체력 기준이다. 야간 산행에서는 계산값에 1.25를 곱해 야간 보정 시간을 더한다. 위 예시라면 255 × 1.25 = 319분, 약 5시간 20분이 야간 기준 소요 시간이다. 여기서 정상 도착 여유 시간 30분을 추가로 확보한다.</p>
+
+<h2>일출 시각 확인 — 한국천문연구원 조회</h2>
+<p>일출 시각은 한국천문연구원(astro.kasi.re.kr)에서 위도·경도·고도를 입력해 날짜별로 정밀 조회할 수 있다. 기상청 일출 시각은 해수면 기준이지만, 산 정상부는 주변 지형이 태양을 가리는 구조에 따라 실제 일출이 기상청 기준보다 5~15분 늦게 보이는 경우가 많다. 동쪽 방향이 열린 정상(대청봉·천왕봉 등)은 오차가 적고, 동쪽에 능선이 있는 구조는 오차가 크다.</p>
+<p>계절별 기준을 잡으면, 여름(6월 하지 전후) 서울 기준 일출 05:11, 겨울(12월 동지 전후) 07:43이다. 산행 날짜에 맞춰 천문연구원 사이트에서 해당 산의 위도·경도를 입력하면 오차가 가장 적은 일출 시각을 확인할 수 있다.</p>
+
+<h2>주요 명산별 시간 계산 예시</h2>
+<table>
+  <thead>
+    <tr><th>산 / 구간</th><th>거리(km)</th><th>고도차(m)</th><th>주간 소요</th><th>야간 보정 소요</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>지리산 장터목→천왕봉</td><td>1.8</td><td>320</td><td>75~90분</td><td>95~110분</td></tr>
+    <tr><td>설악산 중청→대청봉</td><td>0.7</td><td>120</td><td>40~50분</td><td>50~60분</td></tr>
+    <tr><td>한라산 성판악→백록담</td><td>9.6</td><td>1,100</td><td>4시간30분</td><td>5시간30분</td></tr>
+    <tr><td>소백산 어의곡→비로봉</td><td>6.1</td><td>850</td><td>3시간</td><td>3시간45분</td></tr>
+  </tbody>
+</table>
+
+<h2>출발 시간 역산 절차</h2>
+<ol>
+  <li>산행 날짜의 일출 시각 확인 (한국천문연구원)</li>
+  <li>목표 정상 도착 시간 = 일출 시각 − 30분</li>
+  <li>야간 소요 시간 계산: (수평거리 × 25분) + (고도차/100 × 30분) × 1.25</li>
+  <li>출발 시간 = 목표 도착 시간 − 야간 소요 시간 − 여유 30분</li>
+  <li>대피소 1박 여부 결정: 출발 시간이 자정 이전이라면 대피소 이용 권장</li>
+</ol>
+
+<h2>야간 산행 안전 — 계산보다 중요한 변수</h2>
+<ul>
+  <li>헤드램프 배터리: 야간 5시간 이상 산행 기준 여분 배터리 2세트</li>
+  <li>기온 급변: 정상부 야간 기온은 하절기에도 10°C 이하로 떨어지는 경우가 있음</li>
+  <li>동행 원칙: 야간 단독 산행은 부상 시 구조 요청 지연 위험으로 권고되지 않음</li>
+  <li>통제 구간 확인: 일부 탐방로는 야간 통행을 공식 제한하므로 반드시 사전 확인</li>
+</ul>
+
+<p><a href="/blog/p42">운무 속 산행 사진명소 BEST 7</a>과 연계하면 일출+운무 사진 산행 계획을 완성할 수 있다.</p>
+
+<div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 산행 전 산림청 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-06T02:00:00+00:00',
+    read: 6,
+    date: '2026.06.06',
+    badges: ['일출', '새벽산행'],
+  },
+  {
+    id: 'p44',
+    cat: '코스추천',
+    pal: 'forest',
+    title: '등산 다이어트 효과 — 칼로리 소모 비교',
+    excerpt: 'MET 수치와 국립공원 공공데이터를 기반으로, 등산과 다른 운동의 칼로리 소모를 비교하고 다이어트 목적 코스 선택 기준을 제시합니다.',
+    body: `<h2>체중 70kg, 1시간 등산으로 얼마나 소모되나</h2>
+<p>보건복지부 신체활동지침의 MET(대사당량) 기준으로 계산하면, 체중 70kg 성인이 경사가 있는 등산로를 1시간 걸었을 때 소모 칼로리는 약 420~595kcal다. 이는 조깅(MET 7.0, 490kcal/시간)과 비슷한 수준이며, 평지 걷기(MET 3.5, 245kcal)의 약 2배다. 단, 이 수치는 개인의 체중·체지방률·경사도·배낭 무게에 따라 달라진다.</p>
+<p>가장 큰 변수는 경사다. 한국스포츠정책과학원 자료에 따르면 경사 15% 이상 오르막에서의 에너지 소비는 평지 대비 약 2.3배 증가한다. 국내 100대 명산 탐방로의 평균 경사는 주요 구간에서 10~25% 범위에 분포하기 때문에, 같은 거리를 걸어도 도심 산책로보다 훨씬 높은 칼로리를 소모한다.</p>
+
+<h2>운동 종목별 칼로리 소모 비교</h2>
+<table>
+  <thead>
+    <tr><th>운동 종목</th><th>MET값</th><th>70kg 기준 1시간 소모(kcal)</th><th>관절 부담</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>평지 걷기</td><td>3.5</td><td>245</td><td>낮음</td></tr>
+    <tr><td>등산(경사 포함)</td><td>6.0~8.5</td><td>420~595</td><td>중간(하산 시 높음)</td></tr>
+    <tr><td>조깅(평지)</td><td>7.0</td><td>490</td><td>높음</td></tr>
+    <tr><td>자전거(중강도)</td><td>5.8</td><td>406</td><td>낮음</td></tr>
+    <tr><td>수영(자유형)</td><td>7.0</td><td>490</td><td>매우 낮음</td></tr>
+  </tbody>
+</table>
+
+<h2>등산이 다이어트에 유리한 구조적 이유</h2>
+<p>등산의 다이어트 효과를 단순 칼로리 소모만으로 설명하면 조깅과 큰 차이가 없다. 실질적인 차이는 근육 동원 방식에 있다. 하체 대근육(대퇴사두근, 햄스트링, 종아리)을 지속적으로 수축·이완시키는 등산 동작은 운동 후 근육 회복 과정에서 기초대사량을 일시적으로 높이는 EPOC(운동 후 초과 산소 소비) 효과를 유발한다. 국민체력100 공식 자료에서는 이 효과가 운동 종료 후 최대 48시간까지 지속될 수 있다고 언급한다.</p>
+<p>대한비만학회 체중 감량 운동 가이드라인은 주 150분 중강도 또는 75분 고강도 운동을 기준으로 제시하는데, 등산 90분짜리 산행 2회만으로 이 기준을 충족할 수 있다. 달리기처럼 관절에 충격이 집중되지 않으면서도 충분한 강도를 얻을 수 있다는 점이 중장년 다이어트에서 등산이 선택받는 구조적 이유다.</p>
+
+<h2>실제 코스 칼로리 계산 — 지리산 노고단 예시</h2>
+<p>지리산 성삼재에서 노고단까지 왕복 코스는 총 거리 7.2km, 고도 차이 396m, 소요 시간 약 3시간이다. 체중 65kg 기준으로 위 공식을 적용하면, 약 930~1,050kcal 소모가 추정된다. 이는 밥 한 공기(300kcal) 3~3.5그릇에 해당하는 에너지양이다.</p>
+<p>주의할 점은 산행 후 과식이다. 운동 직후 식욕이 증가하는 것은 자연스러운 생리 반응이지만, 소모량 이상을 섭취하면 체중 감량 효과가 상쇄된다. 하산 후 식사는 단백질 위주로 구성하고, 총 칼로리를 소모량의 60~70% 수준으로 유지하는 것이 체중 감량 목적 등산의 실질적인 전략이다. <a href="/blog/p45">스트레스 해소 힐링 산행지 5곳</a>에서 긴 호흡의 등산 루틴 관리법도 참고할 수 있다.</p>
+
+<h2>경사도별 소모 칼로리 — 코스 선택 기준</h2>
+<ul>
+  <li>경사 5% 미만(완만한 능선길): 평지 대비 1.2~1.4배 소모. 회복기·입문자에 적합.</li>
+  <li>경사 10~15%(일반 탐방로 주요 구간): 평지 대비 1.8~2.1배 소모. 체중 관리 목적에 가장 효율적.</li>
+  <li>경사 20% 이상(암릉·급경사): 평지 대비 2.3배 이상 소모. 심폐 부하 급증, 관절 주의.</li>
+</ul>
+
+<h2>다이어트 목적 등산 시 주의사항</h2>
+<ul>
+  <li>하산 시 무릎 관절 부담이 상승의 2~3배에 달한다. 스틱 사용과 보폭 축소로 충격을 분산한다.</li>
+  <li>공복 산행은 저혈당 위험이 있다. 출발 전 소화가 빠른 탄수화물(바나나, 에너지바)을 섭취한다.</li>
+  <li>수분 보충 부족 시 대사율이 떨어진다. 1시간마다 150~200mL 음용을 기준으로 삼는다.</li>
+</ul>
+
+<ol>
+  <li>목표 체중과 주 산행 횟수를 설정한다</li>
+  <li>경사도 기준으로 코스를 선택한다 (체중 감량 목적: 경사 10~15%)</li>
+  <li>산행 전후 식사 계획을 미리 세운다</li>
+  <li>4주 단위로 코스 강도를 점진적으로 높인다</li>
+</ol>
+
+<p><a href="/mountains/jirisan">지리산 코스 전체 안내</a>에서 경사도별 구간 정보를 확인할 수 있다.</p>
+
+<div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 산행 전 산림청 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-06T07:00:00+00:00',
+    read: 7,
+    date: '2026.06.06',
+    badges: ['다이어트', '건강'],
+  },
+  {
+    id: 'p45',
+    cat: '코스추천',
+    pal: 'dawn',
+    title: '스트레스 해소 힐링 산행지 5곳',
+    excerpt: '피톤치드 농도·음이온·자연음 기준으로 스트레스 해소 효과가 검증된 숲길과 계곡 탐방로 5곳을 실제 거리·소요 시간과 함께 소개합니다.',
+    body: `<h2>숲이 스트레스를 낮추는 방식 — 2시간의 변화</h2>
+<p>국립산림과학원의 2022년 연구는 도시 거주자가 산림 환경에 2시간 머물렀을 때 혈압, 심박수, 코르티솔 수치가 유의미하게 감소했다는 결과를 제시한다. 특히 소나무와 편백 군락에서 방출되는 피톤치드(테르펜류)는 오전 10시~오후 2시 사이 농도가 가장 높으며, 이 시간대 30분 이상 노출 시 스트레스 호르몬 억제 효과가 관찰된다. 등산이 아니라 '걷기'만으로도 이 효과는 충분히 얻을 수 있다.</p>
+<p>힐링 산행지 선택 기준은 단순하다. 경사가 완만해 체력 소모보다 감각에 집중할 수 있을 것, 숲 밀도가 높아 피톤치드 농도가 유지될 것, 인공 소음이 차단되는 자연음(계곡, 바람, 새소리) 환경일 것. 이 세 기준을 충족하는 곳들이 아래의 5곳이다.</p>
+
+<h2>변산반도 내소사 전나무 숲길 — 600m의 고요</h2>
+<p>전북 부안군 변산반도국립공원 내소사 입구의 전나무 숲길은 약 500그루의 전나무가 600m 구간 양편에 줄지어 서 있다. 일광 차폐율이 높아 여름 한낮에도 숲길 내부 기온이 바깥보다 5°C 이상 낮게 유지되며, 지면에는 바람이 거의 닿지 않아 극단적으로 조용한 공간이 만들어진다. 전나무 수피와 잎에서 방출되는 테르펜 농도는 편백 군락보다는 낮지만, 밀도가 높은 군락 특성상 체감 효과가 뚜렷하다.</p>
+<p>내소사 탐방 코스는 전나무 숲길 → 내소사 대웅보전 → 관음봉(433m) 왕복으로 이어지며, 관음봉까지 편도 약 2.5km, 소요 약 1시간 30분이다. 관음봉 정상에서는 서해가 보여 탁 트인 조망을 덤으로 얻는다. 전나무 숲길만 왕복할 경우 30분 내외로 부담 없이 산책할 수 있다.</p>
+
+<h2>지리산 둘레길 인월~금계 구간 — 295km의 조각</h2>
+<p>지리산 둘레길은 총 연장 295km의 저산 순환 트레일이다. 능선 등산이 아니라 마을과 계곡을 잇는 낮은 고도의 길이어서 체력 부담 없이 오랜 시간 걸을 수 있다. 그 중 인월~금계 구간(22km)은 지리산 남쪽 자락의 마을길과 숲길이 혼합된 코스로, 고도 변화가 적어 보행 명상에 활용되는 구간으로 알려져 있다.</p>
+<p>하루 완주보다 원하는 구간을 2~3시간씩 나눠 걷는 방식이 힐링 목적에는 더 적합하다. 경남 하동 화개면의 벚꽃길 구간은 봄철 벚꽃 낙화와 계곡 소리가 겹쳐지는 구간으로, 감각적 몰입이 가능한 짧은 코스다. <a href="/mountains/jirisan">지리산 둘레길 상세 안내</a>에서 구간 정보를 확인할 수 있다.</p>
+
+<h2>치악산 구룡사 계곡 탐방로 — 활엽수 그늘 4km</h2>
+<p>강원도 원주시 치악산국립공원 구룡사 탐방로는 탐방지원센터에서 구룡사까지 편도 약 4km의 계곡 탐방로다. 양쪽으로 활엽수 군락이 빽빽하게 서 있어 도심 대비 기온이 5°C 낮게 유지된다. 계곡물 소리가 탐방로 전 구간에서 들리고, 구간 대부분이 평탄하거나 완경사라 체력 소모가 적다.</p>
+<p>구룡사에서 세렴폭포까지 추가 약 2km를 연장하면 폭포 주변의 음이온 환경에서 짧은 휴식이 가능하다. 세렴폭포 왕복 기준 총 12km, 약 4~5시간 소요이며, 구룡사까지만 다녀올 경우 약 2시간 내외의 반나절 코스로 완성된다.</p>
+
+<h2>오대산 월정사 전나무 숲길 — 천년 숲의 무게</h2>
+<p>강원도 평창군 오대산 월정사 입구의 전나무 숲길은 수령 200~500년 전나무 약 1,700그루가 약 1km 구간에 조성된 국내 대표 명품 숲길이다. 나무의 키가 높아 하늘이 거의 가려지고, 바닥에는 이끼가 깔려 있어 소리가 흡수되는 환경이 만들어진다. 힐링 산행보다는 '숲 체류'에 더 가까운 경험을 제공한다.</p>
+<p>월정사에서 상원사까지 이어지는 선재길(약 9km)을 연장해 걸으면 오대천을 따라가는 평탄한 숲길이 이어진다. 전나무 숲길 구간(1km)만 왕복할 경우 30~40분, 상원사까지 왕복하면 약 4~5시간이 걸린다. 계절에 관계없이 일정한 고요함을 유지하는 곳으로, 겨울에는 눈 쌓인 전나무 군락이 별도의 풍경을 만든다.</p>
+
+<h2>힐링 산행 5곳 비교</h2>
+<table>
+  <thead>
+    <tr><th>장소</th><th>핵심 환경</th><th>소요 시간</th><th>체력 부담</th><th>추천 시기</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>내소사 전나무 숲길</td><td>전나무 600m</td><td>30분~3시간</td><td>낮음</td><td>연중</td></tr>
+    <tr><td>지리산 둘레길</td><td>마을·계곡 혼합</td><td>2~8시간 (구간 선택)</td><td>낮음</td><td>봄·가을</td></tr>
+    <tr><td>치악산 구룡사 계곡</td><td>활엽수+계곡</td><td>2~5시간</td><td>낮음~중간</td><td>여름</td></tr>
+    <tr><td>오대산 월정사 숲길</td><td>고수령 전나무</td><td>1~5시간</td><td>낮음</td><td>연중</td></tr>
+    <tr><td>선운산 도솔천 계곡</td><td>동백+계곡</td><td>2~3시간</td><td>낮음</td><td>봄·여름</td></tr>
+  </tbody>
+</table>
+
+<h2>힐링 산행 효과를 높이는 실천 방법</h2>
+<ul>
+  <li>속도를 낮춘다: 걷기 속도를 평소의 70% 수준으로 줄이면 주변 감각에 집중하기 쉬워진다.</li>
+  <li>이어폰을 빼놓는다: 자연음(바람, 물소리, 새소리) 청취가 부교감신경 활성화에 영향을 미친다.</li>
+  <li>피톤치드 시간대에 맞춘다: 오전 10시~오후 2시 사이 숲 체류 시간을 집중한다.</li>
+  <li>휴식 지점을 정한다: 계곡 바위나 벤치에서 5~10분 눈을 감고 앉는 것만으로 회복 효과가 배가된다.</li>
+</ul>
+
+<ol>
+  <li>목적지별 접근 교통편 확인 (대중교통 가능 여부)</li>
+  <li>탐방 시간 오전 10시~오후 2시 기준으로 설정</li>
+  <li>방수 재킷 및 여벌 양말 준비 (계곡 주변 습기 대비)</li>
+</ol>
+
+<p><a href="/blog/p44">등산 다이어트 효과 칼로리 비교</a>와 힐링 산행을 조합하면 신체 건강과 정신 회복을 함께 챙길 수 있다.</p>
+
+<div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 산행 전 산림청 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-06T12:00:00+00:00',
+    read: 7,
+    date: '2026.06.06',
+    badges: ['힐링', '숲길'],
+  },
+  {
+    id: 'p46',
+    cat: '코스추천',
+    pal: 'sage',
+    title: '지리산 vs 설악산 — 완등 난이도 실전 비교',
+    excerpt: '암릉 비율 40% vs 5%, 정상부 풍속 9m/s vs 6m/s — 지리산과 설악산의 완등 난이도를 공공데이터 기반으로 항목별 비교합니다.',
+    body: `<h2>두 산을 같은 기준으로 볼 수 없는 이유</h2>
+<p>지리산(1,915m)과 설악산(1,708m)은 고도만 보면 지리산이 207m 높다. 하지만 등산 난이도는 고도가 전부가 아니다. 암릉 비율, 능선 풍속, 코스 길이, 탈출로 위치, 대피소 밀도 — 이 다섯 가지가 실제 체감 난이도를 결정한다. 두 산은 각 기준에서 완전히 다른 방향을 가리킨다.</p>
+<p>한국등산학교 교육자료에 따르면 설악산 공룡능선은 암릉 구간 비율이 약 40%로 바위 오르기와 철사 구간 통과가 반복된다. 반면 지리산 주능선은 암릉 5% 미만으로 대부분이 토양 보행이다. 같은 '종주'라는 단어를 쓰더라도 두 산의 체험 내용은 전혀 다르다.</p>
+
+<h2>정상 등정 기준 비교 — 데이터로</h2>
+<table>
+  <thead>
+    <tr><th>항목</th><th>지리산 천왕봉</th><th>설악산 대청봉</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>고도(m)</td><td>1,915</td><td>1,708</td></tr>
+    <tr><td>최단 코스 기점</td><td>중산리</td><td>오색</td></tr>
+    <tr><td>편도 거리(km)</td><td>5.7</td><td>5.0</td></tr>
+    <tr><td>고도 상승(m)</td><td>1,225</td><td>1,010</td></tr>
+    <tr><td>소요 시간(평균)</td><td>3시간 30분~4시간</td><td>3~3시간 30분</td></tr>
+    <tr><td>암릉 비율</td><td>5% 미만</td><td>오색 코스: 20% 이상</td></tr>
+    <tr><td>연평균 풍속(정상부)</td><td>약 6m/s</td><td>약 9m/s</td></tr>
+  </tbody>
+</table>
+
+<h2>종주 기준 — 규모와 성격의 차이</h2>
+<p>지리산 종주(노고단~천왕봉)는 총 거리 약 35km로 통상 2박 3일 일정이다. 하루 이동 거리가 10~15km이고 고도 변화는 완만하지만, 오랜 시간 발이 땅에 닿는 만큼 피로 누적이 관건이다. 대피소가 4곳(노고단, 연하천, 벽소령, 장터목) 배치되어 있어 비상 대피 계획을 세우기 쉽고, 탈출로도 여러 지점에 있다.</p>
+<p>설악산 공룡능선 종주는 약 13km 거리에 7~9시간 소요로 지리산 대비 거리는 짧지만 암릉 구간 통과가 반복되어 집중력 소모가 크다. 희운각대피소 외 중간 탈출로가 제한적이라 날씨 변화에 대한 대응 선택지가 적다. 겨울철 대청봉 풍속이 최대 50m/s를 초과한 기록이 있어 기상 창이 좁은 계절에는 입산 통제가 잦다.</p>
+
+<h2>체력·기술 유형별 추천 기준</h2>
+<ul>
+  <li><strong>등산 입문~중급, 장거리 보행 선호</strong>: 지리산 주능선 종주가 적합. 암릉 기술 없이도 완주 가능하며, 대피소 예약만 확보하면 계획대로 진행할 수 있다.</li>
+  <li><strong>암릉·바위 경험 있는 중상급</strong>: 설악산 공룡능선이 목표치가 높은 코스. 슬링·확보 장비 경험이 없어도 되지만 고소 공포가 없어야 한다.</li>
+  <li><strong>겨울 등산</strong>: 두 산 모두 아이젠·스패츠 필수. 설악산 대청봉은 풍속 통제 빈도가 높으므로 전날 기상 확인이 지리산보다 더 중요하다.</li>
+</ul>
+
+<h2>비용·접근성 비교</h2>
+<ul>
+  <li>지리산: 중산리 주차장(경남 산청군) — 서울 기준 고속버스+시외버스 3~4시간. 대피소 예약은 국립공원 e-예약 시스템.</li>
+  <li>설악산: 오색 탐방지원센터(강원 양양군) — 서울 기준 2시간 30분~3시간. 탐방 예약제(성수기) 사전 확인 필수.</li>
+</ul>
+
+<ol>
+  <li>목표 코스 결정 (정상 등정 vs 능선 종주)</li>
+  <li>체력 유형 파악: 장거리 지구력 vs 암릉 기술 집중</li>
+  <li>탐방 예약 및 대피소 예약 동시 진행</li>
+  <li>기상청 산악날씨 예보 출발 전날 최종 확인</li>
+</ol>
+
+<p><a href="/mountains/jirisan">지리산 코스 전체 안내</a>와 <a href="/mountains/seoraksan">설악산 코스 전체 안내</a>를 각각 참고하면 코스별 세부 정보를 확인할 수 있다.</p>
+
+<div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 산행 전 산림청 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-06T17:00:00+00:00',
+    read: 8,
+    date: '2026.06.07',
+    badges: ['비교분석', '대표명산'],
+  },
+  {
+    id: 'p47',
+    cat: '코스추천',
+    pal: 'forest',
+    title: '한라산 vs 지리산 어느 산이 더 힘들까',
+    excerpt: '"한라산이 더 쉽다"는 통념을 거리·경사·기상 데이터로 검토합니다. 어떤 체력 유형인가에 따라 두 산의 체감 난이도가 정반대로 달라집니다.',
+    body: `<h2>"한라산이 지리산보다 쉽다"는 통념은 어디서 왔나</h2>
+<p>한라산은 곤도라 없이 오르는 국내 최고봉(1,950m)임에도 불구하고 "지리산보다 쉽다"는 인식이 퍼져 있다. 이 통념의 근거는 대부분 성판악 코스의 완만한 경사에서 비롯된다. 성판악 코스의 평균 경사는 11.5%로, 지리산 중산리 코스 평균 경사 21.5%보다 훨씬 낮다. 완만하니까 쉽다는 판단이 자연스럽게 형성된 것이다.</p>
+<p>하지만 경사 외에 총 이동 거리와 탐방 시간 제한을 함께 보면 판단이 달라진다. 성판악~백록담 왕복은 총 19.2km로, 중산리~천왕봉 왕복 11.4km의 1.7배다. 국립공원공단 기준 총 소요 시간도 왕복 9시간 이상이며, 오전 9시 이후 입산 시 하산 시간 내 완주가 불가능하다. 경사가 낮아도 거리가 길면 소모되는 총 에너지는 비슷하거나 더 많다.</p>
+
+<h2>코스 수치로 보는 두 산의 차이</h2>
+<table>
+  <thead>
+    <tr><th>항목</th><th>한라산(성판악)</th><th>지리산(중산리)</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>정상 고도(m)</td><td>1,950</td><td>1,915</td></tr>
+    <tr><td>편도 거리(km)</td><td>9.6</td><td>5.7</td></tr>
+    <tr><td>고도 상승(m)</td><td>1,100</td><td>1,225</td></tr>
+    <tr><td>평균 경사(%)</td><td>11.5</td><td>21.5</td></tr>
+    <tr><td>왕복 소요</td><td>9시간 이상</td><td>7~8시간</td></tr>
+    <tr><td>입산 시간 제한</td><td>오전 6~9시</td><td>별도 통제 시 확인</td></tr>
+  </tbody>
+</table>
+
+<h2>실제 체력 소모가 많은 구간 — 각 산의 고비</h2>
+<p>한라산 성판악 코스에서 가장 힘든 구간은 진달래밭대피소(해발 1,500m)에서 정상까지의 약 2.3km다. 이 구간은 경사가 급해지고 화산암 지형으로 발 디딤이 불규칙해진다. 산행 시작 후 7km를 걸어온 상태에서 이 구간을 만나기 때문에 체력 고갈이 이 지점에서 집중된다. 기상 불량 시 이 구간에서 강한 해풍에 노출된다.</p>
+<p>지리산 중산리 코스의 고비는 법계사(해발 1,450m)에서 천왕봉까지 약 2km 구간이다. 경사가 가파르고 바위 계단이 이어지는데, 중산리에서 출발한 지 약 2시간 30분이 지난 시점이라 다리 근육이 이미 상당히 소모된 상태다. 두 산 모두 마지막 2km에서 가장 많은 산행자가 힘든 구간이 집중된다는 공통점이 있다.</p>
+
+<h2>기상 조건 — 한라산이 더 변수가 많다</h2>
+<p>한라산 정상부는 연 강수량이 약 4,000mm에 달해 국내 최다 수준이다. 기상청 통계 기준으로 한라산 정상의 연간 맑은 날은 전체의 20% 수준에 불과한 해도 있다. 안개, 강풍, 갑작스러운 비가 잦아 시야 확보가 어려운 날이 많다. 제주도 특성상 해풍이 강하게 불면 체감 기온이 지리산 정상보다 훨씬 낮아지는 경우도 발생한다.</p>
+<p>지리산은 내륙 산악 특성상 날씨 변화 속도가 상대적으로 느리다. 기상청 예보 신뢰도가 제주도보다 높고, 예보상 맑음이면 실제로 맑은 경우가 많다. 탐방 계획의 예측 가능성 면에서는 지리산이 우위다. <a href="/mountains/hallasan">한라산 코스 안내</a>와 <a href="/mountains/jirisan">지리산 코스 안내</a>를 병행해 참고하면 계획 수립에 도움이 된다.</p>
+
+<h2>어느 산이 더 힘든가 — 유형별 판단 기준</h2>
+<ul>
+  <li><strong>장거리 보행이 약한 경우</strong>: 한라산이 더 힘들다. 왕복 19km 이상을 9시간 안에 완주해야 하는 시간 압박이 크다.</li>
+  <li><strong>급경사에 약한 경우</strong>: 지리산이 더 힘들다. 중산리 코스 평균 경사 21.5%는 무릎과 종아리에 집중적인 부하를 준다.</li>
+  <li><strong>기상 변화 대응이 약한 경우</strong>: 한라산이 더 힘들다. 해풍과 안개가 잦아 계획대로 진행하기 어려운 날이 많다.</li>
+  <li><strong>처음 오르는 산</strong>: 두 산 모두 당일 단독 산행 입문지로는 권장되지 않는다. 사전에 해발 1,000m급 산행 경험 2~3회가 필요하다.</li>
+</ul>
+
+<ol>
+  <li>체력 유형 파악: 장거리 지구력 vs 급경사 순발력 중 취약한 쪽 확인</li>
+  <li>한라산은 오전 6~9시 입산 제한 확인 필수 (초과 시 당일 완주 불가)</li>
+  <li>한라산은 예약 탐방제 적용 여부 사전 확인</li>
+  <li>기상청 산악날씨 예보 출발 전날 기준 최종 확인</li>
+</ol>
+
+<div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 산행 전 산림청 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-06T22:00:00+00:00',
+    read: 7,
+    date: '2026.06.07',
+    badges: ['비교', '난이도'],
+  },
+  {
+    id: 'p48',
+    cat: '코스추천',
+    pal: 'valley',
+    title: '덕유산 vs 소백산 겨울 눈산 비교',
+    excerpt: '곤도라로 쉽게 오르는 덕유산과 설화 밀도가 높은 소백산, 두 겨울 눈산의 적설량·풍속·설화 조건을 데이터로 비교합니다.',
+    body: `<h2>나뭇가지에 눈꽃이 피는 조건 — 두 산의 접근 방식</h2>
+<p>겨울 산의 설화(나뭇가지 눈꽃)는 기온 영하 5~15°C, 안개, 결빙, 바람이 복합적으로 맞아야 발생한다. 단순히 눈이 많이 쌓이는 것과는 다른 현상이다. 덕유산 향적봉은 적설량 기준으로 국내 최상위 수준이고, 소백산 비로봉~연화봉 능선은 설화 발생 빈도와 능선 길이 기준으로 국내 대표 눈꽃 트레일로 꼽힌다. 두 산은 '겨울 눈산'이라는 공통점 안에서 전혀 다른 방향을 제공한다.</p>
+<p>덕유산은 접근 편의성이 강점이다. 무주리조트 곤도라를 이용하면 설천봉(1,520m)까지 약 20분 만에 오를 수 있고, 이후 향적봉까지 도보 600m만 걸으면 된다. 소백산은 곤도라가 없다. 어의곡 탐방지원센터에서 비로봉까지 편도 6.1km, 약 3시간의 산행이 필요하다. 눈꽃을 보기 위해 어느 정도의 노력을 투자할 것인지가 선택의 첫 번째 기준이 된다.</p>
+
+<h2>덕유산 향적봉 — 국내 최고 수준의 적설</h2>
+<p>덕유산 향적봉(1,614m)은 기상청 기준 겨울 평균 적설량 1~1.5m, 최대 2m 이상을 기록한다. 눈꽃 발생 시기는 12월 중순부터 2월까지이며, 곤도라 운행 시간(오전 9시~오후 5시)에 맞춰 당일 산행이 가능하다. 곤도라를 이용하지 않는 경우 백련사 기점으로 편도 약 7km, 소요 약 3시간 30분의 코스를 걸어야 한다.</p>
+<p>향적봉 정상의 설경은 적설량이 충분한 날에는 나무 전체가 흰 설화로 뒤덮이는 장면이 연출된다. 정상 주변의 구상나무와 주목이 눈의 무게로 아래로 휘어진 형태가 이 산의 겨울 특유의 풍경이다. 적설 상태가 좋은 날에는 정상부 일대가 보행 자체가 어려울 정도로 눈이 깊어 스노우슈즈나 게이터 착용이 권장된다.</p>
+
+<h2>소백산 비로봉~연화봉 능선 — 설화 밀도의 기준</h2>
+<p>소백산 비로봉(1,439m)에서 연화봉(1,383m)으로 이어지는 능선 약 3.2km는 국내 설화 명소 중 가장 긴 능선 코스 중 하나다. 기상청 자료 기준 정상부 연평균 풍속이 9~11m/s로 덕유산 향적봉(6~8m/s)보다 높고, 안개 발생도 잦아 설화 조건이 형성되는 빈도가 더 높다. 한국기상학회가 분류한 상고대 명소 조건(기온 영하 5~15°C + 안개 + 결빙 + 바람)을 소백산 능선이 충족하는 날수는 덕유산보다 많은 것으로 나타난다.</p>
+<p>소백산 어의곡 탐방지원센터(충북 단양군)에서 비로봉까지 편도 6.1km, 약 3시간 소요다. 비로봉 정상에서 연화봉까지는 능선 트레일 약 3.2km로 추가 1시간 30분이 걸린다. 설화가 있는 날에는 이 능선 구간이 압도적인 사진 구도를 제공하며, 주목 군락이 설화로 덮이는 장면은 덕유산과 구분되는 소백산만의 겨울 정체성이다. <a href="/mountains/sobaeksan">소백산 겨울 코스 안내</a></p>
+
+<h2>겨울 눈산 비교표</h2>
+<table>
+  <thead>
+    <tr><th>항목</th><th>덕유산 향적봉</th><th>소백산 비로봉</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>고도(m)</td><td>1,614</td><td>1,439</td></tr>
+    <tr><td>접근 방식</td><td>곤도라 가능</td><td>도보 전용</td></tr>
+    <tr><td>편도 거리(곤도라 제외시)</td><td>7km</td><td>6.1km</td></tr>
+    <tr><td>적설량(겨울 평균)</td><td>1~1.5m</td><td>0.5~1m</td></tr>
+    <tr><td>설화 발생 빈도</td><td>중간</td><td>높음</td></tr>
+    <tr><td>정상부 풍속(평균)</td><td>6~8m/s</td><td>9~11m/s</td></tr>
+    <tr><td>눈꽃 시즌</td><td>12월~2월</td><td>12월~2월</td></tr>
+  </tbody>
+</table>
+
+<h2>어떤 산을 선택해야 하나 — 유형별 판단</h2>
+<ul>
+  <li><strong>겨울 산행 입문자, 편의성 우선</strong>: 덕유산. 곤도라 이용으로 체력 부담 없이 눈꽃을 볼 수 있다. 단, 곤도라 대기 시간이 성수기에 1시간 이상 발생할 수 있다.</li>
+  <li><strong>설화 밀도·사진 구도 우선</strong>: 소백산. 비로봉~연화봉 능선의 설화 발생 빈도와 주목 군락 배경은 덕유산과 다른 차원의 풍경을 제공한다. 단, 정상부 바람이 강해 방풍·방한 장비를 더 철저히 갖춰야 한다.</li>
+  <li><strong>날씨 예측 기준</strong>: 설화는 구름이 낮게 깔리는 날에 발생한다. "맑음" 예보 날은 설화가 없고, "구름 많음 + 기온 영하 10°C 이하"가 설화 산행의 이상적 날씨다.</li>
+</ul>
+
+<ol>
+  <li>기상청 산악날씨 예보에서 정상부 기온과 풍속 확인</li>
+  <li>덕유산 곤도라 예약 여부 사전 확인 (성수기 현장 대기 없이 예약 이용 권장)</li>
+  <li>아이젠, 스패츠, 방풍 재킷 필수 지참</li>
+</ol>
+
+<p><a href="/blog/p43">일출 산행 정상 도착 시간 계산법</a>에서 겨울 야간 산행 시간 역산 방법을 참고할 수 있다.</p>
+
+<div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 산행 전 산림청 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-07T03:00:00+00:00',
+    read: 7,
+    date: '2026.06.07',
+    badges: ['겨울비교', '눈꽃'],
+  },
+  {
+    id: 'p49',
+    cat: '코스추천',
+    pal: 'winter',
+    title: '설악산 당일 vs 1박2일 코스 선택 기준',
+    excerpt: '설악산 오색~대청봉 5km 당일 코스가 가능한 조건과, 중청·소청대피소를 활용한 1박2일 선택이 더 유리한 경우를 체크리스트로 정리합니다.',
+    body: `<h2>대청봉을 당일로 오르다가 하산 통제를 당한 이유</h2>
+<p>설악산 대청봉 오색 코스는 편도 5km, 3~3시간 30분 소요다. 왕복 7시간 내외이니 당일 산행이 가능해 보인다. 하지만 현장에서 하산 통제를 경험한 산행자 대부분이 공통적으로 언급하는 실수가 있다. 오후 1시 이후에야 정상에 도달하고, 예상보다 하산 시간이 지체되어 일몰 후 어두운 하산로에서 고생한다는 것이다.</p>
+<p>설악산 당일 산행은 "거리상 가능"과 "안전하게 완주 가능"이 다르다. 국립공원 하산 기준 시간을 역산하면 오색 기준 오전 8시 이전 출발이 실질적 요건이다. 여기에 탐방 예약 경쟁, 기상 변화 대응, 체력 예비분까지 고려하면 1박2일 선택이 합리적인 상황이 생각보다 많다.</p>
+
+<h2>당일 코스가 가능한 조건</h2>
+<ul>
+  <li>오전 6~7시 출발 가능 여부: 오색 기준 8시 이전 탐방 개시가 원칙. 늦은 출발은 하산 시간 초과 위험.</li>
+  <li>왕복 6~7시간 체력 확보: 최근 3개월 내 4시간 이상 등산 경험이 있어야 안정적.</li>
+  <li>기상 확인: 정상부 풍속 10m/s 이하, 시정 1km 이상 예보일 때만 당일 계획 확정.</li>
+  <li>탐방 예약 여부: 성수기(7~8월, 10월)에는 사전 예약 없이 입산 불가 구간 발생.</li>
+</ul>
+
+<h2>1박2일 선택이 더 유리한 경우</h2>
+<p>중청대피소(1,676m)는 대청봉에서 약 0.7km 거리에 위치하며, 수용 인원 약 60명이다. 소청대피소(1,580m)는 수용 약 80명으로 약간 더 크다. 두 곳 모두 국립공원 e-예약 선착순으로 운영되며, 성수기에는 예약 시작 수 분 안에 마감된다. 대피소를 활용하면 정상부 일몰과 일출을 모두 경험할 수 있다는 것이 당일과 가장 큰 차이다.</p>
+<p>1박2일 코스는 체력 측면에서도 유리하다. 첫날 오후에 천천히 오르고 대피소에서 숙박한 뒤, 다음날 새벽 일출 후 여유 있게 하산하는 일정은 무릎과 근육에 가해지는 부하를 분산시킨다. 당일에 무리하게 오르락내리락하는 것보다 근육 피로 누적이 훨씬 적다. <a href="/mountains/seoraksan">설악산 대피소 예약 및 코스 안내</a>에서 상세 정보를 확인할 수 있다.</p>
+
+<h2>당일 vs 1박2일 비교</h2>
+<table>
+  <thead>
+    <tr><th>항목</th><th>당일</th><th>1박2일</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>체력 요구</td><td>높음 (집중 소모)</td><td>중간 (분산)</td></tr>
+    <tr><td>비용</td><td>낮음</td><td>대피소 이용료 추가</td></tr>
+    <tr><td>일출 경험</td><td>어려움</td><td>가능</td></tr>
+    <tr><td>하산 통제 위험</td><td>있음</td><td>낮음</td></tr>
+    <tr><td>기상 대응</td><td>당일 확정 필요</td><td>다음날 기상 확인 가능</td></tr>
+    <tr><td>예약 필요</td><td>탐방 예약</td><td>탐방 예약 + 대피소 예약</td></tr>
+  </tbody>
+</table>
+
+<h2>코스별 난이도와 선택 기준</h2>
+<table style="margin-top:12px">
+  <thead>
+    <tr><th>코스</th><th>거리(편도)</th><th>소요(편도)</th><th>당일 적합</th><th>1박 포인트</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>오색~대청봉</td><td>5km</td><td>3~3.5시간</td><td>조건부</td><td>소청대피소</td></tr>
+    <tr><td>한계령~공룡능선</td><td>13km</td><td>7~9시간</td><td>불가</td><td>희운각대피소</td></tr>
+    <tr><td>소공원~비선대~대청봉</td><td>약 10km</td><td>4.5~5시간</td><td>불가(성수기)</td><td>중청대피소</td></tr>
+  </tbody>
+</table>
+
+<h2>예약 및 준비 절차</h2>
+<ol>
+  <li>산행 날짜 2~4주 전 국립공원 e-예약에서 탐방 예약 신청</li>
+  <li>1박2일 계획이면 대피소 예약을 동시에 진행 (대피소 예약이 탐방 예약보다 경쟁이 더 치열함)</li>
+  <li>출발 전날 기상청 설악산 산악날씨 예보 확인</li>
+  <li>오색 코스는 대청봉 기준 7월 평균 기온 11°C — 기온 대비 방풍 레이어 필수</li>
+</ol>
+
+<p><a href="/blog/p43">일출 산행 정상 도착 시간 계산법</a>에서 대피소 기점 일출 타이밍 역산 방법을 함께 확인할 수 있다.</p>
+
+<div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 산행 전 산림청 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-07T08:00:00+00:00',
+    read: 7,
+    date: '2026.06.07',
+    badges: ['설악산', '1박2일'],
+  },
+  {
+    id: 'p50',
+    cat: '코스추천',
+    pal: 'forest',
+    title: '100대 명산 종주 계획 세우는 법',
+    excerpt: '산림청 100대 명산 완등까지 평균 4~6년, 완등률 10% 미만 — 지역 클러스터 동선 설계부터 예약 관리·기록 체계까지 단계별로 정리합니다.',
+    body: `<h2>100대 명산 완등 목표를 세웠다가 3년 안에 멈추는 이유</h2>
+<p>100대 명산 완등을 목표로 설정하는 사람은 많다. 하지만 한국산악회 추산 기준으로 실제 완등까지 도달하는 비율은 10% 미만이다. 가장 흔한 실패 패턴은 초기에 가까운 산부터 무작위로 방문하다가 중반에 동선이 꼬이고, 체력 관리 계획이 없어 산행 빈도가 줄고, 마지막으로 기록 체계가 없어 어디까지 왔는지 파악이 안 되는 것이다. 계획 없이 시작하면 100개는 단순한 숫자 목록으로 끝난다.</p>
+<p>100대 명산 완등은 평균 4~6년이 걸리는 장기 프로젝트다. 단기 집중형(1~2년)과 장기 완주형(5~10년)으로 전략이 갈리며, 어느 유형이든 초반에 세운 계획의 질이 완등 도달 여부에 결정적인 영향을 미친다. 아래의 절차는 그 계획을 세우는 실질적인 방법이다.</p>
+
+<h2>1단계 — 100대 명산 목록 전체를 지역·고도로 분류</h2>
+<p>산림청이 선정한 100대 명산은 고도 509m의 변산반도 의상봉부터 1,950m의 한라산까지 편차가 크다. 첫 단계는 이 목록을 지역(수도권·강원·충청·경상·전라·제주)과 고도(500m대·700m대·1,000m대·1,500m 이상)로 분류하는 작업이다. 분류 후 접근 가능한 지역부터 거점을 설정하면 이동 동선 낭비를 줄일 수 있다.</p>
+<p>실용적인 방법은 산림청 e-그린카드 앱에서 전체 목록을 불러와 방문 여부를 체크해가는 것이다. GPS 기반 체류 기록으로 완등이 자동 인정되기 때문에 별도 서류 없이 스마트폰으로 처리할 수 있다. 지역별 밀집도가 높은 곳(경남 지리산 권역, 강원 설악·오대·태백 권역)을 확인하면 1박2일로 2~3개 산을 묶어 방문하는 동선 설계가 가능해진다.</p>
+
+<h2>2단계 — 체력 수준에 맞춘 연간 목표 설정</h2>
+<table>
+  <thead>
+    <tr><th>완등 목표 기간</th><th>연간 필요 산행 횟수</th><th>월 평균</th><th>적합 체력 수준</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>2년 (단기)</td><td>50회/년</td><td>약 4.2회</td><td>주 2회 산행 가능</td></tr>
+    <tr><td>4년 (표준)</td><td>25회/년</td><td>약 2.1회</td><td>격주 산행 가능</td></tr>
+    <tr><td>7년 (장기)</td><td>14~15회/년</td><td>월 1.2회</td><td>월 1~2회 가능</td></tr>
+  </tbody>
+</table>
+
+<p>체력 목표와 생활 패턴을 함께 고려해야 한다. 연간 25회 산행이 가능한지 먼저 판단하고, 여기에 1,500m 이상 고산(17개) 방문 빈도와 원거리 이동(제주 한라산, 경남 지리산) 일정을 미리 배분한다. 체력이 낮은 상태에서 무리하게 고산부터 시작하면 부상 위험이 높아지고 이후 산행 계획 전체가 늦어진다.</p>
+
+<h2>3단계 — 국립공원 22개 산 우선 예약 관리</h2>
+<p>100대 명산 중 22개는 국립공원 내에 위치한다. 이 중 일부는 탐방 예약제를 운영하며, 성수기에는 수주 전에 예약이 마감된다. 전체 100개 중 예약이 필요한 산들을 먼저 파악하고, 연간 계획표에 예약 가능 시기를 사전에 표시해두는 것이 필수다. 예약 없이 현장 방문했다가 입산하지 못하면 이동 비용과 시간이 낭비된다.</p>
+<p>제주 한라산은 성판악과 관음사 코스 모두 탐방 예약제를 운영하며, 주말 예약은 1~2주 전에 마감되는 경우가 많다. 원정 산행이 필요한 산(한라산, 지리산, 설악산, 오대산 등)은 교통·숙소·탐방 예약을 동시에 처리하는 '원정 계획 묶음'을 미리 만들어두는 것이 효율적이다. <a href="/mountains/hallasan">한라산 탐방 예약 안내</a></p>
+
+<h2>4단계 — 기록 체계와 완등 인증 관리</h2>
+<ul>
+  <li>산림청 e-그린카드 앱: GPS 기반 완등 자동 인증. 방문 이력과 미방문 산 목록을 앱 내에서 확인 가능.</li>
+  <li>개인 기록 보조: 사진 날짜·위치 메타데이터를 보조 기록으로 활용하면 방문 이력 증빙에 활용 가능.</li>
+  <li>일정 관리 앱 연계: 구글 캘린더나 노션에 '예약 완료 / 방문 완료 / 잔여' 상태를 구분해 추적하면 장기 완등 과정에서 누락이 생기지 않는다.</li>
+</ul>
+
+<h2>5단계 — 순서 전략 — 지역 클러스터로 묶기</h2>
+<ul>
+  <li><strong>강원 권역 클러스터</strong>: 설악산·오대산·태백산·두타산·함백산 — 2박3일로 3~4개 묶기 가능</li>
+  <li><strong>경남 권역 클러스터</strong>: 지리산·덕유산·가야산·황매산 — 2박3일로 2~3개 묶기 가능</li>
+  <li><strong>충북·충남 권역</strong>: 소백산·월악산·속리산·대둔산 — 당일~1박으로 2개 묶기 가능</li>
+  <li><strong>제주 단독 원정</strong>: 한라산 1개 — 왕복 항공 일정 포함 1박2일 최소</li>
+</ul>
+
+<ol>
+  <li>산림청 100대 명산 전체 목록 다운로드 → 지역·고도 분류</li>
+  <li>e-그린카드 앱 설치 및 계정 등록</li>
+  <li>국립공원 22개 산 예약 필요 여부 일괄 확인</li>
+  <li>연간 산행 횟수 목표 설정 → 월별 배분</li>
+  <li>지역 클러스터 기준 1년치 일정표 초안 작성</li>
+</ol>
+
+<p><a href="/blog/p46">지리산 vs 설악산 완등 난이도 비교</a>에서 100대 명산 핵심 두 산의 선택 기준을 참고할 수 있다.</p>
+
+<div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 산행 전 산림청 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-07T13:00:00+00:00',
+    read: 8,
+    date: '2026.06.07',
+    badges: ['종주', '계획'],
+  },
+
+  // ── 추가 포스트 p71~p80 ─────────────────────────────────
+  {
+    id: 'p71',
+    cat: '가이드',
+    pal: 'autumn',
+    title: '등산 후 회복 루틴 — 근육통 빠르게 없애는 법',
+    excerpt: '하산 직후 72시간이 회복의 핵심 구간입니다. 지연성 근육통(DOMS) 발생 원리부터 냉온욕·스트레칭·단백질 섭취 타이밍까지, 다음 산행을 빠르게 앞당기는 회복 루틴을 단계별로 정리했습니다.',
+    body: `<h2>하산 후 근육통이 생기는 이유 — 원리부터 파악</h2><p>등산 후 찾아오는 근육통은 의학 용어로 DOMS(Delayed Onset Muscle Soreness, 지연성 근육통)라 부른다. 운동 직후가 아니라 24~72시간 뒤에 최고조에 달하는 것이 특징이다. 원인은 주로 하산 구간에서 집중되는 신장성 수축(eccentric contraction)이다. 내리막에서 허벅지 앞쪽 대퇴사두근이 늘어나면서 동시에 힘을 써야 하기 때문에 근섬유 미세 파열이 일어나고, 이 미세 손상이 염증 반응을 거쳐 통증으로 발현된다.</p><p>오르막보다 내리막이 더 아픈 이유가 여기 있다. 10km 코스에서 고도를 600m 올랐다 내린 뒤 하루 이틀 뒤 허벅지가 뻐근한 것은 정상적인 반응이다. 문제는 이 시간을 어떻게 보내느냐다. 적절한 회복 루틴은 통증 최고조 시점을 앞당기고 지속 기간을 줄여, 다음 산행 날짜를 빠르게 당길 수 있게 한다.</p>
+
+<h2>하산 직후 30분 — 단백질과 탄수화물 보충</h2><p>운동 종료 후 30분 이내는 '단백질 합성 창(anabolic window)'으로 불리는 구간이다. 이 시간 안에 단백질을 섭취하면 근섬유 복구 속도가 빨라진다. 등산처럼 장시간 지속되는 유산소 운동 후에는 체중 1kg당 1.2~1.6g의 단백질 보충이 권장된다. 체중 65kg 기준으로 약 78~104g이다. 한 번에 다 먹을 필요는 없고, 하산 직후 25~30g을 먼저 섭취하고 저녁 식사로 나머지를 채우는 방식이 실용적이다.</p><p>단백질만큼 중요한 것이 탄수화물이다. 산행 중 소모된 근육 글리코겐을 빠르게 보충해야 피로 회복 속도가 빨라진다. 바나나 2개 또는 주먹 크기 밥 한 공기 정도가 적당하다. 유제품 기반 단백질(우유, 요거트)은 단백질과 탄수화물을 동시에 섭취할 수 있어 하산 후 간식으로 활용하기 좋다.</p>
+
+<h2>하산 당일 저녁 — 냉온욕 루틴 방법</h2><p>냉온욕(contrast water therapy)은 혈관의 수축과 확장을 반복시켜 혈액순환을 촉진하고 노폐물 제거를 돕는다. 방법은 단순하다. 냉수(10~15°C) 2분 → 온수(38~40°C) 1분을 3~5회 반복하고 온수로 마무리한다. 총 15~20분이면 충분하다.</p><p>집에 욕조가 없다면 간소화된 방식도 효과가 있다. 샤워기로 냉수와 온수를 교대로 30초씩 반복하는 것만으로도 하지 근육의 순환 개선에 도움이 된다. 냉온욕 후 하체를 심장보다 높이 들어 올리는 자세(침대에 누워 다리를 벽에 기대는 방식)를 10~15분 유지하면 종아리 부종 감소에 추가로 효과적이다.</p>
+
+<h2>이틀째 — 능동적 회복이 완전 휴식보다 효과적인 이유</h2><p>DOMS가 심한 이틀째에 무조건 쉬는 것은 회복에 최선이 아니다. 스포츠의학 연구에서 가벼운 유산소 움직임(능동적 회복, active recovery)이 완전 휴식보다 젖산 제거를 약 30% 빠르게 하는 것으로 나타난다. 30분 이내의 평지 걷기, 가벼운 자전거, 수영이 여기에 해당한다. 통증을 일으키는 강도를 넘지 않는 것이 기준이다.</p><ul><li>평지 30분 걷기: 근육 혈류 개선, 관절 가동성 유지</li><li>폼롤러 셀프 마사지: 허벅지·종아리 3~5분씩, 압통점에 집중</li><li>온찜질(40°C): 긴장된 근육 이완, 통증 완화 (염증 급성기 지난 36~48시간 이후 권장)</li></ul>
+
+<h2>스트레칭 루틴 — 등산 후 반드시 풀어야 할 4개 부위</h2><p>정적 스트레칭은 각 자세를 20~30초 유지하고 3회 반복하는 것이 효과적이다. 한 번에 길게 당기는 것보다 여러 번 반복하는 방식이 근육 이완에 더 낫다.</p><ol><li><strong>대퇴사두근(허벅지 앞)</strong>: 한 발로 서서 뒤쪽 발목을 잡아 엉덩이 쪽으로 당기기. 벽을 짚어도 된다.</li><li><strong>햄스트링(허벅지 뒤)</strong>: 바닥에 앉아 다리를 뻗고 발끝을 향해 상체를 천천히 숙이기.</li><li><strong>종아리</strong>: 계단 끝에 발끝을 걸치고 뒤꿈치를 천천히 내리기. 15~20초 유지.</li><li><strong>고관절(엉덩이)</strong>: 피전 포즈(한쪽 다리를 앞으로 구부리고 다른 다리를 뒤로 뻗어 바닥에 누이기). 양쪽 각 30초.</li></ol><p>스트레칭은 통증이 느껴지는 강도의 70~80% 수준에서 유지하는 것이 원칙이다. '당기는 느낌'이 있어야 하지만 '아픈 느낌'까지 가면 과도한 자극이다.</p>
+
+<div class="info-box" style="background:#f5efe8;border-left:4px solid #c47a2a;padding:16px;margin:20px 0"><strong>회복 타임라인 요약</strong><table style="width:100%;border-collapse:collapse;margin-top:10px;font-size:0.9em"><thead><tr style="background:#e8d9c8"><th style="padding:8px;border:1px solid #d4b896;text-align:left">시점</th><th style="padding:8px;border:1px solid #d4b896;text-align:left">권장 행동</th><th style="padding:8px;border:1px solid #d4b896;text-align:left">이유</th></tr></thead><tbody><tr><td style="padding:8px;border:1px solid #d4b896">하산 직후 30분</td><td style="padding:8px;border:1px solid #d4b896">단백질 25~30g + 탄수화물</td><td style="padding:8px;border:1px solid #d4b896">근섬유 복구 창 활용</td></tr><tr style="background:#f9f4ef"><td style="padding:8px;border:1px solid #d4b896">하산 당일 저녁</td><td style="padding:8px;border:1px solid #d4b896">냉온욕 15~20분</td><td style="padding:8px;border:1px solid #d4b896">혈액순환 촉진, 염증 억제</td></tr><tr><td style="padding:8px;border:1px solid #d4b896">다음날(D+1)</td><td style="padding:8px;border:1px solid #d4b896">가벼운 걷기 + 폼롤러</td><td style="padding:8px;border:1px solid #d4b896">능동적 회복으로 젖산 제거</td></tr><tr style="background:#f9f4ef"><td style="padding:8px;border:1px solid #d4b896">D+2~3</td><td style="padding:8px;border:1px solid #d4b896">온찜질 + 스트레칭</td><td style="padding:8px;border:1px solid #d4b896">DOMS 최고조 구간 관리</td></tr></tbody></table></div>
+
+<h2>회복을 방해하는 흔한 실수</h2><p>산행 다음 날 통증이 가장 강한 이유로 완전히 눕기만 하는 경우가 많다. 근육은 움직임이 없으면 혈류가 줄고 노폐물 제거가 늦어진다. 반대로 통증이 있는데도 무리하게 다음 날 바로 산행에 나서는 것도 문제다. 미세 파열이 아직 복구되지 않은 상태에서 다시 부하가 가해지면 부상으로 이어질 수 있다.</p><p>통증이 완전히 사라진 뒤 최소 1~2일 더 회복 기간을 두고 다음 산행을 계획하는 것이 안전한 기준이다. 규칙적인 산행을 이어가는 사람들은 이 회복 루틴이 몸에 배어 통증 지속 기간 자체가 점차 짧아지는 것을 경험한다. <a href="/blog/p13">하산 중 무릎 통증 줄이는 3가지 방법</a>과 <a href="/blog/p74">등산 입문자 첫 1년 성장 로드맵</a>을 함께 참고하면 체력 증진 계획 수립에 도움이 된다.</p>
+
+<div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 산행 전 산림청 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-12T18:00:00+00:00',
+    read: 7,
+    date: '2026.06.13',
+    badges: ['회복루틴', '근육통'],
+  },
+  {
+    id: 'p72',
+    cat: '가이드',
+    pal: 'dawn',
+    title: '산에서 길 잃었을 때 대처하는 법',
+    excerpt: '소방청 통계 기준 조난은 전체 산악 사고의 23%를 차지하며, 독거 산행 시 평균 구조 대기 시간은 2시간 48분입니다. 조난 직후 첫 5분의 행동이 구조 시간을 결정합니다. STOP 원칙부터 119 신고 절차까지 순서대로 정리했습니다.',
+    body: `<h2>조난 사고의 실제 규모 — 숫자로 보는 현황</h2><p>소방청이 집계한 산악 사고 유형을 보면 실족·추락이 36%로 가장 많고, 조난(길 잃음 포함)이 23%를 차지한다. 119산악구조대 연간 출동 건수는 약 8,000건에 달한다. 이 중 단독 산행 중 발생한 조난 사고의 평균 구조 대기 시간은 2시간 48분으로, 2명 이상 동행 산행(평균 1시간 22분)에 비해 두 배 이상 길다. 조난은 경험 많은 산행자에게도 발생한다. 날씨 변화, 안개, 해 질 무렵 귀로 혼동이 주요 원인이다.</p><p>산행 거리가 길수록 조난 비율이 높아진다. 6km 이상 코스에서 발생하는 조난이 전체의 약 62%를 차지한다는 국립공원공단 자료가 있다. 낯선 산에서 처음 오르는 코스, 이정표 간격이 넓은 구간, 능선 분기점에서의 방향 혼동이 대표적인 조난 발생 지점이다.</p>
+
+<h2>STOP 원칙 — 길 잃었을 때 첫 5분의 행동 순서</h2><p>조난 상황에서 가장 먼저 해야 할 일은 멈추는 것이다. 방향을 모르는 상태에서 계속 움직이면 위치가 더 파악하기 어려워지고, 체력 소모로 탈수·저체온 위험이 높아진다. STOP은 다음 네 단계를 의미한다.</p><ol><li><strong>Stop(멈추기)</strong>: 움직임을 즉시 중단한다. 패닉 상태에서 아무 방향으로나 걷는 것이 조난을 악화시키는 가장 흔한 행동이다.</li><li><strong>Think(생각하기)</strong>: 마지막으로 확실하게 알고 있는 위치가 어디였는지 기억한다. 분기점, 이정표, 특이 지형지물 등을 떠올린다.</li><li><strong>Observe(관찰하기)</strong>: 현재 위치 주변의 이정표 번호, 지형, 방향을 확인한다. 국립공원 등산로에는 500m마다 위치 표지판이 설치되어 있다.</li><li><strong>Plan(계획하기)</strong>: 119에 신고하거나, 확실히 아는 지점으로 되돌아가거나, 현재 위치에서 대기하는 세 가지 옵션 중 판단한다.</li></ol>
+
+<h2>119 신고 절차 — 위치 전달이 핵심</h2><p>스마트폰 GPS는 셀룰러 신호가 없어도 위성 신호만으로 작동한다. 통화가 안 되는 지역에서도 지도 앱에서 현재 좌표를 확인하는 것은 가능한 경우가 많다. 119 신고 시 구조대에 전달해야 하는 정보는 세 가지다.</p><ul><li><strong>위치 표지판 번호</strong>: 국립공원과 주요 등산로의 이정표에 표시된 고유 번호. 119 구조대가 가장 빠르게 위치를 파악하는 정보다.</li><li><strong>GPS 좌표</strong>: 카카오맵·네이버맵·구글맵의 현재 위치 기능에서 확인 가능. 도(°), 분('), 초(″) 형식으로 읽어주거나 소수점 형식(예: 37.4567, 128.3421)으로 전달한다.</li><li><strong>현재 상태</strong>: 동행 인원, 부상 여부, 남은 배터리·식수 현황.</li></ul><p>신호가 약한 산지에서도 문자 메시지는 통화보다 전송 성공률이 높다. 119에 문자로 위치와 상황을 전달하는 방식도 유효하다. 소방청 앱 '119신고'는 GPS 좌표를 자동 첨부해 신고할 수 있는 기능을 제공한다.</p>
+
+<h2>야간 조난 — 어두워진 뒤의 대응 원칙</h2><p>일몰 후 산속에서 조난 상태가 되면 움직임을 최소화하는 것이 원칙이다. 야간에 낯선 지형을 이동하면 실족·추락 위험이 급격히 높아진다. 체온 유지가 첫 번째 목표다. 바람이 없는 바위 뒤쪽이나 나무 그늘 아래에 위치를 잡고, 여벌 옷을 모두 껴입는다. 비상 알루미늄 담요(공간 차지 없이 배낭 필수품)가 있으면 열 손실을 크게 줄일 수 있다.</p><p>헤드랜턴을 머리 위로 들어 일정한 간격으로 켜고 끄는 동작은 구조 헬기나 구조대에게 위치 신호로 기능한다. 호루라기는 배터리 없이 위치를 알릴 수 있는 최소 비상 장비다. 3회 연속 호루라기는 국제 조난 신호다.</p>
+
+<div class="info-box" style="background:#eef3f8;border-left:4px solid #4a7ba8;padding:16px;margin:20px 0"><strong>조난 대비 필수 앱·장비 체크리스트</strong><table style="width:100%;border-collapse:collapse;margin-top:10px;font-size:0.9em"><thead><tr style="background:#dce8f0"><th style="padding:8px;border:1px solid #b8d0e0;text-align:left">항목</th><th style="padding:8px;border:1px solid #b8d0e0;text-align:left">용도</th><th style="padding:8px;border:1px solid #b8d0e0;text-align:left">비고</th></tr></thead><tbody><tr><td style="padding:8px;border:1px solid #b8d0e0">소방청 119신고 앱</td><td style="padding:8px;border:1px solid #b8d0e0">GPS 자동 첨부 신고</td><td style="padding:8px;border:1px solid #b8d0e0">사전 설치 필수</td></tr><tr style="background:#f4f8fb"><td style="padding:8px;border:1px solid #b8d0e0">산림청 국민 안심 서비스</td><td style="padding:8px;border:1px solid #b8d0e0">코스·귀환 예정 등록</td><td style="padding:8px;border:1px solid #b8d0e0">출발 전 등록</td></tr><tr><td style="padding:8px;border:1px solid #b8d0e0">호루라기</td><td style="padding:8px;border:1px solid #b8d0e0">배터리 없는 조난 신호</td><td style="padding:8px;border:1px solid #b8d0e0">배낭 외부 부착</td></tr><tr style="background:#f4f8fb"><td style="padding:8px;border:1px solid #b8d0e0">비상 알루미늄 담요</td><td style="padding:8px;border:1px solid #b8d0e0">야간 체온 유지</td><td style="padding:8px;border:1px solid #b8d0e0">접은 크기 손바닥만</td></tr><tr><td style="padding:8px;border:1px solid #b8d0e0">보조 배터리</td><td style="padding:8px;border:1px solid #b8d0e0">신고·GPS 유지</td><td style="padding:8px;border:1px solid #b8d0e0">5,000mAh 이상 권장</td></tr></tbody></table></div>
+
+<h2>조난을 예방하는 출발 전 루틴</h2><p>산행 전 5분의 루틴이 조난 위험을 크게 줄인다. 등산로 앱(산림청 등산로 정보, 트랭글, 트레일 가이드)에서 코스를 오프라인으로 저장해두면 통신 불가 지역에서도 GPS 트랙을 따라갈 수 있다. 지도 앱은 데이터 연결이 없어도 위성 GPS로 현재 위치를 표시한다.</p><p>산림청 국민 안심 서비스 앱에 출발 전 코스·출발 시각·귀환 예정 시간을 등록해두면, 예정 시간을 초과할 경우 자동으로 비상연락인에게 알림이 전송된다. 등록은 2분이면 된다. <a href="/blog/p5">산행 전 반드시 확인하는 통제·기상 정보 5곳</a>과 <a href="/blog/p35">혼자 산행 안전하게 즐기는 법</a>을 함께 읽으면 출발 전 체크리스트를 완성할 수 있다.</p>
+
+<div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 산행 전 산림청 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-12T23:00:00+00:00',
+    read: 7,
+    date: '2026.06.13',
+    badges: ['조난대처', '안전'],
+  },
+  {
+    id: 'p73',
+    cat: '가이드',
+    pal: 'sage',
+    title: '100대 명산 인증 스탬프 받는 방법',
+    excerpt: '산림청 100대 명산 인증은 디지털(e-그린카드 앱 GPS 자동 인증)과 아날로그(정상 스탬프 날인) 두 방식이 병존합니다. 완등증 발급 절차, 정상 인증 사진 기준, 스탬프 비치 위치까지 처음 도전하는 분을 위해 정리했습니다.',
+    body: `<h2>100대 명산 인증 방식 — 디지털과 아날로그 두 트랙</h2><p>산림청이 운영하는 100대 명산 인증은 크게 두 가지 방식으로 나뉜다. 하나는 산림청 공식 앱인 '숲에ON'(구 e-그린카드) 기반의 GPS 자동 인증이고, 다른 하나는 탐방지원센터·정상 대피소에 비치된 실물 스탬프를 찍는 아날로그 방식이다. 두 방식을 동시에 활용하는 것이 기록 누락을 방지하는 가장 안전한 방법이다.</p><p>숲에ON 앱의 GPS 인증은 해당 산의 정상 반경 내에 진입하면 자동으로 방문이 기록된다. 별도 조작 없이 앱을 켜고 정상에 오르기만 하면 된다. 인증된 산 목록은 앱 내에서 언제든 확인할 수 있고, 100개를 채우면 완등 배지가 자동 부여된다. 완등증 발급을 위해서는 앱 내 완등 인증 신청 기능을 통해 추가 절차를 거쳐야 한다.</p>
+
+<h2>숲에ON 앱 GPS 인증 — 단계별 절차</h2><ol><li><strong>앱 설치 및 회원 가입</strong>: 구글 플레이 또는 앱스토어에서 '숲에ON' 검색 후 설치. 실명 기반 회원 가입이 필요하다.</li><li><strong>위치 권한 허용</strong>: GPS 자동 인증을 위해 앱의 위치 접근 권한을 '항상 허용'으로 설정해야 한다. '앱 사용 중에만 허용'으로 설정하면 백그라운드 인증이 누락될 수 있다.</li><li><strong>100대 명산 메뉴 진입</strong>: 앱 메인 화면 하단 '100대 명산' 탭을 선택하면 전체 목록과 인증 현황이 표시된다.</li><li><strong>정상 도달 시 자동 인증</strong>: 별도 버튼 없이 정상 반경 진입만으로 인증된다. 단, 통신 음영 지역에서는 하산 후 통신 연결 시 인증이 반영되는 경우도 있다.</li><li><strong>인증 사진 촬영</strong>: 앱 인증 외에 정상석이 포함된 사진을 별도로 저장해두는 것이 권장된다. 앱 오류·기기 분실 시 보조 증빙으로 활용된다.</li></ol>
+
+<h2>실물 스탬프 — 비치 위치와 현장 활용법</h2><p>실물 스탬프는 국립공원 탐방지원센터, 대피소, 일부 정상부 스탬프 박스에 비치되어 있다. 모든 100대 명산에 스탬프가 있는 것은 아니다. 스탬프가 없는 산은 GPS 인증 또는 정상석 인증 사진으로 대체한다. 스탬프 노트는 별도 구매가 필요하며, 등산 전문 쇼핑몰과 산 입구 매점에서 구할 수 있다.</p><p>스탬프 잉크가 마르거나 날인이 흐리게 찍히는 경우가 있다. 두 번 중복 날인하거나 강하게 눌러 찍으면 번지므로, 한 번 살짝 날인 후 노트를 평평한 곳에 올려놓고 잠시 건조시키는 것이 선명하게 찍히는 방법이다. 스탬프 보관 상태가 나쁜 산에서는 탐방지원센터 직원에게 날인을 요청할 수 있다.</p>
+
+<h2>인증 사진 기준 — 정상석 포함 촬영 요령</h2><p>완등증 신청 시 일부 산은 정상석이 포함된 인증 사진을 요구한다. 정상석 인증 사진의 기본 요건은 다음과 같다.</p><ul><li>정상석 명칭 글자가 사진에서 식별 가능해야 한다.</li><li>촬영자(본인)가 정상석 옆에 위치하거나 정상석 전체가 화면에 들어오는 구도.</li><li>사진 메타데이터(촬영 날짜·GPS 좌표)가 삭제되지 않은 원본 파일이 유리하다.</li><li>흐릿하거나 역광으로 글자가 안 보이는 사진은 재촬영 권장.</li></ul><p>안개가 자욱하거나 날씨가 나쁜 날에는 정상석 글자가 보이지 않을 수 있다. 이런 경우 스마트폰 플래시를 켜거나 정상석 정면에서 최대한 가까이 촬영하는 방법이 도움이 된다. 날씨가 나쁜 날의 인증 사진이 오히려 기억에 남는 기록이 되기도 한다.</p>
+
+<div class="info-box" style="background:#edf3ed;border-left:4px solid #5a8a5a;padding:16px;margin:20px 0"><strong>산별 인증 현황 — 주요 국립공원 스탬프 위치</strong><table style="width:100%;border-collapse:collapse;margin-top:10px;font-size:0.9em"><thead><tr style="background:#d4e8d4"><th style="padding:8px;border:1px solid #b0d0b0;text-align:left">산</th><th style="padding:8px;border:1px solid #b0d0b0;text-align:left">스탬프 위치</th><th style="padding:8px;border:1px solid #b0d0b0;text-align:left">GPS 인증 정상 반경</th></tr></thead><tbody><tr><td style="padding:8px;border:1px solid #b0d0b0">설악산 대청봉</td><td style="padding:8px;border:1px solid #b0d0b0">중청대피소, 소청대피소</td><td style="padding:8px;border:1px solid #b0d0b0">300m</td></tr><tr style="background:#f4f9f4"><td style="padding:8px;border:1px solid #b0d0b0">지리산 천왕봉</td><td style="padding:8px;border:1px solid #b0d0b0">장터목대피소</td><td style="padding:8px;border:1px solid #b0d0b0">300m</td></tr><tr><td style="padding:8px;border:1px solid #b0d0b0">한라산 백록담</td><td style="padding:8px;border:1px solid #b0d0b0">성판악·관음사 탐방지원센터</td><td style="padding:8px;border:1px solid #b0d0b0">500m</td></tr><tr style="background:#f4f9f4"><td style="padding:8px;border:1px solid #b0d0b0">태백산 천제단</td><td style="padding:8px;border:1px solid #b0d0b0">당골광장 탐방지원센터</td><td style="padding:8px;border:1px solid #b0d0b0">300m</td></tr><tr><td style="padding:8px;border:1px solid #b0d0b0">북한산 백운대</td><td style="padding:8px;border:1px solid #b0d0b0">북한산성 탐방지원센터</td><td style="padding:8px;border:1px solid #b0d0b0">300m</td></tr></tbody></table></div>
+
+<h2>완등증 발급 절차 — 100개 완료 후 신청 방법</h2><p>100대 명산을 모두 인증하면 산림청에 완등증 발급을 신청할 수 있다. 신청 방법은 숲에ON 앱 내 완등 인증 메뉴를 통한 온라인 신청이 기본이다. 신청 후 산림청 검토를 거쳐 완등증이 우편으로 발송된다. 처리 기간은 통상 2~4주가 소요된다.</p><p>완등증과 함께 100대 명산 완등 배지(금속 재질)도 함께 발송되는 경우가 있다. 발급 여부와 신청 절차는 산림청 공식 홈페이지에서 최신 정보를 확인하는 것이 정확하다. 정책이 변경될 수 있으므로 신청 시점의 안내문을 기준으로 따르는 것이 좋다. <a href="/blog/g1">100대 명산 챌린지 시작하기 — 완전 입문 가이드</a>에서 전체 도전 계획 수립 방법을 확인할 수 있다. <a href="/blog/p74">등산 입문자 첫 1년 성장 로드맵</a>도 함께 참고하면 단계적 완등 전략을 세우기 좋다.</p>
+
+<div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 산행 전 산림청 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-13T04:00:00+00:00',
+    read: 6,
+    date: '2026.06.13',
+    badges: ['인증스탬프', '완등증'],
+  },
+  {
+    id: 'p74',
+    cat: '가이드',
+    pal: 'forest',
+    title: '등산 입문자 첫 1년 성장 로드맵',
+    excerpt: '국내 등산 인구 약 1,900만 명 중 첫 1년을 제대로 보낸 사람과 그렇지 않은 사람의 차이는 부상 발생률과 지속 여부에서 명확하게 갈립니다. 고도·거리·주기를 단계별로 설계한 첫 1년 로드맵을 정리했습니다.',
+    body: `<h2>처음 오른 산에서 무릎을 다치는 패턴</h2><p>등산 부상 통계에서 하산 중 발목·무릎 부상이 전체 산행 부상의 64%를 차지한다. 입문자에게 이 비율이 더 높은 이유는 준비 없이 난이도가 높은 산부터 도전하기 때문이다. 체력보다 의욕이 앞서는 첫 1년은 부상 위험이 가장 높은 시기다. 반대로 이 1년을 제대로 설계하면 평생 지속 가능한 산행 기반을 만들 수 있다.</p><p>한국갤럽 조사 기준으로 국내 등산 인구는 약 1,900만 명이다. 그러나 정기적으로(월 2회 이상) 산행을 지속하는 비율은 30% 수준에 불과하다. 첫 1~2년 내에 부상 또는 흥미 저하로 그만두는 경우가 70%에 달한다는 것이다. 로드맵 없는 입문이 가져오는 결과다.</p>
+
+<h2>1~3개월차 — 기초 체력과 발 근육 만들기</h2><p>첫 3개월의 목표는 '완등'이 아니라 '부상 없이 지속하기'다. 고도 300~500m, 거리 5km 이내, 소요 2~3시간 코스가 이 구간에 적합하다. 수도권 기준으로 청계산(매봉·옥녀봉 코스, 3.8km, 고도 약 300m), 관악산 삼성산 코스(4.2km, 고도 480m), 용문산 용문사 코스(4km, 고도 400m) 수준이다.</p><ul><li>빈도: 월 3~4회. 매주 오르는 것보다 근육 회복 시간을 확보하는 것이 중요하다.</li><li>장비: 발목 지지력 있는 등산화(미드컷 이상), 배낭 10L 이하, 트레킹 폴 선택 사항.</li><li>하산 집중: 무릎 하중을 줄이는 지그재그 보행과 트레킹 폴 사용법을 이 시기에 익힌다.</li></ul><p>이 구간에서 가장 흔한 실수는 주말 이틀 연속으로 오르는 것이다. 근육이 회복되지 않은 상태에서 다시 하산 충격을 받으면 무릎 연골에 누적 손상이 발생한다. 주말 산행 → 주중 3~4일 휴식 → 다음 주말 산행의 패턴을 유지한다.</p>
+
+<h2>4~6개월차 — 고도 600~800m 도전과 지구력 증가</h2><p>3개월 동안 부상 없이 지속했다면 몸은 산행에 필요한 기초 근력과 관절 적응이 이루어진 상태다. 이 단계에서 고도 범위를 600~800m로 높이고 거리를 7~9km까지 늘린다. 소요 시간 기준 4~5시간 코스가 목표다. 북한산 백운대 코스(8.6km, 고도 660m, 약 4.5시간), 감악산 정상 코스(5.8km, 고도 675m), 계방산 이승복 기념관 코스(6.4km, 고도 640m) 수준이다.</p><p>이 시기에 산행 후 회복 루틴을 습관으로 만드는 것이 중요하다. 하산 직후 스트레칭 15분, 단백질 섭취, 다음 날 가벼운 걷기로 이어지는 루틴이 이후 고난도 산행에서 부상 예방의 기반이 된다. 지구력 향상을 위해 평일 30~40분 걷기를 유지하는 것도 도움이 된다.</p>
+
+<h2>7~9개월차 — 1,000m급 입문과 장비 업그레이드</h2><p>6개월 이상 꾸준히 산행한 몸은 1,000m급 산에 도전할 준비가 된다. 태백산 당골 코스(5.2km, 고도 567m 상승, 약 3시간), 치악산 성남 코스(5.7km, 고도 768m 상승, 약 3시간), 오대산 상원사~비로봉 코스(4.6km, 고도 498m 상승, 약 2시간 30분)가 이 단계의 목표 코스다.</p><ul><li>배낭: 20~25L로 업그레이드. 여벌 옷, 비상식량, 응급 키트를 챙길 수 있는 용량.</li><li>의류: 레이어링 시스템(베이스레이어·미드레이어·방풍 재킷) 개념을 이 시기에 체화한다.</li><li>기상 확인: 기상청 산악날씨 서비스를 출발 전 의무적으로 확인하는 습관을 만든다.</li></ul>
+
+<h2>10~12개월차 — 100대 명산 입문과 장기 계획 수립</h2><p>첫 1년의 마지막 3개월은 100대 명산 도전 여부를 결정하는 시점이다. 9개월의 경험이 있다면 100대 명산 중 '하' 난이도에 해당하는 산(고도 700~800m, 거리 8~10km, 소요 4~5시간)에 도전할 체력이 갖춰진 상태다.</p><div class="info-box" style="background:#edf4ed;border-left:4px solid #4a7a4a;padding:16px;margin:20px 0"><strong>단계별 목표 요약</strong><table style="width:100%;border-collapse:collapse;margin-top:10px;font-size:0.9em"><thead><tr style="background:#d4e8d4"><th style="padding:8px;border:1px solid #b0d0b0;text-align:left">단계</th><th style="padding:8px;border:1px solid #b0d0b0;text-align:left">목표 고도</th><th style="padding:8px;border:1px solid #b0d0b0;text-align:left">목표 거리</th><th style="padding:8px;border:1px solid #b0d0b0;text-align:left">월 빈도</th></tr></thead><tbody><tr><td style="padding:8px;border:1px solid #b0d0b0">1~3개월</td><td style="padding:8px;border:1px solid #b0d0b0">300~500m</td><td style="padding:8px;border:1px solid #b0d0b0">5km 이내</td><td style="padding:8px;border:1px solid #b0d0b0">3~4회</td></tr><tr style="background:#f4f9f4"><td style="padding:8px;border:1px solid #b0d0b0">4~6개월</td><td style="padding:8px;border:1px solid #b0d0b0">600~800m</td><td style="padding:8px;border:1px solid #b0d0b0">7~9km</td><td style="padding:8px;border:1px solid #b0d0b0">3~4회</td></tr><tr><td style="padding:8px;border:1px solid #b0d0b0">7~9개월</td><td style="padding:8px;border:1px solid #b0d0b0">1,000m 도전</td><td style="padding:8px;border:1px solid #b0d0b0">8~12km</td><td style="padding:8px;border:1px solid #b0d0b0">2~4회</td></tr><tr style="background:#f4f9f4"><td style="padding:8px;border:1px solid #b0d0b0">10~12개월</td><td style="padding:8px;border:1px solid #b0d0b0">100대 명산 입문</td><td style="padding:8px;border:1px solid #b0d0b0">10~15km</td><td style="padding:8px;border:1px solid #b0d0b0">2~4회</td></tr></tbody></table></div>
+
+<h2>1년 후 점검 — 지속 가능성이 유일한 기준</h2><p>첫 1년이 끝난 시점에 '얼마나 높이 올랐는가'보다 '부상 없이 지속했는가'를 기준으로 평가해야 한다. 체력은 꾸준함에서 온다. 월 2회 산행을 12개월 지속한 사람이, 4개월은 매주 오르다 부상으로 6개월을 쉰 사람보다 훨씬 좋은 상태로 두 번째 해를 시작한다.</p><p>두 번째 해부터는 고도 1,200m+ 산, 암릉 구간, 장거리(15km+) 코스로 범위가 넓어진다. 100대 명산 도전은 이 시점이 실질적으로 가장 적절한 출발점이다. <a href="/blog/g1">100대 명산 챌린지 시작하기</a>와 <a href="/blog/p71">등산 후 회복 루틴</a>을 함께 읽으면 지속 가능한 산행 루틴을 만드는 데 도움이 된다.</p>
+
+<div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 산행 전 산림청 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-13T09:00:00+00:00',
+    read: 8,
+    date: '2026.06.13',
+    badges: ['입문자', '로드맵'],
+  },
+  {
+    id: 'p75',
+    cat: '가이드',
+    pal: 'valley',
+    title: '산행 계획 거리 고도 소요시간 계산법',
+    excerpt: '포털 지도 앱이 제시하는 예상 시간은 평지 보행 속도 기준입니다. 실제 산에서는 이 수치의 40~60%밖에 안 됩니다. 나이페더 공식과 고도 보정값을 활용한 현실적 소요시간 계산법과 안전 귀환 시각 역산 방법을 정리했습니다.',
+    body: `<h2>포털 앱 시간이 왜 산에서 안 맞는가</h2><p>카카오맵이나 네이버맵에서 등산 코스를 검색하면 예상 도착 시간이 표시된다. 이 숫자는 평균 도보 속도 약 5km/h를 기반으로 계산된 값이다. 산에서 실제 보행 속도는 지형·경사·배낭 무게에 따라 2~3km/h로 줄어든다. 거기에 고도 상승 구간에서 추가 시간이 발생하므로, 포털 앱 시간만 믿고 출발 시각을 잡으면 하산 중 일몰을 만날 수 있다.</p><p>2023년 국립공원 현장 구조 사례를 분석한 자료에 따르면, 구조 요청자의 62%가 '예상보다 늦어진 하산 중 어두워짐'을 원인으로 꼽았다. 소요시간 오판은 단순한 불편을 넘어 안전 문제로 직결된다.</p>
+
+<h2>나이페더 공식 — 산행 시간 계산의 기준</h2><p>산행 소요시간을 현실적으로 계산하는 데 가장 많이 쓰이는 공식은 스위스 산악인 나이페더(Naismith)가 고안한 공식이다. 기본 공식은 다음과 같다.</p><div class="info-box" style="background:#f0f4e8;border-left:4px solid #6a8a3a;padding:16px;margin:20px 0;font-size:1em"><strong>나이페더 공식</strong><p style="margin-top:10px"><strong>소요시간(분) = (거리 km × 12분) + (고도 상승 m ÷ 100 × 10분)</strong></p><p style="margin-top:8px;color:#555">예시: 거리 6km + 고도 상승 600m → (6×12) + (6×10) = 72 + 60 = <strong>132분 (2시간 12분)</strong></p></div><p>이 공식은 성인의 표준 보행 능력을 기준으로 한다. 체력이 낮거나 배낭이 15kg 이상이면 계산값에 30~50%를 더하는 것이 안전하다. 반대로 단거리·저고도 코스에서 체력이 충분한 경우 20~30% 감산도 가능하다. 나이페더 공식은 상행 기준이며, 하산 시간은 일반적으로 상행 시간의 60~70% 수준이다.</p>
+
+<h2>실전 계산 예시 — 3개 코스 적용</h2><table style="width:100%;border-collapse:collapse;font-size:0.9em"><thead><tr style="background:#e8f0d8"><th style="padding:8px;border:1px solid #c0d0a0;text-align:left">코스</th><th style="padding:8px;border:1px solid #c0d0a0;text-align:center">거리</th><th style="padding:8px;border:1px solid #c0d0a0;text-align:center">고도 상승</th><th style="padding:8px;border:1px solid #c0d0a0;text-align:center">나이페더 상행</th><th style="padding:8px;border:1px solid #c0d0a0;text-align:center">하산(×0.65)</th><th style="padding:8px;border:1px solid #c0d0a0;text-align:center">왕복 합계</th></tr></thead><tbody><tr><td style="padding:8px;border:1px solid #c0d0a0">태백산 당골 코스</td><td style="padding:8px;border:1px solid #c0d0a0;text-align:center">5.2km</td><td style="padding:8px;border:1px solid #c0d0a0;text-align:center">567m</td><td style="padding:8px;border:1px solid #c0d0a0;text-align:center">2시간 19분</td><td style="padding:8px;border:1px solid #c0d0a0;text-align:center">1시간 31분</td><td style="padding:8px;border:1px solid #c0d0a0;text-align:center">약 3시간 50분</td></tr><tr style="background:#f4f8ec"><td style="padding:8px;border:1px solid #c0d0a0">북한산 백운대</td><td style="padding:8px;border:1px solid #c0d0a0;text-align:center">8.6km</td><td style="padding:8px;border:1px solid #c0d0a0;text-align:center">660m</td><td style="padding:8px;border:1px solid #c0d0a0;text-align:center">3시간 3분</td><td style="padding:8px;border:1px solid #c0d0a0;text-align:center">1시간 59분</td><td style="padding:8px;border:1px solid #c0d0a0;text-align:center">약 5시간</td></tr><tr><td style="padding:8px;border:1px solid #c0d0a0">한라산 성판악</td><td style="padding:8px;border:1px solid #c0d0a0;text-align:center">9.6km</td><td style="padding:8px;border:1px solid #c0d0a0;text-align:center">1,200m</td><td style="padding:8px;border:1px solid #c0d0a0;text-align:center">4시간 35분</td><td style="padding:8px;border:1px solid #c0d0a0;text-align:center">2시간 59분</td><td style="padding:8px;border:1px solid #c0d0a0;text-align:center">약 7시간 30분</td></tr></tbody></table><p>위 계산값은 표준 체력 기준이다. 실제 국립공원공단 공식 소요시간과 10~20분 내외로 일치하는 경우가 많다. 본인이 처음 오르는 산이라면 계산값에 30%를 더한 시간으로 계획을 잡는 것이 안전하다.</p>
+
+<h2>안전 귀환 시각 역산법</h2><p>소요시간 계산의 최종 목적은 '몇 시에 출발해야 하는가'를 결정하는 것이다. 역산 순서는 다음과 같다.</p><ol><li><strong>당일 일몰 시각 확인</strong>: 기상청 또는 포털에서 해당 지역 일몰 시각 확인.</li><li><strong>하산 완료 목표 시각 설정</strong>: 일몰 1.5~2시간 전을 하산 완료 목표로 잡는다. 일몰이 오후 7시 30분이면 오후 5시 30분~6시 하산 완료 목표.</li><li><strong>정상 출발 시각 계산</strong>: 하산 완료 목표 시각에서 하산 소요시간을 뺀다.</li><li><strong>들머리 출발 시각 계산</strong>: 정상 출발 시각에서 상행 소요시간을 뺀다.</li></ol><p>예시: 일몰 오후 7시 30분 기준 북한산 백운대 산행 → 하산 완료 목표 오후 6시 → 정상 출발 오후 4시 01분 → 들머리 출발 오전 10시 57분. 실제로는 오전 10시 출발로 여유를 두는 것이 현실적이다.</p>
+
+<h2>기상 조건이 소요시간에 미치는 영향</h2><p>바람·비·안개·눈은 이동 속도를 눈에 띄게 줄인다. 기상청 산악날씨 풍속 예보가 10m/s를 초과하면 소요시간이 20~30% 증가한다고 보정하는 것이 현실적이다. 초속 10m의 바람은 평지에서도 걷기 어려운 수준이고, 능선 구간에서는 체력 소모가 2배 가까이 늘어난다. 비나 눈이 내리는 날에는 미끄러운 노면 대응으로 이동 속도가 추가로 줄어든다.</p><p>기상 예보 확인 타이밍도 중요하다. 출발 전날 저녁의 예보와 당일 새벽의 예보가 달라지는 경우가 있다. 최종 확인은 출발 당일 오전 기준으로 한다. <a href="/blog/g2">산 날씨 앱 비교 — 기상청 산악날씨 vs 윈디</a>에서 산악 기상 확인 방법을 상세히 다루고 있다. <a href="/blog/p72">산에서 길 잃었을 때 대처하는 법</a>도 함께 읽으면 안전 계획 수립에 도움이 된다.</p>
+
+<div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 산행 전 산림청 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-13T14:00:00+00:00',
+    read: 7,
+    date: '2026.06.13',
+    badges: ['계획수립', '시간계산'],
+  },
+  {
+    id: 'p76',
+    cat: '안전',
+    pal: 'forest',
+    title: '등산 중 낙뢰 대피법 — 번개 만났을 때',
+    excerpt: '여름 산에서 낙뢰는 오후 2~5시 사이 집중 발생합니다. 낙뢰 직접 피격 사망률은 20~30%에 달하며, 능선과 정상부는 피격 확률이 가장 높은 지점입니다. 30초 규칙 판단법부터 안전 대피 지점까지 단계별로 정리했습니다.',
+    body: `<h2>낙뢰가 산에서 더 위험한 이유 — 지형 특성과 발생 시간대</h2><p>낙뢰는 전기가 구름에서 지면으로 이동하는 가장 짧은 경로를 찾아 내려온다. 산의 능선, 정상부, 독립수(주변보다 높은 나무)는 구조적으로 낙뢰 피격 확률이 높다. 특히 암릉 구간에서는 주변 지형보다 높은 위치에 노출된 등산객이 피뢰침 역할을 할 수 있다.</p><p>여름철 낙뢰는 오후 2~5시 사이에 집중된다. 낮 동안 지표면이 달궈지며 상승 기류가 형성되고, 이것이 적란운으로 발달하는 시간대가 오후 2시 전후다. 한국 기상청 통계에서 연간 낙뢰 발생의 약 60%가 6~8월에 집중된다. 이른 아침에 오르면 정상에서 오후 폭풍을 만나는 패턴이 전형적인 낙뢰 사고 시나리오다.</p>
+
+<h2>30초 규칙 — 낙뢰 위험 판단 기준</h2><p>번개가 번쩍인 뒤 천둥 소리가 들리기까지의 시간을 재면 거리를 추정할 수 있다. 소리는 초당 약 340m 이동하므로, 번개 후 30초 이내에 천둥이 들리면 낙뢰가 약 10km 이내에 위치한 것이다. 이 시점이 즉시 대피를 시작해야 하는 판단 기준이다.</p><ul><li>번개 후 30초 이내 천둥 → 10km 이내, 즉시 대피</li><li>번개 후 10초 이내 천둥 → 약 3.4km 이내, 극히 위험</li><li>번개와 거의 동시에 천둥 → 1km 이내, 직접 피격 위험</li></ul><p>한 번 폭풍이 지나간 뒤에도 30분 이상은 안심하기 이르다. 낙뢰는 폭풍 후에도 산발적으로 발생하며, 구름이 완전히 걷힐 때까지 능선 이동을 피하는 것이 원칙이다.</p>
+
+<h2>안전 대피 지점 — 어디로, 어떻게 피해야 하는가</h2><p>낙뢰 대피 시 가장 위험한 오해는 나무 아래나 동굴 입구가 안전하다는 생각이다. 키 큰 나무는 낙뢰 피격 확률이 높은 지점이며, 나무 반경 5m 이내는 측격(side flash) 위험 구간이다. 동굴 입구는 전류가 암반을 타고 흐를 수 있어 위험하다. 안전한 대피 지점의 기준은 다음과 같다.</p><ol><li><strong>능선 즉시 이탈</strong>: 정상부와 능선은 주변 지형보다 높아 피격 확률이 집중된다. 능선에서 100m 이상 아래 사면으로 이동한다.</li><li><strong>낮은 지대 선택</strong>: 비슷한 높이의 나무가 밀집된 숲 안 낮은 곳이 상대적으로 안전하다. 주변 나무보다 낮은 위치를 유지한다.</li><li><strong>바위 노출 지역 회피</strong>: 큰 바위 위나 옆은 전류 경로가 될 수 있다. 바위에서 5m 이상 거리 유지.</li><li><strong>금속 물체 내려놓기</strong>: 등산 스틱, 트레킹 폴, 카메라 삼각대는 금속 부분이 피뢰침 역할을 할 수 있다. 대피 시 몸에서 5m 이상 떨어진 곳에 내려놓는다.</li></ol>
+
+<h2>낙뢰 대피 자세 — 현장에서 즉시 적용</h2><p>안전한 지점으로 이동이 어렵다면 낙뢰 대피 자세를 취한다. 발을 붙이고 무릎을 구부려 웅크린 자세로, 두 발이 지면과 접촉하는 면적을 최소화한다. 이 자세는 만약 근처에 낙뢰가 치더라도 지면을 타고 전류가 양 발 사이를 통과하는 '보폭 전압' 피해를 줄이기 위한 것이다.</p><div class="info-box" style="background:#f0f4ec;border-left:4px solid #5a7a3a;padding:16px;margin:20px 0"><strong>낙뢰 대피 핵심 정리</strong><table style="width:100%;border-collapse:collapse;margin-top:10px;font-size:0.9em"><thead><tr style="background:#d8e8c8"><th style="padding:8px;border:1px solid #b0c890;text-align:left">상황</th><th style="padding:8px;border:1px solid #b0c890;text-align:left">행동</th></tr></thead><tbody><tr><td style="padding:8px;border:1px solid #b0c890">번개 후 30초 이내 천둥</td><td style="padding:8px;border:1px solid #b0c890">즉시 능선 이탈, 숲 낮은 곳으로 이동</td></tr><tr style="background:#f4f8f0"><td style="padding:8px;border:1px solid #b0c890">이동 불가능한 상황</td><td style="padding:8px;border:1px solid #b0c890">발 붙이고 웅크린 자세, 금속 물체 분리</td></tr><tr><td style="padding:8px;border:1px solid #b0c890">나무 근처</td><td style="padding:8px;border:1px solid #b0c890">5m 이상 거리 유지, 키 큰 단독수 회피</td></tr><tr style="background:#f4f8f0"><td style="padding:8px;border:1px solid #b0c890">폭풍 통과 후</td><td style="padding:8px;border:1px solid #b0c890">30분 이상 대기 후 이동 재개</td></tr><tr><td style="padding:8px;border:1px solid #b0c890">동굴·바위 근처</td><td style="padding:8px;border:1px solid #b0c890">5m 이상 거리 유지</td></tr></tbody></table></div>
+
+<h2>낙뢰 부상자 발생 시 응급 처치</h2><p>낙뢰 피격자는 전기 전도체가 아니므로 즉시 만져도 안전하다. 의식이 없다면 심폐소생술(CPR)을 즉시 시작해야 한다. 낙뢰는 심장 박동을 멈추는 심실세동을 유발하는 경우가 많아 CPR의 효과가 다른 외상보다 높다. 119 신고를 동시에 진행하고, 구조대 도착 전까지 CPR을 멈추지 않는다.</p><p>낙뢰 사고 예방은 기상 예보 확인에서 시작된다. 기상청 산악날씨 서비스에서 오후 시간대 뇌우 예보가 있으면 정상 도달 시각을 오전으로 앞당기는 계획이 현실적인 대응이다. <a href="/blog/p5">산행 전 반드시 확인하는 통제·기상 정보 5곳</a>과 <a href="/blog/p78">산행 탈수 예방 — 수분 보충 올바른 방법</a>을 함께 읽으면 여름 산행 안전 준비를 완성할 수 있다.</p>
+
+<div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 산행 전 산림청 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-13T19:00:00+00:00',
+    read: 6,
+    date: '2026.06.14',
+    badges: ['낙뢰', '안전대피'],
+  },
+  {
+    id: 'p77',
+    cat: '안전',
+    pal: 'winter',
+    title: '겨울 산행 동상 예방과 현장 응급처치',
+    excerpt: '체감 온도 영하 10°C 이하부터 동상 위험이 급격히 높아집니다. 젖은 장갑 착용 시 동상 위험은 건조 상태보다 5배 증가합니다. 동상 단계별 현장 처치법과 방한 장비 선택 기준을 구체적으로 정리했습니다.',
+    body: `<h2>동상이 발생하는 조건 — 온도와 습기의 복합 작용</h2><p>동상은 피부 조직이 어는 현상이다. 기온 영하 10°C 이하에서 위험이 급격히 높아지지만, 습기가 더해지면 그 임계점이 훨씬 높아진다. 젖은 장갑을 착용한 상태에서는 건조한 장갑보다 열 손실 속도가 5배 빨라지기 때문에, 영하 5°C에서도 동상이 발생할 수 있다. 바람도 결정적 변수다. 기온 영하 10°C + 초속 10m 바람이 결합되면 체감 온도는 영하 22~25°C에 달한다.</p><p>겨울 산행 중 동상이 가장 많이 발생하는 신체 부위는 손가락 끝, 발가락 끝, 귀, 코다. 혈관이 가늘고 혈류가 집중되지 않는 말단 부위가 먼저 얼기 시작한다. 손가락 끝 온도가 15°C 이하로 내려가면 감각이 저하되기 시작하고, 10°C 이하에서는 세밀한 동작이 어려워진다. 이 단계를 넘어가면 동상 1도가 시작된다.</p>
+
+<h2>동상 단계 구분 — 현장에서 판단하는 기준</h2><p>동상은 조직 손상 깊이에 따라 1~4도(또는 표재성·심부성)로 분류된다. 현장에서는 1도와 2도 이상을 구분하는 것이 핵심이다. 2도 이상이면 현장 처치 후 반드시 병원 이동이 필요하다.</p><table style="width:100%;border-collapse:collapse;font-size:0.9em"><thead><tr style="background:#dce8f5"><th style="padding:8px;border:1px solid #b8d0e8;text-align:left">단계</th><th style="padding:8px;border:1px solid #b8d0e8;text-align:left">증상</th><th style="padding:8px;border:1px solid #b8d0e8;text-align:left">피부 상태</th><th style="padding:8px;border:1px solid #b8d0e8;text-align:left">현장 처치</th></tr></thead><tbody><tr><td style="padding:8px;border:1px solid #b8d0e8">1도 (표재성)</td><td style="padding:8px;border:1px solid #b8d0e8">따끔거림, 감각 저하</td><td style="padding:8px;border:1px solid #b8d0e8">발적(빨갛게 됨), 딱딱하지 않음</td><td style="padding:8px;border:1px solid #b8d0e8">보온 + 온기 공급</td></tr><tr style="background:#f0f5fb"><td style="padding:8px;border:1px solid #b8d0e8">2도</td><td style="padding:8px;border:1px solid #b8d0e8">통증, 부종</td><td style="padding:8px;border:1px solid #b8d0e8">수포(물집) 형성</td><td style="padding:8px;border:1px solid #b8d0e8">온수 담금 + 이송</td></tr><tr><td style="padding:8px;border:1px solid #b8d0e8">3도</td><td style="padding:8px;border:1px solid #b8d0e8">무감각</td><td style="padding:8px;border:1px solid #b8d0e8">혈성 수포, 피부 경화</td><td style="padding:8px;border:1px solid #b8d0e8">즉시 이송, 현장 해동 금지</td></tr><tr style="background:#f0f5fb"><td style="padding:8px;border:1px solid #b8d0e8">4도 (심부)</td><td style="padding:8px;border:1px solid #b8d0e8">무감각, 경목</td><td style="padding:8px;border:1px solid #b8d0e8">피부 흑변, 괴사 진행</td><td style="padding:8px;border:1px solid #b8d0e8">즉시 이송, 현장 해동 절대 금지</td></tr></tbody></table><p>1도 동상은 따뜻한 손이나 겨드랑이 안쪽에 환부를 밀착해 서서히 온기를 전달하는 것으로 대부분 회복된다. 눈이나 얼음으로 문지르는 것은 조직 손상을 악화시키므로 절대 금지다. 마찰도 금지다.</p>
+
+<h2>현장 응급처치 — 온수 담금 방법</h2><p>2도 이상 동상이 의심될 때 현장에서 물과 열원이 확보된 경우 온수 담금(rewarming) 처치를 시행할 수 있다. 방법은 39~42°C의 온수(손등을 담갔을 때 따뜻하지만 뜨겁지 않은 온도)에 환부를 20~30분 담그는 것이다.</p><ul><li>물 온도: 39~42°C. 이보다 뜨거우면 손상 조직에 화상을 입힐 수 있다.</li><li>담금 시간: 20~30분. 피부색이 붉어지고 감각이 돌아올 때까지.</li><li>담금 중 문지르기 금지: 조직이 약해진 상태에서 마찰은 손상을 악화시킨다.</li><li>재동결 위험이 있는 경우 해동 금지: 해동 후 다시 얼면 조직 손상이 훨씬 심해진다. 이송 중 재동결이 불가피하다면 현장에서 해동하지 않는 것이 낫다.</li></ul><p>3도 이상이 의심되거나 현장에서 물 온도 유지가 어려운 경우 환부를 마른 거즈나 깨끗한 천으로 감싸고 신속하게 119를 통해 이송하는 것이 우선이다.</p>
+
+<h2>예방 — 방한 장비 선택과 착용 원칙</h2><p>동상 예방의 핵심은 세 가지다. 첫째, 방습 소재 내부 장갑 + 방풍 외부 장갑의 이중 착용. 둘째, 산행 중 장갑이 젖으면 반드시 여벌로 교체. 셋째, 휴식 중 지속적인 손발 굴신 운동으로 말단 혈류 유지.</p><ol><li><strong>내부 장갑</strong>: 폴리프로필렌 또는 울 소재 얇은 라이너 장갑. 땀 흡수 후 빠른 건조.</li><li><strong>외부 장갑</strong>: 방풍·방수 미텐(벙어리 장갑) 또는 방풍 글러브. 손가락을 붙여주는 미텐이 열 보존이 더 뛰어나다.</li><li><strong>양말</strong>: 메리노 울 또는 기능성 양말 + 방수 등산 양말 이중 착용. 면 소재 양말은 땀이 차면 보온 기능이 0에 가까워지므로 겨울 산행 금지.</li><li><strong>핫팩</strong>: 부피 없이 응급 보온 역할. 장갑 안 손등 위치에 넣으면 효과적. 단, 감각이 마비된 상태에서 피부에 직접 접촉 시 화상 위험이 있으니 천 위에 올려두어야 한다.</li></ol><p><a href="/blog/p3">겨울 눈꽃 산행, 아이젠·스패츠 고르는 법</a>에서 전반적인 겨울 장비 선택 기준을 확인할 수 있다. <a href="/blog/p79">등산 중 발목 삐었을 때 현장 대처법</a>과 함께 읽으면 현장 응급 대처 전반을 준비하는 데 도움이 된다.</p>
+
+<div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 산행 전 산림청 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-14T00:00:00+00:00',
+    read: 7,
+    date: '2026.06.14',
+    badges: ['동상', '겨울안전'],
+  },
+  {
+    id: 'p78',
+    cat: '안전',
+    pal: 'sage',
+    title: '산행 탈수 예방 — 수분 보충 올바른 방법',
+    excerpt: '체중의 2%만 탈수가 진행되어도 지구력이 20% 감소합니다. 산행 중 시간당 500~750ml 수분 보충이 권장되지만, 전해질 없이 물만 마시면 저나트륨혈증이 발생할 수 있습니다. 탈수·열사병 전조 증상과 예방법을 단계별로 정리했습니다.',
+    body: `<h2>산에서 탈수가 빨라지는 이유 — 평지와 다른 조건</h2><p>산행 중 수분 손실 속도는 평지 걷기보다 훨씬 빠르다. 고도 상승 구간에서 호흡 횟수가 늘어나며 호흡을 통한 수분 손실이 증가하고, 땀으로 나가는 수분도 강도 높은 구간에서 시간당 500~1,000ml까지 달한다. 기온이 높은 여름 산행에서는 이 속도가 더 빨라진다.</p><p>스포츠의학 연구에서 체중의 2% 탈수(체중 70kg 기준 1.4L)가 진행되면 지구력이 약 20% 감소하는 것으로 나타난다. 체중의 3%가 손실되면 근력과 반응 속도도 저하되기 시작한다. 문제는 갈증이 탈수의 후행 지표라는 점이다. 갈증을 느끼는 시점에는 이미 체중의 1.5~2% 탈수가 진행된 상태인 경우가 많다. 갈증이 생긴 뒤 마시는 것이 아니라 갈증이 생기기 전에 마시는 것이 올바른 수분 보충 방법이다.</p>
+
+<h2>권장 수분 보충량 — 시간과 조건별 기준</h2><p>산행 중 권장 수분 섭취량은 시간당 500~750ml다. 기온 30°C 이상, 습도 60% 이상의 조건에서는 750~1,000ml로 늘린다. 반대로 기온이 낮고(20°C 이하) 구름이 낀 날에는 400~500ml로 줄여도 된다. 중요한 것은 규칙적으로, 소량씩 마시는 것이다.</p><table style="width:100%;border-collapse:collapse;font-size:0.9em"><thead><tr style="background:#dce8d8"><th style="padding:8px;border:1px solid #b0c8a8;text-align:left">조건</th><th style="padding:8px;border:1px solid #b0c8a8;text-align:center">시간당 권장 섭취량</th><th style="padding:8px;border:1px solid #b0c8a8;text-align:left">비고</th></tr></thead><tbody><tr><td style="padding:8px;border:1px solid #b0c8a8">기온 25°C 미만, 맑음</td><td style="padding:8px;border:1px solid #b0c8a8;text-align:center">400~600ml</td><td style="padding:8px;border:1px solid #b0c8a8">기본 산행</td></tr><tr style="background:#f0f6ee"><td style="padding:8px;border:1px solid #b0c8a8">기온 25~30°C</td><td style="padding:8px;border:1px solid #b0c8a8;text-align:center">500~750ml</td><td style="padding:8px;border:1px solid #b0c8a8">여름 산행 표준</td></tr><tr><td style="padding:8px;border:1px solid #b0c8a8">기온 30°C+, 고습도</td><td style="padding:8px;border:1px solid #b0c8a8;text-align:center">750~1,000ml</td><td style="padding:8px;border:1px solid #b0c8a8">전해질 보충 필요</td></tr><tr style="background:#f0f6ee"><td style="padding:8px;border:1px solid #b0c8a8">급경사 연속 구간</td><td style="padding:8px;border:1px solid #b0c8a8;text-align:center">+200~300ml 추가</td><td style="padding:8px;border:1px solid #b0c8a8">발한량 급증 구간</td></tr></tbody></table><p>목표 섭취량을 채우기 위해 물통이나 배낭 호스(하이드레이션 시스템)를 이용하는 것이 실용적이다. 500ml 물병 2~3개를 배낭에 넣고, 30분마다 한 모금씩 마시는 루틴을 만들면 자연스럽게 시간당 400~600ml를 채울 수 있다.</p>
+
+<h2>전해질 — 물만 마시는 것의 위험</h2><p>3시간 이상 연속 산행에서 물만 다량 마시면 혈중 나트륨 농도가 희석되는 저나트륨혈증이 발생할 수 있다. 증상은 두통, 구역질, 혼돈으로 탈수 증상과 혼동하기 쉽다. 땀으로 나트륨이 함께 빠져나가는데, 물만 보충하면 나트륨 농도가 더 떨어지는 역설이 발생한다.</p><ul><li>3시간 이상 산행 또는 고온 다습 조건에서는 전해질 보충이 필요하다.</li><li>스포츠 음료(이온 음료) 또는 전해질 정제를 물에 타서 마시는 방법이 현실적이다.</li><li>간식으로 견과류, 짠 과자를 소량 섭취하는 것도 나트륨 보충에 도움이 된다.</li><li>커피, 탄산음료, 에너지 드링크는 이뇨 작용으로 탈수를 악화시키므로 산행 중 주 수분원으로 적합하지 않다.</li></ul>
+
+<h2>열사병 전조 증상 — 탈수에서 열사병으로 넘어가는 신호</h2><p>탈수가 진행되면 체온 조절 능력이 저하되고, 이것이 심해지면 열사병으로 이어진다. 열사병은 응급 상황으로, 적절히 대응하지 않으면 사망에 이를 수 있다. 전조 증상을 빠르게 인식하는 것이 핵심이다.</p><ol><li><strong>열 경련(초기)</strong>: 근육 경련, 다리 쥐남. 수분과 전해질 보충으로 대응 가능.</li><li><strong>열 탈진(중기)</strong>: 체온 37~40°C, 창백한 피부, 대량 발한, 어지럼증, 구역질. 즉시 그늘에서 휴식 + 시원한 음료 섭취.</li><li><strong>열사병(위험)</strong>: 체온 38.5°C 이상 + 발한 감소(피부 건조·뜨거움) + 의식 혼란. 즉시 119 신고 필요. 서늘한 곳으로 이동, 옷을 느슨하게 하고 시원한 물로 피부를 적셔 열을 낮춰야 한다.</li></ol><p>열사병 환자에게 의식이 없는 경우 억지로 물을 마시게 하면 기도로 들어갈 수 있어 금지다. 몸에 물을 뿌리고 부채질해 기화 냉각을 최대화하면서 구조 대기가 올바른 처치다.</p>
+
+<h2>출발 전 수분 관리 — 산행 시작 전부터 준비</h2><p>탈수 예방은 산행 당일 아침부터 시작된다. 아침 기상 시 소변 색이 진한 노란색이면 이미 가벼운 탈수 상태다. 출발 1~2시간 전에 400~500ml를 천천히 마셔두면 산행 초반 탈수를 예방할 수 있다.</p><p>준비해야 할 물의 총량 계산 기준은 시간당 500ml × 산행 시간이다. 6시간 산행이라면 최소 3L, 여름이라면 3.5~4L를 준비한다. 무게가 걱정된다면 출발 전 충분히 마시고, 약수터·대피소에서 중간 보충하는 계획을 세운다. 단, 약수터나 계곡물은 반드시 정수 처리하거나 검증된 음용 가능 표시가 있는 것만 마신다. <a href="/blog/p76">등산 중 낙뢰 대피법</a>과 함께 읽으면 여름 산행 전반의 안전 준비를 완성할 수 있다. <a href="/blog/p71">등산 후 회복 루틴</a>도 함께 참고하면 체력 관리 체계를 만드는 데 도움이 된다.</p>
+
+<div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 산행 전 산림청 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-14T05:00:00+00:00',
+    read: 6,
+    date: '2026.06.14',
+    badges: ['탈수예방', '수분'],
+  },
+  {
+    id: 'p79',
+    cat: '안전',
+    pal: 'forest',
+    title: '등산 중 발목 삐었을 때 현장 대처법',
+    excerpt: '발목 염좌는 전체 산행 부상의 약 32%를 차지합니다. 하산 중 돌밭이나 목재 계단에서 순간 꺾이는 내반 손상이 전형적인 패턴입니다. RICE 원칙 적용 순서와 2도 이상 염좌 시 하산 방법을 단계별로 정리했습니다.',
+    body: `<h2>산행 중 발목 부상이 집중되는 지점과 이유</h2><p>발목 염좌는 전체 산행 부상의 약 32%로 가장 흔한 산행 부상이다. 대부분은 하산 구간에서 발생한다. 오르막에서는 발목이 앞쪽으로 구부러지는 배굴(dorsiflexion) 방향이 주로 작용하는 반면, 내리막에서는 발이 돌이나 나무 계단에 걸리거나 미끄러지며 안쪽으로 꺾이는 내반(inversion) 손상이 일어난다. 발목 외측 인대(ATFL, CFL)가 순간적으로 과도하게 당겨지거나 파열된다.</p><p>위험 지점은 주로 불규칙한 돌길, 목재 데크 끝부분, 젖은 낙엽 위, 급경사 모래 구간이다. 체력이 떨어진 산행 후반부에서 발목 근육 피로도가 높아져 순간 반응 속도가 늦어지면서 발생하는 경우가 많다. 이른 아침과 달리 하산 시점의 발목 지지력은 근육 피로로 인해 15~20% 감소한다는 연구 결과가 있다.</p>
+
+<h2>RICE 원칙 — 현장 즉시 처치 순서</h2><p>발목을 삐었을 때 가장 먼저 적용하는 것이 RICE 원칙이다. Rest(안정)·Ice(냉각)·Compression(압박)·Elevation(거상)의 약자로, 이 순서대로 처치하면 부종과 통증을 빠르게 줄일 수 있다.</p><ol><li><strong>Rest(안정)</strong>: 즉시 체중 부하를 중단하고 앉거나 기댄다. 통증이 있는 상태에서 계속 걸으면 부분 파열이 완전 파열로 악화될 수 있다.</li><li><strong>Ice(냉각)</strong>: 차가운 물이 담긴 수건이나 아이스팩을 환부에 15~20분 적용한다. 직접 피부에 얼음을 대면 동상 위험이 있으니 수건이나 천으로 감싸서 사용한다. 냉각은 혈관을 수축시켜 부종 확산을 줄이고 통증을 완화한다.</li><li><strong>Compression(압박)</strong>: 탄력붕대나 헝겊을 발목에 감아 압박한다. 발가락 쪽에서 위로 올라오는 방향으로 감아야 혈류가 막히지 않는다. 너무 세게 감으면 순환 장애가 생기므로, 조금 조인 느낌이 드는 정도가 적당하다.</li><li><strong>Elevation(거상)</strong>: 가능하면 발목을 심장보다 높이 들어 올린다. 앉아서 발을 배낭이나 바위 위에 올려놓는 방식으로 10~15분 유지하면 부종 감소에 효과적이다.</li></ol>
+
+<h2>염좌 단계 판단 — 2도 이상 여부 확인법</h2><p>현장에서 정확한 진단은 불가능하지만, 처치 방향을 결정하기 위해 대략적인 단계 판단이 필요하다.</p><table style="width:100%;border-collapse:collapse;font-size:0.9em"><thead><tr style="background:#d8ecd8"><th style="padding:8px;border:1px solid #b0c8b0;text-align:left">단계</th><th style="padding:8px;border:1px solid #b0c8b0;text-align:left">증상</th><th style="padding:8px;border:1px solid #b0c8b0;text-align:left">체중 부하 가능 여부</th><th style="padding:8px;border:1px solid #b0c8b0;text-align:left">처치 방향</th></tr></thead><tbody><tr><td style="padding:8px;border:1px solid #b0c8b0">1도 (인대 늘어남)</td><td style="padding:8px;border:1px solid #b0c8b0">경미한 통증, 부종 적음</td><td style="padding:8px;border:1px solid #b0c8b0">통증 있으나 가능</td><td style="padding:8px;border:1px solid #b0c8b0">RICE 후 스틱 보조 하산</td></tr><tr style="background:#f0f8f0"><td style="padding:8px;border:1px solid #b0c8b0">2도 (부분 파열)</td><td style="padding:8px;border:1px solid #b0c8b0">중등도 통증, 부종·멍</td><td style="padding:8px;border:1px solid #b0c8b0">통증 심해 어려움</td><td style="padding:8px;border:1px solid #b0c8b0">RICE + 119 또는 동행 부축 하산</td></tr><tr><td style="padding:8px;border:1px solid #b0c8b0">3도 (완전 파열)</td><td style="padding:8px;border:1px solid #b0c8b0">심한 통증, 관절 불안정</td><td style="padding:8px;border:1px solid #b0c8b0">불가</td><td style="padding:8px;border:1px solid #b0c8b0">119 구조 요청, 이동 금지</td></tr></tbody></table><p>2도 이상이 의심될 때는 체중을 부하하지 않는 것이 원칙이다. 무리하게 걸어 내려오다 3도로 악화되는 경우가 많다. 동행자 없이 혼자 오른 경우라도 119에 신고하면 구조대가 들것(스트레처)이나 픽업으로 지원한다. 부목을 만들려면 등산 스틱 두 개를 발목 양옆에 대고 탄력붕대로 고정하는 방법이 현장에서 가능한 응급 고정법이다.</p>
+
+<h2>1도 염좌 시 자력 하산 — 트레킹 폴 활용 방법</h2><p>1도 염좌로 판단되고 통증이 있지만 체중 부하가 가능한 경우, 트레킹 폴을 이용한 자력 하산이 가능하다. 부상 발목 반대쪽에 폴을 짚어 체중을 분산하고, 보폭을 평소의 절반 이하로 줄인다. 내리막에서 폴을 앞에 내려 짚고 건강한 발을 먼저 내딛는 방식이 부상 발목의 충격을 최소화하는 보행 패턴이다.</p><ul><li>폴 길이: 평상시보다 5~10cm 길게 조정해 더 많은 체중을 폴에 실을 수 있게 한다.</li><li>보행 속도: 평소의 40~50% 속도. 서두르지 않는 것이 재부상을 막는다.</li><li>휴식 빈도: 30분 마다 5분 이상 RICE 자세로 쉬면서 냉각을 반복한다.</li></ul>
+
+<h2>예방 — 발목 염좌를 줄이는 습관</h2><p>발목 염좌 예방은 장비와 근력 두 축으로 접근한다. 발목을 감싸는 미드컷 이상의 등산화는 내반 손상을 막는 물리적 지지대 역할을 한다. 러닝화나 트레일 러닝화로 급경사 하산 구간을 내려오면 부상 위험이 크게 높아진다.</p><p>평소 발목 근력 강화 운동(한발 서기, 발목 써클, 밴드 저항 운동)을 꾸준히 하면 순간적인 불안정 자극에 대한 반응 속도가 빨라진다. 하산 시 트레킹 폴 2개 사용이 발목 하중을 약 25% 줄이는 것으로 보고된다. <a href="/blog/p13">하산 중 무릎 통증 줄이는 3가지 방법</a>과 <a href="/blog/p71">등산 후 회복 루틴</a>을 함께 읽으면 하산 부상 예방 전체를 준비하는 데 도움이 된다.</p>
+
+<div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 산행 전 산림청 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-14T10:00:00+00:00',
+    read: 7,
+    date: '2026.06.14',
+    badges: ['발목부상', '응급처치'],
+  },
+  {
+    id: 'p80',
+    cat: '안전',
+    pal: 'autumn',
+    title: '산불 예방 — 등산 중 화재 안전 수칙',
+    excerpt: '국내 산불은 연간 평균 약 500건 발생하며, 입산자 실화가 34%로 원인 1위입니다. 봄철(2~5월)과 가을철(11~12월)은 산불 통제기간으로 입산 자체가 제한되는 구역이 있습니다. 등산 중 지켜야 할 화재 안전 수칙과 신고 절차를 정리했습니다.',
+    body: `<h2>산불이 등산객과 직접 연관되는 이유 — 원인별 통계</h2><p>산림청 최근 5년 평균 기준으로 국내 산불은 연간 약 500건 발생한다. 피해 면적은 해마다 차이가 크지만, 대형 산불이 발생한 해에는 수천 헥타르가 한 번에 소실되기도 한다. 원인별로 보면 입산자 실화(33~34%), 논밭 소각(25~26%), 담뱃불(10~11%) 순이다. 입산자 실화 항목 안에는 무단 취사, 담배 투기, 방화 행위가 포함된다.</p><p>봄철은 산불이 집중되는 시기다. 겨울을 지난 낙엽과 마른 풀이 쌓인 상태에서 건조한 바람이 불면 불씨 하나가 빠르게 확산된다. 성인 남성이 무심코 던진 담뱃불이 초속 10m 바람 조건에서 시속 최대 3km 속도로 번질 수 있다. 등산로에서 500m 떨어진 산불도 바람 방향에 따라 수 분 안에 탐방객에게 위협이 되는 거리다.</p>
+
+<h2>산불 통제기간 — 출발 전 반드시 확인해야 하는 이유</h2><p>산림청은 건조하고 화재 위험이 높은 시기에 산불 예방 강화기간과 입산통제 구역을 지정한다. 봄철(2월 1일~5월 15일 전후)과 가을철(11월 1일~12월 15일 전후)이 대표적인 통제 시기이며, 기상 조건에 따라 기간이 조정된다. 통제기간 중 입산 통제 구역에 들어가면 과태료 처분(최대 50만 원)을 받을 수 있다.</p><ul><li>산림청 산불 재난 통합관리시스템(forest.go.kr)에서 실시간 통제 구역 확인 가능.</li><li>각 국립공원 탐방지원센터 전화 또는 국립공원 예약시스템에서 해당 탐방로 통제 여부 확인.</li><li>등산 전날 저녁 또는 당일 아침에 최종 확인하는 것이 중요하다. 기상 상황에 따라 전날 공지 없이 당일 통제가 시작되는 경우도 있다.</li></ul>
+
+<h2>등산 중 금지 행위 — 법적 기준과 현장 규칙</h2><p>산림 내 화기 사용은 산림보호법으로 규제된다. 지정 야영지 외 취사 행위, 인화 물질 지참(등산로 내), 흡연 행위가 법적 금지 또는 통제 대상이다. 현장에서 적용되는 구체적인 기준을 알아두면 본의 아닌 위반을 막을 수 있다.</p><ol><li><strong>흡연</strong>: 국립공원 내 전 구역 흡연 금지(국립공원법 제27조). 지정 흡연 구역에서만 허용되며, 해당 구역이 없는 탐방로에서는 전면 금지다.</li><li><strong>취사</strong>: 국립공원 내 지정 야영장 및 대피소 취사장 외 취사 금지. 일반 등산로에서 버너 점화 자체가 금지다.</li><li><strong>화기 물품</strong>: 라이터, 성냥, 버너 등 화기를 입산 금지 구역 내에서 소지하면 적발 대상이 될 수 있다.</li><li><strong>쓰레기 소각</strong>: 산 안에서 쓰레기를 불로 소각하는 행위는 산림보호법 위반이자 산불 원인이 된다. 모든 쓰레기는 되가져오는 것이 원칙이다.</li></ol>
+
+<h2>등산 중 산불 발견 시 신고 절차</h2><p>산불을 목격하면 즉시 신고하는 것이 첫 번째 행동이다. 규모가 작아 보여도 건조한 날 산불은 수 분 안에 급격히 확산된다.</p><div class="info-box" style="background:#f8ece0;border-left:4px solid #c06020;padding:16px;margin:20px 0"><strong>산불 신고 채널</strong><table style="width:100%;border-collapse:collapse;margin-top:10px;font-size:0.9em"><thead><tr style="background:#ecd4b8"><th style="padding:8px;border:1px solid #d4a878;text-align:left">신고처</th><th style="padding:8px;border:1px solid #d4a878;text-align:left">연락처</th><th style="padding:8px;border:1px solid #d4a878;text-align:left">특징</th></tr></thead><tbody><tr><td style="padding:8px;border:1px solid #d4a878">소방청</td><td style="padding:8px;border:1px solid #d4a878">119</td><td style="padding:8px;border:1px solid #d4a878">긴급 출동, 24시간</td></tr><tr style="background:#faf4ec"><td style="padding:8px;border:1px solid #d4a878">산림청 산불상황실</td><td style="padding:8px;border:1px solid #d4a878">1588-9119</td><td style="padding:8px;border:1px solid #d4a878">산림 전용, 24시간</td></tr><tr><td style="padding:8px;border:1px solid #d4a878">국립공원 탐방지원센터</td><td style="padding:8px;border:1px solid #d4a878">해당 공원 번호</td><td style="padding:8px;border:1px solid #d4a878">위치 정보 전달에 효과적</td></tr></tbody></table></div><p>신고 시 전달해야 할 정보는 발화 위치(가장 가까운 이정표 번호 또는 GPS 좌표), 불의 크기와 연기 방향, 신고자 현재 위치다. 신고 후 불을 향한 방향으로 이동하지 말고, 바람이 불어오는 쪽과 반대 방향으로 즉시 대피한다.</p>
+
+<h2>산불 대피 시 이동 방향 — 방향 판단 원칙</h2><p>산불은 바람 방향과 경사를 따라 빠르게 이동한다. 능선 위쪽으로는 열기와 불이 빠르게 올라오므로 정상부 방향으로 대피하는 것은 위험하다. 산불 대피의 기본 방향은 불길의 측면 또는 아래쪽이다.</p><ul><li><strong>바람 방향 파악</strong>: 연기가 흐르는 방향이 불의 이동 방향. 연기 방향의 반대 또는 직각 방향으로 이동.</li><li><strong>등산로 활용</strong>: 등산로는 탁 트인 화재 차단선 역할을 한다. 등산로를 따라 아래쪽으로 빠르게 이동.</li><li><strong>계곡 쪽 이동 주의</strong>: 불이 계곡부로 내려오고 있다면 계곡도 위험 구간이 될 수 있다. 상황을 보고 등산로 기준으로 판단.</li><li><strong>119 신고 후 대기</strong>: 완전히 탈출할 수 없다면 바위 뒤, 낙엽이 없는 지면에 엎드려 119 위치를 전달하고 구조 대기.</li></ul>
+
+<p>산불 예방은 개인의 작은 습관에서 시작된다. 봄·가을 건조 시기 산행에서 화기 없이, 쓰레기 없이, 통제 구역 확인 후 출발하는 것이 산불을 막는 가장 직접적인 방법이다. <a href="/blog/p5">산행 전 반드시 확인하는 통제·기상 정보 5곳</a>에서 산불 통제 외에 확인해야 할 정보 채널을 정리했다. <a href="/blog/p72">산에서 길 잃었을 때 대처하는 법</a>도 함께 읽으면 비상 상황 대응 전반을 준비할 수 있다.</p>
+
+<div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 산행 전 산림청 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-14T15:00:00+00:00',
+    read: 6,
+    date: '2026.06.14',
+    badges: ['산불예방', '수칙'],
+  },
+  {
+    id: 'p81',
+    cat: '안전',
+    pal: 'valley',
+    title: '겨울 산행 저체온증 예방과 응급 대처',
+    excerpt: '소방청 통계에서 겨울 산악 사망 원인 중 저체온증·동결 관련 비율은 15~20%에 달합니다. 체심부 온도 35°C 아래로 내려가기 전에 막는 레이어링 원칙과 응급 처치 단계를 정리했습니다.',
+    body: `<h2>저체온증이 산에서 위험한 이유 — 원인과 결과 사슬</h2><p>저체온증은 체심부 온도(직장온도 기준)가 35°C 미만으로 떨어진 상태를 말한다. 보건복지부 응급의료 가이드는 경증(32~35°C), 중등도(28~32°C), 중증(28°C 미만) 세 단계로 분류한다. 문제는 경증 단계에서 이미 판단력이 흐려지기 시작한다는 점이다. 피로 증가 → 근육 떨림 증가 → 열 생산 능력 소진 → 체온 급락 → 의식 저하의 인과 사슬이 빠르게 진행된다.</p><p>겨울 산에서 저체온증이 가속화되는 주요 인자는 세 가지다. 젖은 의류(땀 또는 강수), 바람(풍속이 강할수록 체감온도 급락), 피로·탈수(열 생산 능력 저하). 이 세 가지가 겹치는 순간부터 체온 손실 속도가 체온 생산 속도를 앞지른다. 정상부에서 바람을 맞으며 젖은 의류 그대로 쉬는 것이 가장 위험한 조합이다.</p>
+
+<h2>레이어링 3층 시스템 — 저체온증을 구조적으로 막는 방법</h2><p>두꺼운 단일 재킷 한 벌 vs 레이어링 3층 시스템을 비교하면 단열 효율에서 분명한 차이가 난다. 단일 두꺼운 재킷은 땀으로 젖으면 단열 성능이 급격히 떨어진다. 반면 3층 시스템은 각 층의 역할이 분리되어 있어 부분 조절이 가능하고 젖음에 강하다.</p>
+<div style="background:#e8f0e8;border-left:4px solid #5a8a6a;padding:16px;margin:20px 0">
+<strong>레이어링 3층 역할 구분</strong>
+<table style="width:100%;border-collapse:collapse;margin-top:10px;font-size:0.9em">
+<thead><tr style="background:#c8dcc8"><th style="padding:8px;border:1px solid #a0c0a0;text-align:left">층</th><th style="padding:8px;border:1px solid #a0c0a0;text-align:left">소재 예시</th><th style="padding:8px;border:1px solid #a0c0a0;text-align:left">역할</th><th style="padding:8px;border:1px solid #a0c0a0;text-align:left">겨울 조건</th></tr></thead>
+<tbody>
+<tr><td style="padding:8px;border:1px solid #a0c0a0">베이스 레이어</td><td style="padding:8px;border:1px solid #a0c0a0">메리노울, 폴리에스터</td><td style="padding:8px;border:1px solid #a0c0a0">땀 배출·속건</td><td style="padding:8px;border:1px solid #a0c0a0">면 절대 금지</td></tr>
+<tr style="background:#f0f5f0"><td style="padding:8px;border:1px solid #a0c0a0">미드 레이어</td><td style="padding:8px;border:1px solid #a0c0a0">플리스, 다운</td><td style="padding:8px;border:1px solid #a0c0a0">단열·보온</td><td style="padding:8px;border:1px solid #a0c0a0">두께 조절 가능 소재 권장</td></tr>
+<tr><td style="padding:8px;border:1px solid #a0c0a0">쉘 레이어</td><td style="padding:8px;border:1px solid #a0c0a0">방풍·방수 재킷</td><td style="padding:8px;border:1px solid #a0c0a0">바람·수분 차단</td><td style="padding:8px;border:1px solid #a0c0a0">고어텍스 등 방수투습 소재</td></tr>
+</tbody></table></div>
+<p>베이스 레이어에 면 소재를 쓰는 것이 가장 흔한 실수다. 면은 땀을 흡수하면 빠르게 마르지 않아 피부에 밀착된 채 냉각원이 된다. 겨울 산행에서 '면 소재 티셔츠 + 두꺼운 아우터' 조합은 단열 효율이 레이어링 시스템의 30~40% 수준에 불과하다.</p>
+
+<h2>저체온증 3단계 증상 인식 — 경증에서 막아야 하는 이유</h2><p>경증(32~35°C) 단계 주요 증상은 심한 오한, 판단력 저하, 행동 둔화다. 이 단계에서 오한이 없어지거나 줄어드는 것은 호전 신호가 아니라 악화 신호다. 근육이 열을 만드는 능력 자체를 잃어가고 있다는 의미이기 때문이다. 중등도(28~32°C)에 들어서면 오한이 멈추고 졸음, 의식 혼란, 근육 강직이 나타난다. 중증(28°C 미만)은 무의식, 심실세동 위험 구간으로 병원 이송 없이는 회복이 어렵다.</p>
+<ul>
+<li><strong>경증 신호</strong>: 격심한 오한, 손발 저림, 말이 느려짐, 발걸음 비틀거림</li>
+<li><strong>중등도 신호</strong>: 오한이 멈춤, 피부가 창백 또는 회색빛, 졸음, 판단 불가</li>
+<li><strong>중증 신호</strong>: 의식 없음, 맥박 희미함, 호흡 매우 느림</li>
+</ul>
+<p>동행자가 "오한이 없어졌다"고 말하거나 "괜찮다"며 주저앉으려 한다면 즉시 응급 처치를 시작하고 119에 신고해야 한다. 자기 판단 능력이 이미 저하된 상태이므로 본인의 주관적 호소는 신뢰할 수 없다.</p>
+
+<h2>응급 처치 단계 — 소방청 산악구조 지침 기반</h2><p>소방청 산악구조 지침은 저체온증 응급 처치를 다음 순서로 제시한다. 이동을 최소화하는 것이 1순위 원칙이다. 중등도 이상 저체온증 환자를 무리하게 움직이면 심실세동이 유발될 수 있다.</p>
+<ol>
+<li><strong>이동 최소화</strong>: 바람 차단 가능한 장소로 수평 이동. 들것 없이 세워서 걷게 하지 않는다.</li>
+<li><strong>젖은 의류 제거</strong>: 땀에 젖은 베이스 레이어를 건조한 의류로 교체. 탈의 시 체온 손실을 최소화하기 위해 신속하게 진행한다.</li>
+<li><strong>단열 보온</strong>: 비상용 은박 담요(서바이벌 블랭킷)로 전신을 감싼다. 지면과의 접촉도 체온을 빼앗으므로 배낭, 여분 의류를 깔아 지면 단열을 확보한다.</li>
+<li><strong>따뜻한 음료 공급</strong>: 의식이 완전히 있을 때만 가능하다. 의식이 혼미하면 기도 흡인 위험으로 금지.</li>
+<li><strong>119 신고</strong>: 중등도 이상이 의심되면 즉시 신고. 경증이라도 처치 후 호전이 없으면 신고.</li>
+</ol>
+
+<h2>비상 장비 — 겨울 산행 필수 2가지</h2><p>비상용 은박 담요는 무게 50~80g, 부피 주먹만 한 크기로 모든 겨울 배낭에 포함시켜야 하는 장비다. 체온 손실의 40~50%는 복사열로 빠져나가는데, 은박 담요는 이 복사열을 최대 90%까지 반사한다. 핫팩은 보조 보온 수단으로 활용 가능하지만, 저체온증 환자의 저온 피부에 직접 접촉하면 저온 화상 위험이 있다. 수건이나 의류로 감싸 간접 접촉으로 사용한다.</p>
+<ul>
+<li>비상용 은박 담요: 필수 상비. 사용 후 재사용 불가이므로 1인 1개.</li>
+<li>보온병(따뜻한 음료): 출발 시 60°C 이상으로 채워 단열 보온병에 보관.</li>
+<li>예비 건조 베이스 레이어: 당일 산행에도 지퍼백에 넣어 배낭 깊숙이 보관.</li>
+</ul>
+
+<h2>자주 묻는 질문</h2>
+<details open><summary><strong>저체온증과 단순 피로를 어떻게 구분하나요?</strong></summary><p>오한이 격심하고 걸음걸이가 비틀거리며 판단이 느려진다면 저체온증 초기로 봐야 한다. 단순 피로는 쉬면 빠르게 회복되지만 저체온증은 따뜻한 곳으로 이동하지 않으면 시간이 지날수록 악화된다.</p></details>
+<details><summary><strong>핫팩을 많이 붙이면 빠르게 체온이 올라가나요?</strong></summary><p>핫팩은 체온을 올리는 도구가 아니라 더 이상 빼앗기지 않도록 돕는 보조 장비다. 핵심은 젖은 의류 제거와 단열 차폐가 먼저다. 핫팩 자체만으로는 중등도 이상 저체온증에 효과가 제한적이다.</p></details>
+<details><summary><strong>술을 마시면 몸이 따뜻해지지 않나요?</strong></summary><p>알코올은 말초 혈관을 확장시켜 일시적으로 피부가 따뜻하게 느껴지지만, 오히려 체열이 피부 표면으로 몰려 빠르게 손실된다. 겨울 산행 중 음주는 저체온증 위험을 높이는 행위다.</p></details>
+
+<p>겨울 산행의 저체온증 위험은 레이어링 선택과 비상 장비 구비 두 가지로 대부분 예방된다. 오한이 멈추는 순간을 경계 신호로 인식하는 것이 응급 처치의 출발점이다. <a href="/blog/p85">겨울 하산 빙판길 미끄럼 사고 예방</a>도 겨울 산행 안전 준비에서 빠질 수 없다. <a href="/blog/p84">산에서 살아남는 안전 수칙 10가지</a>도 겨울 산행 전반의 안전 기준을 세우는 데 연결된다.</p>
+
+<div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 산행 전 산림청 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-14T20:00:00+00:00',
+    read: 7,
+    date: '2026.06.15',
+    badges: ['저체온증', '겨울안전'],
+  },
+  {
+    id: 'p82',
+    cat: '안전',
+    pal: 'forest',
+    title: '고혈압 심장질환 있어도 등산 가능한가',
+    excerpt: '산악 심정지 사례의 약 40%가 기저 심혈관질환자에서 발생합니다. 그러나 적절한 코스 선택과 자기 점검 루틴을 갖추면 고혈압·심장질환자도 완만한 등산을 지속할 수 있습니다. 판단 기준을 정리했습니다.',
+    body: `<h2>고혈압 환자가 등산을 무조건 피해야 한다는 통념 — 데이터는 다르게 말한다</h2><p>고혈압이나 심장질환이 있으면 등산을 아예 하지 말아야 한다는 인식이 있다. 소방청 2023년 산악구조 통계를 보면 산악 심정지 사례의 약 40%에서 기저 심혈관질환이 확인된다. 이 수치만 보면 위험하다는 결론이 자연스럽다. 그런데 대한고혈압학회 가이드라인은 혈압이 조절되는 고혈압 환자에게 규칙적인 유산소 운동(MET 4~6 수준)을 적극 권장한다. 등산 강도를 올바르게 조절하면 심혈관 기능 강화에 도움이 된다는 근거다.</p><p>문제는 강도 조절 없이 급경사 산행에 나서는 것이다. 보건복지부 심장질환 지침에 따르면 경사 10% 이상 등산의 운동 강도는 6~8 MET로, 이는 고혈압 환자 권장 강도(4~6 MET)를 초과한다. 표고차 700m 이상 코스를 쉬지 않고 오르면 수축기 혈압이 순간적으로 200mmHg을 넘을 수 있다. 약이 잘 듣고 있는 상태라도 이 수준의 급격한 혈압 상승은 뇌졸중·심근경색 위험을 높인다.</p>
+
+<div class="aeo-answer" style="background:#f0f4f0;border-left:4px solid #5a8a6a;padding:16px;margin:20px 0"><strong>핵심 답변</strong><p style="margin:8px 0 0">혈압이 안정적으로 조절되는 상태라면 표고차 300m 이하, 경사 완만, 충분한 휴식을 전제로 등산 가능하다. 단, 출발 전 의사 상담과 당일 혈압 확인이 선행되어야 한다.</p></div>
+
+<h2>출발 전 자기 점검 — 의사 상담이 필요한 기준</h2><p>다음 조건 중 하나라도 해당되면 산행 전 반드시 주치의와 상의해야 한다.</p>
+<ul>
+<li>수축기 혈압이 160mmHg 이상으로 조절이 안 되는 상태</li>
+<li>최근 6개월 이내 협심증·심근경색·뇌졸중 이력</li>
+<li>심부전 진단 또는 심장 판막 질환</li>
+<li>혈압약 복용 시작 후 아직 안정화가 되지 않은 상태(조절 기간 3개월 미만)</li>
+<li>당일 아침 혈압 측정 시 수축기 140mmHg 초과</li>
+</ul>
+<p>혈압약 중 베타차단제를 복용하는 경우 심박수 증가가 제한되어 운동 능력이 낮게 평가될 수 있다. 이때 자신이 느끼는 피로도(Borg 자각 운동 강도 13 이하, 즉 "다소 힘들다" 수준)를 기준으로 강도를 조절하는 것이 심박수보다 신뢰할 수 있는 지표다.</p>
+
+<h2>코스 선택 기준 — 수치로 판단하는 방법</h2>
+<table style="width:100%;border-collapse:collapse;font-size:0.9em;margin:16px 0">
+<thead><tr style="background:#c8dcc8"><th style="padding:8px;border:1px solid #a0c0a0;text-align:left">항목</th><th style="padding:8px;border:1px solid #a0c0a0;text-align:left">권장 범위</th><th style="padding:8px;border:1px solid #a0c0a0;text-align:left">주의 범위</th><th style="padding:8px;border:1px solid #a0c0a0;text-align:left">위험 범위</th></tr></thead>
+<tbody>
+<tr><td style="padding:8px;border:1px solid #a0c0a0">표고차</td><td style="padding:8px;border:1px solid #a0c0a0">200m 이하</td><td style="padding:8px;border:1px solid #a0c0a0">200~500m</td><td style="padding:8px;border:1px solid #a0c0a0">500m 초과</td></tr>
+<tr style="background:#f0f5f0"><td style="padding:8px;border:1px solid #a0c0a0">편도 거리</td><td style="padding:8px;border:1px solid #a0c0a0">3~5km</td><td style="padding:8px;border:1px solid #a0c0a0">5~8km</td><td style="padding:8px;border:1px solid #a0c0a0">8km 초과</td></tr>
+<tr><td style="padding:8px;border:1px solid #a0c0a0">경사도</td><td style="padding:8px;border:1px solid #a0c0a0">경사 완만(10% 미만)</td><td style="padding:8px;border:1px solid #a0c0a0">10~20%</td><td style="padding:8px;border:1px solid #a0c0a0">암릉·20% 초과</td></tr>
+<tr style="background:#f0f5f0"><td style="padding:8px;border:1px solid #a0c0a0">기온</td><td style="padding:8px;border:1px solid #a0c0a0">15~25°C</td><td style="padding:8px;border:1px solid #a0c0a0">25~30°C</td><td style="padding:8px;border:1px solid #a0c0a0">30°C 초과 또는 0°C 미만</td></tr>
+</tbody></table>
+<p>저지대 완만 코스는 표고차 500m 이상 급경사 코스 대비 수축기 혈압 상승 폭이 30~40mmHg 낮게 나타난다. 초기 심혈관질환자라면 북한산 둘레길(총 71.5km, 구간당 5~10km), 남한산성 능선(둘레 9km, 표고차 약 180m) 같은 완만한 능선 구간부터 시작하는 것이 적절하다.</p>
+<p>코스 선택 후에도 첫 산행에서는 동행자가 있는 것이 안전하다. 혼자 산행 중 이상 증상이 발생하면 주변에 알릴 수 없고 구조 요청도 늦어진다. 처음 3~5회 산행은 표고차 200m 이하 코스를 동행자와 걸으며 자신의 혈압 반응 패턴을 확인한다. 혈압 측정기를 배낭에 넣어 중간 지점에서 측정하면 본인 기준 데이터를 쌓을 수 있다.</p>
+
+<h2>산행 중 이상 신호 — 즉시 하산 기준</h2><p>다음 증상이 나타나면 즉시 휴식을 취하고 증상이 지속되면 하산 후 병원을 방문해야 한다.</p>
+<ol>
+<li><strong>흉통 또는 흉부 압박감</strong>: 협심증 증상. 즉시 활동 중단 + 니트로글리세린(처방받은 경우) 설하 투여 + 119 신고.</li>
+<li><strong>두통·어지럼증 동반 구역질</strong>: 혈압 급상승 가능성. 앉아서 5~10분 안정 후 호전 없으면 하산.</li>
+<li><strong>호흡 곤란이 평지에서도 지속</strong>: 심부전 악화 신호일 수 있다.</li>
+<li><strong>불규칙 맥박 감지</strong>: 심방세동 등 부정맥 가능성. 즉시 앉아 안정.</li>
+</ol>
+
+<h2>혈압약 복용과 탈수 — 두 가지를 동시에 관리해야 하는 이유</h2><p>이뇨제 계열 혈압약(hydrochlorothiazide, furosemide 등)을 복용하는 경우 소변량이 많아 탈수가 빠르게 진행될 수 있다. 탈수는 혈액 농도를 높여 혈전 위험을 증가시키고 혈압 불안정을 유발한다. 등산 시간이 2시간을 넘는다면 30분마다 150~200ml씩 마시는 계획적인 수분 섭취가 필요하다.</p>
+<p>베타차단제를 복용 중이면 더위에 대한 체온 조절 반응이 느려질 수 있다. 여름 고온 산행보다 봄·가을 기온이 적당한 시기가 안전하다. <a href="/blog/p89">등산 후 이런 증상 나타나면 병원에 가세요</a>에서 귀가 후 확인해야 할 이상 신호를 정리했다. <a href="/blog/p84">산에서 살아남는 안전 수칙 10가지</a>에서 심혈관 위험 외에도 갖춰야 할 기본 준비를 확인할 수 있다.</p>
+
+<h2>자주 묻는 질문</h2>
+<details open><summary><strong>혈압약을 먹고 있으면 등산 중 혈압이 안 오르나요?</strong></summary><p>혈압약은 안정 시 혈압을 낮추지만 운동 중 혈압 상승 자체를 완전히 막지는 못한다. 강도 높은 등산에서는 약을 복용해도 수축기 혈압이 180mmHg 이상 오를 수 있다. 약 복용 여부와 관계없이 완만한 코스 선택이 더 중요하다.</p></details>
+<details><summary><strong>스마트워치 심박수 측정을 믿어도 되나요?</strong></summary><p>광학식 심박수 측정 오차는 안정 시 3~5bpm, 운동 중 5~15bpm 수준이다. 절대 수치보다 추세(갑자기 오르거나 불규칙한 패턴)를 보는 용도로 활용하는 것이 현실적이다. 정확한 모니터링이 필요하면 의사 처방 심전도 기반 웨어러블을 사용한다.</p></details>
+
+<div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 산행 전 산림청 공식 통제정보를 확인하고, 심혈관 관련 이상이 있으면 반드시 의사 상담 후 산행 여부를 결정하세요.</p></div>`,
+    publishAt: '2026-06-15T01:00:00+00:00',
+    read: 7,
+    date: '2026.06.15',
+    badges: ['건강주의', '중장년'],
+  },
+  {
+    id: 'p83',
+    cat: '안전',
+    pal: 'dawn',
+    title: '스마트폰 배터리 — 등산 중 오래 쓰는 법',
+    excerpt: '소방청 구조 통계에서 배터리 방전으로 인한 위치 파악 지연 사례가 지속적으로 확인됩니다. 리튬이온 배터리는 0°C 이하에서 용량이 최대 50% 줄어듭니다. 절전 설정 순서와 보조배터리 선택 기준을 단계별로 정리했습니다.',
+    body: `<h2>1단계. 출발 전 — 배터리 상태 점검과 초기 설정</h2><p>등산 당일 아침, 배터리 잔량이 100%라도 설정 확인 없이 출발하면 산에서 예상보다 빠르게 방전된다. 화면 밝기가 자동 설정이거나 불필요한 앱이 백그라운드에서 실행 중이면 시간당 소모량이 2~3배 늘어난다. 집을 나서기 전 다음 세 가지를 확인한다.</p>
+<ol>
+<li><strong>화면 밝기</strong>: 수동으로 40~50%로 낮춘다. 야외에서도 이 수준이면 판독 가능하다.</li>
+<li><strong>백그라운드 앱 갱신 차단</strong>: iOS는 설정 → 일반 → 백그라운드 앱 갱신 전체 끄기. Android는 배터리 → 앱 최적화 → 각 앱 제한 적용.</li>
+<li><strong>위치 서비스 선택 적용</strong>: 등산 앱(트랭글, 산책, Komoot 등) 한 개만 '사용하는 동안' 허용, 나머지 앱 위치 서비스 끄기. 전체 GPS를 끄면 비상 시 위치 확인이 불가하므로 주의한다.</li>
+</ol>
+
+<h2>2단계. 산행 중 — 상황별 절전 모드 전환</h2><p>능선 이동 중 전화를 쓰지 않는 구간에서 배터리를 아끼는 방법은 두 가지다. 화면을 끄는 것과 알림을 줄이는 것이다. 비행기 모드는 셀룰러 신호 탐색을 완전히 차단해 배터리 소모를 30~40% 줄이지만, 통화와 문자가 불가해진다. 산행 중 연락이 필요 없는 구간에서만 선택적으로 적용하고, 쉬는 장소에서 비행기 모드를 해제해 연락 여부를 확인하는 루틴이 현실적이다.</p>
+<ul>
+<li><strong>배터리 절약 모드</strong>: 배터리 20~30% 시점에 켜는 것보다 출발 시부터 켜두는 것이 총 사용 시간을 늘리는 데 효과적이다.</li>
+<li><strong>화면 자동 잠금 시간</strong>: 15초 또는 30초로 설정해 화면이 빠르게 꺼지도록 한다.</li>
+<li><strong>5G → LTE 전환</strong>: 산간 지역에서 5G 신호를 잡으려는 탐색 동작이 배터리를 많이 소모한다. 수동으로 LTE로 변경하면 신호 탐색 에너지가 줄어든다.</li>
+</ul>
+
+<h2>3단계. 겨울 산행 — 저온에서 배터리 관리</h2><p>리튬이온 배터리는 온도에 민감하다. 0°C 이하에서 배터리 용량이 20~30% 급감하고, -10°C에서는 최대 50%까지 손실된다. 배터리 잔량 70%로 출발했다가 정상부에서 실제 가용 용량이 35%에 불과한 상황이 발생하는 이유다. 겨울에는 스마트폰을 내의 주머니(체온 유지 가능한 위치)에 넣어 보온하는 것이 실질적인 절전 방법이다.</p>
+<div style="background:#e8f0e8;border-left:4px solid #5a8a6a;padding:16px;margin:20px 0">
+<strong>온도별 배터리 가용 용량 참고</strong>
+<table style="width:100%;border-collapse:collapse;margin-top:10px;font-size:0.9em">
+<thead><tr style="background:#c8dcc8"><th style="padding:8px;border:1px solid #a0c0a0">온도</th><th style="padding:8px;border:1px solid #a0c0a0">가용 용량 수준</th><th style="padding:8px;border:1px solid #a0c0a0">대응</th></tr></thead>
+<tbody>
+<tr><td style="padding:8px;border:1px solid #a0c0a0">15~25°C</td><td style="padding:8px;border:1px solid #a0c0a0">100% 기준</td><td style="padding:8px;border:1px solid #a0c0a0">일반 관리</td></tr>
+<tr style="background:#f0f5f0"><td style="padding:8px;border:1px solid #a0c0a0">0~15°C</td><td style="padding:8px;border:1px solid #a0c0a0">80~90%</td><td style="padding:8px;border:1px solid #a0c0a0">절전 모드 조기 활성</td></tr>
+<tr><td style="padding:8px;border:1px solid #a0c0a0">-10~0°C</td><td style="padding:8px;border:1px solid #a0c0a0">50~80%</td><td style="padding:8px;border:1px solid #a0c0a0">내의 주머니 보온 필수</td></tr>
+<tr style="background:#f0f5f0"><td style="padding:8px;border:1px solid #a0c0a0">-10°C 미만</td><td style="padding:8px;border:1px solid #a0c0a0">50% 이하</td><td style="padding:8px;border:1px solid #a0c0a0">보조배터리도 보온 필요</td></tr>
+</tbody></table></div>
+
+<h2>4단계. 보조배터리 선택 — 용량별 실사용 기준</h2><p>보조배터리는 표시 용량과 실제 출력 용량이 다르다. 변환 손실이 있어 10,000mAh 보조배터리의 실제 충전 가능 용량은 약 6,500~7,000mAh 수준이다. 스마트폰 배터리 용량(4,000~5,000mAh 일반)을 기준으로 충전 횟수를 역산한다.</p>
+<ul>
+<li><strong>5,000mAh</strong>: 1회 충전, 무게 약 100g. 당일 산행용 최소 선택.</li>
+<li><strong>10,000mAh</strong>: 1.5~2회 충전, 무게 약 200g. 1박 2일 적합.</li>
+<li><strong>20,000mAh</strong>: 3~4회 충전, 무게 약 400g. 장거리 종주 또는 예비 장비 충전 필요 시.</li>
+</ul>
+<p>겨울 산행에서 보조배터리 자체도 저온으로 성능이 저하된다. 배낭 내부보다 내의 주머니에 가까이 두거나 인슐레이터 파우치에 넣어 보온하는 것이 권장된다.</p>
+
+<h2>5단계. 비상 통신 — 배터리 없을 때 대안</h2><p>스마트폰이 완전 방전되면 119 신고가 불가능해진다. 배터리 5~10% 수준에 도달하면 즉시 비상 위치(GPS 좌표 또는 국가지점번호)를 메모하고 119에 연락하거나 동행자에게 위치를 공유한다. 완전 방전 직전에는 긴급 SOS 신호만 발신할 수 있는 모드를 활성화해 두는 것이 마지막 수단이다.</p>
+<p>호루라기는 스마트폰 없이도 위치를 알릴 수 있는 비상 장비다. 소리 에너지 소모가 없고, 3번 연속 취명이 국제 조난 신호다. 배터리에 의존하지 않는 이 도구를 배낭 외부 포켓에 항상 달아두는 습관이 디지털 의존도를 보완한다.
+<p>최근 일부 스마트폰 기종은 위성 긴급 SOS 기능을 지원한다. 애플 iPhone 14 이상(iOS 16.1+)은 산간 지역에서 셀룰러 없이 위성으로 119와 연결하거나 응급 메시지를 발신할 수 있다. 갤럭시 일부 기종도 긴급 SOS 위성 메시지 기능이 탑재되기 시작했다. 구조 통신 수단이 단 하나인 상황을 만들지 않는 것이 핵심이다. <a href="/blog/p88">119 구조 신고 — 산에서 위치 정확히 알리는 법</a>에서 배터리 없는 상황에서의 대응 방법을 더 자세히 다뤘다. <a href="/blog/p84">산에서 살아남는 안전 수칙 10가지</a>도 준비물 전반을 점검하는 데 참고가 된다.</p></p>
+
+<h2>자주 묻는 질문</h2>
+<details open><summary><strong>등산 앱을 켜놓으면 배터리가 얼마나 빨리 닳나요?</strong></summary><p>GPS 트래킹 앱을 화면 켠 상태로 운영하면 시간당 15~25% 소모된다. 화면을 끄고 백그라운드 트래킹만 유지하면 시간당 8~12% 수준으로 줄어든다. 6시간 산행 기준 백그라운드 트래킹만 사용하면 약 50~70% 소모를 예상한다.</p></details>
+<details><summary><strong>겨울에 보조배터리를 배낭 안에 두면 얼지 않나요?</strong></summary><p>리튬이온 보조배터리는 -20°C에서도 얼지는 않지만 용량이 대폭 감소한다. 배낭 내부보다 외투 안쪽 주머니가 온도가 높아 성능 유지에 유리하다. 겨울 장거리 산행이라면 단열 파우치를 사용하는 것이 가장 효과적이다.</p></details>
+
+<div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 산행 전 산림청 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-15T06:00:00+00:00',
+    read: 6,
+    date: '2026.06.15',
+    badges: ['배터리관리', '준비물'],
+  },
+  {
+    id: 'p84',
+    cat: '안전',
+    pal: 'sage',
+    title: '산에서 살아남는 안전 수칙 10가지',
+    excerpt: '소방청 2024년 산악사고 구조 건수는 연간 약 9,000~10,000건입니다. 원인 1위 실족·추락(35%), 2위 길 잃음(25%), 3위 탈진(15%). 이 세 가지 원인을 대부분 막을 수 있는 기본 수칙 10가지를 정리했습니다.',
+    body: `<h2>통계가 보여주는 산악사고의 구조 — 예방 가능한 원인이 80%</h2><p>소방청 2024년 산악사고 현황에서 연간 구조 건수는 약 9,000~10,000건이다. 원인별로 나누면 실족·추락 35%, 길 잃음 25%, 탈진·체력 고갈 15%, 개인 질환 10%, 기타 15%로 분류된다. 상위 세 원인(실족·길 잃음·탈진)이 전체의 75%를 차지하며, 이 세 가지는 공통적으로 사전 준비와 행동 선택으로 예방 가능하다. 단독 산행이냐 2인 이상 동행이냐도 구조 소요 시간에 큰 차이를 만든다. 혼자 실족했을 때 구조 신호 발신부터 현장 도착까지 평균 2~3시간 더 걸리는 것으로 소방청 통계는 보여준다.</p><p>반면 "장비만 좋으면 안전하다"는 인식은 통계로 뒤집힌다. 고가 장비를 갖춘 경험자가 능력 초과 코스에서 사고를 당하는 사례가 전체 중장년 산악사고의 상당 비율을 차지한다. 안전의 핵심은 장비가 아니라 판단과 행동 선택이다.</p>
+
+<h2>1. 입산 전 공식 통제정보 확인</h2><p>산림청 산림공간정보서비스, 국립공원공단 예약통합시스템에서 당일 탐방로 통제 여부를 확인한다. 기상 악화, 산불 통제, 동절기 결빙 구간 통제는 당일 아침에도 바뀐다. 전날 예보만 믿고 출발하면 현장에서 발길을 돌리거나 무단 입산자가 된다.</p>
+
+<h2>2. 산행 계획서 공유 — 출발지·코스·귀가 예상 시간</h2><p>가족이나 지인에게 출발지, 이용 코스, 예상 귀가 시간을 문자로 남긴다. 사고 시 수색 범위를 좁히는 데 결정적인 역할을 한다. 국립공원 탐방객 산행신고서 시스템(일부 국립공원 운영)을 활용하면 공식 기록이 남는다.</p>
+
+<h2>3. 일몰 2시간 전 하산 완료 기준</h2><p>등산로에서 조명 없이 이동하는 것은 실족 위험을 3~5배 높인다. 일몰 시간은 계절마다 다르며, 겨울 산행에서 오후 5시 이전 하산 완료를 기준으로 잡으면 안전 마진이 확보된다. 편도 소요시간의 2배를 왕복 시간으로 계산하되, 실제 하산은 오름보다 빠른 경우도 있지만 피로도가 높아지면 느려진다는 점을 감안한다.</p>
+<ul>
+<li>봄·가을 일몰: 오후 6~7시 → 오후 4~5시까지 하산 시작</li>
+<li>겨울 일몰: 오후 5시 30분 전후 → 오후 3시 30분까지 하산 시작</li>
+<li>여름 일몰: 오후 7시 30분 전후 → 오후 5시 30분까지 하산 시작</li>
+</ul>
+
+<h2>4. 수분·행동식 충분히 준비</h2><p>성인 기준 1시간 등산에 약 500~700ml의 수분이 소모된다. 6시간 산행이면 최소 3L가 필요하고, 여름이라면 3.5~4L를 준비한다. 행동식(에너지바, 견과류, 고열량 젤리)은 2시간 간격으로 섭취해 혈당 급락을 막는다. 탈진 사고의 상당수가 수분·에너지 공급 소홀에서 시작된다.</p>
+
+<h2>5. 날씨 변화 신호에 즉각 대응</h2><p>기상청 산악날씨 예보는 등산로 해발 기준으로 제공된다. 출발 전 예보 확인뿐 아니라 산행 중 서쪽 방향 구름이 급격히 몰려오거나 갑자기 바람이 강해지는 경우 기상 악화 신호로 받아들인다. "이미 올라왔으니 정상까지만"이라는 판단이 사고를 만드는 가장 흔한 심리다.</p>
+
+<h2>6. 등산로 이탈 금지</h2><p>산악구조 사례의 25%인 길 잃음 사고 대부분은 등산로를 벗어난 지점에서 발생한다. 지름길처럼 보이는 사면을 내려가다 절벽 앞에서 진퇴양난이 되는 패턴이 반복된다. 표지판이 없는 방향으로는 한 발짝도 나아가지 않는 것이 원칙이다. 방향 확신이 없다면 왔던 길을 되돌아간다.</p>
+
+<h2>7. 국가지점번호 이정표 위치 기억</h2><p>등산로 주요 지점에 설치된 국가지점번호(예: 가나12-34-56)는 100m 격자 위치 정보를 담고 있다. 구조 신고 시 이 번호를 전달하면 GPS 좌표 없이도 구조대가 정확한 위치를 파악한다. 중간 쉬는 지점에서 가장 최근에 본 이정표 번호를 기억해두는 습관이 비상 시 생명을 구할 수 있다.</p>
+
+<h2>8. 기본 응급 장비 상시 휴대</h2>
+<ul>
+<li>비상용 은박 담요(서바이벌 블랭킷): 50~80g, 저체온증 응급 시 필수</li>
+<li>호루라기: 배터리 불필요, 조난 신호(3회 연속)</li>
+<li>헤드랜턴 + 예비 배터리: 일몰 후 이동 또는 동굴 대피 시</li>
+<li>방수 소형 구급 키트: 탄력붕대, 지혈패드, 일회용 소독제</li>
+</ul>
+
+<h2>9. 혼자 산행 시 추가 주의사항</h2><p>단독 산행은 금지 사항이 아니지만 위험 반경이 넓어진다. 부상 시 도움 요청 수단 없이 방치되는 시간이 길어진다. 단독이라면 코스 난이도를 한 단계 낮추고, 산행 전 출발 정보를 복수의 사람에게 공유한다. 실시간 위치 공유 앱(카카오 라이브 위치 공유, 구글 공유 위치)을 켜두면 배터리가 살아 있는 동안 이동 경로가 기록된다.</p>
+
+<h2>10. 자기 체력 한계 인식 — 하산 결정 기준</h2><p>산행 중 예상 시간의 절반을 지났는데 체력이 60% 이상 소모된 느낌이라면 정상 대신 하산이 맞는 결정이다. "정상까지 거의 다 왔다"는 생각이 탈진 사고로 이어지는 가장 흔한 경로다. 오르는 데 쓴 체력의 60~70%가 하산에도 필요하다는 점을 항상 역산해야 한다.</p>
+
+<table style="width:100%;border-collapse:collapse;font-size:0.9em;margin:20px 0">
+<thead><tr style="background:#e8d8a0"><th style="padding:8px;border:1px solid #c8b878;text-align:left">수칙</th><th style="padding:8px;border:1px solid #c8b878;text-align:left">예방하는 사고 유형</th><th style="padding:8px;border:1px solid #c8b878;text-align:left">핵심 행동</th></tr></thead>
+<tbody>
+<tr><td style="padding:8px;border:1px solid #c8b878">1. 통제정보 확인</td><td style="padding:8px;border:1px solid #c8b878">통제 구역 무단 진입</td><td style="padding:8px;border:1px solid #c8b878">산림청·공단 사이트 당일 확인</td></tr>
+<tr style="background:#faf4e0"><td style="padding:8px;border:1px solid #c8b878">2. 계획서 공유</td><td style="padding:8px;border:1px solid #c8b878">수색 범위 과대</td><td style="padding:8px;border:1px solid #c8b878">코스·귀가 시간 문자 발송</td></tr>
+<tr><td style="padding:8px;border:1px solid #c8b878">3. 일몰 2시간 전 하산</td><td style="padding:8px;border:1px solid #c8b878">야간 실족</td><td style="padding:8px;border:1px solid #c8b878">역산해 출발 시각 결정</td></tr>
+<tr style="background:#faf4e0"><td style="padding:8px;border:1px solid #c8b878">4. 수분·행동식</td><td style="padding:8px;border:1px solid #c8b878">탈진·열사병</td><td style="padding:8px;border:1px solid #c8b878">최소 3L + 에너지바</td></tr>
+<tr><td style="padding:8px;border:1px solid #c8b878">5. 기상 대응</td><td style="padding:8px;border:1px solid #c8b878">낙뢰·폭우 고립</td><td style="padding:8px;border:1px solid #c8b878">구름 방향 관찰 + 하산 결정</td></tr>
+<tr style="background:#faf4e0"><td style="padding:8px;border:1px solid #c8b878">6. 등산로 이탈 금지</td><td style="padding:8px;border:1px solid #c8b878">길 잃음(25%)</td><td style="padding:8px;border:1px solid #c8b878">표지판 없는 방향 진입 금지</td></tr>
+<tr><td style="padding:8px;border:1px solid #c8b878">7. 이정표 기억</td><td style="padding:8px;border:1px solid #c8b878">구조 위치 특정 지연</td><td style="padding:8px;border:1px solid #c8b878">국가지점번호 메모</td></tr>
+<tr style="background:#faf4e0"><td style="padding:8px;border:1px solid #c8b878">8. 응급 장비 휴대</td><td style="padding:8px;border:1px solid #c8b878">저체온증·출혈</td><td style="padding:8px;border:1px solid #c8b878">은박 담요·호루라기·구급 키트</td></tr>
+<tr><td style="padding:8px;border:1px solid #c8b878">9. 단독 시 코스 낮춤</td><td style="padding:8px;border:1px solid #c8b878">부상 후 방치</td><td style="padding:8px;border:1px solid #c8b878">계획서 공유 + 표고차 한 단계 낮춤</td></tr>
+<tr style="background:#faf4e0"><td style="padding:8px;border:1px solid #c8b878">10. 체력 한계 하산</td><td style="padding:8px;border:1px solid #c8b878">탈진(15%)</td><td style="padding:8px;border:1px solid #c8b878">50% 체력 소모 = 하산 시작</td></tr>
+</tbody></table>
+
+<p>이 10가지 수칙은 장비나 기술보다 판단 습관에 가깝다. 특별한 비용 없이 실천할 수 있고, 소방청 통계에서 가장 흔한 사고 원인 세 가지를 직접적으로 막는다. <a href="/blog/p88">119 구조 신고 — 산에서 위치 정확히 알리는 법</a>에서 위기 상황 대응 절차를 확인하면 수칙을 실제 상황에 연결할 수 있다. <a href="/blog/p5">산행 전 반드시 확인하는 통제·기상 정보 5곳</a>도 출발 루틴에 포함시키면 좋다.</p>
+
+<div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 산행 전 산림청 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-15T11:00:00+00:00',
+    read: 7,
+    date: '2026.06.15',
+    badges: ['안전수칙', '기본'],
+  },
+  {
+    id: 'p85',
+    cat: '안전',
+    pal: 'winter',
+    title: '겨울 하산 빙판길 미끄럼 사고 예방',
+    excerpt: '겨울 등산사고의 약 60%가 하산 중 발생하며, 결빙 노면 미끄러짐이 주요 원인입니다. 아이젠 착탈 시점과 4발·10발 선택 기준, 빙판 하산 보행법을 수치 기반으로 정리했습니다.',
+    body: `<h2>겨울 하산 사고가 오르막보다 많은 이유 — 통계와 원인</h2><p>소방청 동계 산악사고 통계에서 겨울 등산사고의 약 60%가 하산 구간에서 발생한다. 오르막에서는 발 앞꿈치가 접지면 안쪽으로 파고드는 방향이라 미끄러짐 저항이 있다. 반면 내리막에서는 발뒤꿈치가 먼저 닿고 체중이 앞으로 쏠리면서 결빙면에서 순간 미끄러진다. 피로도가 높아진 하산 시점에 이 구조적 취약성이 겹치는 것이 사고 집중의 원인이다.</p><p>겨울 하산 미끄럼 사고의 특징은 단순 타박상을 넘어 척추·골반 골절로 이어지는 경우가 많다는 점이다. 미끄러진 후 경사를 따라 수 미터~수십 미터 구른 뒤 암반이나 나무에 충돌하는 2차 부상이 치명적이다. 아이젠 미착용이나 착용 시점이 늦은 경우가 중증 사고의 주요 패턴이다.</p>
+
+<h2>아이젠 종류별 선택 기준 — 경사도와 코스 유형으로 결정</h2>
+<table style="width:100%;border-collapse:collapse;font-size:0.9em;margin:16px 0">
+<thead><tr style="background:#d0dce8"><th style="padding:8px;border:1px solid #a0b8cc;text-align:left">종류</th><th style="padding:8px;border:1px solid #a0b8cc;text-align:left">발 수</th><th style="padding:8px;border:1px solid #a0b8cc;text-align:left">적합 지형</th><th style="padding:8px;border:1px solid #a0b8cc;text-align:left">주의</th></tr></thead>
+<tbody>
+<tr><td style="padding:8px;border:1px solid #a0b8cc">체인 스파이크</td><td style="padding:8px;border:1px solid #a0b8cc">4~6발</td><td style="padding:8px;border:1px solid #a0b8cc">완만한 포장로·등산로 결빙</td><td style="padding:8px;border:1px solid #a0b8cc">급경사·암릉 부적합</td></tr>
+<tr style="background:#f0f4f8"><td style="padding:8px;border:1px solid #a0b8cc">C형 아이젠</td><td style="padding:8px;border:1px solid #a0b8cc">8~10발</td><td style="padding:8px;border:1px solid #a0b8cc">일반 겨울 산행·능선</td><td style="padding:8px;border:1px solid #a0b8cc">암반 구간 제거 권장</td></tr>
+<tr><td style="padding:8px;border:1px solid #a0b8cc">바인딩 아이젠</td><td style="padding:8px;border:1px solid #a0b8cc">10~12발</td><td style="padding:8px;border:1px solid #a0b8cc">설산·급경사 빙면</td><td style="padding:8px;border:1px solid #a0b8cc">등산화 호환 확인 필수</td></tr>
+</tbody></table>
+<p>4발 체인 스파이크와 10발 바인딩 아이젠의 경사 15° 이상 빙면 접지력 차이는 상당하다. 국내 100대 명산 겨울 산행 대부분(설악산·북한산·치악산·덕유산 등)에서는 10발 이상 아이젠이 기본이다. 덕유산 곤돌라 상부 데크 구간처럼 경사 5° 이하 포장 탐방로에서는 4발 체인 스파이크로도 충분하다.</p>
+
+<h2>아이젠 착탈 시점 판단 기준</h2><p>아이젠을 너무 일찍 착용하면 비결빙 암반에서 스파이크가 걸려 오히려 넘어질 수 있다. 너무 늦게 착용하면 결빙 구간에서 미끄러진다. 판단 기준을 단순하게 만들면 다음과 같다.</p>
+<ol>
+<li><strong>착용 시점</strong>: 등산로 1/3 이상이 결빙면으로 바뀐 것이 보일 때. 또는 동행자가 발이 미끄러진다고 말하는 순간. "괜찮을 것 같다"는 생각이 들 때가 이미 착용 시점이다.</li>
+<li><strong>제거 시점</strong>: 암반 구간이 20m 이상 연속되거나 완전히 녹은 흙길이 지속될 때. 아이젠 착용 상태로 암반을 걸으면 스파이크가 걸려 발목을 꺾을 수 있다.</li>
+<li><strong>재착용</strong>: 능선에서 계곡부로 내려올 때 다시 결빙 구간이 나타나면 즉시 재착용. 한 번 벗었다고 끝까지 안 신어도 된다는 생각이 사고로 이어진다.</li>
+</ol>
+
+<h2>빙판 하산 보행법 — 신체 역학 기반</h2><p>빙판 내리막에서 안전한 보행법은 일반 보행과 반대다. 일반 보행은 발뒤꿈치부터 착지하지만, 결빙면에서는 발 전체를 동시에 수평으로 내딛는 펭귄 걸음이 안전하다.</p>
+<ul>
+<li><strong>보폭 줄이기</strong>: 평소 보폭의 50~60%로 줄이면 순간 하중이 분산된다.</li>
+<li><strong>무릎 약간 굽힘</strong>: 무릎을 5~10° 굽힌 자세는 무게중심을 낮추고 미끄러질 때 반응 거리를 확보한다.</li>
+<li><strong>트레킹 폴 2개 착지</strong>: 하산 시 폴을 전방 양쪽에 짚어 3점 지지를 유지하면 미끄러짐 시 슬라이딩 거리가 줄어든다. 폴 한 개만 사용하면 체중이 한쪽으로 쏠려 효과가 반감된다.</li>
+<li><strong>경사 지그재그 이동</strong>: 급경사 빙판에서 직선 하강 대신 사선 방향으로 이동하면 경사각이 줄어든다.</li>
+</ul>
+
+<h2>스패츠(게이터)와 방수 등산화 — 결빙 예방 보조 장비</h2><p>무릎 아래 길이 스패츠는 적설 구간에서 눈이 신발 안으로 들어오는 것을 막아준다. 신발 내부가 젖으면 발 온도가 급격히 떨어지고 감각이 무뎌져 결빙면 감지 능력이 떨어진다. 방수투습 소재(고어텍스 등) 등산화 + 스패츠 조합이 겨울 하산 기본 구성이다.</p>
+<p>스패츠는 등산화 아웃솔의 홈에 걸리는 클립 방식과 밸크로 방식이 있다. 클립 방식이 고정력이 높지만 등산화 밑창 모양에 따라 호환 여부를 확인해야 한다. 국내 겨울 산행 기준 가랑이 높이 이하 쇼트 게이터(25~35cm)면 대부분의 환경에 대응 가능하다.
+<p>하산 보행에서 스틱 2개 사용이 발목 하중을 약 25% 줄이고 미끄럼 균형을 잡는 데 효과적이라는 점을 기억한다. 체중 70kg 기준 편도 500m 하산 시 무릎 관절에 가해지는 충격은 약 3,500~4,200N에 달한다. 스틱 2개와 펭귄 걸음 보행을 병행하면 관절 충격이 20~30% 분산된다. 이 습관은 아이젠 효과와 더불어 겨울 하산 사고를 줄이는 가장 기본적인 방법이다.</p>
+<p>겨울 국립공원 주요 진입로에서 아이젠 미착용 시 입산을 제한하거나 무료 대여 서비스를 운영하는 탐방지원센터가 늘고 있다. 설악산 오색 탐방지원센터, 태백산 당골 탐방지원센터 등이 대표적이다. 출발 전 해당 국립공원 탐방지원센터에 전화로 대여 가능 여부를 확인하면 장비를 현장에서 해결할 수 있다. 단, 대여 수량이 한정되어 있어 성수기(12월~2월) 주말에는 조기 소진될 수 있다. <a href="/blog/p81">겨울 산행 저체온증 예방과 응급 대처</a>도 겨울 산행 안전 준비의 또 다른 축이다. <a href="/blog/p3">겨울 눈꽃 산행 아이젠·스패츠 고르는 법</a>에서 장비 선택 세부 기준을 확인할 수 있다.</p></p>
+
+<h2>자주 묻는 질문</h2>
+<details open><summary><strong>아이젠 없이 빙판 구간을 안전하게 내려올 수 있나요?</strong></summary><p>경사 5° 이하의 짧은 결빙 구간이라면 폴 양쪽 착지와 펭귄 걸음으로 통과할 수 있다. 그러나 경사 10° 이상이거나 결빙 구간이 100m 이상 연속된다면 아이젠 없이 내려오는 것은 사고 위험이 높다. 현장에서 대여가 가능한 탐방지원센터도 있으니 출발 전 확인하는 것이 낫다.</p></details>
+<details><summary><strong>아이젠을 신으면 발이 더 미끄럽게 느껴지는 경우도 있나요?</strong></summary><p>마른 암반이나 목재 데크 위에서 아이젠을 신으면 스파이크가 걸려 오히려 발이 불안정해질 수 있다. 이때는 일시적으로 아이젠을 벗거나 발 전체를 수평으로 내딛는 방식으로 접지하면 된다. 아이젠은 얼음·눈 위에서만 유효하다는 점을 기억한다.</p></details>
+
+<div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 산행 전 산림청 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-15T16:00:00+00:00',
+    read: 6,
+    date: '2026.06.15',
+    badges: ['빙판길', '아이젠'],
+  },
+  {
+    id: 'p86',
+    cat: '안전',
+    pal: 'valley',
+    title: '이 코스 가도 될까 — 위험 판단 기준 5가지',
+    excerpt: '산악 탈진·체력 고갈 사고의 40% 이상이 자신의 체력 대비 과도한 코스 선택에서 시작됩니다. 표고차·소요시간·암릉 여부·기상·구조 접근성 다섯 기준으로 코스 위험을 사전에 판단하는 방법을 정리했습니다.',
+    body: `<h2>"이 정도는 갈 수 있겠지"라는 판단이 사고를 만드는 이유</h2><p>소방청 산악사고 원인 분석에서 탈진·체력 고갈 사고의 40% 이상이 자신의 체력 대비 과도한 코스 선택이 직접 원인이었다. 장비가 좋고 경험이 있어도 코스 선택 오류는 발생한다. 특히 "지도상 거리가 짧으니 괜찮다"는 판단이 가장 흔한 실수다. 표고차가 크거나 암릉 구간이 있으면 같은 거리라도 소요 시간과 체력 소모가 2~3배 달라진다.</p><p>산림청과 국립공원공단 기준의 상·중·하 난이도 분류는 표고차, 거리, 암릉 유무를 주요 변수로 산정된다. 그러나 같은 '중' 등급이라도 코스 성격이 다르면 체감 난이도 차이가 크다. 본인의 체력 상태, 동행 여부, 당일 기상을 모두 대입해야 실질적인 위험 판단이 가능하다.</p>
+
+<h2>판단 기준 1 — 표고차와 편도 거리</h2><p>표고차는 코스의 실질 난이도를 가장 직접적으로 반영하는 수치다. 같은 3km 코스라도 표고차 300m 코스와 700m 코스의 체력 소모는 완전히 다르다. 체중 70kg 성인 기준 칼로리 소모량으로 환산하면 표고차 300m 코스 약 250kcal, 700m 코스 약 550kcal로 2배 이상 차이 난다. 1,000m 이상은 800kcal를 넘는다.</p>
+<div style="background:#e8f0e8;border-left:4px solid #5a8a6a;padding:16px;margin:20px 0">
+<strong>표고차별 적합 대상 기준</strong>
+<table style="width:100%;border-collapse:collapse;margin-top:10px;font-size:0.9em">
+<thead><tr style="background:#c8dcc8"><th style="padding:8px;border:1px solid #a0c0a0">표고차</th><th style="padding:8px;border:1px solid #a0c0a0">소요 체력 수준</th><th style="padding:8px;border:1px solid #a0c0a0">초보자 적합</th></tr></thead>
+<tbody>
+<tr><td style="padding:8px;border:1px solid #a0c0a0">300m 이하</td><td style="padding:8px;border:1px solid #a0c0a0">낮음</td><td style="padding:8px;border:1px solid #a0c0a0">적합</td></tr>
+<tr style="background:#f0f5f0"><td style="padding:8px;border:1px solid #a0c0a0">300~600m</td><td style="padding:8px;border:1px solid #a0c0a0">중간</td><td style="padding:8px;border:1px solid #a0c0a0">3개월 이상 경험자</td></tr>
+<tr><td style="padding:8px;border:1px solid #a0c0a0">600~900m</td><td style="padding:8px;border:1px solid #a0c0a0">높음</td><td style="padding:8px;border:1px solid #a0c0a0">6개월 이상 경험자</td></tr>
+<tr style="background:#f0f5f0"><td style="padding:8px;border:1px solid #a0c0a0">900m 초과</td><td style="padding:8px;border:1px solid #a0c0a0">매우 높음</td><td style="padding:8px;border:1px solid #a0c0a0">상급자 이상</td></tr>
+</tbody></table></div>
+
+<h2>판단 기준 2 — 소요 예상 시간 vs 일몰 시간</h2><p>코스 안내판의 소요 시간은 평균 체력 기준이다. 초보자나 체력이 낮은 날에는 1.3~1.5배를 적용해야 실제와 가깝다. 왕복 예상 시간을 계산한 뒤 일몰 시간에서 2시간을 뺀 시각이 하산 완료 데드라인이다. 이 역산 기준으로 출발 시각과 등정 가능 여부를 판단한다.</p>
+<ul>
+<li>예시: 편도 4시간 코스, 일몰 오후 6시 → 하산 데드라인 오후 4시 → 왕복 8시간 × 1.2배 = 9.6시간 → 오전 6시 24분 이전 출발 필요</li>
+<li>오전 8시 이후 출발이라면 이 코스는 당일 완주가 어렵다는 결론이 나온다.</li>
+</ul>
+
+<h2>판단 기준 3 — 암릉 구간 유무</h2><p>국립공원공단 탐방로 정보에 '암릉' 표기가 있거나 "밧줄·철계단 구간"이 안내된 코스는 기술적 난이도가 추가된다. 암릉 구간은 지도상 거리가 짧아도 통과에 30분~1시간이 더 소요된다. 고소공포증이 있거나 암벽 훈련 경험이 없다면 암릉 비율이 20% 이상인 코스는 피하는 것이 현실적이다. 북한산 인수봉, 월악산 영봉(표고차 717m, 암릉 구간 0.8km), 설악산 공룡능선이 대표적인 고난이도 암릉 코스다.</p>
+
+<h2>판단 기준 4 — 당일 기상 이력과 예보</h2><p>코스 난이도는 기상 조건에 따라 완전히 달라진다. 전날 비가 온 뒤 기온이 영하로 내려간 경우 하산 구간 결빙이 심해진다. 당일 오후 예보에 강수 확률 30% 이상이면 하산 중 비를 맞을 가능성이 있다. 오름 시작 전 날씨가 맑아도 정상부 기상이 다를 수 있다. 기상청 산악날씨(기상청 앱 → 산악날씨 탭)는 해발 고도별 기온·풍속·강수를 제공한다.</p>
+
+<h2>판단 기준 5 — 119 구조 접근성</h2><p>코스 형태에 따라 사고 시 구조대 접근 시간이 크게 달라진다. 등산로가 차량 접근 가능한 들머리에서 시작하는지, 계곡 코스인지 능선 코스인지에 따라 구조 소요시간이 최대 2~3배 차이 난다. 산 전체가 도보 접근 2시간 이상인 오지 코스(지리산 종주, 설악산 깊은 계곡 등)는 부상 시 구조가 그만큼 늦다. 초보자나 단독 산행자가 오지 코스를 선택하면 작은 부상도 위험한 상황이 된다.</p>
+<p>5가지 기준 중 하나라도 "우려" 수준이면 코스를 조정하거나 출발을 미루는 것이 합리적이다. 코스 변경을 약함으로 볼 것이 아니라 판단력의 결과로 봐야 한다.</p>
+<ul>
+<li><strong>기준 1 통과</strong>: 표고차 600m 이하 + 편도 7km 이내</li>
+<li><strong>기준 2 통과</strong>: 왕복 시간 × 1.3 + 일몰 2시간 전 하산 가능</li>
+<li><strong>기준 3 통과</strong>: 암릉 비율 20% 미만 또는 철계단 구간 없음</li>
+<li><strong>기준 4 통과</strong>: 당일 강수 확률 30% 미만 + 바람 초속 8m 이하</li>
+<li><strong>기준 5 통과</strong>: 들머리에서 구조차 접근 가능 (편도 1시간 이내)</li>
+</ul>
+<p>5개 기준을 모두 통과해야 출발 기준을 충족한다. 한 개라도 "우려" 수준이면 코스를 낮추거나 날짜를 바꾸는 것이 현명한 선택이다. 능력을 아끼고 경험을 쌓는 속도가 완주보다 중요하다.</p>
+<p>국립공원공단 홈페이지에서는 탐방로별 거리·소요시간·표고차를 공식으로 제공한다. 산림청 '산행정보' 서비스에서도 주요 100대 명산의 코스별 난이도 등급을 조회할 수 있다. 두 출처를 병행 확인하면 지도 앱 정보보다 정확한 기준을 얻을 수 있다. <a href="/blog/p84">산에서 살아남는 안전 수칙 10가지</a>에서 판단 기준을 실전 준비로 연결할 수 있다. <a href="/blog/p5">산행 전 반드시 확인하는 통제·기상 정보 5곳</a>도 출발 전 루틴에 포함시키면 좋다.</p>
+
+<h2>자주 묻는 질문</h2>
+<details open><summary><strong>지도 앱에 "쉬움" 표시된 코스도 위험할 수 있나요?</strong></summary><p>지도 앱의 난이도 표기는 기준이 각기 다르다. 일부 앱은 단순히 거리만 기준으로 삼는다. 표고차와 암릉 여부를 직접 확인하거나 국립공원공단·산림청 공식 코스 정보를 병행 확인하는 것이 더 정확하다.</p></details>
+<details><summary><strong>등산 횟수가 많으면 어려운 코스도 갈 수 있나요?</strong></summary><p>횟수보다 유사한 표고차와 코스 성격의 경험이 더 중요하다. 완만한 코스를 100번 다녀온 것보다 표고차 600m 코스를 10번 완주한 경험이 기술적 판단에 더 직접적으로 연결된다. 단계적으로 난이도를 높여가는 접근이 안전하다.</p></details>
+
+<div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 산행 전 산림청 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-15T21:00:00+00:00',
+    read: 7,
+    date: '2026.06.16',
+    badges: ['위험판단', '코스선택'],
+  },
+  {
+    id: 'p87',
+    cat: '안전',
+    pal: 'forest',
+    title: '등산 전 5분 스트레칭 — 부상 막는 루틴',
+    excerpt: '등산 관련 근골격계 부상에서 무릎 손상이 40%, 발목 염좌가 25%를 차지합니다. 동적 스트레칭 6단계 루틴으로 관절 가동 범위를 확보하면 부상 발생률을 낮출 수 있습니다.',
+    body: `<h2>동산 전 스트레칭이 왜 5분 이상이어야 하는가</h2><p>대한정형외과학회 자료에 따르면 등산 관련 근골격계 부상에서 무릎 손상이 전체의 약 40%, 발목 염좌가 약 25%를 차지한다. 이 두 부위는 모두 사전 스트레칭으로 손상 위험을 낮출 수 있는 관절이다. 체육과학연구원 분석에서 스트레칭 없이 산행을 시작한 그룹과 10분 준비운동을 한 그룹을 비교했을 때 부상 발생률 차이가 확인된다. 준비운동 없는 그룹에서 관절 부상이 더 빈번하게 보고됐다.</p><p>중요한 구분이 있다. 운동 전에는 동적 스트레칭(관절을 움직이며 가동 범위 확보), 운동 후에는 정적 스트레칭(근육을 늘인 상태로 유지)이 권장된다. 대한스포츠의학회 기준도 같다. 오랫동안 관행적으로 이어진 "운동 전 정적 스트레칭"은 오히려 근력을 일시적으로 떨어뜨려 부상 위험을 높일 수 있다.</p>
+
+<h2>1단계. 발목 회전 — 30초</h2><p>발목은 하산 중 내반 손상이 가장 많이 발생하는 관절이다. 발목 외측 인대 주변 근육의 가동 범위를 미리 확보하면 순간적인 발 꺾임에 대한 반응 속도가 빨라진다. 한 발씩 들어 발목을 시계 방향 10회, 반시계 방향 10회 돌린다. 속도는 느리게, 가동 범위를 최대한 크게 가져간다. 발목이 뻣뻣한 느낌이 있으면 15초 더 연장한다.</p>
+
+<h2>2단계. 무릎 굴신 — 30초</h2><p>서서 양발을 어깨너비로 벌리고 무릎을 구부렸다 폈다를 반복한다. 스쿼트 동작과 유사하지만 깊이는 90° 이하로 제한한다. 15~20회 반복하면 무릎 관절낭이 이완되고 슬개골 주변 근육이 활성화된다. 무릎 통증이 있는 사람은 10° 이하의 얕은 굴신으로 시작한다.</p>
+
+<h2>3단계. 고관절 스트레칭 — 1분</h2><p>고관절은 오르막에서 보폭을 결정하는 관절로, 유연성이 낮으면 무릎과 허리에 불필요한 부하가 전달된다. 한 발씩 교대로 앞으로 크게 내딛고 상체를 앞으로 기울여 고관절 앞쪽 근육(장요근)을 30초씩 늘인다. 이때 뒷다리 무릎은 바닥에 대거나 살짝 구부린 상태로 유지한다.</p>
+<ul>
+<li>런지 자세에서 앞무릎이 발끝을 넘어가지 않도록 주의한다.</li>
+<li>고관절 안쪽 당기는 느낌이 있으면 정상적인 스트레칭 반응이다.</li>
+<li>통증이 있으면 즉시 중단한다.</li>
+</ul>
+
+<h2>4단계. 허리 굴신 — 1분</h2><p>양발을 어깨너비로 서서 양손을 허리에 얹고 상체를 앞으로 45° 구부렸다 세우기를 10~12회 반복한다. 이어 상체를 좌우로 각각 30° 기울이는 옆 굴신을 10회 반복한다. 허리 다열근과 광배근이 이완되어 배낭 착용 시 허리 부하를 분산하는 데 도움이 된다. 급격히 뒤로 젖히는 동작은 요추 부담이 크므로 생략한다.</p>
+
+<h2>5단계. 종아리·햄스트링 스트레칭 — 1분</h2><p>등산로 오르막에서 종아리(비복근·가자미근)는 가장 많이 쓰이는 근육이다. 벽이나 나무를 짚고 한 발씩 교대로 뒤로 밀어 종아리를 늘인다. 무릎을 편 상태는 비복근, 무릎을 약간 구부린 상태는 가자미근에 작용한다. 각 30초씩 유지한다. 이어 발을 나란히 모아 서서 상체를 앞으로 구부려 햄스트링(허벅지 뒤 근육)을 30초 늘인다.</p>
+
+<h2>6단계. 어깨·목 회전 — 1분</h2><p>배낭 착용은 어깨와 목에 상시 부하를 준다. 배낭을 멘 채 어깨를 앞뒤로 크게 원을 그리며 10회 회전한다. 이어 목을 좌우로 각각 45° 천천히 기울이고 3~5초 유지한다. 좌우 회전도 각 10회. 이 동작은 배낭 착용 자세에서 어깨 관절이 올바른 위치를 잡는 데 도움이 된다. 급격히 목을 돌리거나 뒤로 젖히는 동작은 경추에 부담이 크므로 피한다.</p>
+
+<table style="width:100%;border-collapse:collapse;font-size:0.9em;margin:20px 0">
+<thead><tr style="background:#c8dcc8"><th style="padding:8px;border:1px solid #a0c0a0;text-align:left">단계</th><th style="padding:8px;border:1px solid #a0c0a0;text-align:left">시간</th><th style="padding:8px;border:1px solid #a0c0a0;text-align:left">대상 관절·근육</th><th style="padding:8px;border:1px solid #a0c0a0;text-align:left">부상 예방 효과</th></tr></thead>
+<tbody>
+<tr><td style="padding:8px;border:1px solid #a0c0a0">1. 발목 회전</td><td style="padding:8px;border:1px solid #a0c0a0">30초</td><td style="padding:8px;border:1px solid #a0c0a0">발목 외측 인대</td><td style="padding:8px;border:1px solid #a0c0a0">내반 손상 예방</td></tr>
+<tr style="background:#f0f5f0"><td style="padding:8px;border:1px solid #a0c0a0">2. 무릎 굴신</td><td style="padding:8px;border:1px solid #a0c0a0">30초</td><td style="padding:8px;border:1px solid #a0c0a0">슬개골 주변 근육</td><td style="padding:8px;border:1px solid #a0c0a0">무릎 관절 활성화</td></tr>
+<tr><td style="padding:8px;border:1px solid #a0c0a0">3. 고관절 런지</td><td style="padding:8px;border:1px solid #a0c0a0">1분</td><td style="padding:8px;border:1px solid #a0c0a0">장요근·고관절</td><td style="padding:8px;border:1px solid #a0c0a0">허리·무릎 부하 분산</td></tr>
+<tr style="background:#f0f5f0"><td style="padding:8px;border:1px solid #a0c0a0">4. 허리 굴신</td><td style="padding:8px;border:1px solid #a0c0a0">1분</td><td style="padding:8px;border:1px solid #a0c0a0">다열근·광배근</td><td style="padding:8px;border:1px solid #a0c0a0">배낭 착용 허리 부하 감소</td></tr>
+<tr><td style="padding:8px;border:1px solid #a0c0a0">5. 종아리·햄스트링</td><td style="padding:8px;border:1px solid #a0c0a0">1분</td><td style="padding:8px;border:1px solid #a0c0a0">비복근·가자미근</td><td style="padding:8px;border:1px solid #a0c0a0">오르막 근육 피로 지연</td></tr>
+<tr style="background:#f0f5f0"><td style="padding:8px;border:1px solid #a0c0a0">6. 어깨·목 회전</td><td style="padding:8px;border:1px solid #a0c0a0">1분</td><td style="padding:8px;border:1px solid #a0c0a0">어깨 관절·경추</td><td style="padding:8px;border:1px solid #a0c0a0">배낭 착용 자세 교정</td></tr>
+</tbody></table>
+<p>총 5분. 들머리에 도착해 배낭 확인 후 바로 진행한다. 차량 이동 후 근육이 굳어 있는 상태라면 2~3분 추가하면 된다.</p>
+
+<h2>스트레칭 효과를 높이는 추가 조건</h2><p>스트레칭 자체뿐 아니라 실행 환경도 효과에 영향을 준다. 기온이 낮은 겨울 아침에는 근육 온도 자체가 낮아 스트레칭 효율이 떨어진다. 이때는 5분 루틴 전에 제자리 걷기나 팔 돌리기를 2~3분 추가해 체온을 먼저 약간 높이면 근육 반응이 빠르다.</p>
+<ul>
+<li>날씨 15°C 이하: 스트레칭 전 제자리 걷기 2분 추가</li>
+<li>오랜 차량 이동 후: 하차 직후 5분간 가볍게 걷고 스트레칭 진행</li>
+<li>전날 음주 또는 수면 부족: 스트레칭 시간을 8분으로 늘리고 강도를 낮춤</li>
+<li>이전 산행 후 근육통 잔류: 통증 부위 정적 스트레칭 30초 → 동적 스트레칭 전환</li>
+</ul>
+
+<h2>자주 묻는 질문</h2>
+<details open><summary><strong>등산 후에는 어떤 스트레칭을 해야 하나요?</strong></summary><p>등산 후에는 정적 스트레칭이 적합하다. 무릎 앞 대퇴사두근 늘이기, 종아리 벽 스트레칭, 고관절 비둘기 자세를 각 30~60초씩 유지한다. 하산 직후보다 귀가 후 몸이 식기 전에 하는 것이 효과적이다.</p></details>
+<details><summary><strong>시간이 없으면 스트레칭을 생략해도 되나요?</strong></summary><p>5분 전체가 어렵다면 발목 회전 30초, 무릎 굴신 30초, 종아리 스트레칭 1분, 이 세 단계 2분만이라도 진행하는 것이 낫다. 완전 생략보다 단축 루틴이 부상 예방 효과가 명확히 다르다.</p></details>
+
+<p>산행 전 5분 스트레칭 습관은 장비 점검만큼 기본이 되어야 한다. <a href="/blog/p13">하산 중 무릎 통증 줄이는 3가지 방법</a>을 참고하면 무릎 부상 예방 체계를 갖출 수 있다. <a href="/blog/p89">등산 후 이런 증상 나타나면 병원에 가세요</a>도 참고하면 산행 전후 관리를 연결할 수 있다.</p>
+
+<div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 산행 전 산림청 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-16T02:00:00+00:00',
+    read: 6,
+    date: '2026.06.16',
+    badges: ['스트레칭', '준비운동'],
+  },
+  {
+    id: 'p88',
+    cat: '안전',
+    pal: 'autumn',
+    title: '119 구조 신고 — 산에서 위치 정확히 알리는 법',
+    excerpt: '소방청 통계에서 산악 구조 요청 후 현장 도착까지 평균 62분이 걸립니다. 위치 특정이 지연되면 2~3배 더 걸립니다. 국가지점번호·GPS 좌표·산 이름 조합으로 정확한 위치를 전달하는 절차를 단계별로 정리했습니다.',
+    body: `<h2>1단계. 안전한 장소 확보 — 신고 전 이 과정을 먼저</h2><p>부상이 발생하거나 길을 잃었을 때 가장 먼저 할 일은 신고가 아니라 안전한 위치 확보다. 부상 직후 불안정한 경사면이나 계곡 가장자리에서 스마트폰을 꺼내 신고하다가 2차 사고가 발생하는 경우가 있다. 가능하다면 평지나 넓은 바위 위로 이동하거나 등산로 중앙으로 나온 뒤 신고한다. 이동이 불가능하다면 현 위치에서 최대한 안정된 자세를 잡은 후 신고한다.</p>
+
+<h2>2단계. 위치 정보 수집 — 국가지점번호·GPS·이정표</h2><p>소방청 산악구조통계에서 위치 특정이 지연되면 구조 도착 시간이 평균보다 2~3배 늘어난다. 정확한 위치 전달이 구조 시간을 결정한다. 산에서 위치를 전달할 수 있는 방법은 세 가지다.</p>
+<div style="background:#f8e8d0;border-left:4px solid #c07030;padding:16px;margin:20px 0">
+<strong>위치 전달 방법 비교</strong>
+<table style="width:100%;border-collapse:collapse;margin-top:10px;font-size:0.9em">
+<thead><tr style="background:#e8cca0"><th style="padding:8px;border:1px solid #c0a070;text-align:left">방법</th><th style="padding:8px;border:1px solid #c0a070;text-align:left">정확도</th><th style="padding:8px;border:1px solid #a0c0a0;text-align:left">준비 필요</th></tr></thead>
+<tbody>
+<tr><td style="padding:8px;border:1px solid #c0a070">국가지점번호</td><td style="padding:8px;border:1px solid #c0a070">100m 격자, 높음</td><td style="padding:8px;border:1px solid #c0a070">이정표 확인</td></tr>
+<tr style="background:#faf0e0"><td style="padding:8px;border:1px solid #c0a070">GPS 좌표</td><td style="padding:8px;border:1px solid #c0a070">10~20m, 가장 높음</td><td style="padding:8px;border:1px solid #c0a070">스마트폰 GPS 앱</td></tr>
+<tr><td style="padding:8px;border:1px solid #c0a070">산 이름+능선+이정표 거리</td><td style="padding:8px;border:1px solid #c0a070">중간(오차 500m~1km)</td><td style="padding:8px;border:1px solid #c0a070">없음</td></tr>
+</tbody></table></div>
+<p>국가지점번호는 행정안전부가 전국을 100m 격자로 구획한 위치 표기 시스템으로, 등산로 안내판에 부착되어 있다. 예: '가나 12-34-56'과 같은 형식이다. GPS 좌표는 스마트폰의 '나침반' 앱(iOS), '구글 지도' 앱 또는 등산 전용 앱에서 현재 위도·경도를 확인할 수 있다. 구글 지도에서는 현재 위치 핀을 길게 누르면 좌표가 표시된다.</p>
+
+<h2>3단계. 119 연결 — 전달해야 할 정보 순서</h2><p>119가 연결되면 당황하지 말고 다음 순서로 정보를 전달한다.</p>
+<ol>
+<li><strong>산 이름과 탐방로 이름</strong>: "설악산 오색 코스입니다"처럼 구체적으로.</li>
+<li><strong>국가지점번호 또는 GPS 좌표</strong>: 확인했다면 숫자를 또렷하게 읽는다.</li>
+<li><strong>최근 통과한 이정표</strong>: "정상에서 약 1.2km 하산 지점, 이정표 번호 가나 12-34-56 근처"</li>
+<li><strong>부상자 상태</strong>: 의식 있음/없음, 출혈 여부, 이동 가능 여부</li>
+<li><strong>신고자 연락처</strong>: 배터리 방전 대비 다른 번호도 전달</li>
+</ol>
+<p>통화 중 배터리가 부족하면 위치 정보를 먼저 전달하고 끊은 뒤 문자로 보내도 된다. 119 문자 신고(문자 보내기 → 119)도 통화와 동일하게 위치와 상황을 텍스트로 전달할 수 있다.</p>
+
+<h2>4단계. 신호 도구 준비 — 구조대 현장 유도</h2><p>119가 출동했다고 끝이 아니다. 구조대가 등산로 진입 후 현장을 찾는 과정에서 신호 도구가 없으면 추가 시간이 걸린다. 호루라기는 3번 연속 취명이 국제 조난 신호다. 소리가 수백 미터 이상 전달되며 배터리 불필요, 악천후에도 유효하다. 야간이라면 헤드랜턴을 흔들거나 반사판(은박 담요)으로 햇빛을 반사해 위치를 시각적으로 알린다.</p>
+<ul>
+<li>호루라기: 배낭 외부 포켓에 항상 고정</li>
+<li>헤드랜턴: 야간·악천후 구조 신호</li>
+<li>비상용 은박 담요: 반사로 위치 표시 + 보온</li>
+<li>붉은색 의류·우의: 수색대 식별 용이</li>
+</ul>
+
+<h2>5단계. 신호 없는 환경에서 119 연결 방법</h2><p>산간 지역에서 셀룰러 신호가 없어도 긴급 전화는 가능한 경우가 있다. 다른 통신사 기지국에 자동 접속해 119 발신이 이루어지는 경우다. 신호가 없다는 표시가 나와도 일단 119를 눌러본다. 스마트폰 SOS 기능(아이폰 전원 버튼 5번 누름, 삼성 측면 버튼 빠르게 3회 등)은 긴급 연락처로 자동 발신하거나 위성 긴급 SOS(지원 기종)를 활용한다. 위성 SOS 기능이 있는 기종은 셀룰러 신호 없이도 구조 요청이 가능하다.</p>
+<p>소방청은 2024년부터 '119 스마트 신고' 앱을 통해 GPS 좌표와 사진을 동시에 전송하는 기능을 운영하고 있다. 앱을 미리 설치해 두면 전화 통화 없이 위치 정보와 상황 사진을 119 상황실에 직접 전송할 수 있다. 통화 연결이 어렵거나 부상자가 말하기 어려운 상황에서 유용하다. 또한 등산 동행자가 2명 이상인 경우, 1명이 구조 신호를 보내는 동안 나머지 1명이 부상자 처치를 맡아 두 역할을 분담할 수 있다.</p>
+<p>야간 구조 상황에서 구조대가 현장을 식별하기 어려운 경우가 많다. 헤드랜턴을 위를 향해 비추거나, 밝은 색상 의류를 등산로에 펼쳐 항공 수색 시 눈에 띄도록 하는 것이 효과적이다. 야간 구조 중 헬기 접근 시 로터 바람이 강하므로 나무 아래나 바위 뒤에서 몸을 낮추고 위치를 알리는 신호만 유지한다. 구조 신고 후 자리를 이동하면 구조대가 혼란을 겪는다. 이동이 불가피한 경우에는 119에 다시 연락해 이동 방향을 알린다. <a href="/blog/p83">스마트폰 배터리 — 등산 중 오래 쓰는 법</a>에서 신고 전 배터리를 최대한 유지하는 방법을 확인할 수 있다. <a href="/blog/p84">산에서 살아남는 안전 수칙 10가지</a>에서 비상 대응 전반의 준비를 이어갈 수 있다.</p>
+
+<h2>자주 묻는 질문</h2>
+<details open><summary><strong>119와 112 중 어디에 신고해야 하나요?</strong></summary><p>산악 구조는 소방청(119) 소관이다. 구조대가 출동하고 헬기 지원도 119를 통해 이루어진다. 112는 경찰 신고용이지만 112에 신고해도 119에 연결해 준다. 빠른 처리를 위해 119가 직접적이다.</p></details>
+<details><summary><strong>GPS 좌표를 119에 말로 전달하기 어렵지 않나요?</strong></summary><p>위도 37.1234, 경도 128.5678과 같이 숫자를 느리게 읽으면 된다. 구조대는 이 형식에 익숙하다. 또는 카카오맵·네이버 지도 앱에서 현재 위치를 캡처해 문자로 보내면 더 정확하다.</p></details>
+
+<div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 산행 전 산림청 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-16T07:00:00+00:00',
+    read: 6,
+    date: '2026.06.16',
+    badges: ['119구조', '위치신고'],
+  },
+  {
+    id: 'p89',
+    cat: '안전',
+    pal: 'dawn',
+    title: '등산 후 이런 증상 나타나면 병원에 가세요',
+    excerpt: '등산 후 근육통은 자연스러운 회복 반응이지만, 콜라색 소변·관절 부종·가슴 두근거림은 즉각 병원이 필요한 이상 신호입니다. 일반 피로와 의료 판단이 필요한 증상의 경계를 구분하는 기준을 정리했습니다.',
+    body: `<h2>등산 후 피로와 이상 신호를 구분해야 하는 이유</h2><p>등산 후 근육통과 피로감은 정상적인 회복 반응이다. 그러나 이 반응과 의학적 개입이 필요한 이상 신호를 혼동하면 치료 시기를 놓칠 수 있다. 대한응급의학회 자료에서 과도한 운동 후 응급실을 찾는 경우 중 횡문근융해증이 주요 원인으로 반복 등장한다. 이 질환은 초기 증상이 단순 근육통과 구분되지 않아 방치되다가 급성 신부전으로 이어지는 사례가 있다. 증상의 심각성보다 증상의 종류와 지속 시간이 판단 기준이 되어야 한다.</p><p>보건복지부 응급의료 가이드는 횡문근융해증을 과도한 운동으로 근육세포가 파괴되어 미오글로빈이 혈류에 방출되는 상태로 정의한다. 미오글로빈이 신장에서 걸러지면서 소변이 갈색이나 콜라색으로 변하는 것이 가장 직접적인 징후다.</p>
+
+<h2>즉시 응급실 — 이 증상은 기다리지 않는다</h2>
+<ul>
+<li><strong>콜라색·갈색 소변</strong>: 횡문근융해증의 핵심 신호. 등산 후 12~48시간 이내 나타날 수 있다. 즉시 응급실 방문.</li>
+<li><strong>흉통 또는 흉부 압박감</strong>: 심근경색·협심증 가능성. 왼쪽 어깨나 턱으로 방사되는 통증이 동반되면 즉시 119 신고.</li>
+<li><strong>의식 혼탁·극심한 두통</strong>: 고산병(해발 2,500m 이상) 또는 뇌졸중 초기 가능성.</li>
+<li><strong>호흡 곤란(평지 안정 상태에서도 지속)</strong>: 심부전 또는 폐색전증 가능성.</li>
+</ul>
+
+<h2>당일~48시간 이내 병원 방문 — 기다리면 늦는 신호</h2>
+<table style="width:100%;border-collapse:collapse;font-size:0.9em;margin:16px 0">
+<thead><tr style="background:#f0dcd0"><th style="padding:8px;border:1px solid #d0b8a8;text-align:left">증상</th><th style="padding:8px;border:1px solid #d0b8a8;text-align:left">의심 원인</th><th style="padding:8px;border:1px solid #d0b8a8;text-align:left">방문 기준</th></tr></thead>
+<tbody>
+<tr><td style="padding:8px;border:1px solid #d0b8a8">발목·무릎 부종 지속</td><td style="padding:8px;border:1px solid #d0b8a8">인대 파열·관절 손상</td><td style="padding:8px;border:1px solid #d0b8a8">부종이 24시간 이상 지속</td></tr>
+<tr style="background:#fcf4f0"><td style="padding:8px;border:1px solid #d0b8a8">관절 쪽 열감·빨개짐</td><td style="padding:8px;border:1px solid #d0b8a8">관절 내 출혈·감염</td><td style="padding:8px;border:1px solid #d0b8a8">온감 + 부종 동반 시</td></tr>
+<tr><td style="padding:8px;border:1px solid #d0b8a8">72시간 이상 지속되는 심한 근육통</td><td style="padding:8px;border:1px solid #d0b8a8">횡문근융해증·근육 파열</td><td style="padding:8px;border:1px solid #d0b8a8">소변 변색 없어도 통증 심하면 방문</td></tr>
+<tr style="background:#fcf4f0"><td style="padding:8px;border:1px solid #d0b8a8">손발 저림·감각 이상</td><td style="padding:8px;border:1px solid #d0b8a8">신경 압박·혈류 장애</td><td style="padding:8px;border:1px solid #d0b8a8">귀가 후 24시간 이상 지속</td></tr>
+<tr><td style="padding:8px;border:1px solid #d0b8a8">심한 피로 + 발열</td><td style="padding:8px;border:1px solid #d0b8a8">진드기 매개 감염(쯔쯔가무시, SFTS)</td><td style="padding:8px;border:1px solid #d0b8a8">풀숲 통과 후 2주 이내 발열</td></tr>
+</tbody></table>
+
+<h2>일반 근육통 vs 횡문근융해증 — 구분 기준</h2><p>일반 근육통(DOMS, 지연성 근육통)은 산행 후 24~48시간 뒤 최고조에 달했다가 3~5일 안에 자연 회복된다. 통증 부위가 특정 근육 부위에 집중되고 움직일 때 더 아픈 것이 전형적이다. 횡문근융해증은 다음과 같은 차이가 있다.</p>
+<ul>
+<li>소변 색이 갈색·콜라색으로 변한다 — 가장 중요한 구분 신호</li>
+<li>전신에 걸쳐 근육이 붓고 만지면 극심하게 아프다</li>
+<li>소변량이 급격히 줄거나 아예 나오지 않는다</li>
+<li>두통, 구역질, 발열이 동반된다</li>
+</ul>
+<p>이 중 소변 색 변화만 있어도 즉시 응급실을 방문해야 한다. 초기 수액 치료로 신장 손상을 예방할 수 있지만, 치료 시기를 놓치면 투석이 필요한 상태로 악화될 수 있다.</p>
+
+<h2>진드기·해충 노출 후 — 2주 관찰 기준</h2><p>여름·가을 산행에서 풀숲을 통과하면 진드기 노출 위험이 있다. 쯔쯔가무시병은 노출 후 6~21일 사이 발열, 두통, 발진이 나타나고 물린 부위에 딱지가 생긴다. 중증열성혈소판감소증후군(SFTS)은 발열·구역질·혈소판 감소가 특징이며 치료가 늦으면 치명률이 높다. 산행 후 2주 이내 38°C 이상 발열에 피부 딱지 또는 발진이 동반되면 진드기 노출 이력을 진료실에 알리고 즉시 방문한다.</p>
+
+<h2>회복 기간 판단 — 언제 다시 산에 가도 되나</h2><p>일반 근육통은 3~5일 충분한 수면과 단백질 섭취(체중 1kg당 1.2~1.5g)로 회복된다. 관절 부상(발목 염좌, 무릎 건염)은 초기 72시간 RICE 처치 후 완전 통증 소멸까지 다음 산행을 피한다. 부분 파열(2도 염좌)은 최소 2~4주, 완전 파열(3도 염좌)은 수술 후 재활 포함 3~6개월이 필요하다.</p>
+<p>횡문근융해증 진단 후에는 의사의 허가 전까지 고강도 운동 재개는 금지다. 급성기 수액 치료 후에도 신장 기능 수치(크레아티닌, BUN)가 정상으로 돌아올 때까지 추적 검사가 필요하다. 회복 기간 중에는 강도 낮은 평지 걷기부터 시작해 2~4주에 걸쳐 단계적으로 강도를 높이는 것이 일반적인 복귀 프로토콜이다. 이 기간에 무리하게 산행을 재개하면 재발 위험이 높다.</p>
+<p>진드기 매개 감염증으로 입원 치료를 받은 경우에는 항생제 치료가 끝난 뒤 충분한 안정 기간이 필요하다. 쯔쯔가무시 치료 기간은 보통 5~7일이지만, 면역 기능이 회복되는 데는 2~4주가 더 걸린다. 이 기간 동안 잔디나 낙엽이 쌓인 숲길 방문은 피하고, 복귀 시에는 긴 옷과 기피제(DEET 성분) 사용을 유지한다. 등산 후 이상 증상에 대한 병원 방문 기준은 "망설일 것 없이 빠르게"다. 증상이 조금 이상하다 싶으면 지켜보는 것보다 방문해 확인하는 것이 치료 결과를 더 좋게 만든다. <a href="/blog/p87">등산 전 5분 스트레칭 — 부상 막는 루틴</a>을 참고하면 부상 예방부터 회복까지 이어지는 루틴을 만들 수 있다. <a href="/blog/p79">등산 중 발목 삐었을 때 현장 대처법</a>도 관련 참고 자료다.</p>
+
+<h2>자주 묻는 질문</h2>
+<details open><summary><strong>등산 후 다리가 너무 아파서 계단을 못 내려가는 것도 이상 신호인가요?</strong></summary><p>대퇴사두근(앞 허벅지)과 종아리의 지연성 근육통이 심한 경우 계단 하강이 매우 불편할 수 있다. 이는 지극히 정상이다. 3~5일 이내 자연 회복되면 일반 근육통으로 봐도 된다. 다만 해당 부위에 눈에 띄는 부종, 열감, 피부색 변화가 동반된다면 심부정맥혈전증(DVT)을 배제하기 위해 병원 방문이 필요하다.</p></details>
+<details><summary><strong>두통이 심한데 진통제를 먹으면 되나요?</strong></summary><p>산행 중 탈수로 인한 두통이라면 충분한 수분 섭취 후 30분 이내 호전된다. 수분 섭취에도 두통이 지속되거나 구역질·시야 변화가 동반되면 약으로 증상을 억제하기 전에 의료 기관 방문이 우선이다.</p></details>
+
+<div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 산행 전 산림청 공식 통제정보를 확인하세요. 본 글의 의료 정보는 일반 안내 목적이며, 증상이 있으면 의사 진단을 받아야 합니다.</p></div>`,
+    publishAt: '2026-06-16T12:00:00+00:00',
+    read: 7,
+    date: '2026.06.16',
+    badges: ['건강관리', '이상신호'],
+  },
+  {
+    id: 'p90',
+    cat: '안전',
+    pal: 'sage',
+    title: '폭우 속 산행 — 계곡 위험과 대피 수칙',
+    excerpt: '시간당 30mm 이상 강우 시 산지 계곡 수위는 30분 내 급상승합니다. 소방청·기상청 합동 통계에서 여름철 산악 익사·고립 사고는 연간 50~80건 발생합니다. 폭우 시 계곡 위험 판단 기준과 대피 절차를 정리했습니다.',
+    body: `<h2>폭우가 계곡을 위험하게 만드는 원인 사슬</h2><p>기상청·소방청 합동 통계에서 여름철(7~8월) 산악 익사·고립 사고는 연간 50~80건 발생한다. 이 사고의 공통점은 강수가 시작될 때 계곡 근처에 있었다는 점이다. 계곡 수위가 오르는 속도는 평지 강물보다 훨씬 빠르다. 국토교통부 수문 자료에 따르면 산지에서 시간당 20mm 강수 조건에서 계곡 수위가 20~40cm 상승하고, 시간당 30mm를 넘으면 30분 이내에 급격한 수위 변화가 나타난다.</p><p>문제는 상류 강수가 하류 계곡에 도달하는 데 시간 차가 있다는 점이다. 계곡 합류 지점의 날씨가 맑아도 수십 킬로미터 상류에서 내린 비가 집중 유입되면 갑자기 물이 불어난다. "위에서 비가 안 오는 것 같다"는 판단이 틀리는 이유가 여기 있다. 유속 초속 2m 이상에서 성인도 서 있기 어렵고, 초속 3m를 넘으면 이동 자체가 불가능하다.</p>
+
+<h2>출발 전 기상 판단 — 취소 기준을 미리 정해야 한다</h2><p>폭우 대피에서 가장 중요한 단계는 출발 전이다. 기상청 산악날씨 예보에서 다음 기준 중 하나라도 해당하면 계곡 구간이 포함된 코스는 출발을 취소하거나 능선 코스로 변경하는 것이 원칙이다.</p>
+<ul>
+<li>당일 오후 강수 확률 50% 이상</li>
+<li>시간당 최대 강수량 예보 20mm 이상</li>
+<li>태풍 경보 또는 주의보 발효 지역</li>
+<li>전날 150mm 이상 강수 후 당일 추가 강수 예보</li>
+</ul>
+<p>실시간 기상 확인은 기상청 날씨앱(동네예보), 기상청 산악날씨 서비스를 사용한다. 특히 산간 지역 기상은 10~15km 이내 레이더 에코 움직임을 확인하는 것이 평균 예보보다 1시간 이상 앞서 상황을 파악하는 데 유용하다.</p>
+
+<h2>산행 중 폭우 시작 — 즉각 행동 기준</h2><p>산행 중 폭우가 시작되면 행동 기준이 명확해야 한다. 판단이 늦어질수록 대피 선택지가 줄어든다.</p>
+<ol>
+<li><strong>계곡 접근 즉시 중단</strong>: 계곡 취사·세면·휴식을 즉시 중단하고 30m 이상 높은 지점으로 이동한다. 계곡 수위는 5~10분 안에도 크게 변할 수 있다.</li>
+<li><strong>능선 방향 이동</strong>: 계곡과 능선의 분기점에서 능선을 선택한다. 능선은 물이 집중되지 않고 시야 확보가 되어 구조 헬기 접근도 용이하다.</li>
+<li><strong>대피소·암굴 1차 피신</strong>: 국립공원 대피소, 암반 오버행(바위가 지붕처럼 돌출된 곳)에서 비를 피하며 상황을 관찰한다. 텐트 설치는 계곡 수위가 안정된 것을 확인한 후 능선 위 평지에서만 한다.</li>
+<li><strong>하산 경로 재확인</strong>: 올라온 계곡 코스가 이미 잠겼을 수 있다. 대피 중 119 구조대에 연락해 하산 가능 경로를 확인한다.</li>
+</ol>
+
+<h2>계곡 수위 판단 — 건너도 되는 기준</h2><p>폭우 중 또는 직후 계곡 도강이 필요한 상황이 생길 수 있다. 다음 기준 중 하나라도 해당되면 도강을 시도하지 않는다.</p>
+<table style="width:100%;border-collapse:collapse;font-size:0.9em;margin:16px 0">
+<thead><tr style="background:#d0e8d0"><th style="padding:8px;border:1px solid #a0c8a0;text-align:left">상태</th><th style="padding:8px;border:1px solid #a0c8a0;text-align:left">위험 수준</th><th style="padding:8px;border:1px solid #a0c8a0;text-align:left">판단 기준</th></tr></thead>
+<tbody>
+<tr><td style="padding:8px;border:1px solid #a0c8a0">물색이 흙탕물로 변함</td><td style="padding:8px;border:1px solid #a0c8a0">높음</td><td style="padding:8px;border:1px solid #a0c8a0">상류에서 대량 유입 진행 중</td></tr>
+<tr style="background:#f0f8f0"><td style="padding:8px;border:1px solid #a0c8a0">수위가 빠르게 상승 중</td><td style="padding:8px;border:1px solid #a0c8a0">매우 높음</td><td style="padding:8px;border:1px solid #a0c8a0">5분 간격 수위 표시 비교</td></tr>
+<tr><td style="padding:8px;border:1px solid #a0c8a0">유속이 빠르고 소용돌이 있음</td><td style="padding:8px;border:1px solid #a0c8a0">극도로 높음</td><td style="padding:8px;border:1px solid #a0c8a0">초속 2m 이상 — 도강 절대 금지</td></tr>
+<tr style="background:#f0f8f0"><td style="padding:8px;border:1px solid #a0c8a0">수위가 무릎 위</td><td style="padding:8px;border:1px solid #a0c8a0">높음</td><td style="padding:8px;border:1px solid #a0c8a0">체중 이동 불안정</td></tr>
+</tbody></table>
+<p>폭우 후 계곡 도강 사망 사고의 대부분은 "물이 줄었다고 생각했을 때" 시도한 경우다. 강수가 완전히 멈춘 후 최소 2~3시간이 지나야 상류 유입이 안정된다. 기다리는 것이 최선의 선택이다.</p>
+
+<h2>폭우 대피 시 119 신고 타이밍</h2><p>고립 우려가 있으면 상황이 심각해지기 전에 먼저 신고하는 것이 원칙이다. "아직 괜찮으니 더 기다려 보자"는 판단이 야간 구조·악천후 구조로 이어지는 패턴이 반복된다. 강수가 강해지고 있거나 계곡 수위가 지속 상승 중이라면, 아직 안전한 상황에서 먼저 119에 신고해 상황을 알리고 구조 대기 지점을 공유한다. 야간이 되면 헬기 운용이 제한되어 구조 난이도가 크게 높아진다.</p>
+<p>출발 전 기상 예보를 한 번 더 확인하는 것이 폭우 대피의 가장 효과적인 방법이다. 위험 기준을 미리 정해두고 조건이 맞으면 출발 자체를 취소하는 문화가 사고를 막는 가장 근본적인 접근이다.
+<p>기상청은 2023년부터 '스마트 기상 알림' 서비스에서 산간 지역 집중호우 예비 특보를 제공한다. 특보 발효 지역에 출발 전이라면 취소, 산행 중이라면 즉시 하산 준비를 시작하는 것이 원칙이다. 기상 특보 발효 기준은 시간당 30mm 이상이고, 이 기준은 계곡 수위 급상승이 시작되는 임계값과 일치한다. 비가 오기 시작한 후 판단하는 것보다 예보 단계에서 결정하는 것이 대피 여유 시간을 2~3시간 더 확보한다. <a href="/blog/p5">산행 전 반드시 확인하는 통제·기상 정보 5곳</a>에서 실시간 기상 확인 방법을 정리했다. <a href="/blog/p88">119 구조 신고 — 산에서 위치 정확히 알리는 법</a>도 폭우 대피 상황에서 신고 절차와 연결된다.</p></p>
+
+<h2>자주 묻는 질문</h2>
+<details open><summary><strong>계곡 옆 야영지에서 폭우를 만나면 어떻게 해야 하나요?</strong></summary><p>즉시 텐트를 걷고 계곡에서 최소 30m 이상 높은 사면으로 이동한다. 텐트 철수 시간이 없다면 텐트를 두고 장비와 식수·비상식량만 챙겨 이동한다. 장비보다 이동이 우선이다. 국립공원 야영장은 대부분 구조 요청 시스템이 갖춰져 있으므로 즉시 야영장 관리인에게 상황을 알린다.</p></details>
+<details><summary><strong>폭우 예보가 있어도 능선 코스는 안전한가요?</strong></summary><p>능선 코스는 계곡에 비해 급류 위험은 없지만 낙뢰 위험이 높아진다. 능선 이동 중 폭우와 함께 번개가 치면 키 큰 나무 아래, 정상 돌출부 등 노출된 위치를 피하고 낮은 자세로 암반 사이 또는 사면 중간 위치로 이동한다. 금속 장비(트레킹 폴, 아이젠)는 지면에 내려놓는다.</p></details>
+
+<div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 산행 전 산림청 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-16T17:00:00+00:00',
+    read: 7,
+    date: '2026.06.17',
+    badges: ['폭우대피', '계곡위험'],
+  },
+  {
+    id: 'p81', cat: '안전', pal: 'valley',
+    title: '겨울 산행 저체온증 예방과 응급 대처',
+    excerpt: '소방청 통계에서 겨울 산악 사망 원인 중 저체온증·동결 관련 비율은 15~20%에 달합니다. 체심부 온도 35°C 아래로 내려가기 전에 막는 레이어링 원칙과 응급 처치 단계를 정리했습니다.',
+    body: `<h2>저체온증이 산에서 위험한 이유 — 원인과 결과 사슬</h2><p>저체온증은 체심부 온도(직장온도 기준)가 35°C 미만으로 떨어진 상태를 말한다. 보건복지부 응급의료 가이드는 경증(32~35°C), 중등도(28~32°C), 중증(28°C 미만) 세 단계로 분류한다. 문제는 경증 단계에서 이미 판단력이 흐려지기 시작한다는 점이다. 피로 증가 → 근육 떨림 증가 → 열 생산 능력 소진 → 체온 급락 → 의식 저하의 인과 사슬이 빠르게 진행된다.</p><p>겨울 산에서 저체온증이 가속화되는 주요 인자는 세 가지다. 젖은 의류(땀 또는 강수), 바람(풍속이 강할수록 체감온도 급락), 피로·탈수(열 생산 능력 저하). 이 세 가지가 겹치는 순간부터 체온 손실 속도가 체온 생산 속도를 앞지른다. 정상부에서 바람을 맞으며 젖은 의류 그대로 쉬는 것이 가장 위험한 조합이다.</p><h2>레이어링 3층 시스템 — 저체온증을 구조적으로 막는 방법</h2><p>두꺼운 단일 재킷 한 벌 vs 레이어링 3층 시스템을 비교하면 단열 효율에서 분명한 차이가 난다. 단일 두꺼운 재킷은 땀으로 젖으면 단열 성능이 급격히 떨어진다. 반면 3층 시스템은 각 층의 역할이 분리되어 있어 부분 조절이 가능하고 젖음에 강하다.</p><div style="background:#e8f0e8;border-left:4px solid #5a8a6a;padding:16px;margin:20px 0"><strong>레이어링 3층 역할 구분</strong><table style="width:100%;border-collapse:collapse;margin-top:10px;font-size:0.9em"><thead><tr style="background:#c8dcc8"><th style="padding:8px;border:1px solid #a0c0a0;text-align:left">층</th><th style="padding:8px;border:1px solid #a0c0a0;text-align:left">소재 예시</th><th style="padding:8px;border:1px solid #a0c0a0;text-align:left">역할</th><th style="padding:8px;border:1px solid #a0c0a0;text-align:left">겨울 조건</th></tr></thead><tbody><tr><td style="padding:8px;border:1px solid #a0c0a0">베이스 레이어</td><td style="padding:8px;border:1px solid #a0c0a0">메리노울, 폴리에스터</td><td style="padding:8px;border:1px solid #a0c0a0">땀 배출·속건</td><td style="padding:8px;border:1px solid #a0c0a0">면 절대 금지</td></tr><tr style="background:#f0f5f0"><td style="padding:8px;border:1px solid #a0c0a0">미드 레이어</td><td style="padding:8px;border:1px solid #a0c0a0">플리스, 다운</td><td style="padding:8px;border:1px solid #a0c0a0">단열·보온</td><td style="padding:8px;border:1px solid #a0c0a0">두께 조절 가능 소재 권장</td></tr><tr><td style="padding:8px;border:1px solid #a0c0a0">쉘 레이어</td><td style="padding:8px;border:1px solid #a0c0a0">방풍·방수 재킷</td><td style="padding:8px;border:1px solid #a0c0a0">바람·수분 차단</td><td style="padding:8px;border:1px solid #a0c0a0">고어텍스 등 방수투습 소재</td></tr></tbody></table></div><p>베이스 레이어에 면 소재를 쓰는 것이 가장 흔한 실수다. 면은 땀을 흡수하면 빠르게 마르지 않아 피부에 밀착된 채 냉각원이 된다. 겨울 산행에서 면 소재 티셔츠 + 두꺼운 아우터 조합은 단열 효율이 레이어링 시스템의 30~40% 수준에 불과하다.</p><h2>저체온증 3단계 증상 인식 — 경증에서 막아야 하는 이유</h2><p>경증(32~35°C) 단계 주요 증상은 심한 오한, 판단력 저하, 행동 둔화다. 이 단계에서 오한이 없어지거나 줄어드는 것은 호전 신호가 아니라 악화 신호다. 근육이 열을 만드는 능력 자체를 잃어가고 있다는 의미이기 때문이다. 중등도(28~32°C)에 들어서면 오한이 멈추고 졸음, 의식 혼란, 근육 강직이 나타난다. 중증(28°C 미만)은 무의식, 심실세동 위험 구간으로 병원 이송 없이는 회복이 어렵다.</p><ul><li><strong>경증 신호</strong>: 격심한 오한, 손발 저림, 말이 느려짐, 발걸음 비틀거림</li><li><strong>중등도 신호</strong>: 오한이 멈춤, 피부가 창백 또는 회색빛, 졸음, 판단 불가</li><li><strong>중증 신호</strong>: 의식 없음, 맥박 희미함, 호흡 매우 느림</li></ul><p>동행자가 오한이 없어졌다고 말하거나 괜찮다며 주저앉으려 한다면 즉시 응급 처치를 시작하고 119에 신고해야 한다. 자기 판단 능력이 이미 저하된 상태이므로 본인의 주관적 호소는 신뢰할 수 없다.</p><h2>응급 처치 단계 — 소방청 산악구조 지침 기반</h2><p>소방청 산악구조 지침은 저체온증 응급 처치를 다음 순서로 제시한다. 이동을 최소화하는 것이 1순위 원칙이다. 중등도 이상 저체온증 환자를 무리하게 움직이면 심실세동이 유발될 수 있다.</p><ol><li><strong>이동 최소화</strong>: 바람 차단 가능한 장소로 수평 이동. 들것 없이 세워서 걷게 하지 않는다.</li><li><strong>젖은 의류 제거</strong>: 땀에 젖은 베이스 레이어를 건조한 의류로 교체. 탈의 시 체온 손실을 최소화하기 위해 신속하게 진행한다.</li><li><strong>단열 보온</strong>: 비상용 은박 담요(서바이벌 블랭킷)로 전신을 감싼다. 지면과의 접촉도 체온을 빼앗으므로 배낭, 여분 의류를 깔아 지면 단열을 확보한다.</li><li><strong>따뜻한 음료 공급</strong>: 의식이 완전히 있을 때만 가능하다. 의식이 혼미하면 기도 흡인 위험으로 금지.</li><li><strong>119 신고</strong>: 중등도 이상이 의심되면 즉시 신고. 경증이라도 처치 후 호전이 없으면 신고.</li></ol><h2>비상 장비 — 겨울 산행 필수 2가지</h2><p>비상용 은박 담요는 무게 50~80g, 부피 주먹만 한 크기로 모든 겨울 배낭에 포함시켜야 하는 장비다. 체온 손실의 40~50%는 복사열로 빠져나가는데, 은박 담요는 이 복사열을 최대 90%까지 반사한다. 핫팩은 보조 보온 수단으로 활용 가능하지만, 저체온증 환자의 저온 피부에 직접 접촉하면 저온 화상 위험이 있다. 수건이나 의류로 감싸 간접 접촉으로 사용한다.</p><ul><li>비상용 은박 담요: 필수 상비. 사용 후 재사용 불가이므로 1인 1개.</li><li>보온병(따뜻한 음료): 출발 시 60°C 이상으로 채워 단열 보온병에 보관.</li><li>예비 건조 베이스 레이어: 당일 산행에도 지퍼백에 넣어 배낭 깊숙이 보관.</li></ul><h2>자주 묻는 질문</h2><details open><summary><strong>저체온증과 단순 피로를 어떻게 구분하나요?</strong></summary><p>오한이 격심하고 걸음걸이가 비틀거리며 판단이 느려진다면 저체온증 초기로 봐야 한다. 단순 피로는 쉬면 빠르게 회복되지만 저체온증은 따뜻한 곳으로 이동하지 않으면 시간이 지날수록 악화된다.</p></details><details><summary><strong>핫팩을 많이 붙이면 빠르게 체온이 올라가나요?</strong></summary><p>핫팩은 체온을 올리는 도구가 아니라 더 이상 빼앗기지 않도록 돕는 보조 장비다. 핵심은 젖은 의류 제거와 단열 차폐가 먼저다. 핫팩 자체만으로는 중등도 이상 저체온증에 효과가 제한적이다.</p></details><details><summary><strong>술을 마시면 몸이 따뜻해지지 않나요?</strong></summary><p>알코올은 말초 혈관을 확장시켜 일시적으로 피부가 따뜻하게 느껴지지만, 오히려 체열이 피부 표면으로 몰려 빠르게 손실된다. 겨울 산행 중 음주는 저체온증 위험을 높이는 행위다.</p></details><p>겨울 산행의 저체온증 위험은 레이어링 선택과 비상 장비 구비 두 가지로 대부분 예방된다. 오한이 멈추는 순간을 경계 신호로 인식하는 것이 응급 처치의 출발점이다. <a href="/blog/p85">겨울 하산 빙판길 미끄럼 사고 예방</a>도 겨울 산행 안전 준비에서 빠질 수 없다. <a href="/blog/p84">산에서 살아남는 안전 수칙 10가지</a>도 겨울 산행 전반의 안전 기준을 세우는 데 연결된다.</p><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 산행 전 산림청 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-14T20:00:00+00:00',
+    read: 7,
+    date: '2026.06.15',
+    badges: ['저체온증', '겨울안전'],
+  },
+  {
+    id: 'p82', cat: '안전', pal: 'forest',
+    title: '고혈압 심장질환 있어도 등산 가능한가',
+    excerpt: '산악 심정지 사례의 약 40%가 기저 심혈관질환자에서 발생합니다. 그러나 적절한 코스 선택과 자기 점검 루틴을 갖추면 고혈압·심장질환자도 완만한 등산을 지속할 수 있습니다. 판단 기준을 정리했습니다.',
+    body: `<h2>고혈압 환자가 등산을 무조건 피해야 한다는 통념 — 데이터는 다르게 말한다</h2><p>고혈압이나 심장질환이 있으면 등산을 아예 하지 말아야 한다는 인식이 있다. 소방청 2023년 산악구조 통계를 보면 산악 심정지 사례의 약 40%에서 기저 심혈관질환이 확인된다. 이 수치만 보면 위험하다는 결론이 자연스럽다. 그런데 대한고혈압학회 가이드라인은 혈압이 조절되는 고혈압 환자에게 규칙적인 유산소 운동(MET 4~6 수준)을 적극 권장한다. 등산 강도를 올바르게 조절하면 심혈관 기능 강화에 도움이 된다는 근거다.</p><p>문제는 강도 조절 없이 급경사 산행에 나서는 것이다. 보건복지부 심장질환 지침에 따르면 경사 10% 이상 등산의 운동 강도는 6~8 MET로, 이는 고혈압 환자 권장 강도(4~6 MET)를 초과한다. 표고차 700m 이상 코스를 쉬지 않고 오르면 수축기 혈압이 순간적으로 200mmHg을 넘을 수 있다.</p><div class="aeo-answer" style="background:#f0f4f0;border-left:4px solid #5a8a6a;padding:16px;margin:20px 0"><strong>핵심 답변</strong><p style="margin:8px 0 0">혈압이 안정적으로 조절되는 상태라면 표고차 300m 이하, 경사 완만, 충분한 휴식을 전제로 등산 가능하다. 단, 출발 전 의사 상담과 당일 혈압 확인이 선행되어야 한다.</p></div><h2>출발 전 자기 점검 — 의사 상담이 필요한 기준</h2><p>다음 조건 중 하나라도 해당되면 산행 전 반드시 주치의와 상의해야 한다.</p><ul><li>수축기 혈압이 160mmHg 이상으로 조절이 안 되는 상태</li><li>최근 6개월 이내 협심증·심근경색·뇌졸중 이력</li><li>심부전 진단 또는 심장 판막 질환</li><li>혈압약 복용 시작 후 아직 안정화가 되지 않은 상태(조절 기간 3개월 미만)</li><li>당일 아침 혈압 측정 시 수축기 140mmHg 초과</li></ul><p>혈압약 중 베타차단제를 복용하는 경우 심박수 증가가 제한되어 운동 능력이 낮게 평가될 수 있다. 이때 자신이 느끼는 피로도(Borg 자각 운동 강도 13 이하)를 기준으로 강도를 조절하는 것이 심박수보다 신뢰할 수 있는 지표다.</p><h2>코스 선택 기준 — 수치로 판단하는 방법</h2><table style="width:100%;border-collapse:collapse;font-size:0.9em;margin:16px 0"><thead><tr style="background:#c8dcc8"><th style="padding:8px;border:1px solid #a0c0a0;text-align:left">항목</th><th style="padding:8px;border:1px solid #a0c0a0;text-align:left">권장 범위</th><th style="padding:8px;border:1px solid #a0c0a0;text-align:left">주의 범위</th><th style="padding:8px;border:1px solid #a0c0a0;text-align:left">위험 범위</th></tr></thead><tbody><tr><td style="padding:8px;border:1px solid #a0c0a0">표고차</td><td style="padding:8px;border:1px solid #a0c0a0">200m 이하</td><td style="padding:8px;border:1px solid #a0c0a0">200~500m</td><td style="padding:8px;border:1px solid #a0c0a0">500m 초과</td></tr><tr style="background:#f0f5f0"><td style="padding:8px;border:1px solid #a0c0a0">편도 거리</td><td style="padding:8px;border:1px solid #a0c0a0">3~5km</td><td style="padding:8px;border:1px solid #a0c0a0">5~8km</td><td style="padding:8px;border:1px solid #a0c0a0">8km 초과</td></tr><tr><td style="padding:8px;border:1px solid #a0c0a0">경사도</td><td style="padding:8px;border:1px solid #a0c0a0">10% 미만</td><td style="padding:8px;border:1px solid #a0c0a0">10~20%</td><td style="padding:8px;border:1px solid #a0c0a0">암릉·20% 초과</td></tr><tr style="background:#f0f5f0"><td style="padding:8px;border:1px solid #a0c0a0">기온</td><td style="padding:8px;border:1px solid #a0c0a0">15~25°C</td><td style="padding:8px;border:1px solid #a0c0a0">25~30°C</td><td style="padding:8px;border:1px solid #a0c0a0">30°C 초과 또는 0°C 미만</td></tr></tbody></table><p>저지대 완만 코스는 표고차 500m 이상 급경사 코스 대비 수축기 혈압 상승 폭이 30~40mmHg 낮게 나타난다. 초기 심혈관질환자라면 북한산 둘레길(총 71.5km), 남한산성 능선(둘레 9km, 표고차 약 180m) 같은 완만한 능선 구간부터 시작하는 것이 적절하다.</p><p>코스 선택 후에도 첫 산행에서는 동행자가 있는 것이 안전하다. 처음 3~5회 산행은 표고차 200m 이하 코스에서 자신의 혈압 반응 패턴을 확인한다. 혈압 측정기를 배낭에 넣어 중간 지점에서 측정하면 본인 기준 데이터를 쌓을 수 있다.</p><h2>산행 중 이상 신호 — 즉시 하산 기준</h2><p>다음 증상이 나타나면 즉시 휴식을 취하고 증상이 지속되면 하산 후 병원을 방문해야 한다.</p><ol><li><strong>흉통 또는 흉부 압박감</strong>: 협심증 증상. 즉시 활동 중단 + 니트로글리세린(처방받은 경우) 설하 투여 + 119 신고.</li><li><strong>두통·어지럼증 동반 구역질</strong>: 혈압 급상승 가능성. 앉아서 5~10분 안정 후 호전 없으면 하산.</li><li><strong>호흡 곤란이 평지에서도 지속</strong>: 심부전 악화 신호일 수 있다.</li><li><strong>불규칙 맥박 감지</strong>: 심방세동 등 부정맥 가능성. 즉시 앉아 안정.</li></ol><h2>혈압약 복용과 탈수 — 두 가지를 동시에 관리해야 하는 이유</h2><p>이뇨제 계열 혈압약(hydrochlorothiazide, furosemide 등)을 복용하는 경우 소변량이 많아 탈수가 빠르게 진행될 수 있다. 탈수는 혈액 농도를 높여 혈전 위험을 증가시키고 혈압 불안정을 유발한다. 등산 시간이 2시간을 넘는다면 30분마다 150~200ml씩 마시는 계획적인 수분 섭취가 필요하다.</p><p>베타차단제를 복용 중이면 더위에 대한 체온 조절 반응이 느려질 수 있다. 여름 고온 산행보다 봄·가을 기온이 적당한 시기가 안전하다. <a href="/blog/p89">등산 후 이런 증상 나타나면 병원에 가세요</a>에서 귀가 후 확인해야 할 이상 신호를 정리했다. <a href="/blog/p84">산에서 살아남는 안전 수칙 10가지</a>에서 심혈관 위험 외에도 갖춰야 할 기본 준비를 확인할 수 있다.</p><h2>자주 묻는 질문</h2><details open><summary><strong>혈압약을 먹고 있으면 등산 중 혈압이 안 오르나요?</strong></summary><p>혈압약은 안정 시 혈압을 낮추지만 운동 중 혈압 상승 자체를 완전히 막지는 못한다. 강도 높은 등산에서는 약을 복용해도 수축기 혈압이 180mmHg 이상 오를 수 있다. 약 복용 여부와 관계없이 완만한 코스 선택이 더 중요하다.</p></details><details><summary><strong>스마트워치 심박수 측정을 믿어도 되나요?</strong></summary><p>광학식 심박수 측정 오차는 안정 시 3~5bpm, 운동 중 5~15bpm 수준이다. 절대 수치보다 추세를 보는 용도로 활용하는 것이 현실적이다. 정확한 모니터링이 필요하면 의사 처방 심전도 기반 웨어러블을 사용한다.</p></details><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 산행 전 산림청 공식 통제정보를 확인하고, 심혈관 관련 이상이 있으면 반드시 의사 상담 후 산행 여부를 결정하세요.</p></div>`,
+    publishAt: '2026-06-15T01:00:00+00:00',
+    read: 7,
+    date: '2026.06.15',
+    badges: ['건강주의', '중장년'],
+  },
+  {
+    id: 'p83', cat: '안전', pal: 'dawn',
+    title: '스마트폰 배터리 — 등산 중 오래 쓰는 법',
+    excerpt: '소방청 구조 통계에서 배터리 방전으로 인한 위치 파악 지연 사례가 지속적으로 확인됩니다. 리튬이온 배터리는 0°C 이하에서 용량이 최대 50% 줄어듭니다. 절전 설정 순서와 보조배터리 선택 기준을 단계별로 정리했습니다.',
+    body: `<h2>1단계. 출발 전 — 배터리 상태 점검과 초기 설정</h2><p>등산 당일 아침, 배터리 잔량이 100%라도 설정 확인 없이 출발하면 산에서 예상보다 빠르게 방전된다. 화면 밝기가 자동 설정이거나 불필요한 앱이 백그라운드에서 실행 중이면 시간당 소모량이 2~3배 늘어난다. 집을 나서기 전 다음 세 가지를 확인한다.</p><ol><li><strong>화면 밝기</strong>: 수동으로 40~50%로 낮춘다.</li><li><strong>백그라운드 앱 갱신 차단</strong>: iOS는 설정 → 일반 → 백그라운드 앱 갱신 전체 끄기. Android는 배터리 → 앱 최적화 → 각 앱 제한 적용.</li><li><strong>위치 서비스 선택 적용</strong>: 등산 앱 한 개만 사용하는 동안 허용, 나머지 앱 위치 서비스 끄기.</li></ol><h2>2단계. 산행 중 — 상황별 절전 모드 전환</h2><p>능선 이동 중 전화를 쓰지 않는 구간에서 배터리를 아끼는 방법은 화면을 끄는 것과 알림을 줄이는 것이다. 비행기 모드는 셀룰러 신호 탐색을 완전히 차단해 배터리 소모를 30~40% 줄인다.</p><ul><li><strong>배터리 절약 모드</strong>: 배터리 20~30% 시점이 아닌 출발 시부터 켜두면 총 사용 시간이 늘어난다.</li><li><strong>화면 자동 잠금 시간</strong>: 15초 또는 30초로 설정한다.</li><li><strong>5G → LTE 전환</strong>: 산간 지역에서 5G 신호 탐색 동작이 배터리를 많이 소모한다. 수동으로 LTE로 변경하면 신호 탐색 에너지가 줄어든다.</li></ul><h2>3단계. 겨울 산행 — 저온에서 배터리 관리</h2><p>리튬이온 배터리는 온도에 민감하다. 0°C 이하에서 배터리 용량이 20~30% 급감하고, -10°C에서는 최대 50%까지 손실된다. 배터리 잔량 70%로 출발했다가 정상부에서 실제 가용 용량이 35%에 불과한 상황이 발생하는 이유다.</p><div style="background:#e8f0e8;border-left:4px solid #5a8a6a;padding:16px;margin:20px 0"><strong>온도별 배터리 가용 용량 참고</strong><table style="width:100%;border-collapse:collapse;margin-top:10px;font-size:0.9em"><thead><tr style="background:#c8dcc8"><th style="padding:8px;border:1px solid #a0c0a0">온도</th><th style="padding:8px;border:1px solid #a0c0a0">가용 용량 수준</th><th style="padding:8px;border:1px solid #a0c0a0">대응</th></tr></thead><tbody><tr><td style="padding:8px;border:1px solid #a0c0a0">15~25°C</td><td style="padding:8px;border:1px solid #a0c0a0">100% 기준</td><td style="padding:8px;border:1px solid #a0c0a0">일반 관리</td></tr><tr style="background:#f0f5f0"><td style="padding:8px;border:1px solid #a0c0a0">0~15°C</td><td style="padding:8px;border:1px solid #a0c0a0">80~90%</td><td style="padding:8px;border:1px solid #a0c0a0">절전 모드 조기 활성</td></tr><tr><td style="padding:8px;border:1px solid #a0c0a0">-10~0°C</td><td style="padding:8px;border:1px solid #a0c0a0">50~80%</td><td style="padding:8px;border:1px solid #a0c0a0">내의 주머니 보온 필수</td></tr><tr style="background:#f0f5f0"><td style="padding:8px;border:1px solid #a0c0a0">-10°C 미만</td><td style="padding:8px;border:1px solid #a0c0a0">50% 이하</td><td style="padding:8px;border:1px solid #a0c0a0">보조배터리도 보온 필요</td></tr></tbody></table></div><h2>4단계. 보조배터리 선택 — 용량별 실사용 기준</h2><p>보조배터리 표시 용량과 실제 출력 용량은 다르다. 변환 손실이 있어 10,000mAh 보조배터리의 실제 충전 가능 용량은 약 6,500~7,000mAh 수준이다.</p><ul><li><strong>5,000mAh</strong>: 1회 충전, 무게 약 100g. 당일 산행용 최소 선택.</li><li><strong>10,000mAh</strong>: 1.5~2회 충전, 무게 약 200g. 1박 2일 적합.</li><li><strong>20,000mAh</strong>: 3~4회 충전, 무게 약 400g. 장거리 종주 또는 예비 장비 충전 필요 시.</li></ul><h2>5단계. 비상 통신 — 배터리 없을 때 대안</h2><p>스마트폰이 완전 방전되면 119 신고가 불가능해진다. 배터리 5~10% 수준에 도달하면 즉시 비상 위치(GPS 좌표 또는 국가지점번호)를 메모하고 119에 연락하거나 동행자에게 위치를 공유한다.</p><p>호루라기는 스마트폰 없이도 위치를 알릴 수 있는 비상 장비다. 소리 에너지 소모가 없고, 3번 연속 취명이 국제 조난 신호다. 배터리에 의존하지 않는 이 도구를 배낭 외부 포켓에 항상 달아두는 습관이 디지털 의존도를 보완한다.</p><p>최근 일부 스마트폰 기종은 위성 긴급 SOS 기능을 지원한다. 애플 iPhone 14 이상(iOS 16.1+)은 산간 지역에서 셀룰러 없이 위성으로 119와 연결하거나 응급 메시지를 발신할 수 있다. 구조 통신 수단이 단 하나인 상황을 만들지 않는 것이 핵심이다. <a href="/blog/p88">119 구조 신고 — 산에서 위치 정확히 알리는 법</a>에서 배터리 없는 상황에서의 대응 방법을 더 자세히 다뤘다. <a href="/blog/p84">산에서 살아남는 안전 수칙 10가지</a>도 준비물 전반을 점검하는 데 참고가 된다.</p><h2>자주 묻는 질문</h2><details open><summary><strong>등산 앱을 켜놓으면 배터리가 얼마나 빨리 닳나요?</strong></summary><p>GPS 트래킹 앱을 화면 켠 상태로 운영하면 시간당 15~25% 소모된다. 화면을 끄고 백그라운드 트래킹만 유지하면 시간당 8~12% 수준으로 줄어든다. 6시간 산행 기준 백그라운드 트래킹만 사용하면 약 50~70% 소모를 예상한다.</p></details><details><summary><strong>겨울에 보조배터리를 배낭 안에 두면 얼지 않나요?</strong></summary><p>리튬이온 보조배터리는 -20°C에서도 얼지는 않지만 용량이 대폭 감소한다. 배낭 내부보다 외투 안쪽 주머니가 온도가 높아 성능 유지에 유리하다. 겨울 장거리 산행이라면 단열 파우치를 사용하는 것이 가장 효과적이다.</p></details><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 산행 전 산림청 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-15T06:00:00+00:00',
+    read: 6,
+    date: '2026.06.15',
+    badges: ['배터리관리', '준비물'],
+  },
+  {
+    id: 'p84', cat: '안전', pal: 'sage',
+    title: '산에서 살아남는 안전 수칙 10가지',
+    excerpt: '소방청 2024년 산악사고 구조 건수는 연간 약 9,000~10,000건입니다. 원인 1위 실족·추락(35%), 2위 길 잃음(25%), 3위 탈진(15%). 이 세 가지 원인을 대부분 막을 수 있는 기본 수칙 10가지를 정리했습니다.',
+    body: `<h2>통계가 보여주는 산악사고의 구조 — 예방 가능한 원인이 80%</h2><p>소방청 2024년 산악사고 현황에서 연간 구조 건수는 약 9,000~10,000건이다. 원인별로 나누면 실족·추락 35%, 길 잃음 25%, 탈진·체력 고갈 15%, 개인 질환 10%, 기타 15%로 분류된다. 상위 세 원인이 전체의 75%를 차지하며, 이 세 가지는 공통적으로 사전 준비와 행동 선택으로 예방 가능하다.</p><h2>1~3. 출발 전 3가지 기본</h2><p>공식 통제정보 확인, 산행 계획서 공유, 일몰 2시간 전 하산 완료 기준은 출발 루틴의 핵심이다. 기상 악화, 산불 통제, 동절기 결빙 구간 통제는 당일 아침에도 바뀐다. 가족이나 지인에게 출발지, 이용 코스, 예상 귀가 시간을 문자로 남기는 것이 수색 범위를 결정한다.</p><p>일몰 시간별 하산 시작 기준을 미리 정해두면 현장에서 판단이 빠르다. 겨울 일몰은 오후 5시 30분 전후로 오후 3시 30분까지 하산 시작이 기준이 된다. 봄·가을은 오후 6~7시 일몰이므로 오후 4~5시까지 하산을 시작해야 안전 마진이 생긴다.</p><h2>4~6. 산행 중 판단 기준</h2><p>수분·행동식 준비, 기상 변화 신호 대응, 등산로 이탈 금지가 핵심이다. 성인 기준 1시간 등산에 약 500~700ml의 수분이 소모된다. 6시간 산행이면 최소 3L가 필요하다. 기상청 산악날씨 예보에서 서쪽 방향 구름이 급격히 몰려오거나 갑자기 바람이 강해지는 경우 기상 악화 신호로 받아들인다.</p><p>산악구조 사례의 25%인 길 잃음 사고 대부분은 등산로를 벗어난 지점에서 발생한다. 표지판이 없는 방향으로는 한 발짝도 나아가지 않는 것이 원칙이다. 방향 확신이 없다면 왔던 길을 되돌아간다.</p><h2>7~8. 위치 파악과 응급 장비</h2><p>등산로 주요 지점에 설치된 국가지점번호(예: 가나12-34-56)는 100m 격자 위치 정보를 담고 있다. 구조 신고 시 이 번호를 전달하면 GPS 좌표 없이도 구조대가 정확한 위치를 파악한다. 중간 쉬는 지점에서 가장 최근에 본 이정표 번호를 기억해두는 습관이 비상 시 구조 시간을 단축한다.</p><ul><li>비상용 은박 담요(서바이벌 블랭킷): 50~80g, 저체온증 응급 시 필수</li><li>호루라기: 배터리 불필요, 조난 신호(3회 연속)</li><li>헤드랜턴 + 예비 배터리: 일몰 후 이동 또는 동굴 대피 시</li><li>방수 소형 구급 키트: 탄력붕대, 지혈패드, 일회용 소독제</li></ul><h2>9~10. 혼자 산행과 체력 판단</h2><p>단독 산행은 금지 사항이 아니지만 위험 반경이 넓어진다. 단독이라면 코스 난이도를 한 단계 낮추고, 실시간 위치 공유 앱(카카오 라이브 위치 공유)을 켜두면 배터리가 살아 있는 동안 이동 경로가 기록된다.</p><p>산행 중 예상 시간의 절반을 지났는데 체력이 60% 이상 소모된 느낌이라면 정상 대신 하산이 맞는 결정이다. 오르는 데 쓴 체력의 60~70%가 하산에도 필요하다는 점을 항상 역산해야 한다.</p><h2>10가지 수칙 요약표</h2><table style="width:100%;border-collapse:collapse;font-size:0.9em;margin:20px 0"><thead><tr style="background:#e8d8a0"><th style="padding:8px;border:1px solid #c8b878;text-align:left">수칙</th><th style="padding:8px;border:1px solid #c8b878;text-align:left">예방하는 사고</th><th style="padding:8px;border:1px solid #c8b878;text-align:left">핵심 행동</th></tr></thead><tbody><tr><td style="padding:8px;border:1px solid #c8b878">1. 통제정보 확인</td><td style="padding:8px;border:1px solid #c8b878">무단 진입</td><td style="padding:8px;border:1px solid #c8b878">산림청·공단 당일 확인</td></tr><tr style="background:#faf4e0"><td style="padding:8px;border:1px solid #c8b878">2. 계획서 공유</td><td style="padding:8px;border:1px solid #c8b878">수색 범위 과대</td><td style="padding:8px;border:1px solid #c8b878">코스·귀가 시간 문자</td></tr><tr><td style="padding:8px;border:1px solid #c8b878">3. 일몰 2시간 전 하산</td><td style="padding:8px;border:1px solid #c8b878">야간 실족</td><td style="padding:8px;border:1px solid #c8b878">역산해 출발 시각 결정</td></tr><tr style="background:#faf4e0"><td style="padding:8px;border:1px solid #c8b878">4. 수분·행동식</td><td style="padding:8px;border:1px solid #c8b878">탈진·열사병</td><td style="padding:8px;border:1px solid #c8b878">최소 3L + 에너지바</td></tr><tr><td style="padding:8px;border:1px solid #c8b878">5. 기상 대응</td><td style="padding:8px;border:1px solid #c8b878">낙뢰·폭우 고립</td><td style="padding:8px;border:1px solid #c8b878">구름 방향 관찰 + 하산</td></tr><tr style="background:#faf4e0"><td style="padding:8px;border:1px solid #c8b878">6. 등산로 이탈 금지</td><td style="padding:8px;border:1px solid #c8b878">길 잃음(25%)</td><td style="padding:8px;border:1px solid #c8b878">표지판 없는 방향 진입 금지</td></tr><tr><td style="padding:8px;border:1px solid #c8b878">7. 이정표 기억</td><td style="padding:8px;border:1px solid #c8b878">구조 위치 지연</td><td style="padding:8px;border:1px solid #c8b878">국가지점번호 메모</td></tr><tr style="background:#faf4e0"><td style="padding:8px;border:1px solid #c8b878">8. 응급 장비 휴대</td><td style="padding:8px;border:1px solid #c8b878">저체온증·출혈</td><td style="padding:8px;border:1px solid #c8b878">은박 담요·호루라기</td></tr><tr><td style="padding:8px;border:1px solid #c8b878">9. 단독 시 코스 낮춤</td><td style="padding:8px;border:1px solid #c8b878">부상 후 방치</td><td style="padding:8px;border:1px solid #c8b878">계획서 공유 + 난이도 낮춤</td></tr><tr style="background:#faf4e0"><td style="padding:8px;border:1px solid #c8b878">10. 체력 한계 하산</td><td style="padding:8px;border:1px solid #c8b878">탈진(15%)</td><td style="padding:8px;border:1px solid #c8b878">50% 체력 소모 = 하산</td></tr></tbody></table><p>이 10가지 수칙은 장비나 기술보다 판단 습관에 가깝다. <a href="/blog/p88">119 구조 신고 — 산에서 위치 정확히 알리는 법</a>에서 위기 상황 대응 절차를 확인하면 수칙을 실제 상황에 연결할 수 있다. <a href="/blog/p5">산행 전 반드시 확인하는 통제·기상 정보 5곳</a>도 출발 루틴에 포함시키면 좋다.</p><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 산행 전 산림청 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-15T11:00:00+00:00',
+    read: 7,
+    date: '2026.06.15',
+    badges: ['안전수칙', '기본'],
+  },
+  {
+    id: 'p85', cat: '안전', pal: 'winter',
+    title: '겨울 하산 빙판길 미끄럼 사고 예방',
+    excerpt: '겨울 등산사고의 약 60%가 하산 중 발생하며, 결빙 노면 미끄러짐이 주요 원인입니다. 아이젠 착탈 시점과 4발·10발 선택 기준, 빙판 하산 보행법을 수치 기반으로 정리했습니다.',
+    body: `<h2>겨울 하산 사고가 오르막보다 많은 이유</h2><p>소방청 동계 산악사고 통계에서 겨울 등산사고의 약 60%가 하산 구간에서 발생한다. 오르막에서는 발 앞꿈치가 접지면 안쪽으로 파고드는 방향이라 미끄러짐 저항이 있다. 반면 내리막에서는 발뒤꿈치가 먼저 닿고 체중이 앞으로 쏠리면서 결빙면에서 순간 미끄러진다. 피로도가 높아진 하산 시점에 이 구조적 취약성이 겹치는 것이 사고 집중의 원인이다.</p><h2>아이젠 종류별 선택 기준</h2><table style="width:100%;border-collapse:collapse;font-size:0.9em;margin:16px 0"><thead><tr style="background:#d0dce8"><th style="padding:8px;border:1px solid #a0b8cc;text-align:left">종류</th><th style="padding:8px;border:1px solid #a0b8cc;text-align:left">발 수</th><th style="padding:8px;border:1px solid #a0b8cc;text-align:left">적합 지형</th><th style="padding:8px;border:1px solid #a0b8cc;text-align:left">주의</th></tr></thead><tbody><tr><td style="padding:8px;border:1px solid #a0b8cc">체인 스파이크</td><td style="padding:8px;border:1px solid #a0b8cc">4~6발</td><td style="padding:8px;border:1px solid #a0b8cc">완만한 포장로·등산로 결빙</td><td style="padding:8px;border:1px solid #a0b8cc">급경사·암릉 부적합</td></tr><tr style="background:#f0f4f8"><td style="padding:8px;border:1px solid #a0b8cc">C형 아이젠</td><td style="padding:8px;border:1px solid #a0b8cc">8~10발</td><td style="padding:8px;border:1px solid #a0b8cc">일반 겨울 산행·능선</td><td style="padding:8px;border:1px solid #a0b8cc">암반 구간 제거 권장</td></tr><tr><td style="padding:8px;border:1px solid #a0b8cc">바인딩 아이젠</td><td style="padding:8px;border:1px solid #a0b8cc">10~12발</td><td style="padding:8px;border:1px solid #a0b8cc">설산·급경사 빙면</td><td style="padding:8px;border:1px solid #a0b8cc">등산화 호환 확인 필수</td></tr></tbody></table><p>4발 체인 스파이크와 10발 바인딩 아이젠의 경사 15° 이상 빙면 접지력 차이는 상당하다. 국내 100대 명산 겨울 산행 대부분에서는 10발 이상 아이젠이 기본이다.</p><h2>아이젠 착탈 시점 판단 기준</h2><p>아이젠을 너무 일찍 착용하면 비결빙 암반에서 스파이크가 걸려 오히려 넘어질 수 있다. 너무 늦게 착용하면 결빙 구간에서 미끄러진다.</p><ol><li><strong>착용 시점</strong>: 등산로 1/3 이상이 결빙면으로 바뀐 것이 보일 때.</li><li><strong>제거 시점</strong>: 암반 구간이 20m 이상 연속되거나 완전히 녹은 흙길이 지속될 때.</li><li><strong>재착용</strong>: 능선에서 계곡부로 내려올 때 다시 결빙 구간이 나타나면 즉시 재착용.</li></ol><h2>빙판 하산 보행법</h2><p>빙판 내리막에서 안전한 보행법은 일반 보행과 반대다. 결빙면에서는 발 전체를 동시에 수평으로 내딛는 펭귄 걸음이 안전하다.</p><ul><li><strong>보폭 줄이기</strong>: 평소 보폭의 50~60%로 줄이면 순간 하중이 분산된다.</li><li><strong>무릎 약간 굽힘</strong>: 무릎을 5~10° 굽힌 자세는 무게중심을 낮추고 반응 거리를 확보한다.</li><li><strong>트레킹 폴 2개 착지</strong>: 하산 시 폴을 전방 양쪽에 짚어 3점 지지를 유지하면 미끄러짐 시 슬라이딩 거리가 줄어든다.</li></ul><h2>스패츠와 방수 등산화 — 결빙 예방 보조 장비</h2><p>무릎 아래 길이 스패츠는 적설 구간에서 눈이 신발 안으로 들어오는 것을 막아준다. 신발 내부가 젖으면 발 온도가 급격히 떨어지고 감각이 무뎌져 결빙면 감지 능력이 저하된다.</p><p>하산 보행에서 스틱 2개 사용이 발목 하중을 약 25% 줄이고 미끄럼 균형을 잡는 데 효과적이다. 체중 70kg 기준 편도 500m 하산 시 무릎 관절에 가해지는 충격은 약 3,500~4,200N에 달한다. 스틱 2개와 펭귄 걸음 보행을 병행하면 관절 충격이 20~30% 분산된다.</p><p>겨울 국립공원 주요 진입로에서 아이젠 미착용 시 입산을 제한하거나 무료 대여 서비스를 운영하는 탐방지원센터가 늘고 있다. 설악산 오색 탐방지원센터, 태백산 당골 탐방지원센터 등이 대표적이다. <a href="/blog/p81">겨울 산행 저체온증 예방과 응급 대처</a>도 겨울 산행 안전 준비의 또 다른 축이다. <a href="/blog/p3">겨울 눈꽃 산행 아이젠·스패츠 고르는 법</a>에서 장비 선택 세부 기준을 확인할 수 있다.</p><h2>자주 묻는 질문</h2><details open><summary><strong>아이젠 없이 빙판 구간을 안전하게 내려올 수 있나요?</strong></summary><p>경사 5° 이하의 짧은 결빙 구간이라면 폴 양쪽 착지와 펭귄 걸음으로 통과할 수 있다. 그러나 경사 10° 이상이거나 결빙 구간이 100m 이상 연속된다면 아이젠 없이 내려오는 것은 사고 위험이 높다.</p></details><details><summary><strong>아이젠을 신으면 발이 더 미끄럽게 느껴지는 경우도 있나요?</strong></summary><p>마른 암반이나 목재 데크 위에서 아이젠을 신으면 스파이크가 걸려 오히려 발이 불안정해질 수 있다. 이때는 일시적으로 아이젠을 벗거나 발 전체를 수평으로 내딛는 방식으로 접지하면 된다.</p></details><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 산행 전 산림청 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-15T16:00:00+00:00',
+    read: 6,
+    date: '2026.06.15',
+    badges: ['빙판길', '아이젠'],
+  },
+  {
+    id: 'p86', cat: '안전', pal: 'valley',
+    title: '이 코스 가도 될까 — 위험 판단 기준 5가지',
+    excerpt: '산악 탈진·체력 고갈 사고의 40% 이상이 자신의 체력 대비 과도한 코스 선택에서 시작됩니다. 표고차·소요시간·암릉 여부·기상·구조 접근성 다섯 기준으로 코스 위험을 사전에 판단하는 방법을 정리했습니다.',
+    body: `<h2>코스 선택 오류가 사고로 이어지는 경로</h2><p>소방청 산악사고 원인 분석에서 탈진·체력 고갈 사고의 40% 이상이 자신의 체력 대비 과도한 코스 선택이 직접 원인이었다. 장비가 좋고 경험이 있어도 코스 선택 오류는 발생한다. 지도상 거리가 짧으니 괜찮다는 판단이 가장 흔한 실수다. 표고차가 크거나 암릉 구간이 있으면 같은 거리라도 소요 시간과 체력 소모가 2~3배 달라진다.</p><h2>판단 기준 1 — 표고차와 편도 거리</h2><p>표고차는 코스의 실질 난이도를 가장 직접적으로 반영하는 수치다. 체중 70kg 성인 기준 칼로리 소모량으로 환산하면 표고차 300m 코스 약 250kcal, 700m 코스 약 550kcal로 2배 이상 차이 난다.</p><table style="width:100%;border-collapse:collapse;font-size:0.9em;margin:16px 0"><thead><tr style="background:#e8d8a0"><th style="padding:8px;border:1px solid #c8b878;text-align:left">표고차</th><th style="padding:8px;border:1px solid #c8b878;text-align:left">소요 체력</th><th style="padding:8px;border:1px solid #c8b878;text-align:left">초보자 적합</th></tr></thead><tbody><tr><td style="padding:8px;border:1px solid #c8b878">300m 이하</td><td style="padding:8px;border:1px solid #c8b878">낮음</td><td style="padding:8px;border:1px solid #c8b878">적합</td></tr><tr style="background:#faf4e0"><td style="padding:8px;border:1px solid #c8b878">300~600m</td><td style="padding:8px;border:1px solid #c8b878">중간</td><td style="padding:8px;border:1px solid #c8b878">3개월 이상 경험자</td></tr><tr><td style="padding:8px;border:1px solid #c8b878">600~900m</td><td style="padding:8px;border:1px solid #c8b878">높음</td><td style="padding:8px;border:1px solid #c8b878">6개월 이상 경험자</td></tr><tr style="background:#faf4e0"><td style="padding:8px;border:1px solid #c8b878">900m 초과</td><td style="padding:8px;border:1px solid #c8b878">매우 높음</td><td style="padding:8px;border:1px solid #c8b878">상급자 이상</td></tr></tbody></table><h2>판단 기준 2 — 소요 예상 시간 vs 일몰 시간</h2><p>코스 안내판의 소요 시간은 평균 체력 기준이다. 초보자나 체력이 낮은 날에는 1.3~1.5배를 적용해야 실제와 가깝다. 왕복 예상 시간을 계산한 뒤 일몰 시간에서 2시간을 뺀 시각이 하산 완료 데드라인이다.</p><ul><li>예시: 편도 4시간 코스, 일몰 오후 6시 → 하산 데드라인 오후 4시 → 왕복 8시간 × 1.2배 = 9.6시간 → 오전 6시 24분 이전 출발 필요</li><li>오전 8시 이후 출발이라면 당일 완주가 어렵다는 결론이 나온다.</li></ul><h2>판단 기준 3 — 암릉 구간 유무</h2><p>국립공원공단 탐방로 정보에 암릉 표기가 있거나 밧줄·철계단 구간이 안내된 코스는 기술적 난이도가 추가된다. 암릉 구간은 지도상 거리가 짧아도 통과에 30분~1시간이 더 소요된다. 고소공포증이 있거나 암벽 훈련 경험이 없다면 암릉 비율이 20% 이상인 코스는 피하는 것이 현실적이다.</p><h2>판단 기준 4 — 당일 기상 이력과 예보</h2><p>전날 비가 온 뒤 기온이 영하로 내려간 경우 하산 구간 결빙이 심해진다. 당일 오후 예보에 강수 확률 30% 이상이면 하산 중 비를 맞을 가능성이 있다. 기상청 산악날씨는 해발 고도별 기온·풍속·강수를 제공한다.</p><h2>판단 기준 5 — 119 구조 접근성</h2><p>코스 형태에 따라 사고 시 구조대 접근 시간이 크게 달라진다. 산 전체가 도보 접근 2시간 이상인 오지 코스는 부상 시 구조가 그만큼 늦다. 초보자나 단독 산행자가 오지 코스를 선택하면 작은 부상도 위험한 상황이 된다.</p><ul><li><strong>기준 1 통과</strong>: 표고차 600m 이하 + 편도 7km 이내</li><li><strong>기준 2 통과</strong>: 왕복 시간 × 1.3 + 일몰 2시간 전 하산 가능</li><li><strong>기준 3 통과</strong>: 암릉 비율 20% 미만 또는 철계단 구간 없음</li><li><strong>기준 4 통과</strong>: 당일 강수 확률 30% 미만 + 바람 초속 8m 이하</li><li><strong>기준 5 통과</strong>: 들머리에서 구조차 접근 가능 (편도 1시간 이내)</li></ul><p>국립공원공단 홈페이지에서는 탐방로별 거리·소요시간·표고차를 공식으로 제공한다. 산림청 산행정보 서비스에서도 주요 100대 명산의 코스별 난이도 등급을 조회할 수 있다. <a href="/blog/p84">산에서 살아남는 안전 수칙 10가지</a>에서 판단 기준을 실전 준비로 연결할 수 있다. <a href="/blog/p5">산행 전 반드시 확인하는 통제·기상 정보 5곳</a>도 출발 전 루틴에 포함시키면 좋다.</p><h2>자주 묻는 질문</h2><details open><summary><strong>지도 앱에 쉬움 표시된 코스도 위험할 수 있나요?</strong></summary><p>지도 앱의 난이도 표기는 기준이 각기 다르다. 일부 앱은 단순히 거리만 기준으로 삼는다. 표고차와 암릉 여부를 직접 확인하거나 국립공원공단·산림청 공식 코스 정보를 병행 확인하는 것이 더 정확하다.</p></details><details><summary><strong>등산 횟수가 많으면 어려운 코스도 갈 수 있나요?</strong></summary><p>횟수보다 유사한 표고차와 코스 성격의 경험이 더 중요하다. 완만한 코스를 100번 다녀온 것보다 표고차 600m 코스를 10번 완주한 경험이 기술적 판단에 더 직접적으로 연결된다.</p></details><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 산행 전 산림청 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-15T21:00:00+00:00',
+    read: 7,
+    date: '2026.06.16',
+    badges: ['위험판단', '코스선택'],
+  },
+  {
+    id: 'p87', cat: '안전', pal: 'forest',
+    title: '등산 전 5분 스트레칭 — 부상 막는 루틴',
+    excerpt: '등산 관련 근골격계 부상에서 무릎 손상이 40%, 발목 염좌가 25%를 차지합니다. 동적 스트레칭 6단계 루틴으로 관절 가동 범위를 확보하면 부상 발생률을 낮출 수 있습니다.',
+    body: `<h2>등산 전 스트레칭이 왜 5분 이상이어야 하는가</h2><p>대한정형외과학회 자료에 따르면 등산 관련 근골격계 부상에서 무릎 손상이 전체의 약 40%, 발목 염좌가 약 25%를 차지한다. 체육과학연구원 분석에서 스트레칭 없이 산행을 시작한 그룹과 10분 준비운동을 한 그룹을 비교했을 때 관절 부상 발생률 차이가 확인된다. 대한스포츠의학회 기준도 같다. 운동 전에는 동적 스트레칭(관절을 움직이며 가동 범위 확보), 운동 후에는 정적 스트레칭(근육을 늘인 상태로 유지)이 권장된다.</p><h2>1단계. 발목 회전 — 30초</h2><p>발목은 하산 중 내반 손상이 가장 많이 발생하는 관절이다. 발목 외측 인대 주변 근육의 가동 범위를 미리 확보하면 순간적인 발 꺾임에 대한 반응 속도가 빨라진다. 한 발씩 들어 발목을 시계 방향 10회, 반시계 방향 10회 돌린다. 가동 범위를 최대한 크게 가져간다.</p><h2>2단계. 무릎 굴신 — 30초</h2><p>서서 양발을 어깨너비로 벌리고 무릎을 구부렸다 폈다를 반복한다. 15~20회 반복하면 무릎 관절낭이 이완되고 슬개골 주변 근육이 활성화된다. 무릎 통증이 있는 사람은 10° 이하의 얕은 굴신으로 시작한다.</p><h2>3단계. 고관절 스트레칭 — 1분</h2><p>고관절은 오르막에서 보폭을 결정하는 관절로, 유연성이 낮으면 무릎과 허리에 불필요한 부하가 전달된다. 한 발씩 교대로 앞으로 크게 내딛고 상체를 앞으로 기울여 고관절 앞쪽 근육(장요근)을 30초씩 늘인다.</p><ul><li>런지 자세에서 앞무릎이 발끝을 넘어가지 않도록 주의한다.</li><li>고관절 안쪽 당기는 느낌이 있으면 정상적인 스트레칭 반응이다.</li><li>통증이 있으면 즉시 중단한다.</li></ul><h2>4단계. 허리 굴신 — 1분</h2><p>양발을 어깨너비로 서서 양손을 허리에 얹고 상체를 앞으로 45° 구부렸다 세우기를 10~12회 반복한다. 이어 상체를 좌우로 각각 30° 기울이는 옆 굴신을 10회 반복한다. 급격히 뒤로 젖히는 동작은 요추 부담이 크므로 생략한다.</p><h2>5단계. 종아리·햄스트링 — 1분</h2><p>벽이나 나무를 짚고 한 발씩 교대로 뒤로 밀어 종아리를 늘인다. 무릎을 편 상태는 비복근, 무릎을 약간 구부린 상태는 가자미근에 작용한다. 각 30초씩 유지한다.</p><h2>6단계. 어깨·목 회전 — 1분</h2><p>배낭을 멘 채 어깨를 앞뒤로 크게 원을 그리며 10회 회전한다. 이어 목을 좌우로 각각 45° 천천히 기울이고 3~5초 유지한다. 급격히 목을 돌리거나 뒤로 젖히는 동작은 경추에 부담이 크므로 피한다.</p><h2>5분 루틴 요약표</h2><table style="width:100%;border-collapse:collapse;font-size:0.9em;margin:20px 0"><thead><tr style="background:#c8dcc8"><th style="padding:8px;border:1px solid #a0c0a0;text-align:left">단계</th><th style="padding:8px;border:1px solid #a0c0a0;text-align:left">시간</th><th style="padding:8px;border:1px solid #a0c0a0;text-align:left">대상</th><th style="padding:8px;border:1px solid #a0c0a0;text-align:left">부상 예방 효과</th></tr></thead><tbody><tr><td style="padding:8px;border:1px solid #a0c0a0">1. 발목 회전</td><td style="padding:8px;border:1px solid #a0c0a0">30초</td><td style="padding:8px;border:1px solid #a0c0a0">발목 외측 인대</td><td style="padding:8px;border:1px solid #a0c0a0">내반 손상 예방</td></tr><tr style="background:#f0f5f0"><td style="padding:8px;border:1px solid #a0c0a0">2. 무릎 굴신</td><td style="padding:8px;border:1px solid #a0c0a0">30초</td><td style="padding:8px;border:1px solid #a0c0a0">슬개골 주변 근육</td><td style="padding:8px;border:1px solid #a0c0a0">무릎 관절 활성화</td></tr><tr><td style="padding:8px;border:1px solid #a0c0a0">3. 고관절 런지</td><td style="padding:8px;border:1px solid #a0c0a0">1분</td><td style="padding:8px;border:1px solid #a0c0a0">장요근·고관절</td><td style="padding:8px;border:1px solid #a0c0a0">허리·무릎 부하 분산</td></tr><tr style="background:#f0f5f0"><td style="padding:8px;border:1px solid #a0c0a0">4. 허리 굴신</td><td style="padding:8px;border:1px solid #a0c0a0">1분</td><td style="padding:8px;border:1px solid #a0c0a0">다열근·광배근</td><td style="padding:8px;border:1px solid #a0c0a0">배낭 착용 허리 부하 감소</td></tr><tr><td style="padding:8px;border:1px solid #a0c0a0">5. 종아리·햄스트링</td><td style="padding:8px;border:1px solid #a0c0a0">1분</td><td style="padding:8px;border:1px solid #a0c0a0">비복근·가자미근</td><td style="padding:8px;border:1px solid #a0c0a0">오르막 근육 피로 지연</td></tr><tr style="background:#f0f5f0"><td style="padding:8px;border:1px solid #a0c0a0">6. 어깨·목 회전</td><td style="padding:8px;border:1px solid #a0c0a0">1분</td><td style="padding:8px;border:1px solid #a0c0a0">어깨 관절·경추</td><td style="padding:8px;border:1px solid #a0c0a0">배낭 착용 자세 교정</td></tr></tbody></table><h2>스트레칭 효과를 높이는 추가 조건</h2><p>기온이 낮은 겨울 아침에는 근육 온도 자체가 낮아 스트레칭 효율이 떨어진다. 5분 루틴 전에 제자리 걷기나 팔 돌리기를 2~3분 추가해 체온을 먼저 약간 높이면 근육 반응이 빠르다.</p><ul><li>날씨 15°C 이하: 스트레칭 전 제자리 걷기 2분 추가</li><li>오랜 차량 이동 후: 하차 직후 5분간 가볍게 걷고 스트레칭 진행</li><li>전날 수면 부족: 스트레칭 시간을 8분으로 늘리고 강도를 낮춤</li><li>이전 산행 후 근육통 잔류: 통증 부위 정적 스트레칭 30초 → 동적 스트레칭 전환</li></ul><h2>자주 묻는 질문</h2><details open><summary><strong>등산 후에는 어떤 스트레칭을 해야 하나요?</strong></summary><p>등산 후에는 정적 스트레칭이 적합하다. 무릎 앞 대퇴사두근 늘이기, 종아리 벽 스트레칭, 고관절 비둘기 자세를 각 30~60초씩 유지한다. 하산 직후보다 귀가 후 몸이 식기 전에 하는 것이 효과적이다.</p></details><details><summary><strong>시간이 없으면 스트레칭을 생략해도 되나요?</strong></summary><p>5분 전체가 어렵다면 발목 회전 30초, 무릎 굴신 30초, 종아리 스트레칭 1분, 이 세 단계 2분만이라도 진행하는 것이 낫다.</p></details><p>산행 전 5분 스트레칭 습관은 장비 점검만큼 기본이 되어야 한다. <a href="/blog/p13">하산 중 무릎 통증 줄이는 3가지 방법</a>을 참고하면 무릎 부상 예방 체계를 갖출 수 있다. <a href="/blog/p89">등산 후 이런 증상 나타나면 병원에 가세요</a>도 참고하면 산행 전후 관리를 연결할 수 있다.</p><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 산행 전 산림청 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-16T02:00:00+00:00',
+    read: 6,
+    date: '2026.06.16',
+    badges: ['스트레칭', '준비운동'],
+  },
+  {
+    id: 'p88', cat: '안전', pal: 'autumn',
+    title: '119 구조 신고 — 산에서 위치 정확히 알리는 법',
+    excerpt: '소방청 통계에서 산악 구조 요청 후 현장 도착까지 평균 62분이 걸립니다. 위치 특정이 지연되면 2~3배 더 걸립니다. 국가지점번호·GPS 좌표·산 이름 조합으로 정확한 위치를 전달하는 절차를 단계별로 정리했습니다.',
+    body: `<h2>1단계. 안전한 장소 확보 — 신고 전 이 과정을 먼저</h2><p>부상이 발생하거나 길을 잃었을 때 가장 먼저 할 일은 신고가 아니라 안전한 위치 확보다. 부상 직후 불안정한 경사면에서 스마트폰을 꺼내 신고하다가 2차 사고가 발생하는 경우가 있다. 가능하다면 평지나 넓은 바위 위로 이동하거나 등산로 중앙으로 나온 뒤 신고한다. 이동이 불가능하다면 현 위치에서 최대한 안정된 자세를 잡은 후 신고한다.</p><h2>2단계. 위치 정보 수집 — 국가지점번호·GPS·이정표</h2><p>소방청 산악구조통계에서 위치 특정이 지연되면 구조 도착 시간이 평균보다 2~3배 늘어난다. 정확한 위치 전달이 구조 시간을 결정한다.</p><div style="background:#f8e8d0;border-left:4px solid #c07030;padding:16px;margin:20px 0"><strong>위치 전달 방법 비교</strong><table style="width:100%;border-collapse:collapse;margin-top:10px;font-size:0.9em"><thead><tr style="background:#e8cca0"><th style="padding:8px;border:1px solid #c0a070;text-align:left">방법</th><th style="padding:8px;border:1px solid #c0a070;text-align:left">정확도</th><th style="padding:8px;border:1px solid #c0a070;text-align:left">준비 필요</th></tr></thead><tbody><tr><td style="padding:8px;border:1px solid #c0a070">국가지점번호</td><td style="padding:8px;border:1px solid #c0a070">100m 격자, 높음</td><td style="padding:8px;border:1px solid #c0a070">이정표 확인</td></tr><tr style="background:#faf0e0"><td style="padding:8px;border:1px solid #c0a070">GPS 좌표</td><td style="padding:8px;border:1px solid #c0a070">10~20m, 가장 높음</td><td style="padding:8px;border:1px solid #c0a070">스마트폰 GPS 앱</td></tr><tr><td style="padding:8px;border:1px solid #c0a070">산 이름+능선+이정표 거리</td><td style="padding:8px;border:1px solid #c0a070">중간(오차 500m~1km)</td><td style="padding:8px;border:1px solid #c0a070">없음</td></tr></tbody></table></div><h2>3단계. 119 연결 — 전달해야 할 정보 순서</h2><p>119가 연결되면 다음 순서로 정보를 전달한다.</p><ol><li><strong>산 이름과 탐방로 이름</strong>: 설악산 오색 코스입니다처럼 구체적으로.</li><li><strong>국가지점번호 또는 GPS 좌표</strong>: 확인했다면 숫자를 또렷하게 읽는다.</li><li><strong>최근 통과한 이정표</strong>: 정상에서 약 1.2km 하산 지점.</li><li><strong>부상자 상태</strong>: 의식 있음/없음, 출혈 여부, 이동 가능 여부.</li><li><strong>신고자 연락처</strong>: 배터리 방전 대비 다른 번호도 전달.</li></ol><h2>4단계. 신호 도구 준비 — 구조대 현장 유도</h2><p>119가 출동했다고 끝이 아니다. 구조대가 등산로 진입 후 현장을 찾는 과정에서 신호 도구가 없으면 추가 시간이 걸린다. 호루라기는 3번 연속 취명이 국제 조난 신호다. 소리가 수백 미터 이상 전달되며 배터리 불필요, 악천후에도 유효하다.</p><ul><li>호루라기: 배낭 외부 포켓에 항상 고정</li><li>헤드랜턴: 야간·악천후 구조 신호</li><li>비상용 은박 담요: 반사로 위치 표시 + 보온</li><li>붉은색 의류·우의: 수색대 식별 용이</li></ul><h2>5단계. 신호 없는 환경에서 119 연결 방법</h2><p>산간 지역에서 셀룰러 신호가 없어도 긴급 전화는 가능한 경우가 있다. 다른 통신사 기지국에 자동 접속해 119 발신이 이루어지는 경우다. 신호가 없다는 표시가 나와도 일단 119를 눌러본다. 스마트폰 SOS 기능(아이폰 전원 버튼 5번 누름, 삼성 측면 버튼 빠르게 3회 등)은 긴급 연락처로 자동 발신하거나 위성 긴급 SOS(지원 기종)를 활용한다.</p><p>소방청은 2024년부터 119 스마트 신고 앱을 통해 GPS 좌표와 사진을 동시에 전송하는 기능을 운영하고 있다. 앱을 미리 설치해 두면 전화 통화 없이 위치 정보와 상황 사진을 119 상황실에 직접 전송할 수 있다. 야간 구조 중 헬기 접근 시 로터 바람이 강하므로 나무 아래나 바위 뒤에서 몸을 낮추고 위치를 알리는 신호만 유지한다. 구조 신고 후 자리를 이동하면 구조대가 혼란을 겪는다. 이동이 불가피한 경우에는 119에 다시 연락해 이동 방향을 알린다. <a href="/blog/p83">스마트폰 배터리 — 등산 중 오래 쓰는 법</a>에서 신고 전 배터리를 최대한 유지하는 방법을 확인할 수 있다. <a href="/blog/p84">산에서 살아남는 안전 수칙 10가지</a>에서 비상 대응 전반의 준비를 이어갈 수 있다.</p><h2>자주 묻는 질문</h2><details open><summary><strong>119와 112 중 어디에 신고해야 하나요?</strong></summary><p>산악 구조는 소방청(119) 소관이다. 구조대가 출동하고 헬기 지원도 119를 통해 이루어진다. 112에 신고해도 119에 연결해 준다. 빠른 처리를 위해 119가 직접적이다.</p></details><details><summary><strong>GPS 좌표를 119에 말로 전달하기 어렵지 않나요?</strong></summary><p>위도 37.1234, 경도 128.5678과 같이 숫자를 느리게 읽으면 된다. 카카오맵·네이버 지도 앱에서 현재 위치를 캡처해 문자로 보내면 더 정확하다.</p></details><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 산행 전 산림청 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-16T07:00:00+00:00',
+    read: 6,
+    date: '2026.06.16',
+    badges: ['119구조', '위치신고'],
+  },
+  {
+    id: 'p89', cat: '안전', pal: 'dawn',
+    title: '등산 후 이런 증상 나타나면 병원에 가세요',
+    excerpt: '등산 후 근육통은 자연스러운 회복 반응이지만, 콜라색 소변·관절 부종·가슴 두근거림은 즉각 병원이 필요한 이상 신호입니다. 일반 피로와 의료 판단이 필요한 증상의 경계를 구분하는 기준을 정리했습니다.',
+    body: `<h2>등산 후 피로와 이상 신호를 구분해야 하는 이유</h2><p>등산 후 근육통과 피로감은 정상적인 회복 반응이다. 그러나 이 반응과 의학적 개입이 필요한 이상 신호를 혼동하면 치료 시기를 놓칠 수 있다. 대한응급의학회 자료에서 과도한 운동 후 응급실을 찾는 경우 중 횡문근융해증이 주요 원인으로 반복 등장한다. 보건복지부 응급의료 가이드는 횡문근융해증을 과도한 운동으로 근육세포가 파괴되어 미오글로빈이 혈류에 방출되는 상태로 정의한다. 미오글로빈이 신장에서 걸러지면서 소변이 갈색이나 콜라색으로 변하는 것이 가장 직접적인 징후다.</p><h2>즉시 응급실 — 이 증상은 기다리지 않는다</h2><ul><li><strong>콜라색·갈색 소변</strong>: 횡문근융해증의 핵심 신호. 등산 후 12~48시간 이내 나타날 수 있다. 즉시 응급실 방문.</li><li><strong>흉통 또는 흉부 압박감</strong>: 심근경색·협심증 가능성. 왼쪽 어깨나 턱으로 방사되는 통증이 동반되면 즉시 119 신고.</li><li><strong>의식 혼탁·극심한 두통</strong>: 고산병(해발 2,500m 이상) 또는 뇌졸중 초기 가능성.</li><li><strong>호흡 곤란(평지 안정 상태에서도 지속)</strong>: 심부전 또는 폐색전증 가능성.</li></ul><h2>당일~48시간 이내 병원 방문 — 기다리면 늦는 신호</h2><table style="width:100%;border-collapse:collapse;font-size:0.9em;margin:16px 0"><thead><tr style="background:#f0dcd0"><th style="padding:8px;border:1px solid #d0b8a8;text-align:left">증상</th><th style="padding:8px;border:1px solid #d0b8a8;text-align:left">의심 원인</th><th style="padding:8px;border:1px solid #d0b8a8;text-align:left">방문 기준</th></tr></thead><tbody><tr><td style="padding:8px;border:1px solid #d0b8a8">발목·무릎 부종 지속</td><td style="padding:8px;border:1px solid #d0b8a8">인대 파열·관절 손상</td><td style="padding:8px;border:1px solid #d0b8a8">부종이 24시간 이상 지속</td></tr><tr style="background:#fcf4f0"><td style="padding:8px;border:1px solid #d0b8a8">관절 쪽 열감·빨개짐</td><td style="padding:8px;border:1px solid #d0b8a8">관절 내 출혈·감염</td><td style="padding:8px;border:1px solid #d0b8a8">온감 + 부종 동반 시</td></tr><tr><td style="padding:8px;border:1px solid #d0b8a8">72시간 이상 심한 근육통</td><td style="padding:8px;border:1px solid #d0b8a8">횡문근융해증·근육 파열</td><td style="padding:8px;border:1px solid #d0b8a8">소변 변색 없어도 통증 심하면</td></tr><tr style="background:#fcf4f0"><td style="padding:8px;border:1px solid #d0b8a8">손발 저림·감각 이상</td><td style="padding:8px;border:1px solid #d0b8a8">신경 압박·혈류 장애</td><td style="padding:8px;border:1px solid #d0b8a8">귀가 후 24시간 이상 지속</td></tr><tr><td style="padding:8px;border:1px solid #d0b8a8">심한 피로 + 발열</td><td style="padding:8px;border:1px solid #d0b8a8">진드기 매개 감염</td><td style="padding:8px;border:1px solid #d0b8a8">풀숲 통과 후 2주 이내 발열</td></tr></tbody></table><h2>일반 근육통 vs 횡문근융해증 — 구분 기준</h2><p>일반 근육통(DOMS, 지연성 근육통)은 산행 후 24~48시간 뒤 최고조에 달했다가 3~5일 안에 자연 회복된다. 횡문근융해증의 핵심 구분 신호는 소변 색이 갈색·콜라색으로 변하는 것이다.</p><ul><li>소변 색이 갈색·콜라색으로 변한다 — 가장 중요한 구분 신호</li><li>전신에 걸쳐 근육이 붓고 만지면 극심하게 아프다</li><li>소변량이 급격히 줄거나 아예 나오지 않는다</li><li>두통, 구역질, 발열이 동반된다</li></ul><h2>진드기·해충 노출 후 — 2주 관찰 기준</h2><p>여름·가을 산행에서 풀숲을 통과하면 진드기 노출 위험이 있다. 쯔쯔가무시병은 노출 후 6~21일 사이 발열, 두통, 발진이 나타나고 물린 부위에 딱지가 생긴다. 중증열성혈소판감소증후군(SFTS)은 발열·구역질·혈소판 감소가 특징이며 치료가 늦으면 치명률이 높다. 산행 후 2주 이내 38°C 이상 발열에 피부 딱지 또는 발진이 동반되면 진드기 노출 이력을 진료실에 알리고 즉시 방문한다.</p><h2>회복 기간 판단 — 언제 다시 산에 가도 되나</h2><p>일반 근육통은 3~5일 충분한 수면과 단백질 섭취(체중 1kg당 1.2~1.5g)로 회복된다. 부분 파열(2도 염좌)은 최소 2~4주, 완전 파열(3도 염좌)은 수술 후 재활 포함 3~6개월이 필요하다.</p><p>횡문근융해증 진단 후에는 의사의 허가 전까지 고강도 운동 재개는 금지다. 신장 기능 수치(크레아티닌, BUN)가 정상으로 돌아올 때까지 추적 검사가 필요하다. 등산 후 이상 증상에 대한 병원 방문 기준은 망설일 것 없이 빠르게다. <a href="/blog/p87">등산 전 5분 스트레칭 — 부상 막는 루틴</a>을 참고하면 부상 예방부터 회복까지 이어지는 루틴을 만들 수 있다. <a href="/blog/p79">등산 중 발목 삐었을 때 현장 대처법</a>도 관련 참고 자료다.</p><h2>자주 묻는 질문</h2><details open><summary><strong>등산 후 다리가 너무 아파서 계단을 못 내려가는 것도 이상 신호인가요?</strong></summary><p>대퇴사두근과 종아리의 지연성 근육통이 심한 경우 계단 하강이 매우 불편할 수 있다. 3~5일 이내 자연 회복되면 일반 근육통으로 봐도 된다. 다만 해당 부위에 눈에 띄는 부종, 열감, 피부색 변화가 동반된다면 심부정맥혈전증(DVT)을 배제하기 위해 병원 방문이 필요하다.</p></details><details><summary><strong>두통이 심한데 진통제를 먹으면 되나요?</strong></summary><p>산행 중 탈수로 인한 두통이라면 충분한 수분 섭취 후 30분 이내 호전된다. 수분 섭취에도 두통이 지속되거나 구역질·시야 변화가 동반되면 약으로 증상을 억제하기 전에 의료 기관 방문이 우선이다.</p></details><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 산행 전 산림청 공식 통제정보를 확인하세요. 본 글의 의료 정보는 일반 안내 목적이며, 증상이 있으면 의사 진단을 받아야 합니다.</p></div>`,
+    publishAt: '2026-06-16T12:00:00+00:00',
+    read: 7,
+    date: '2026.06.16',
+    badges: ['건강관리', '이상신호'],
+  },
+  {
+    id: 'p90', cat: '안전', pal: 'sage',
+    title: '폭우 속 산행 — 계곡 위험과 대피 수칙',
+    excerpt: '시간당 30mm 이상 강우 시 산지 계곡 수위는 30분 내 급상승합니다. 소방청·기상청 합동 통계에서 여름철 산악 익사·고립 사고는 연간 50~80건 발생합니다. 폭우 시 계곡 위험 판단 기준과 대피 절차를 정리했습니다.',
+    body: `<h2>폭우가 계곡을 위험하게 만드는 원인 사슬</h2><p>기상청·소방청 합동 통계에서 여름철(7~8월) 산악 익사·고립 사고는 연간 50~80건 발생한다. 이 사고의 공통점은 강수가 시작될 때 계곡 근처에 있었다는 점이다. 국토교통부 수문 자료에 따르면 산지에서 시간당 20mm 강수 조건에서 계곡 수위가 20~40cm 상승하고, 시간당 30mm를 넘으면 30분 이내에 급격한 수위 변화가 나타난다.</p><p>상류 강수가 하류 계곡에 도달하는 데 시간 차가 있다는 점이 핵심 위험이다. 계곡 합류 지점의 날씨가 맑아도 수십 킬로미터 상류에서 내린 비가 집중 유입되면 갑자기 물이 불어난다. 유속 초속 2m 이상에서 성인도 서 있기 어렵고, 초속 3m를 넘으면 이동 자체가 불가능하다.</p><h2>출발 전 기상 판단 — 취소 기준을 미리 정해야 한다</h2><p>폭우 대피에서 가장 중요한 단계는 출발 전이다. 기상청 산악날씨 예보에서 다음 기준 중 하나라도 해당하면 계곡 구간이 포함된 코스는 출발을 취소하거나 능선 코스로 변경하는 것이 원칙이다.</p><ul><li>당일 오후 강수 확률 50% 이상</li><li>시간당 최대 강수량 예보 20mm 이상</li><li>태풍 경보 또는 주의보 발효 지역</li><li>전날 150mm 이상 강수 후 당일 추가 강수 예보</li></ul><h2>산행 중 폭우 시작 — 즉각 행동 기준</h2><p>산행 중 폭우가 시작되면 행동 기준이 명확해야 한다. 판단이 늦어질수록 대피 선택지가 줄어든다.</p><ol><li><strong>계곡 접근 즉시 중단</strong>: 계곡 취사·세면·휴식을 즉시 중단하고 30m 이상 높은 지점으로 이동한다.</li><li><strong>능선 방향 이동</strong>: 계곡과 능선의 분기점에서 능선을 선택한다.</li><li><strong>대피소·암굴 1차 피신</strong>: 국립공원 대피소, 암반 오버행에서 비를 피하며 상황을 관찰한다.</li><li><strong>하산 경로 재확인</strong>: 올라온 계곡 코스가 이미 잠겼을 수 있다. 119 구조대에 연락해 하산 가능 경로를 확인한다.</li></ol><h2>계곡 수위 판단 — 건너도 되는 기준</h2><table style="width:100%;border-collapse:collapse;font-size:0.9em;margin:16px 0"><thead><tr style="background:#d0e8d0"><th style="padding:8px;border:1px solid #a0c8a0;text-align:left">상태</th><th style="padding:8px;border:1px solid #a0c8a0;text-align:left">위험 수준</th><th style="padding:8px;border:1px solid #a0c8a0;text-align:left">판단 기준</th></tr></thead><tbody><tr><td style="padding:8px;border:1px solid #a0c8a0">물색이 흙탕물로 변함</td><td style="padding:8px;border:1px solid #a0c8a0">높음</td><td style="padding:8px;border:1px solid #a0c8a0">상류에서 대량 유입 진행 중</td></tr><tr style="background:#f0f8f0"><td style="padding:8px;border:1px solid #a0c8a0">수위가 빠르게 상승 중</td><td style="padding:8px;border:1px solid #a0c8a0">매우 높음</td><td style="padding:8px;border:1px solid #a0c8a0">5분 간격 수위 표시 비교</td></tr><tr><td style="padding:8px;border:1px solid #a0c8a0">유속이 빠르고 소용돌이 있음</td><td style="padding:8px;border:1px solid #a0c8a0">극도로 높음</td><td style="padding:8px;border:1px solid #a0c8a0">초속 2m 이상 — 도강 절대 금지</td></tr><tr style="background:#f0f8f0"><td style="padding:8px;border:1px solid #a0c8a0">수위가 무릎 위</td><td style="padding:8px;border:1px solid #a0c8a0">높음</td><td style="padding:8px;border:1px solid #a0c8a0">체중 이동 불안정</td></tr></tbody></table><p>폭우 후 계곡 도강 사망 사고의 대부분은 물이 줄었다고 생각했을 때 시도한 경우다. 강수가 완전히 멈춘 후 최소 2~3시간이 지나야 상류 유입이 안정된다.</p><h2>폭우 대피 시 119 신고 타이밍</h2><p>고립 우려가 있으면 상황이 심각해지기 전에 먼저 신고하는 것이 원칙이다. 강수가 강해지고 있거나 계곡 수위가 지속 상승 중이라면, 아직 안전한 상황에서 먼저 119에 신고해 상황을 알리고 구조 대기 지점을 공유한다. 야간이 되면 헬기 운용이 제한되어 구조 난이도가 크게 높아진다.</p><p>기상청은 2023년부터 스마트 기상 알림 서비스에서 산간 지역 집중호우 예비 특보를 제공한다. 특보 발효 기준은 시간당 30mm 이상이고, 이 기준은 계곡 수위 급상승이 시작되는 임계값과 일치한다. 비가 오기 시작한 후 판단하는 것보다 예보 단계에서 결정하는 것이 대피 여유 시간을 2~3시간 더 확보한다. <a href="/blog/p5">산행 전 반드시 확인하는 통제·기상 정보 5곳</a>에서 실시간 기상 확인 방법을 정리했다. <a href="/blog/p88">119 구조 신고 — 산에서 위치 정확히 알리는 법</a>도 폭우 대피 상황에서 신고 절차와 연결된다.</p><h2>자주 묻는 질문</h2><details open><summary><strong>계곡 옆 야영지에서 폭우를 만나면 어떻게 해야 하나요?</strong></summary><p>즉시 텐트를 걷고 계곡에서 최소 30m 이상 높은 사면으로 이동한다. 텐트 철수 시간이 없다면 텐트를 두고 장비와 식수·비상식량만 챙겨 이동한다. 장비보다 이동이 우선이다.</p></details><details><summary><strong>폭우 예보가 있어도 능선 코스는 안전한가요?</strong></summary><p>능선 코스는 계곡에 비해 급류 위험은 없지만 낙뢰 위험이 높아진다. 능선 이동 중 폭우와 함께 번개가 치면 키 큰 나무 아래, 정상 돌출부 등 노출된 위치를 피하고 낮은 자세로 암반 사이로 이동한다.</p></details><div class="safety"><strong>산행 전 반드시 확인하세요</strong><p>본 글의 코스 정보는 공공데이터 기반 참고치입니다. 산행 전 산림청 공식 통제정보를 확인하세요.</p></div>`,
+    publishAt: '2026-06-16T17:00:00+00:00',
+    read: 7,
+    date: '2026.06.17',
+    badges: ['폭우대피', '계곡위험'],
   },
 ]

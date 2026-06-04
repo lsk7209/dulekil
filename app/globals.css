@@ -187,6 +187,17 @@ a { color: inherit; }
 .card--hover { transition: transform .15s ease, box-shadow .18s ease, border-color .2s; cursor: pointer; }
 .card--hover:hover { transform: translateY(-2px); box-shadow: var(--sh-3); border-color: var(--mist-deep); }
 
+/* 블로그 본문 (prose) */
+.prose { font-size: 17px; line-height: 1.85; color: var(--ink-soft); }
+.prose h2 { font-size: clamp(19px,3vw,22px); font-weight: 800; color: var(--forest); margin: 2em 0 .6em; letter-spacing: -.01em; }
+.prose h3 { font-size: 17px; font-weight: 700; color: var(--forest-700); margin: 1.6em 0 .5em; }
+.prose p { margin: 0 0 1.2em; }
+.prose ul, .prose ol { padding-left: 1.5em; margin: 0 0 1.2em; }
+.prose li { margin-bottom: .4em; }
+.prose strong { font-weight: 700; color: var(--charcoal); }
+.prose blockquote { border-left: 3px solid var(--sage); margin: 1.6em 0; padding: .8em 1.2em; background: var(--bg-warm); border-radius: 0 var(--r-sm) var(--r-sm) 0; color: var(--ink-soft); font-style: normal; }
+.prose .safety { margin: 2em 0; }
+
 /* 스탯 바 */
 .statbar { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; }
 @media (min-width: 520px) { .statbar { grid-template-columns: repeat(4, 1fr); } }

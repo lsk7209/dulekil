@@ -2,6 +2,9 @@ import type { Metadata } from 'next'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
 import { BlogClient } from './blog-client'
+import { POSTS } from '@/lib/posts'
+
+export const revalidate = 3600
 
 export const metadata: Metadata = {
   title: '둘레길고고 매거진 · 다음 산을 고르는 안목',
@@ -9,10 +12,15 @@ export const metadata: Metadata = {
 }
 
 export default function BlogPage() {
+  const now = new Date()
+  const published = POSTS.filter(p =>
+    !p.publishAt || new Date(p.publishAt) <= now
+  )
+
   return (
     <div id="top">
       <SiteHeader active="blog" />
-      <BlogClient />
+      <BlogClient posts={published} />
       <SiteFooter />
     </div>
   )
