@@ -18,12 +18,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE}/data-license`, lastModified: NOW, changeFrequency: 'monthly', priority: 0.2 },
   ]
 
-  const blogPages: MetadataRoute.Sitemap = POSTS.map(p => ({
-    url:             `${BASE}/blog/${p.id}`,
-    lastModified:    p.date.replace(/\./g, '-'),
-    changeFrequency: 'monthly' as const,
-    priority:        0.8,
-  }))
+  const now = new Date()
+  const blogPages: MetadataRoute.Sitemap = POSTS
+    .filter(p => !p.publishAt || new Date(p.publishAt) <= now)
+    .map(p => ({
+      url:             `${BASE}/blog/${p.id}`,
+      lastModified:    p.date.replace(/\./g, '-'),
+      changeFrequency: 'monthly' as const,
+      priority:        0.8,
+    }))
 
   // DB에서 100대 명산 목록 가져오기
   let mountainPages: MetadataRoute.Sitemap = []
