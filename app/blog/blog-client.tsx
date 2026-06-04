@@ -101,16 +101,33 @@ function PostCard({ p }: { p: Post }) {
   )
 }
 
+// 모든 배지 집계 (빈도순 상위 12개)
+function topBadges(posts: Post[]): string[] {
+  const freq: Record<string, number> = {}
+  for (const p of posts) for (const b of (p.badges ?? [])) freq[b] = (freq[b] ?? 0) + 1
+  return Object.entries(freq).sort((a, b) => b[1] - a[1]).slice(0, 12).map(([b]) => b)
+}
+
 /* ---- 메인 클라이언트 컴포넌트 ---- */
 export function BlogClient({ posts }: { posts: Post[] }) {
-  const [cat, setCat] = useState<FilterCat>('전체')
+  const [cat,   setCat]   = useState<FilterCat>('전체')
+  const [query, setQuery] = useState('')
+  const [badge, setBadge] = useState('')
 
   const featured = posts.find((p) => p.featured) ?? posts[0]
   const rest = posts.filter((p) => p.id !== featured?.id)
   if (!featured) return null
-  const filtered = cat === '전체' ? rest : rest.filter((p) => p.cat === cat)
-  const showFeatured = cat === '전체'
 
+  const q = query.trim().toLowerCase()
+  const filtered = rest.filter((p) => {
+    if (cat !== '전체' && p.cat !== cat) return false
+    if (badge && !(p.badges ?? []).includes(badge)) return false
+    if (q && !p.title.toLowerCase().includes(q) && !p.excerpt.toLowerCase().includes(q)) return false
+    return true
+  })
+  const showFeatured = cat === '전체' && !q && !badge
+
+  const badges = topBadges(posts)
   const contourSvg = contour({ seed: 'mag', stroke: '#C4D1C7', opacity: 0.5, cx: 0.8, cy: 0.4, rings: 9, w: 1200, h: 360 })
 
   return (
@@ -130,34 +147,69 @@ export function BlogClient({ posts }: { posts: Post[] }) {
         </div>
       </section>
 
-      {/* 카테고리 필터 */}
-      <div className="wrap" style={{ paddingTop: 22 }}>
+      {/* 검색 + 필터 영역 */}
+      <div className="wrap" style={{ paddingTop: 22, display: 'flex', flexDirection: 'column', gap: 14 }}>
+        {/* 검색창 */}
+        <div style={{ position: 'relative', maxWidth: 400 }}>
+          <span style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: 'var(--ink-faint)', pointerEvents: 'none', display: 'flex' }}>
+            <Icon name="search" size={16} stroke={1.8} />
+          </span>
+          <input
+            type="search"
+            placeholder="제목 검색 (예: 설악산, 지리산)"
+            value={query}
+            onChange={e => { setQuery(e.target.value); setBadge('') }}
+            style={{
+              width: '100%', padding: '9px 12px 9px 36px',
+              border: '1px solid var(--line)', borderRadius: 'var(--r)',
+              fontSize: 14, background: '#fff', outline: 'none',
+              boxSizing: 'border-box',
+            }}
+          />
+        </div>
+
+        {/* 카테고리 칩 */}
         <div className="chiprow" style={{ flexWrap: 'wrap' }}>
           {ALL_CATS.map((c) => (
             <button
               key={c}
               className={'chip' + (cat === c ? ' is-on' : '')}
               aria-pressed={cat === c}
-              onClick={() => setCat(c as FilterCat)}
+              onClick={() => { setCat(c as FilterCat); setBadge('') }}
             >
               {c === '전체' ? '전체' : CATS[c as CatKey].label}
             </button>
           ))}
         </div>
+
+        {/* 배지 필터 칩 */}
+        <div className="chiprow" style={{ flexWrap: 'wrap', gap: 6 }}>
+          {badges.map((b) => (
+            <button
+              key={b}
+              className={'chip chip--sm' + (badge === b ? ' is-on' : '')}
+              aria-pressed={badge === b}
+              onClick={() => setBadge(prev => prev === b ? '' : b)}
+              style={{ fontSize: 12 }}
+            >
+              {b}
+            </button>
+          ))}
+        </div>
       </div>
 
-      {/* 피처드 글 (전체 탭만) */}
+      {/* 피처드 글 (전체 탭 + 검색·배지 없을 때만) */}
       {showFeatured && (
         <section className="wrap" style={{ paddingTop: 24 }}>
           <Featured p={featured} />
         </section>
       )}
 
-      {/* 글 목록 상단 3편 */}
+      {/* 글 목록 */}
       <section className="wrap" style={{ paddingTop: 28 }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 18 }}>
           <h2 className="h3" style={{ color: 'var(--forest)', whiteSpace: 'nowrap' }}>
-            {cat === '전체' ? '최신 글' : CATS[cat as CatKey].label + ' 글'}
+            {q ? `"${q}" 검색 결과` : badge ? `#${badge}` : cat === '전체' ? '최신 글' : CATS[cat as CatKey].label + ' 글'}
           </h2>
           <span className="cap" style={{ fontWeight: 600, whiteSpace: 'nowrap' }}>{filtered.length}편</span>
         </div>
@@ -166,7 +218,7 @@ export function BlogClient({ posts }: { posts: Post[] }) {
         </div>
         {filtered.length === 0 && (
           <div style={{ textAlign:'center', padding:'48px 0', color:'var(--ink-faint)' }}>
-            <p>이 카테고리의 글이 없습니다.</p>
+            <p>{q ? `"${q}"에 해당하는 글이 없습니다.` : '이 조건의 글이 없습니다.'}</p>
           </div>
         )}
       </section>

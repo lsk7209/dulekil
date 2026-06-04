@@ -7,6 +7,8 @@ import { Icon } from '@/components/icon'
 import { getMountainBySlug, getCoursesByMountainId, getMountainsForHub, getRegionGroup } from '@/lib/db/queries'
 import { ridgeCover } from '@/lib/motif'
 import { DIFF_META } from '@/lib/mountains-static'
+import { getRelatedPosts } from '@/lib/mountain-blog-map'
+import { CATS } from '@/lib/posts'
 
 export const revalidate = 86400
 
@@ -71,10 +73,11 @@ export default async function MountainDetailPage({ params }: Props) {
   const mountain = await getMountainBySlug(name)
   if (!mountain) notFound()
 
-  const courses   = await getCoursesByMountainId(mountain.id)
-  const allMtns   = await getMountainsForHub()
-  const group     = getRegionGroup(mountain.region)
-  const nearby    = allMtns.filter(x => x.name !== mountain.name && x.group === group).slice(0, 3)
+  const courses       = await getCoursesByMountainId(mountain.id)
+  const allMtns       = await getMountainsForHub()
+  const group         = getRegionGroup(mountain.region)
+  const nearby        = allMtns.filter(x => x.name !== mountain.name && x.group === group).slice(0, 3)
+  const relatedPosts  = getRelatedPosts(mountain.name, group)
 
   const bestDiff  = courses.length > 0
     ? normDiff(courses.sort((a, b) => (a.distance ?? 99) - (b.distance ?? 99))[0]?.diff_norm)
@@ -239,6 +242,35 @@ export default async function MountainDetailPage({ params }: Props) {
               <div className="card card--pad" style={{ textAlign: 'center', color: 'var(--ink-faint)', padding: 32 }}>
                 <p>등산로 데이터를 준비 중입니다.</p>
               </div>
+            )}
+
+            {/* 관련 가이드 & 블로그 */}
+            {relatedPosts.length > 0 && (
+              <section>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
+                  <h2 className="h3">{mountain.name} 관련 가이드</h2>
+                  <Link href="/blog" className="seemore">전체 보기 <Icon name="chevron" size={15} /></Link>
+                </div>
+                <div className="card-grid">
+                  {relatedPosts.map(post => {
+                    const cat = CATS[post.cat]
+                    return (
+                      <Link
+                        key={post.id}
+                        href={`/blog/${post.id}`}
+                        className="card card--hover card--pad"
+                        style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column', gap: 8 }}
+                      >
+                        <span style={{ fontSize: 12, fontWeight: 700, color: cat?.c ?? 'var(--forest)', background: cat?.bg ?? 'var(--bg-warm)', borderRadius: 4, padding: '2px 7px', alignSelf: 'flex-start' }}>
+                          {post.cat}
+                        </span>
+                        <p style={{ margin: 0, fontSize: 15, fontWeight: 700, lineHeight: 1.4, color: 'var(--ink)' }}>{post.title}</p>
+                        <span className="cap">{post.read}분 읽기</span>
+                      </Link>
+                    )
+                  })}
+                </div>
+              </section>
             )}
 
             {/* FAQ */}

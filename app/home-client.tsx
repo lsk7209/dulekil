@@ -356,10 +356,12 @@ function ScrollRow({ items, done, toggle }: { items: HubMountain[]; done: Set<st
 
 /* ---- 가이드 섹션 ---- */
 const GUIDES = [
-  { icon: 'route', t: '초보의 첫 100대 명산',  d: '체력·코스·장비 — 시작 전 알아둘 것', href: '/blog/g1' },
-  { icon: 'bus',   t: '대중교통으로 가는 명산', d: '지하철·버스로 닿는 들머리 모음',      href: '/blog/p11' },
-  { icon: 'snow',  t: '겨울 눈꽃 산행 준비',    d: '아이젠·스패츠·보온 체크리스트',      href: '/blog/p3' },
-  { icon: 'warn',  t: '안전 산행 수칙',          d: '통제정보·일몰·조난 예방의 기본',      href: '/blog/p5' },
+  { icon: 'route', t: '초보의 첫 100대 명산',  d: '산 선택·코스·장비 — 시작 전 알아둘 것',  href: '/guide/beginner-100' },
+  { icon: 'bus',   t: '대중교통으로 가는 명산', d: '지하철·버스로 닿는 들머리 모음',          href: '/guide/transit-mountains' },
+  { icon: 'pack',  t: '등산 장비 기초 가이드',  d: '등산화·배낭·의류 — 예산별 선택법',       href: '/guide/gear-basics' },
+  { icon: 'leaf',  t: '계절별 등산 준비',        d: '봄 진달래부터 겨울 설경까지 시즌 가이드', href: '/guide/seasonal-hiking' },
+  { icon: 'warn',  t: '산행 안전 체크리스트',    d: '출발 전 10분 — 기상·통제·장비 점검',     href: '/guide/safety-checklist' },
+  { icon: 'clock', t: '당일치기 산행 계획법',    d: '코스 선택부터 귀가까지 역산 플래닝',      href: '/guide/one-day-plan' },
 ]
 
 function Guides() {
