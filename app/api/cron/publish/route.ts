@@ -1,10 +1,11 @@
 /**
  * Vercel Cron — 매일 06:00 KST 드립피드
  * 품질 게이트 통과한 pages를 최대 20건 published로 전환
- * 발행 완료 후 IndexNow 자동 전송
+ * 발행 완료 후 IndexNow + Google Indexing API 자동 전송
  */
 import { NextResponse } from 'next/server'
 import { notifyIndexNow } from '@/lib/indexnow'
+import { notifyGoogleIndexing } from '@/lib/gsc-indexing'
 
 export const runtime    = 'nodejs'
 export const maxDuration = 300
@@ -49,8 +50,11 @@ export async function GET(req: Request) {
       }
     }
 
-    // IndexNow 자동 전송
-    await notifyIndexNow(publishedUrls)
+    // IndexNow + Google Indexing API 병렬 전송
+    await Promise.allSettled([
+      notifyIndexNow(publishedUrls),
+      notifyGoogleIndexing(publishedUrls),
+    ])
 
     return NextResponse.json({
       published: toPublish.length,
