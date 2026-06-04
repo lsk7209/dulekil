@@ -84,13 +84,22 @@ export default function BlogDetailPage({ params }: Props) {
           </div>
         </section>
 
-        {/* 광고 슬롯 — 리더보드 */}
-        <div className="wrap wrap--narrow" style={{ paddingTop: 16, paddingBottom: 4 }}>
-          <div className="ad ad--leaderboard"><span className="ad__label">광고 · 리더보드</span></div>
-        </div>
-
         {/* 아티클 본문 */}
         <article className="wrap wrap--narrow" style={{ paddingTop: 28, paddingBottom: 12 }}>
+          {post.body && (() => {
+            const matches = [...post.body.matchAll(/<h2[^>]*>([^<]+)<\/h2>/g)]
+            if (matches.length < 2) return null
+            return (
+              <nav style={{ background:'var(--bg-warm)', border:'1px solid var(--line)', borderRadius:'var(--r)', padding:'20px 24px', marginBottom:28 }}>
+                <div style={{ fontWeight:700, fontSize:14, color:'var(--forest)', marginBottom:12, letterSpacing:'.02em' }}>목차</div>
+                <ol style={{ margin:0, padding:'0 0 0 20px', display:'flex', flexDirection:'column', gap:8 }}>
+                  {matches.map((m, i) => (
+                    <li key={i} style={{ fontSize:14.5, color:'var(--ink-soft)', lineHeight:1.4 }}>{m[1]}</li>
+                  ))}
+                </ol>
+              </nav>
+            )
+          })()}
           {post.body ? (
             <div className="prose" dangerouslySetInnerHTML={{ __html: post.body }} />
           ) : (
@@ -106,11 +115,6 @@ export default function BlogDetailPage({ params }: Props) {
             </div>
           )}
         </article>
-
-        {/* 광고 슬롯 — 인피드 */}
-        <div className="wrap wrap--narrow" style={{ paddingTop: 4, paddingBottom: 28 }}>
-          <div className="ad ad--infeed"><span className="ad__label">광고 · 본문 인피드</span></div>
-        </div>
 
         {/* 관련 글 */}
         {relatedPosts.length > 0 && (

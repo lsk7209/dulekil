@@ -120,11 +120,6 @@ export function MountainsClient({ mountains }: Props) {
         </div>
       </section>
 
-      {/* 광고 */}
-      <div className="wrap" style={{ paddingTop: 12, paddingBottom: 2 }}>
-        <div className="ad ad--leaderboard"><span className="ad__label">광고 · 리더보드</span></div>
-      </div>
-
       {/* 필터 */}
       <div className="wrap" style={{ paddingTop: 20 }}>
         <div className="chiprow" style={{ marginBottom: 10, flexWrap: 'wrap' }}>

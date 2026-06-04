@@ -59,11 +59,6 @@ export function SiteHeader({ active }: SiteHeaderProps) {
           </nav>
         </div>
       </div>
-      <div className="wrap" style={{ paddingTop: 10, paddingBottom: 2 }}>
-        <div className="ad ad--leaderboard">
-          <span className="ad__label">광고 · 리더보드 728×90</span>
-        </div>
-      </div>
     </header>
   )
 }

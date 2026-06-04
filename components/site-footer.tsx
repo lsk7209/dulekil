@@ -24,15 +24,6 @@ const FOOTER_LINKS = [
 export function SiteFooter() {
   return (
     <footer style={{ marginTop: 44, background: 'var(--forest-deep)', color: '#C9D3CB' }}>
-      <div className="wrap" style={{ paddingTop: 16, paddingBottom: 8 }}>
-        <div
-          className="ad ad--anchor"
-          style={{ background: 'rgba(255,255,255,.05)', borderColor: 'rgba(255,255,255,.18)', color: '#9FB2AE' }}
-        >
-          <span className="ad__label">광고 · 하단 앵커</span>
-        </div>
-      </div>
-
       <div className="wrap footer-grid" style={{ paddingTop: 26, paddingBottom: 30 }}>
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 9, marginBottom: 10 }}>

@@ -97,11 +97,6 @@ export function TrackerClient() {
         </div>
       </section>
 
-      {/* 광고 리더보드 */}
-      <div className="wrap" style={{ paddingTop: 16, paddingBottom: 4 }}>
-        <div className="ad ad--leaderboard"><span className="ad__label">광고 · 본문 인피드</span></div>
-      </div>
-
       {/* 지역별 그리드 */}
       {grouped.map(group => (
         <section key={group.label} className="wrap" style={{ paddingTop: 36 }}>

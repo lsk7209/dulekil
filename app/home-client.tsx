@@ -419,10 +419,6 @@ export function HomeClient({ mountains }: { mountains: HubMountain[] }) {
       <Hero query={query} setQuery={setQuery} goResults={goResults} doneCount={done.size} featured={featured} total={total} />
       <Explore mountains={mountains} query={query} active={active} setActive={setActive} done={done} toggle={toggle} />
 
-      <section className="wrap" style={{ paddingTop: 20 }}>
-        <div className="ad ad--infeed"><span className="ad__label">광고 · 본문 인피드</span></div>
-      </section>
-
       <TrackerPreview mountains={mountains} done={done} />
 
       {beginners.length > 0 && (

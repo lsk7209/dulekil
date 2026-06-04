@@ -233,9 +233,6 @@ export default async function MountainDetailPage({ params }: Props) {
               </div>
             )}
 
-            {/* 인피드 광고 */}
-            <div className="ad ad--infeed"><span className="ad__label">광고 · 본문 인피드</span></div>
-
             {/* FAQ */}
             <section className="card card--pad">
               <h2 className="h3" style={{ marginBottom: 20 }}>자주 묻는 질문</h2>
