@@ -4,7 +4,7 @@ import { SiteFooter } from '@/components/site-footer'
 
 export const metadata: Metadata = {
   title: '데이터 출처·라이선스',
-  description: '둘레길 사이트에서 사용하는 공공데이터 출처 및 라이선스 정보',
+  description: '둘레길고고 사이트에서 사용하는 공공데이터 출처 및 라이선스 정보',
 }
 
 export default function DataLicensePage() {

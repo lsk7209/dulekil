@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next'
 import { POSTS } from '@/lib/posts'
 
-const BASE = 'https://dulekil.vercel.app'
+const BASE = 'https://dullegilgogo.kr'
 const NOW  = new Date().toISOString()
 
 export const revalidate = 3600

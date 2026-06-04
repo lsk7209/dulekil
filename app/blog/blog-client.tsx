@@ -121,7 +121,7 @@ export function BlogClient() {
       >
         <div className="contour-svg" dangerouslySetInnerHTML={{ __html: contourSvg }} />
         <div className="wrap" style={{ position: 'relative' }}>
-          <div className="eyebrow" style={{ marginBottom: 10 }}>둘레길 매거진</div>
+          <div className="eyebrow" style={{ marginBottom: 10 }}>둘레길고고 매거진</div>
           <h1 className="h1" style={{ maxWidth: 720, marginBottom: 16 }}>다음 산을 고르는 안목</h1>
           <p className="lead" style={{ maxWidth: 540 }}>
             코스 추천부터 장비·안전·계절 가이드까지. 완등 챌린지에 필요한 판단을 데이터 위에서 정리한 글 모음입니다.

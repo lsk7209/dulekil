@@ -39,7 +39,7 @@ export function SiteFooter() {
             <span style={{ width: 28, height: 28, borderRadius: 8, background: 'var(--sage)', display: 'grid', placeItems: 'center', color: 'var(--forest-deep)' }}>
               {LOGO_ICON}
             </span>
-            <span style={{ fontWeight: 800, fontSize: 19, color: '#fff', whiteSpace: 'nowrap' }}>둘레길</span>
+            <span style={{ fontWeight: 800, fontSize: 19, color: '#fff', whiteSpace: 'nowrap' }}>둘레길고고</span>
           </div>
           <p style={{ fontSize: 13.5, lineHeight: 1.6, color: '#9FB2AE', maxWidth: 280, margin: 0 }}>
             100대 명산 완등 챌린지를 위한 코스·둘레길 정보 사이트.

@@ -35,7 +35,7 @@ export default function BlogDetailPage({ params }: Props) {
     headline: post.title,
     description: post.excerpt,
     datePublished: post.date.replace(/\./g, '-'),
-    publisher: { '@type': 'Organization', name: '둘레길', url: 'https://dulekil.com' },
+    publisher: { '@type': 'Organization', name: '둘레길고고', url: 'https://dullegilgogo.kr' },
   }
 
   return (

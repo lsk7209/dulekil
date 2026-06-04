@@ -4,7 +4,7 @@ import { SiteFooter } from '@/components/site-footer'
 
 export const metadata: Metadata = {
   title: '사이트 소개',
-  description: '둘레길 — 한국 100대 명산 완등 챌린지를 위한 코스·둘레길 정보 사이트 소개',
+  description: '둘레길고고 — 한국 100대 명산 완등 챌린지를 위한 코스·둘레길 정보 사이트 소개',
 }
 
 export default function AboutPage() {
@@ -13,11 +13,11 @@ export default function AboutPage() {
       <SiteHeader />
       <main className="wrap wrap--narrow" style={{ paddingTop: 48, paddingBottom: 64 }}>
         <div className="eyebrow" style={{ marginBottom: 12 }}>소개</div>
-        <h1 className="h1" style={{ marginBottom: 24 }}>둘레길 소개</h1>
+        <h1 className="h1" style={{ marginBottom: 24 }}>둘레길고고 소개</h1>
 
         <div className="body" style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
           <p>
-            <b>둘레길</b>은 한국 산림청이 선정한 100대 명산 완등 챌린지에 도전하는 등산객을 위한 정보 사이트입니다.
+            <b>둘레길고고</b>는 한국 산림청이 선정한 100대 명산 완등 챌린지에 도전하는 등산객을 위한 정보 사이트입니다.
             "집에서 다음에 어느 산을 갈지 계획하는 단계"를 돕습니다.
           </p>
           <p>

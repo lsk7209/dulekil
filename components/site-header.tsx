@@ -28,7 +28,7 @@ export function SiteHeader({ active }: SiteHeaderProps) {
             <span style={{ width: 30, height: 30, borderRadius: 9, background: 'var(--forest)', display: 'grid', placeItems: 'center', color: '#fff' }}>
               {LOGO_ICON}
             </span>
-            <span style={{ fontWeight: 800, fontSize: 20, color: 'var(--forest)', letterSpacing: '-.02em', whiteSpace: 'nowrap' }}>둘레길</span>
+            <span style={{ fontWeight: 800, fontSize: 20, color: 'var(--forest)', letterSpacing: '-.02em', whiteSpace: 'nowrap' }}>둘레길고고</span>
           </Link>
           <nav style={{ display: 'flex', alignItems: 'center', gap: 4, flexWrap: 'nowrap', whiteSpace: 'nowrap' }}>
             {NAV_LINKS.map((l) => (

@@ -7,20 +7,20 @@ const ADSENSE_ID = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID
 
 export const metadata: Metadata = {
   title: {
-    default: '둘레길 — 100대 명산 챌린지 도우미',
-    template: '%s · 둘레길',
+    default: '둘레길고고 — 100대 명산 챌린지 도우미',
+    template: '%s · 둘레길고고',
   },
   description: '한국 100대 명산 완등 챌린지를 위한 코스·둘레길 정보 사이트. 집에서 다음 산을 계획하세요.',
   keywords: ['100대 명산', '등산 코스', '둘레길', '완등 챌린지', '등산 난이도', '대중교통 등산'],
-  authors: [{ name: '둘레길' }],
-  metadataBase: new URL('https://dulekil.vercel.app'),
+  authors: [{ name: '둘레길고고' }],
+  metadataBase: new URL('https://dullegilgogo.kr'),
   openGraph: {
-    siteName: '둘레길',
+    siteName: '둘레길고고',
     locale: 'ko_KR',
     type: 'website',
   },
   alternates: {
-    canonical: 'https://dulekil.vercel.app',
+    canonical: 'https://dullegilgogo.kr',
   },
   verification: {
     google: 'F4MlP2TwGNrutz6uvY5BhPRqbdgAA5QXvuVhg0KbFg0',

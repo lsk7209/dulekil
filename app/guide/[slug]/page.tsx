@@ -86,7 +86,7 @@ export default function GuidePage({ params }: { params: { slug: string } }) {
     '@type': 'Article',
     headline: guide.title,
     description: guide.description,
-    publisher: { '@type': 'Organization', name: '둘레길' },
+    publisher: { '@type': 'Organization', name: '둘레길고고' },
     mainEntity: {
       '@type': 'FAQPage',
       mainEntity: guide.faq.map(f => ({

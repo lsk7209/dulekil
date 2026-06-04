@@ -94,8 +94,8 @@ export default async function MountainDetailPage({ params }: Props) {
       {
         '@type': 'BreadcrumbList',
         itemListElement: [
-          { '@type': 'ListItem', position: 1, name: '홈', item: 'https://dulekil.vercel.app' },
-          { '@type': 'ListItem', position: 2, name: '100대 명산', item: 'https://dulekil.vercel.app/mountains' },
+          { '@type': 'ListItem', position: 1, name: '홈', item: 'https://dullegilgogo.kr' },
+          { '@type': 'ListItem', position: 2, name: '100대 명산', item: 'https://dullegilgogo.kr/mountains' },
           { '@type': 'ListItem', position: 3, name: mountain.name },
         ],
       },
