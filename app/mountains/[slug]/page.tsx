@@ -25,14 +25,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const name = decodeURIComponent(params.slug)
   const m = await getMountainBySlug(name)
   if (!m) return {}
+  const ogSub = `${m.region ?? ''} · 해발 ${(m.elev ?? 0).toLocaleString()}m`
+  const ogUrl = `/og?title=${encodeURIComponent(m.name)}&type=mountain&sub=${encodeURIComponent(ogSub)}`
   return {
     title: `${m.name} 등산 코스 — 난이도·거리·소요시간`,
     description: m.description ??
       `${m.name}(${m.region ?? ''}) 등산 코스 정보. 해발 ${m.elev ?? '?'}m. 공공데이터 기반.`,
     openGraph: {
       title: `${m.name} 등산 코스`,
-      description: `${m.region} · 해발 ${(m.elev ?? 0).toLocaleString()}m`,
+      description: ogSub,
       type: 'article',
+      url: `https://dullegilgogo.kr/mountains/${encodeURIComponent(m.name)}`,
+      images: [{ url: ogUrl, width: 1200, height: 630, alt: m.name }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      images: [ogUrl],
     },
   }
 }

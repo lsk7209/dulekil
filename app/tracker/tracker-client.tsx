@@ -6,7 +6,8 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Icon } from '@/components/icon'
 import { ridgeCover, contour } from '@/lib/motif'
-import { MOUNTAINS, DIFF_META, type StaticMountain } from '@/lib/mountains-static'
+import { DIFF_META } from '@/lib/mountains-static'
+import type { HubMountain } from '@/lib/db/queries'
 
 const LS_KEY = 'dulle_done_v1'
 
@@ -15,9 +16,9 @@ function useDone() {
   useEffect(() => {
     try { setDone(new Set(JSON.parse(localStorage.getItem(LS_KEY) ?? '[]'))) } catch { /* */ }
   }, [])
-  const toggle = (id: string) => setDone(prev => {
+  const toggle = (name: string) => setDone(prev => {
     const n = new Set(prev)
-    n.has(id) ? n.delete(id) : n.add(id)
+    n.has(name) ? n.delete(name) : n.add(name)
     localStorage.setItem(LS_KEY, JSON.stringify([...n]))
     return n
   })
@@ -42,21 +43,19 @@ function DiffBadge({ level }: { level: string }) {
   )
 }
 
-export function TrackerClient() {
+const GROUP_ORDER = ['수도권', '강원', '충청', '영남', '호남', '제주', '기타']
+
+export function TrackerClient({ mountains }: { mountains: HubMountain[] }) {
   const [done, toggle] = useDone()
-  const count = done.size
-  const pct   = Math.round((count / 100) * 100)
+  const total = mountains.length
+  const count = [...done].filter(name => mountains.some(m => m.name === name)).length
+  const pct   = total > 0 ? Math.round((count / total) * 100) : 0
 
   const contourSvg = contour({ seed: 'tracker-header', stroke: '#C4D1C7', opacity: 0.4, cx: 0.7, cy: 0.4, rings: 8, w: 1200, h: 320 })
 
-  const grouped = [
-    { label: '수도권', mountains: MOUNTAINS.filter(m => m.group === '수도권') },
-    { label: '강원',   mountains: MOUNTAINS.filter(m => m.group === '강원')   },
-    { label: '충청',   mountains: MOUNTAINS.filter(m => m.group === '충청')   },
-    { label: '영남',   mountains: MOUNTAINS.filter(m => m.group === '영남')   },
-    { label: '호남',   mountains: MOUNTAINS.filter(m => m.group === '호남')   },
-    { label: '제주',   mountains: MOUNTAINS.filter(m => m.group === '제주')   },
-  ].filter(g => g.mountains.length > 0)
+  const grouped = GROUP_ORDER
+    .map(label => ({ label, mountains: mountains.filter(m => m.group === label) }))
+    .filter(g => g.mountains.length > 0)
 
   return (
     <main>
@@ -83,7 +82,7 @@ export function TrackerClient() {
             </div>
             <div>
               <div style={{ color: 'var(--sage-soft)', fontSize: 13, fontWeight: 600, marginBottom: 4 }}>남은 산</div>
-              <div className="tnum" style={{ fontSize: 42, fontWeight: 800, color: 'var(--mist)', lineHeight: 1 }}>{100 - count}</div>
+              <div className="tnum" style={{ fontSize: 42, fontWeight: 800, color: 'var(--mist)', lineHeight: 1 }}>{total - count}</div>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 8, minWidth: 180 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13, color: 'var(--sage-soft)', fontWeight: 600 }}>
@@ -106,12 +105,12 @@ export function TrackerClient() {
               <h2 className="h3" style={{ color: 'var(--forest)' }}>{group.label}</h2>
             </div>
             <span className="cap" style={{ fontWeight: 600 }}>
-              {group.mountains.filter(m => done.has(m.id)).length}/{group.mountains.length}
+              {group.mountains.filter(m => done.has(m.name)).length}/{group.mountains.length}
             </span>
           </div>
           <div className="card-grid">
             {group.mountains.map(m => (
-              <TrackerCard key={m.id} m={m} done={done.has(m.id)} onToggle={toggle} />
+              <TrackerCard key={m.id} m={m} done={done.has(m.name)} onToggle={toggle} />
             ))}
           </div>
         </section>
@@ -131,7 +130,7 @@ export function TrackerClient() {
   )
 }
 
-function TrackerCard({ m, done, onToggle }: { m: StaticMountain; done: boolean; onToggle: (id: string) => void }) {
+function TrackerCard({ m, done, onToggle }: { m: HubMountain; done: boolean; onToggle: (name: string) => void }) {
   return (
     <article
       className="card"
@@ -144,7 +143,9 @@ function TrackerCard({ m, done, onToggle }: { m: StaticMountain; done: boolean; 
       <RidgeCover seed={m.name} pal={m.pal} height={88} />
       <div className="card--pad" style={{ display: 'flex', flexDirection: 'column', gap: 8, flex: 1 }}>
         <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
-          <span className="h3" style={{ fontSize: 18 }}>{m.name}</span>
+          <Link href={`/mountains/${encodeURIComponent(m.slug)}`} style={{ textDecoration: 'none' }}>
+            <span className="h3" style={{ fontSize: 18, color: 'var(--forest)' }}>{m.name}</span>
+          </Link>
           <span className="cap" style={{ fontWeight: 600 }}>{m.elev.toLocaleString()}m</span>
         </div>
         <p className="cap" style={{ display: 'flex', alignItems: 'center', gap: 3 }}>
@@ -163,7 +164,7 @@ function TrackerCard({ m, done, onToggle }: { m: StaticMountain; done: boolean; 
           style={{ width: '100%', marginTop: 'auto' }}
           onClick={() => {
             const next = !done
-            onToggle(m.id)
+            onToggle(m.name)
             window.gtag?.('event', 'tracker_toggle', { mountain_name: m.name, completed: next })
           }}
           aria-pressed={done}

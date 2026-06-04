@@ -40,9 +40,11 @@ export const metadata: Metadata = {
     siteName: '둘레길고고',
     locale: 'ko_KR',
     type: 'website',
+    images: [{ url: '/og', width: 1200, height: 630, alt: '둘레길고고' }],
   },
   twitter: {
     card: 'summary_large_image',
+    images: ['/og'],
   },
   alternates: {
     canonical: 'https://dullegilgogo.kr',

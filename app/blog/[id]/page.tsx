@@ -18,10 +18,21 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const post = POSTS.find(p => p.id === params.id)
   if (!post) return {}
+  const ogUrl = `/og?title=${encodeURIComponent(post.title)}&type=blog&sub=${encodeURIComponent(post.cat)}`
   return {
     title: post.title,
     description: post.excerpt,
-    openGraph: { title: post.title, description: post.excerpt, type: 'article' },
+    openGraph: {
+      title: post.title,
+      description: post.excerpt,
+      type: 'article',
+      url: `https://dullegilgogo.kr/blog/${post.id}`,
+      images: [{ url: ogUrl, width: 1200, height: 630, alt: post.title }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      images: [ogUrl],
+    },
   }
 }
 
