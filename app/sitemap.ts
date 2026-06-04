@@ -1,7 +1,14 @@
 import type { MetadataRoute } from 'next'
 import { POSTS } from '@/lib/posts'
 
-const GUIDE_SLUGS = ['beginner-100', 'transit-mountains']
+const GUIDE_SLUGS = [
+  'beginner-100',
+  'transit-mountains',
+  'gear-basics',
+  'seasonal-hiking',
+  'safety-checklist',
+  'one-day-plan',
+]
 
 const BASE = 'https://dullegilgogo.kr'
 const NOW  = new Date().toISOString()
