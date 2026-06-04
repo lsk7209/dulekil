@@ -1,6 +1,7 @@
 /**
  * Vercel Cron — 5시간마다 실행 (0 0,5,10,15,20 * * *)
  * 새로 공개된 블로그 포스트를 IndexNow(Bing/Naver) + Google Indexing API로 알림
+ * + GSC 사이트맵 핑
  */
 import { NextResponse } from 'next/server'
 import { POSTS } from '@/lib/posts'
@@ -10,7 +11,17 @@ import { notifyGoogleIndexing } from '@/lib/gsc-indexing'
 export const runtime     = 'nodejs'
 export const maxDuration = 60
 
-const BASE = 'https://dullegilgogo.kr'
+const BASE     = 'https://dullegilgogo.kr'
+const SITEMAP  = `${BASE}/sitemap.xml`
+
+async function pingSitemapToGoogle(): Promise<void> {
+  try {
+    const res = await fetch(`https://www.google.com/ping?sitemap=${encodeURIComponent(SITEMAP)}`)
+    console.log(`[GSC-Sitemap] ping → HTTP ${res.status}`)
+  } catch (e) {
+    console.error('[GSC-Sitemap] ping 실패:', e)
+  }
+}
 
 export async function GET(req: Request) {
   const authHeader = req.headers.get('authorization')
@@ -33,10 +44,11 @@ export async function GET(req: Request) {
 
   const urls = newlyPublished.map(p => `${BASE}/blog/${p.id}`)
 
-  // IndexNow (Bing/Naver) + Google Indexing API 병렬 전송
+  // IndexNow (Bing/Naver) + Google Indexing API + GSC 사이트맵 핑 병렬 전송
   await Promise.allSettled([
     notifyIndexNow(urls),
     notifyGoogleIndexing(urls),
+    pingSitemapToGoogle(),
   ])
 
   console.log(`[blog-notify] ${urls.length}개 전송:`, urls)
@@ -44,5 +56,6 @@ export async function GET(req: Request) {
   return NextResponse.json({
     notified: urls.length,
     posts:    newlyPublished.map(p => p.id),
+    sitemap:  SITEMAP,
   })
 }
