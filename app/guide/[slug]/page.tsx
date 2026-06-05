@@ -179,6 +179,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   return {
     title: guide.title,
     description: guide.description,
+    alternates: { canonical: `https://dullegilgogo.kr/guide/${params.slug}` },
     openGraph: {
       title: guide.title,
       description: guide.description,
@@ -194,42 +195,53 @@ export default function GuidePage({ params }: { params: { slug: string } }) {
   const guide = GUIDES[params.slug]
   if (!guide) notFound()
 
+  const guideUrl = `https://dullegilgogo.kr/guide/${params.slug}`
+
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'Article',
-    headline: guide.title,
-    description: guide.description,
-    publisher: { '@type': 'Organization', name: '둘레길고고' },
-    mainEntity: {
-      '@type': 'FAQPage',
-      mainEntity: guide.faq.map(f => ({
-        '@type': 'Question',
-        name: f.q,
-        acceptedAnswer: { '@type': 'Answer', text: f.a },
-      })),
-    },
+    '@graph': [
+      {
+        '@type': 'Article',
+        headline: guide.title,
+        description: guide.description,
+        publisher: { '@type': 'Organization', name: '둘레길고고', url: 'https://dullegilgogo.kr' },
+        mainEntityOfPage: { '@type': 'WebPage', '@id': guideUrl },
+      },
+      {
+        '@type': 'FAQPage',
+        mainEntity: guide.faq.map(f => ({
+          '@type': 'Question',
+          name: f.q,
+          acceptedAnswer: { '@type': 'Answer', text: f.a },
+        })),
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: '홈', item: 'https://dullegilgogo.kr' },
+          { '@type': 'ListItem', position: 2, name: '가이드', item: 'https://dullegilgogo.kr/guide' },
+          { '@type': 'ListItem', position: 3, name: guide.title, item: guideUrl },
+        ],
+      },
+    ],
   }
 
   return (
     <div id="top">
       <SiteHeader />
-      <main>
+      <main id="main-content">
         <section style={{ background: 'var(--bg-warm)', paddingTop: 36, paddingBottom: 32 }}>
           <div className="wrap wrap--narrow">
             <nav style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, color: 'var(--ink-faint)', marginBottom: 20 }}>
               <Link href="/" style={{ color: 'var(--ink-faint)', textDecoration: 'none' }}>홈</Link>
               <Icon name="chevron" size={13} />
-              <Link href="/blog" style={{ color: 'var(--ink-faint)', textDecoration: 'none' }}>가이드</Link>
+              <Link href="/guide" style={{ color: 'var(--ink-faint)', textDecoration: 'none' }}>가이드</Link>
             </nav>
             <div className="eyebrow" style={{ marginBottom: 12 }}>가이드</div>
             <h1 className="h1" style={{ marginBottom: 16 }}>{guide.title}</h1>
             <p className="lead">{guide.description}</p>
           </div>
         </section>
-
-        <div className="wrap wrap--narrow" style={{ paddingTop: 16, paddingBottom: 8 }}>
-          <div className="ad ad--leaderboard"><span className="ad__label">광고 · 리더보드</span></div>
-        </div>
 
         <article className="wrap wrap--narrow" style={{ paddingTop: 32 }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
@@ -239,8 +251,6 @@ export default function GuidePage({ params }: { params: { slug: string } }) {
                 <p className="body">{s.body}</p>
               </section>
             ))}
-
-            <div className="ad ad--infeed"><span className="ad__label">광고 · 본문 인피드</span></div>
 
             <section>
               <h2 className="h3" style={{ marginBottom: 20 }}>자주 묻는 질문</h2>

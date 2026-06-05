@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next'
 import { POSTS } from '@/lib/posts'
+import { FILLERS } from '@/lib/fillers-static'
 
 const GUIDE_SLUGS = [
   'beginner-100',
@@ -19,10 +20,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticPages: MetadataRoute.Sitemap = [
     { url: BASE,              lastModified: NOW, changeFrequency: 'daily',   priority: 1.0 },
     { url: `${BASE}/blog`,    lastModified: NOW, changeFrequency: 'daily',   priority: 0.9 },
+    { url: `${BASE}/guide`,   lastModified: NOW, changeFrequency: 'weekly',  priority: 0.8 },
     { url: `${BASE}/mountains`, lastModified: NOW, changeFrequency: 'weekly', priority: 0.9 },
     { url: `${BASE}/tracker`, lastModified: NOW, changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${BASE}/about`,   lastModified: NOW, changeFrequency: 'monthly', priority: 0.3 },
+    { url: `${BASE}/about`,        lastModified: NOW, changeFrequency: 'monthly', priority: 0.3 },
     { url: `${BASE}/data-license`, lastModified: NOW, changeFrequency: 'monthly', priority: 0.2 },
+    { url: `${BASE}/privacy`,      lastModified: NOW, changeFrequency: 'yearly',  priority: 0.2 },
+    { url: `${BASE}/terms`,        lastModified: NOW, changeFrequency: 'yearly',  priority: 0.2 },
   ]
 
   const now = new Date()
@@ -57,5 +61,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority:        0.7,
   }))
 
-  return [...staticPages, ...blogPages, ...mountainPages, ...guidePages]
+  const fillerPages: MetadataRoute.Sitemap = FILLERS.map(f => ({
+    url:             `${BASE}/list/${f.slug}`,
+    lastModified:    NOW,
+    changeFrequency: 'monthly' as const,
+    priority:        0.75,
+  }))
+
+  return [...staticPages, ...blogPages, ...mountainPages, ...guidePages, ...fillerPages]
 }

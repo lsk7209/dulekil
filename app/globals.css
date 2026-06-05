@@ -200,6 +200,17 @@ a { color: inherit; }
 .prose .safety { margin: 2em 0; }
 .prose a, .mountain-link { color: var(--forest); text-decoration: underline; text-decoration-color: var(--sage); text-underline-offset: 3px; }
 .prose a:hover, .mountain-link:hover { color: var(--forest-dark, #1a2e20); }
+.prose table { width: 100%; border-collapse: collapse; font-size: 0.9em; margin: 1.4em 0; }
+.prose th, .prose td { padding: 8px 12px; border: 1px solid var(--line); text-align: left; vertical-align: top; }
+.prose thead tr { background: var(--bg-warm); }
+.prose tbody tr:nth-child(even) { background: #fafaf7; }
+.prose details { border: 1px solid var(--line); border-radius: var(--r-sm); margin: .8em 0; }
+.prose details summary { cursor: pointer; padding: 12px 16px; font-weight: 700; color: var(--forest); list-style: none; }
+.prose details summary::-webkit-details-marker { display: none; }
+.prose details summary::before { content: '▶ '; font-size: .75em; color: var(--sage); }
+.prose details[open] summary::before { content: '▼ '; }
+.prose details > *:not(summary) { padding: 0 16px 14px; }
+.prose img { max-width: 100%; border-radius: var(--r); margin: 1em 0; }
 
 /* 스탯 바 */
 .statbar { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; }
@@ -230,21 +241,6 @@ a { color: inherit; }
 .safety h4 { margin: 0 0 4px; font-size: 15.5px; font-weight: 800; color: var(--clay-deep); }
 .safety p  { margin: 0; font-size: 14px; line-height: 1.55; color: #6E4D33; }
 
-/* ============================================================
-   광고 슬롯
-   ============================================================ */
-.ad {
-  display: grid; place-items: center;
-  border: 1px dashed var(--ad-line);
-  border-radius: var(--r);
-  background: repeating-linear-gradient(135deg, #fff, #fff 9px, #FBF9F3 9px, #FBF9F3 18px);
-  color: #B6AE9C; font-size: 12px; font-weight: 600; letter-spacing: .08em;
-  text-transform: uppercase;
-}
-.ad__label { display: inline-flex; align-items: center; gap: 6px; padding: 4px 0; }
-.ad--leaderboard { min-height: 90px; }
-.ad--infeed      { min-height: 120px; }
-.ad--anchor      { min-height: 60px; }
 
 /* ============================================================
    진행률 바
@@ -346,6 +342,12 @@ a { color: inherit; }
 
 @media (max-width: 560px) {
   .hide-sm { display: none; }
+  /* 모바일 prose 최적화 */
+  .prose { font-size: 16px; }
+  .prose table { font-size: 13px; display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .prose th, .prose td { padding: 6px 8px; white-space: nowrap; }
+  /* 이전/다음 글 네비 */
+  .wrap--narrow .prev-next { grid-template-columns: 1fr; }
 }
 
 /* ============================================================
@@ -395,3 +397,238 @@ a { color: inherit; }
 @media (min-width: 900px) {
   .card-grid { grid-template-columns: repeat(3, 1fr); }
 }
+
+/* ============================================================
+   홈 Filler 모음 그리드
+   ============================================================ */
+.filler-home-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-top: 20px;
+}
+.filler-home-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--forest);
+  text-decoration: none;
+  border-radius: var(--r);
+}
+.filler-home-card svg { flex: none; color: var(--sage); }
+
+@media (max-width: 600px) {
+  .filler-home-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ============================================================
+   L2 Filler 모음 페이지 (/list/[slug])
+   ============================================================ */
+.filler-page {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 20px 80px;
+}
+
+/* 브레드크럼 */
+.breadcrumb ol {
+  display: flex; flex-wrap: wrap; gap: 4px 8px;
+  list-style: none; margin: 24px 0 0; padding: 0;
+  font-size: 13px; color: var(--ink-faint);
+}
+.breadcrumb li + li::before { content: '/'; margin-right: 8px; opacity: .5; }
+.breadcrumb a { color: var(--ink-faint); text-decoration: none; }
+.breadcrumb a:hover { color: var(--forest); }
+
+/* 헤더 */
+.filler-header {
+  padding: 28px 0 24px;
+  border-bottom: 1px solid var(--line-soft);
+  margin-bottom: 24px;
+}
+.filler-header h1 {
+  font-size: clamp(24px, 5vw, 34px);
+  font-weight: 800;
+  color: var(--forest);
+  letter-spacing: -.02em;
+  line-height: 1.15;
+  margin: 0 0 12px;
+}
+.filler-intro {
+  font-size: 15.5px;
+  line-height: 1.75;
+  color: var(--ink-soft);
+  margin: 0 0 14px;
+}
+.filler-count {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--forest);
+  background: var(--mist);
+  border-radius: var(--r-pill);
+  padding: 4px 12px;
+}
+
+/* 목록 */
+.filler-mountain-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.filler-mountain-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.filler-rank {
+  flex: none;
+  width: 28px;
+  text-align: right;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink-faint);
+  font-variant-numeric: tabular-nums;
+}
+.filler-mountain-link {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: var(--r);
+  text-decoration: none;
+  color: inherit;
+  background: var(--card);
+  border: 1px solid var(--line-soft);
+  transition: background .12s, box-shadow .12s, border-color .12s;
+}
+.filler-mountain-link:hover {
+  background: #fff;
+  box-shadow: var(--sh-2);
+  border-color: var(--mist-deep);
+}
+.filler-mountain-info { flex: 1; min-width: 0; }
+.filler-mountain-name {
+  display: block;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--forest);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.filler-mountain-meta {
+  display: block;
+  font-size: 13px;
+  color: var(--ink-faint);
+  margin-top: 2px;
+}
+.filler-mountain-tags {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  flex: none;
+}
+.filler-mountain-dist {
+  flex: none;
+  font-size: 12.5px;
+  color: var(--ink-faint);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.filler-empty { color: var(--ink-faint); font-size: 15px; padding: 24px 0; }
+
+/* 난이도·기능 칩 (리스트 전용 소형) */
+.chip--diff {
+  font-size: 11px;
+  padding: 3px 8px;
+  min-height: 22px;
+  border-radius: var(--r-pill);
+  font-weight: 700;
+  border: 1px solid transparent;
+  cursor: default;
+}
+.chip--low    { background: var(--diff-low-bg);  color: var(--diff-low);  border-color: #C9DCC9; }
+.chip--mid    { background: var(--diff-mid-bg);  color: var(--diff-mid);  border-color: #E2D09A; }
+.chip--high   { background: var(--diff-high-bg); color: var(--diff-high); border-color: #E8C9AC; }
+.chip--transit, .chip--gpx {
+  font-size: 11px;
+  padding: 3px 8px;
+  min-height: 22px;
+  border-radius: var(--r-pill);
+  font-weight: 600;
+  border: 1px solid transparent;
+  cursor: default;
+  background: var(--mist);
+  color: var(--ink-soft);
+  border-color: var(--line);
+}
+
+/* 데이터 출처 */
+.data-source {
+  font-size: 12px;
+  color: var(--ink-faint);
+  margin: 20px 0 0;
+  padding-top: 16px;
+  border-top: 1px solid var(--line-soft);
+}
+
+/* 관련 모음 */
+.filler-related { margin-top: 40px; }
+.filler-related h2 {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--forest);
+  margin: 0 0 14px;
+}
+.filler-related-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.filler-related-list a {
+  display: inline-block;
+  font-size: 13.5px;
+  padding: 6px 14px;
+  border-radius: var(--r-pill);
+  background: var(--bg-warm);
+  border: 1px solid var(--line);
+  color: var(--forest);
+  text-decoration: none;
+  transition: background .12s, border-color .12s;
+}
+.filler-related-list a:hover { background: var(--mist-deep); border-color: var(--mist-deep); }
+
+@media (max-width: 520px) {
+  .filler-mountain-link { flex-wrap: wrap; gap: 8px; }
+  .filler-mountain-dist { display: none; }
+}
+
+/* ── 건너뛰기 링크 (접근성) ── */
+.skip-link {
+  position: fixed;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  background: var(--forest);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 0 0 var(--r) var(--r);
+  font-weight: 700;
+  font-size: 14px;
+  text-decoration: none;
+  transition: top .15s ease;
+  white-space: nowrap;
+}
+.skip-link:focus { top: 0; outline: 3px solid var(--clay); outline-offset: 2px; }

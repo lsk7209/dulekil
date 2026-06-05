@@ -92,9 +92,14 @@ function PostCard({ p }: { p: Post }) {
           <CatTag cat={p.cat} solid />
         </div>
       </RidgeCover>
-      <div className="card--pad" style={{ display: 'flex', flexDirection: 'column', gap: 10, flex: 1 }}>
-        <h3 className="h3" style={{ fontSize: 19 }}>{p.title}</h3>
-        <p className="body" style={{ fontSize:14.5, flex:1, display:'-webkit-box', WebkitLineClamp:3, WebkitBoxOrient:'vertical', overflow:'hidden' }}>{p.excerpt}</p>
+      <div className="card--pad" style={{ display: 'flex', flexDirection: 'column', gap: 8, flex: 1 }}>
+        <h3 className="h3" style={{ fontSize: 18, lineHeight: 1.4 }}>{p.title}</h3>
+        <p className="body" style={{ fontSize: 14, flex: 1, lineHeight: 1.65, display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden', color: 'var(--ink-soft)' }}>{p.excerpt}</p>
+        {p.badges && p.badges.length > 0 && (
+          <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
+            {p.badges.slice(0, 3).map(b => <span key={b} className="tag" style={{ fontSize: 11 }}>{b}</span>)}
+          </div>
+        )}
         <Meta p={p} />
       </div>
     </Link>
@@ -131,7 +136,7 @@ export function BlogClient({ posts }: { posts: Post[] }) {
   const contourSvg = contour({ seed: 'mag', stroke: '#C4D1C7', opacity: 0.5, cx: 0.8, cy: 0.4, rings: 9, w: 1200, h: 360 })
 
   return (
-    <main>
+    <main id="main-content">
       {/* 매스트헤드 */}
       <section
         className="contour-bg"
@@ -213,24 +218,16 @@ export function BlogClient({ posts }: { posts: Post[] }) {
           </h2>
           <span className="cap" style={{ fontWeight: 600, whiteSpace: 'nowrap' }}>{filtered.length}편</span>
         </div>
-        <div className="post-grid">
-          {filtered.slice(0, 3).map((p) => <PostCard key={p.id} p={p} />)}
-        </div>
-        {filtered.length === 0 && (
+        {filtered.length === 0 ? (
           <div style={{ textAlign:'center', padding:'48px 0', color:'var(--ink-faint)' }}>
             <p>{q ? `"${q}"에 해당하는 글이 없습니다.` : '이 조건의 글이 없습니다.'}</p>
           </div>
+        ) : (
+          <div className="post-grid">
+            {filtered.map((p) => <PostCard key={p.id} p={p} />)}
+          </div>
         )}
       </section>
-
-      {/* 글 목록 나머지 */}
-      {filtered.length > 3 && (
-        <section className="wrap" style={{ paddingTop: 24 }}>
-          <div className="post-grid">
-            {filtered.slice(3).map((p) => <PostCard key={p.id} p={p} />)}
-          </div>
-        </section>
-      )}
 
       {/* 안전 고지 */}
       <section className="wrap" style={{ paddingTop: 36, paddingBottom: 8 }}>
