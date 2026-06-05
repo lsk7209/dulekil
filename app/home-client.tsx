@@ -8,6 +8,7 @@ import { Icon } from '@/components/icon'
 import { ridgeCover, contour } from '@/lib/motif'
 import { DIFF_META, SEASON_ICON } from '@/lib/mountains-static'
 import type { HubMountain } from '@/lib/db/queries'
+import { CATS, type Post } from '@/lib/posts'
 
 const LS_KEY = 'dulle_done_v1'
 
@@ -364,6 +365,46 @@ const GUIDES = [
   { icon: 'clock', t: '당일치기 산행 계획법',    d: '코스 선택부터 귀가까지 역산 플래닝',      href: '/guide/one-day-plan' },
 ]
 
+/* ---- 최신 블로그 글 ---- */
+function LatestPosts({ posts }: { posts: Post[] }) {
+  if (posts.length === 0) return null
+  return (
+    <section className="wrap" style={{ paddingTop: 44, paddingBottom: 8 }}>
+      <SecHead kicker="최신 발행" title="새로 올라온 글" more={{ href: '/blog', label: '전체 보기' }} />
+      <div className="card-grid">
+        {posts.map(p => {
+          const cat = CATS[p.cat]
+          return (
+            <Link
+              key={p.id}
+              href={`/blog/${p.id}`}
+              className="card card--hover card--pad"
+              style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column', gap: 10 }}
+            >
+              <span style={{
+                fontSize: 11, fontWeight: 700, letterSpacing: '.04em',
+                color: cat?.c, background: cat?.bg,
+                borderRadius: 4, padding: '3px 8px', alignSelf: 'flex-start',
+              }}>
+                {cat?.label ?? p.cat}
+              </span>
+              <p style={{ margin: 0, fontSize: 15, fontWeight: 700, lineHeight: 1.4, color: 'var(--ink)', flex: 1 }}>
+                {p.title}
+              </p>
+              <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+                {(p.badges ?? []).slice(0, 2).map(b => (
+                  <span key={b} className="tag" style={{ fontSize: 11 }}>{b}</span>
+                ))}
+              </div>
+              <span className="cap" style={{ fontSize: 12 }}>{p.read}분 읽기</span>
+            </Link>
+          )
+        })}
+      </div>
+    </section>
+  )
+}
+
 function Guides() {
   return (
     <section id="guide" className="wrap" style={{ paddingTop: 44, paddingBottom: 8 }}>
@@ -400,7 +441,7 @@ function SafetyBlock() {
 }
 
 /* ---- 메인 ---- */
-export function HomeClient({ mountains }: { mountains: HubMountain[] }) {
+export function HomeClient({ mountains, latestPosts }: { mountains: HubMountain[]; latestPosts: Post[] }) {
   const [done, toggle] = useDone()
   const [query, setQuery]   = useState('')
   const [active, setActive] = useState<Set<string>>(() => new Set())
@@ -437,6 +478,7 @@ export function HomeClient({ mountains }: { mountains: HubMountain[] }) {
         </section>
       )}
 
+      <LatestPosts posts={latestPosts} />
       <Guides />
       <SafetyBlock />
     </>

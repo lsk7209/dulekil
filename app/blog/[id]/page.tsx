@@ -5,6 +5,7 @@ import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
 import { Icon } from '@/components/icon'
 import { POSTS, CATS } from '@/lib/posts'
+import { linkMountainNames } from '@/lib/mountain-link'
 
 interface Props { params: { id: string } }
 
@@ -112,7 +113,7 @@ export default function BlogDetailPage({ params }: Props) {
             )
           })()}
           {post.body ? (
-            <div className="prose" dangerouslySetInnerHTML={{ __html: post.body }} />
+            <div className="prose" dangerouslySetInnerHTML={{ __html: linkMountainNames(post.body) }} />
           ) : (
             <div style={{ fontSize: 17, lineHeight: 1.8, color: 'var(--ink-soft)' }}>
               <p style={{ marginTop: 0 }}>{post.excerpt}</p>

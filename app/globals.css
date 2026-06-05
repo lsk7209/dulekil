@@ -172,6 +172,7 @@ a { color: inherit; }
   background: var(--forest); color: #fff; border-color: var(--forest);
 }
 .chip svg { width: 16px; height: 16px; }
+.chip--sm { font-size: 12px; padding: 5px 10px; min-height: 30px; gap: 4px; }
 
 /* ============================================================
    카드
@@ -197,6 +198,8 @@ a { color: inherit; }
 .prose strong { font-weight: 700; color: var(--charcoal); }
 .prose blockquote { border-left: 3px solid var(--sage); margin: 1.6em 0; padding: .8em 1.2em; background: var(--bg-warm); border-radius: 0 var(--r-sm) var(--r-sm) 0; color: var(--ink-soft); font-style: normal; }
 .prose .safety { margin: 2em 0; }
+.prose a, .mountain-link { color: var(--forest); text-decoration: underline; text-decoration-color: var(--sage); text-underline-offset: 3px; }
+.prose a:hover, .mountain-link:hover { color: var(--forest-dark, #1a2e20); }
 
 /* 스탯 바 */
 .statbar { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; }

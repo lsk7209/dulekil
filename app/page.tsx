@@ -3,6 +3,7 @@ import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
 import { HomeClient } from './home-client'
 import { getMountainsForHub } from '@/lib/db/queries'
+import { POSTS } from '@/lib/posts'
 
 export const revalidate = 3600
 
@@ -48,11 +49,15 @@ const jsonLd = {
 
 export default async function HomePage() {
   const mountains = await getMountainsForHub()
+  const now = new Date()
+  const latestPosts = POSTS
+    .filter(p => !p.publishAt || new Date(p.publishAt) <= now)
+    .slice(0, 4)
 
   return (
     <div id="top">
       <SiteHeader active="explore" />
-      <HomeClient mountains={mountains} />
+      <HomeClient mountains={mountains} latestPosts={latestPosts} />
       <SiteFooter />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
     </div>
