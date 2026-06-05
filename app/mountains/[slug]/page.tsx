@@ -100,6 +100,7 @@ export default async function MountainDetailPage({ params }: Props) {
         '@type': 'TouristAttraction',
         name: mountain.name,
         description: mountain.description ?? `${mountain.region}에 위치한 해발 ${mountain.elev}m의 명산.`,
+        image: `https://dullegilgogo.kr/og?title=${encodeURIComponent(mountain.name)}&type=mountain&sub=${encodeURIComponent(`${mountain.region ?? ''} · 해발 ${(mountain.elev ?? 0).toLocaleString()}m`)}`,
         address: { '@type': 'PostalAddress', addressRegion: mountain.region ?? '', addressCountry: 'KR' },
         ...(mountain.lat && mountain.lng ? {
           geo: { '@type': 'GeoCoordinates', latitude: mountain.lat, longitude: mountain.lng }

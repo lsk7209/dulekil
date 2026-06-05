@@ -1,0 +1,38 @@
+{
+  "name": "둘레길고고",
+  "short_name": "둘레길고고",
+  "description": "한국 100대 명산 등산 코스·둘레길 정보. 집에서 다음 산을 계획하세요.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#EAE6DC",
+  "theme_color": "#2F4A3C",
+  "lang": "ko",
+  "icons": [
+    {
+      "src": "/apple-icon",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon",
+      "sizes": "32x32",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["travel", "sports", "lifestyle"],
+  "shortcuts": [
+    {
+      "name": "100대 명산",
+      "url": "/mountains",
+      "description": "100대 명산 목록 보기"
+    },
+    {
+      "name": "완등 트래커",
+      "url": "/tracker",
+      "description": "완등 현황 체크"
+    }
+  ]
+}

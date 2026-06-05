@@ -24,6 +24,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: post.title,
     description: post.excerpt,
+    keywords: [...(post.badges ?? []), post.cat, '등산', '100대명산', '둘레길'],
     openGraph: {
       title: post.title,
       description: post.excerpt,
@@ -60,7 +61,11 @@ export default function BlogDetailPage({ params }: Props) {
     headline: post.title,
     description: post.excerpt,
     datePublished: post.date.replace(/\./g, '-'),
+    dateModified:  post.date.replace(/\./g, '-'),
+    author: { '@type': 'Organization', name: '둘레길고고', url: 'https://dullegilgogo.kr' },
     publisher: { '@type': 'Organization', name: '둘레길고고', url: 'https://dullegilgogo.kr' },
+    image: `https://dullegilgogo.kr/og?title=${encodeURIComponent(post.title)}&type=blog&sub=${encodeURIComponent(post.cat)}`,
+    mainEntityOfPage: { '@type': 'WebPage', '@id': postUrl },
   }
 
   return (

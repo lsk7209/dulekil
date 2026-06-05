@@ -55,12 +55,14 @@ export const metadata: Metadata = {
       'naver-site-verification': '43567d5a8e06ca7e10fa1d706c858b086a85ff4f',
     },
   },
+  manifest: '/manifest.json',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko" className={`${pretendard.variable} ${notoSerifKR.variable}`}>
       <head>
+        <meta name="theme-color" content="#2F4A3C" />
         {ADSENSE_ID && (
           <Script
             async
