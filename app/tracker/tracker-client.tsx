@@ -58,7 +58,7 @@ export function TrackerClient({ mountains }: { mountains: HubMountain[] }) {
     .filter(g => g.mountains.length > 0)
 
   return (
-    <main>
+    <main id="main-content">
       {/* 헤더 */}
       <section className="contour-bg" style={{ position: 'relative', overflow: 'hidden', paddingTop: 28, paddingBottom: 32, background: 'var(--forest-deep)' }}>
         <div className="contour-svg" dangerouslySetInnerHTML={{ __html: contourSvg }} />

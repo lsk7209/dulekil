@@ -126,7 +126,7 @@ export default function GuidePage() {
                   {g.icon}
                 </div>
                 <div style={{ flex: 1, minWidth: 0 }}>
-                  <h2 className="h3" style={{ marginBottom: 8, fontSize: 18 }}>{g.title}</h2>
+                  <h2 className="h2" style={{ marginBottom: 8, fontSize: 18 }}>{g.title}</h2>
                   <p className="body" style={{ fontSize: 14, color: 'var(--ink-soft)', marginBottom: 10, lineHeight: 1.6 }}>{g.desc}</p>
                   <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap' }}>
                     {g.badges.map(b => <span key={b} className="tag" style={{ fontSize: 12 }}>{b}</span>)}

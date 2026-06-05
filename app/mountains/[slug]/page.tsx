@@ -33,6 +33,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `${m.name} 등산 코스 — 난이도·거리·소요시간`,
     description: m.description ??
       `${m.name}(${m.region ?? ''}) 등산 코스 정보. 해발 ${m.elev ?? '?'}m. 공공데이터 기반.`,
+    alternates: {
+      canonical: `https://dullegilgogo.kr/mountains/${encodeURIComponent(m.name)}`,
+    },
     openGraph: {
       title: `${m.name} 등산 코스`,
       description: ogSub,
@@ -62,7 +65,7 @@ function minutesToHM(min: number | null): string {
 function RidgeCoverImg({ name, pal, height }: { name: string; pal: string; height: number }) {
   const html = ridgeCover({ seed: name, palette: pal, w: 1200, h: height * 2 })
   return (
-    <div style={{ position: 'relative', height, overflow: 'hidden' }}>
+    <div role="img" aria-label={`${name} 능선 일러스트`} style={{ position: 'relative', height, overflow: 'hidden' }}>
       <div style={{ position: 'absolute', inset: 0 }} dangerouslySetInnerHTML={{ __html: html }} />
     </div>
   )
@@ -140,7 +143,7 @@ export default async function MountainDetailPage({ params }: Props) {
   return (
     <div id="top">
       <SiteHeader active="explore" />
-      <main>
+      <main id="main-content">
         {/* 히어로 커버 */}
         <div style={{ position: 'relative' }}>
           <RidgeCoverImg name={mountain.name} pal={mountain.pal ?? 'forest'} height={260} />
@@ -205,7 +208,7 @@ export default async function MountainDetailPage({ params }: Props) {
             {/* 등산로 목록 */}
             {courses.length > 0 && (
               <section>
-                <h2 className="h3" style={{ marginBottom: 16 }}>등산로 목록 ({courses.length}개)</h2>
+                <h2 className="h2" style={{ marginBottom: 16 }}>등산로 목록 ({courses.length}개)</h2>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
                   {courses.slice(0, 20).map(c => (
                     <div key={c.id} className="card card--pad" style={{ display: 'flex', gap: 16, alignItems: 'center', flexWrap: 'wrap' }}>
@@ -249,7 +252,7 @@ export default async function MountainDetailPage({ params }: Props) {
             {relatedPosts.length > 0 && (
               <section>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
-                  <h2 className="h3">{mountain.name} 관련 가이드</h2>
+                  <h2 className="h2">{mountain.name} 관련 가이드</h2>
                   <Link href="/blog" className="seemore">전체 보기 <Icon name="chevron" size={15} /></Link>
                 </div>
                 <div className="card-grid">
@@ -276,7 +279,7 @@ export default async function MountainDetailPage({ params }: Props) {
 
             {/* FAQ */}
             <section className="card card--pad">
-              <h2 className="h3" style={{ marginBottom: 20 }}>자주 묻는 질문</h2>
+              <h2 className="h2" style={{ marginBottom: 20 }}>자주 묻는 질문</h2>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
                 {[
                   { q: `${mountain.name} 등산 난이도는?`, a: `${mountain.name}에는 총 ${courses.length}개의 등산로가 있으며, 주요 난이도는 '${bestDiff}'입니다. 가장 짧은 코스는 ${minDist ? minDist.toFixed(1) + 'km' : '?km'}입니다.` },
@@ -296,7 +299,7 @@ export default async function MountainDetailPage({ params }: Props) {
               <div className="safety__icon"><Icon name="warn" size={21} stroke={2} /></div>
               <div>
                 <h4>산행 전 꼭 확인하세요</h4>
-                <p>본 페이지의 코스·소요시간은 공공데이터(data.go.kr, 산림청)를 가공한 참고치입니다. 실제 산행 전 날씨·체력·장비를 점검하고, 산림청·국립공원 공식 통제정보를 반드시 확인하세요.</p>
+                <p>본 페이지의 코스·소요시간은 <a href="https://www.data.go.kr" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit' }}>공공데이터포털</a>·<a href="https://www.forest.go.kr" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit' }}>산림청</a>을 가공한 참고치입니다. 실제 산행 전 <a href="https://www.weather.go.kr" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit' }}>기상청</a> 날씨와 <a href="https://www.knps.or.kr" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit' }}>국립공원공단</a> 통제정보를 반드시 확인하세요.</p>
               </div>
             </div>
 
@@ -304,7 +307,7 @@ export default async function MountainDetailPage({ params }: Props) {
             {nearby.length > 0 && (
               <section>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
-                  <h2 className="h3">{group} 다른 명산</h2>
+                  <h2 className="h2">{group} 다른 명산</h2>
                   <Link href="/mountains" className="seemore">전체 보기 <Icon name="chevron" size={15} /></Link>
                 </div>
                 <div className="card-grid">

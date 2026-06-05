@@ -89,7 +89,7 @@ export function MountainsClient({ mountains }: Props) {
   }, [mountains, group, diff, transit, sort, query])
 
   return (
-    <main>
+    <main id="main-content">
       {/* 헤더 */}
       <section className="contour-bg" style={{ position: 'relative', overflow: 'hidden', paddingTop: 28, paddingBottom: 26 }}>
         <div className="contour-svg" dangerouslySetInnerHTML={{ __html: contourSvg }} />
@@ -113,6 +113,7 @@ export function MountainsClient({ mountains }: Props) {
                   window.gtag?.('event', 'search', { search_term: e.target.value })
                 }}
                 placeholder="산 이름 또는 지역으로 검색"
+                aria-label="산 이름 또는 지역 검색"
                 style={{ flex: 1, border: 0, outline: 'none', background: 'transparent', fontFamily: 'var(--sans)', fontSize: 15, minWidth: 0 }}
               />
             </div>
@@ -124,7 +125,7 @@ export function MountainsClient({ mountains }: Props) {
       <div className="wrap" style={{ paddingTop: 20 }}>
         <div className="chiprow" style={{ marginBottom: 10, flexWrap: 'wrap' }}>
           {GROUPS.map(g => (
-            <button key={g} className={'chip' + (group === g ? ' is-on' : '')} onClick={() => {
+            <button key={g} className={'chip' + (group === g ? ' is-on' : '')} aria-pressed={group === g} onClick={() => {
               setGroup(g)
               window.gtag?.('event', 'filter_apply', { filter_type: 'region', filter_value: g })
             }}>{g}</button>
@@ -133,7 +134,7 @@ export function MountainsClient({ mountains }: Props) {
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
           <div className="chiprow" style={{ flexWrap: 'wrap' }}>
             {DIFFS.map(d => (
-              <button key={d} className={'chip' + (diff === d ? ' is-on' : '')} onClick={() => {
+              <button key={d} className={'chip' + (diff === d ? ' is-on' : '')} aria-pressed={diff === d} onClick={() => {
                 setDiff(d)
                 window.gtag?.('event', 'filter_apply', { filter_type: 'difficulty', filter_value: d })
               }}
@@ -143,6 +144,7 @@ export function MountainsClient({ mountains }: Props) {
             ))}
             <button
               className={'chip' + (transit ? ' is-on' : '')}
+              aria-pressed={transit}
               onClick={() => {
                 const next = !transit
                 setTransit(next)
@@ -174,7 +176,15 @@ export function MountainsClient({ mountains }: Props) {
           <p className="cap" style={{ fontWeight: 600 }}>
             {list.length}개 산 · {done.size}/{mountains.length} 완등
           </p>
-          <div className="progress" style={{ width: 140 }}>
+          <div
+            className="progress"
+            role="progressbar"
+            aria-valuenow={done.size}
+            aria-valuemin={0}
+            aria-valuemax={mountains.length}
+            aria-label="완등 진행률"
+            style={{ width: 140 }}
+          >
             <div className="progress__fill" style={{ width: `${Math.max(2, Math.round(done.size / mountains.length * 100))}%` }} />
           </div>
         </div>

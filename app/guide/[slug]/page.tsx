@@ -204,7 +204,11 @@ export default function GuidePage({ params }: { params: { slug: string } }) {
         '@type': 'Article',
         headline: guide.title,
         description: guide.description,
+        datePublished: '2025-10-01',
+        dateModified: '2026-06-01',
+        author: { '@type': 'Organization', name: '둘레길고고', url: 'https://dullegilgogo.kr' },
         publisher: { '@type': 'Organization', name: '둘레길고고', url: 'https://dullegilgogo.kr' },
+        image: `https://dullegilgogo.kr/og?title=${encodeURIComponent(guide.title)}&type=blog&sub=등산 가이드`,
         mainEntityOfPage: { '@type': 'WebPage', '@id': guideUrl },
       },
       {
@@ -213,6 +217,18 @@ export default function GuidePage({ params }: { params: { slug: string } }) {
           '@type': 'Question',
           name: f.q,
           acceptedAnswer: { '@type': 'Answer', text: f.a },
+        })),
+      },
+      {
+        '@type': 'HowTo',
+        name: guide.title,
+        description: guide.description,
+        image: `https://dullegilgogo.kr/og?title=${encodeURIComponent(guide.title)}&type=blog&sub=등산 가이드`,
+        step: guide.sections.map((s, i) => ({
+          '@type': 'HowToStep',
+          position: i + 1,
+          name: s.heading,
+          text: s.body,
         })),
       },
       {
@@ -247,13 +263,13 @@ export default function GuidePage({ params }: { params: { slug: string } }) {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
             {guide.sections.map(s => (
               <section key={s.heading}>
-                <h2 className="h3" style={{ marginBottom: 12, color: 'var(--forest)' }}>{s.heading}</h2>
+                <h2 className="h2" style={{ marginBottom: 12, color: 'var(--forest)' }}>{s.heading}</h2>
                 <p className="body">{s.body}</p>
               </section>
             ))}
 
             <section>
-              <h2 className="h3" style={{ marginBottom: 20 }}>자주 묻는 질문</h2>
+              <h2 className="h2" style={{ marginBottom: 20 }}>자주 묻는 질문</h2>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
                 {guide.faq.map(f => (
                   <div key={f.q} style={{ borderBottom: '1px solid var(--line-soft)', paddingBottom: 16 }}>
@@ -264,11 +280,30 @@ export default function GuidePage({ params }: { params: { slug: string } }) {
               </div>
             </section>
 
+            <div style={{ padding: '16px 20px', background: 'var(--bg-warm)', borderRadius: 'var(--r)', border: '1px solid var(--line)' }}>
+              <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--forest)', marginBottom: 10 }}>참고 자료</div>
+              <ul style={{ margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexWrap: 'wrap', gap: '6px 20px' }}>
+                {[
+                  { label: '산림청 공식 사이트', url: 'https://www.forest.go.kr' },
+                  { label: '국립공원 탐방예약시스템', url: 'https://reservation.knps.or.kr' },
+                  { label: '두루누비 (국가 트레일 정보)', url: 'https://www.durunubi.kr' },
+                  { label: '기상청 날씨 예보', url: 'https://www.weather.go.kr' },
+                ].map(r => (
+                  <li key={r.url}>
+                    <a href={r.url} target="_blank" rel="noopener noreferrer"
+                      style={{ color: 'var(--forest)', fontSize: 13, textDecoration: 'underline', textUnderlineOffset: 3 }}>
+                      {r.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
             <div className="safety">
               <div className="safety__icon"><Icon name="warn" size={21} stroke={2} /></div>
               <div>
                 <h4>산행 전 공식 정보를 확인하세요</h4>
-                <p>본 가이드의 코스 정보는 공공데이터를 가공한 참고 자료입니다. 실제 산행 전 산림청·국립공원 공식 통제정보를 반드시 확인하세요.</p>
+                <p>본 가이드의 코스 정보는 공공데이터를 가공한 참고 자료입니다. 실제 산행 전 <a href="https://www.forest.go.kr" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit' }}>산림청</a>·<a href="https://www.knps.or.kr" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit' }}>국립공원공단</a> 공식 통제정보를 반드시 확인하세요.</p>
               </div>
             </div>
           </div>

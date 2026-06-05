@@ -213,7 +213,7 @@ export function BlogClient({ posts }: { posts: Post[] }) {
       {/* 글 목록 */}
       <section className="wrap" style={{ paddingTop: 28 }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 18 }}>
-          <h2 className="h3" style={{ color: 'var(--forest)', whiteSpace: 'nowrap' }}>
+          <h2 className="h2" style={{ color: 'var(--forest)', whiteSpace: 'nowrap' }}>
             {q ? `"${q}" 검색 결과` : badge ? `#${badge}` : cat === '전체' ? '최신 글' : CATS[cat as CatKey].label + ' 글'}
           </h2>
           <span className="cap" style={{ fontWeight: 600, whiteSpace: 'nowrap' }}>{filtered.length}편</span>
@@ -239,7 +239,10 @@ export function BlogClient({ posts }: { posts: Post[] }) {
             <h4>글의 코스 정보는 참고용입니다</h4>
             <p>
               본 매거진의 코스·소요시간은 공공데이터를 가공한 추정치이며 일부는 AI 보조로 작성되었습니다.
-              산행 전 날씨·체력·장비를 점검하고 산림청·국립공원 공식 통제정보를 반드시 확인하세요.
+              산행 전 날씨·체력·장비를 점검하고{' '}
+              <a href="https://www.forest.go.kr" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit' }}>산림청</a>·
+              <a href="https://www.knps.or.kr" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit' }}>국립공원공단</a>{' '}
+              공식 통제정보를 반드시 확인하세요.
             </p>
           </div>
         </div>

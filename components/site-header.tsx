@@ -31,34 +31,38 @@ export function SiteHeader({ active }: SiteHeaderProps) {
   }, [])
 
   return (
-    <header style={{ position: 'sticky', top: 0, zIndex: 50 }}>
-      <div style={{
-        background: 'rgba(250,248,243,.86)',
-        backdropFilter: 'blur(10px)',
-        borderBottom: '1px solid var(--line)',
-        boxShadow: scrolled ? 'var(--sh-2)' : 'none',
-        transition: 'box-shadow .2s ease',
-      }}>
-        <div className="wrap" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 60 }}>
-          <Link href="/#top" style={{ display: 'flex', alignItems: 'center', gap: 9, textDecoration: 'none' }}>
-            <span style={{ width: 30, height: 30, borderRadius: 9, background: 'var(--forest)', display: 'grid', placeItems: 'center', color: '#fff' }}>
-              {LOGO_ICON}
-            </span>
-            <span style={{ fontWeight: 800, fontSize: 20, color: 'var(--forest)', letterSpacing: '-.02em', whiteSpace: 'nowrap' }}>둘레길고고</span>
-          </Link>
-          <nav style={{ display: 'flex', alignItems: 'center', gap: 4, flexWrap: 'nowrap', whiteSpace: 'nowrap' }}>
-            {NAV_LINKS.map((l) => (
-              <Link
-                key={l.key}
-                href={l.href}
-                className={['navlink', l.sm ? 'hide-sm' : '', active === l.key ? 'navlink--on' : ''].filter(Boolean).join(' ')}
-              >
-                {l.label}
-              </Link>
-            ))}
-          </nav>
+    <>
+      <a href="#main-content" className="skip-link">콘텐츠로 건너뛰기</a>
+      <header style={{ position: 'sticky', top: 0, zIndex: 50 }}>
+        <div style={{
+          background: 'rgba(250,248,243,.86)',
+          backdropFilter: 'blur(10px)',
+          borderBottom: '1px solid var(--line)',
+          boxShadow: scrolled ? 'var(--sh-2)' : 'none',
+          transition: 'box-shadow .2s ease',
+        }}>
+          <div className="wrap" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 60 }}>
+            <Link href="/#top" aria-label="둘레길고고 홈" style={{ display: 'flex', alignItems: 'center', gap: 9, textDecoration: 'none' }}>
+              <span style={{ width: 30, height: 30, borderRadius: 9, background: 'var(--forest)', display: 'grid', placeItems: 'center', color: '#fff' }}>
+                {LOGO_ICON}
+              </span>
+              <span style={{ fontWeight: 800, fontSize: 20, color: 'var(--forest)', letterSpacing: '-.02em', whiteSpace: 'nowrap' }}>둘레길고고</span>
+            </Link>
+            <nav aria-label="주요 네비게이션" style={{ display: 'flex', alignItems: 'center', gap: 4, flexWrap: 'nowrap', whiteSpace: 'nowrap' }}>
+              {NAV_LINKS.map((l) => (
+                <Link
+                  key={l.key}
+                  href={l.href}
+                  className={['navlink', l.sm ? 'hide-sm' : '', active === l.key ? 'navlink--on' : ''].filter(Boolean).join(' ')}
+                  aria-current={active === l.key ? 'page' : undefined}
+                >
+                  {l.label}
+                </Link>
+              ))}
+            </nav>
+          </div>
         </div>
-      </div>
-    </header>
+      </header>
+    </>
   )
 }

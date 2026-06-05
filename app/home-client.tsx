@@ -9,6 +9,7 @@ import { ridgeCover, contour } from '@/lib/motif'
 import { DIFF_META, SEASON_ICON } from '@/lib/mountains-static'
 import type { HubMountain } from '@/lib/db/queries'
 import { CATS, type Post } from '@/lib/posts'
+import { FILLERS } from '@/lib/fillers-static'
 
 const LS_KEY = 'dulle_done_v1'
 
@@ -425,6 +426,34 @@ function Guides() {
   )
 }
 
+/* ---- 명산 모음 링크 ---- */
+const FILLER_SHOWCASE = [
+  { slug: 'seoul-gyeonggi',    label: '수도권 명산',  icon: 'pin'    as const },
+  { slug: 'gangwon',           label: '강원 명산',    icon: 'snow'   as const },
+  { slug: 'beginner',          label: '초보자 추천',  icon: 'up'     as const },
+  { slug: 'transit-accessible', label: '대중교통',    icon: 'bus'    as const },
+  { slug: 'alpine',            label: '고산 1500m+',  icon: 'target' as const },
+  { slug: 'autumn',            label: '가을 단풍',    icon: 'leaf'   as const },
+  { slug: 'spring',            label: '봄 산행',      icon: 'flower' as const },
+  { slug: 'yeongnam',          label: '영남 명산',    icon: 'map'    as const },
+]
+
+function FillerSection() {
+  return (
+    <section className="wrap" style={{ paddingTop: 44, paddingBottom: 8 }}>
+      <SecHead kicker="주제별 모음" title="어떤 산을 찾고 계신가요?" more={{ href: '/mountains', label: '전체 명산' }} />
+      <div className="filler-home-grid">
+        {FILLER_SHOWCASE.map(f => (
+          <Link key={f.slug} href={`/list/${f.slug}`} className="card card--hover filler-home-card">
+            <Icon name={f.icon} size={20} stroke={1.8} />
+            <span>{f.label}</span>
+          </Link>
+        ))}
+      </div>
+    </section>
+  )
+}
+
 /* ---- 안전 고지 ---- */
 function SafetyBlock() {
   return (
@@ -433,7 +462,7 @@ function SafetyBlock() {
         <div className="safety__icon"><Icon name="warn" size={21} stroke={2} /></div>
         <div>
           <h4>산행 전 꼭 확인하세요</h4>
-          <p>출발 전 날씨와 본인 체력·장비를 점검하고, 산림청·국립공원 공식 통제정보를 반드시 확인하세요. 해 지기 전 하산을 권장합니다. 본 사이트의 코스 정보는 참고용이며 현장 상황과 다를 수 있습니다.</p>
+          <p>출발 전 <a href="https://www.weather.go.kr" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit' }}>기상청</a> 날씨와 본인 체력·장비를 점검하고, <a href="https://www.forest.go.kr" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit' }}>산림청</a>·<a href="https://www.knps.or.kr" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit' }}>국립공원공단</a> 공식 통제정보를 반드시 확인하세요. 해 지기 전 하산을 권장합니다. 본 사이트의 코스 정보는 참고용이며 현장 상황과 다를 수 있습니다.</p>
         </div>
       </div>
     </section>
@@ -459,7 +488,7 @@ export function HomeClient({ mountains, latestPosts, postCount }: { mountains: H
   }
 
   return (
-    <>
+    <main id="main-content">
       <Hero query={query} setQuery={setQuery} goResults={goResults} doneCount={done.size} featured={featured} total={total} />
 
       {/* 사이트 통계 바 */}
@@ -498,8 +527,9 @@ export function HomeClient({ mountains, latestPosts, postCount }: { mountains: H
       )}
 
       <LatestPosts posts={latestPosts} />
+      <FillerSection />
       <Guides />
       <SafetyBlock />
-    </>
+    </main>
   )
 }

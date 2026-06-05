@@ -2,16 +2,27 @@ import type { Metadata } from 'next'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
 
+const OG_URL = '/og?title=데이터+출처·라이선스&type=default&sub=공공데이터+공공누리+제1유형'
+
 export const metadata: Metadata = {
-  title: '데이터 출처·라이선스',
+  title: '데이터 출처·라이선스 | 둘레길고고',
   description: '둘레길고고 사이트에서 사용하는 공공데이터 출처 및 라이선스 정보',
+  alternates: { canonical: 'https://dullegilgogo.kr/data-license' },
+  openGraph: {
+    title: '데이터 출처·라이선스',
+    description: '산림청·한국관광공사·data.go.kr 공공데이터 출처 및 공공누리 라이선스 안내',
+    type: 'website',
+    url: 'https://dullegilgogo.kr/data-license',
+    images: [{ url: OG_URL, width: 1200, height: 630, alt: '데이터 출처·라이선스' }],
+  },
+  twitter: { card: 'summary_large_image', images: [OG_URL] },
 }
 
 export default function DataLicensePage() {
   return (
     <div id="top">
       <SiteHeader />
-      <main className="wrap wrap--narrow" style={{ paddingTop: 48, paddingBottom: 64 }}>
+      <main id="main-content" className="wrap wrap--narrow" style={{ paddingTop: 48, paddingBottom: 64 }}>
         <div className="eyebrow" style={{ marginBottom: 12 }}>공개 정보</div>
         <h1 className="h1" style={{ marginBottom: 24 }}>데이터 출처·라이선스</h1>
 
