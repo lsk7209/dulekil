@@ -6,6 +6,7 @@ import { SiteFooter } from '@/components/site-footer'
 import { Icon } from '@/components/icon'
 import { POSTS, CATS } from '@/lib/posts'
 import { linkMountainNames } from '@/lib/mountain-link'
+import { ShareButton } from '@/components/share-button'
 
 interface Props { params: { id: string } }
 
@@ -44,6 +45,14 @@ export default function BlogDetailPage({ params }: Props) {
 
   const cat = CATS[post.cat]
   const relatedPosts = POSTS.filter(p => p.id !== post.id && p.cat === post.cat).slice(0, 3)
+
+  const now = new Date()
+  const published = POSTS.filter(p => !p.publishAt || new Date(p.publishAt) <= now)
+  const idx  = published.findIndex(p => p.id === post.id)
+  const prev = idx > 0 ? published[idx - 1] : null
+  const next = idx < published.length - 1 ? published[idx + 1] : null
+
+  const postUrl = `https://dullegilgogo.kr/blog/${post.id}`
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -127,6 +136,29 @@ export default function BlogDetailPage({ params }: Props) {
             </div>
           )}
         </article>
+
+        {/* 공유 + 이전/다음 */}
+        <div className="wrap wrap--narrow" style={{ paddingTop: 32, paddingBottom: 8 }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16, paddingBottom: 24, borderBottom: '1px solid var(--line)' }}>
+            <ShareButton title={post.title} url={postUrl} />
+          </div>
+          {(prev || next) && (
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, paddingTop: 24 }}>
+              {prev ? (
+                <Link href={`/blog/${prev.id}`} className="card card--hover card--pad" style={{ textDecoration: 'none' }}>
+                  <span className="cap" style={{ fontSize: 11 }}>← 이전 글</span>
+                  <p style={{ margin: '6px 0 0', fontSize: 14, fontWeight: 700, color: 'var(--forest)', lineHeight: 1.4 }}>{prev.title}</p>
+                </Link>
+              ) : <div />}
+              {next ? (
+                <Link href={`/blog/${next.id}`} className="card card--hover card--pad" style={{ textDecoration: 'none', textAlign: 'right' }}>
+                  <span className="cap" style={{ fontSize: 11 }}>다음 글 →</span>
+                  <p style={{ margin: '6px 0 0', fontSize: 14, fontWeight: 700, color: 'var(--forest)', lineHeight: 1.4 }}>{next.title}</p>
+                </Link>
+              ) : <div />}
+            </div>
+          )}
+        </div>
 
         {/* 관련 글 */}
         {relatedPosts.length > 0 && (

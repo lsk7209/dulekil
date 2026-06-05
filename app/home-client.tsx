@@ -441,7 +441,7 @@ function SafetyBlock() {
 }
 
 /* ---- 메인 ---- */
-export function HomeClient({ mountains, latestPosts }: { mountains: HubMountain[]; latestPosts: Post[] }) {
+export function HomeClient({ mountains, latestPosts, postCount }: { mountains: HubMountain[]; latestPosts: Post[]; postCount: number }) {
   const [done, toggle] = useDone()
   const [query, setQuery]   = useState('')
   const [active, setActive] = useState<Set<string>>(() => new Set())
@@ -450,6 +450,7 @@ export function HomeClient({ mountains, latestPosts }: { mountains: HubMountain[
   const featured   = mountains.find(m => m.name === '덕유산') ?? mountains.find(m => m.elev > 1500) ?? mountains[0]
   const beginners  = mountains.filter(m => m.beginner).slice(0, 8)
   const seasonal   = mountains.filter(m => m.seasons.includes('여름') || m.seasons.includes('봄')).slice(0, 8)
+  const totalCourses = mountains.reduce((acc, m) => acc + (m.dist > 0 ? 1 : 0), 0)
 
   const goResults = () => {
     window.gtag?.('event', 'search', { search_term: query })
@@ -460,6 +461,24 @@ export function HomeClient({ mountains, latestPosts }: { mountains: HubMountain[
   return (
     <>
       <Hero query={query} setQuery={setQuery} goResults={goResults} doneCount={done.size} featured={featured} total={total} />
+
+      {/* 사이트 통계 바 */}
+      <div style={{ background: 'var(--forest-deep)', borderBottom: '1px solid rgba(255,255,255,.08)' }}>
+        <div className="wrap" style={{ display: 'flex', gap: 0, overflow: 'auto' }}>
+          {[
+            { k: '100대 명산', v: `${total}개` },
+            { k: '블로그 글',  v: `${postCount}편` },
+            { k: '데이터 출처', v: '산림청·두루누비' },
+            { k: '공공누리',   v: '제1유형' },
+          ].map(s => (
+            <div key={s.k} style={{ flex: '0 0 auto', padding: '14px 24px', borderRight: '1px solid rgba(255,255,255,.08)' }}>
+              <div style={{ fontSize: 11, color: 'rgba(255,255,255,.5)', fontWeight: 600, letterSpacing: '.04em', marginBottom: 3 }}>{s.k}</div>
+              <div style={{ fontSize: 16, fontWeight: 700, color: '#fff' }}>{s.v}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
       <Explore mountains={mountains} query={query} active={active} setActive={setActive} done={done} toggle={toggle} />
 
       <TrackerPreview mountains={mountains} done={done} />

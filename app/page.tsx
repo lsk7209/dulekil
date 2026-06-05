@@ -50,14 +50,14 @@ const jsonLd = {
 export default async function HomePage() {
   const mountains = await getMountainsForHub()
   const now = new Date()
-  const latestPosts = POSTS
-    .filter(p => !p.publishAt || new Date(p.publishAt) <= now)
-    .slice(0, 4)
+  const publishedPosts = POSTS.filter(p => !p.publishAt || new Date(p.publishAt) <= now)
+  const latestPosts    = publishedPosts.slice(0, 4)
+  const postCount      = publishedPosts.length
 
   return (
     <div id="top">
       <SiteHeader active="explore" />
-      <HomeClient mountains={mountains} latestPosts={latestPosts} />
+      <HomeClient mountains={mountains} latestPosts={latestPosts} postCount={postCount} />
       <SiteFooter />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
     </div>
