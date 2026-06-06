@@ -9,6 +9,17 @@ import { ridgeCover } from '@/lib/motif'
 import { DIFF_META } from '@/lib/mountains-static'
 import { getRelatedPosts } from '@/lib/mountain-blog-map'
 import { CATS, getPostPath } from '@/lib/posts'
+import {
+  buildAccessNotes,
+  buildMountainFitNotes,
+  buildMountainSummary,
+  buildSafetyChecks,
+  buildSeasonNotes,
+  formatDistance,
+  formatDuration,
+  getCourseStats,
+  normalizeDifficulty,
+} from '@/lib/mountain-content'
 
 export const revalidate = 86400
 
@@ -50,13 +61,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-function normDiff(raw: string | null): string {
-  if (raw === '하' || raw === '쉬움') return '하'
-  if (raw === '상' || raw === '어려움') return '상'
-  if (raw === '매우상') return '매우상'
-  return '중'
-}
-
 function minutesToHM(min: number | null): string {
   if (!min || min <= 0) return '?:??'
   return `${Math.floor(min / 60)}:${String(min % 60).padStart(2, '0')}`
@@ -81,20 +85,22 @@ export default async function MountainDetailPage({ params }: Props) {
   const group         = getRegionGroup(mountain.region)
   const nearby        = allMtns.filter(x => x.name !== mountain.name && x.group === group).slice(0, 3)
   const relatedPosts  = getRelatedPosts(mountain.name, group)
+  const courseStats   = getCourseStats(courses)
+  const summary       = buildMountainSummary(mountain, courses)
+  const fitNotes      = buildMountainFitNotes(mountain, courses)
+  const accessNotes   = buildAccessNotes(mountain, courses)
+  const seasonNotes   = buildSeasonNotes(mountain)
+  const safetyChecks  = buildSafetyChecks(courses)
 
   const bestDiff  = courses.length > 0
-    ? normDiff(courses.sort((a, b) => (a.distance ?? 99) - (b.distance ?? 99))[0]?.diff_norm)
+    ? normalizeDifficulty(courseStats.shortest?.diff_norm ?? courseStats.hardest?.diff_norm)
     : '중'
   const cls       = DIFF_META[bestDiff]?.cls ?? 'mid'
 
-  const hasTransit = courses.some(c => c.transit)
-  const hasGpx     = courses.some(c => c.gpx_available)
-  const minDist    = courses.length > 0
-    ? Math.min(...courses.map(c => c.distance ?? 99).filter(d => d < 99))
-    : null
-  const maxDur     = courses.length > 0
-    ? Math.max(...courses.map(c => c.duration_up ?? 0))
-    : null
+  const hasTransit = courseStats.hasTransit
+  const hasGpx     = courseStats.hasGpx
+  const minDist    = courseStats.minDistance
+  const maxDur     = courseStats.maxDuration
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -199,9 +205,108 @@ export default async function MountainDetailPage({ params }: Props) {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
 
             {/* 설명 */}
-            {mountain.description && (
-              <section className="card card--pad">
-                <p className="body" style={{ margin: 0, fontSize: 16.5, lineHeight: 1.75 }}>{mountain.description}</p>
+            <section className="mountain-brief">
+              <div>
+                <div className="eyebrow" style={{ marginBottom: 8 }}>코스 선택 요약</div>
+                <h2 className="h2" style={{ marginBottom: 12 }}>{mountain.name} 등산 전 핵심 판단</h2>
+                <p className="body" style={{ marginBottom: 14 }}>
+                  {mountain.description ?? summary[0]}
+                </p>
+                <ul>
+                  {summary.map(item => <li key={item}>{item}</li>)}
+                </ul>
+              </div>
+              <div className="mountain-factbox">
+                <strong>빠른 기준</strong>
+                <dl>
+                  <div><dt>추천 난이도</dt><dd>난이도 {bestDiff}</dd></div>
+                  <div><dt>최단 코스</dt><dd>{formatDistance(minDist)}</dd></div>
+                  <div><dt>상행 최대</dt><dd>{formatDuration(maxDur)}</dd></div>
+                  <div><dt>접근성</dt><dd>{hasTransit ? '대중교통 코스 있음' : '자가용 우선 검토'}</dd></div>
+                </dl>
+              </div>
+            </section>
+
+            <section>
+              <h2 className="h2" style={{ marginBottom: 16 }}>{mountain.name} 추천 대상별 코스 선택</h2>
+              <div className="mountain-info-grid">
+                {fitNotes.map(note => (
+                  <article key={note.title} className="card card--pad mountain-info-card">
+                    <h3>{note.title}</h3>
+                    <p>{note.body}</p>
+                  </article>
+                ))}
+              </div>
+            </section>
+
+            <section className="card card--pad mountain-access">
+              <h2 className="h2" style={{ marginBottom: 12 }}>{accessNotes.title}</h2>
+              <p className="body">{accessNotes.body}</p>
+              {accessNotes.trailheads.length > 0 && (
+                <div style={{ marginTop: 14 }}>
+                  <strong>확인된 들머리</strong>
+                  <ul>
+                    {accessNotes.trailheads.map(trailhead => <li key={trailhead}>{trailhead}</li>)}
+                  </ul>
+                </div>
+              )}
+            </section>
+
+            <section>
+              <h2 className="h2" style={{ marginBottom: 16 }}>{mountain.name} 계절별 산행 포인트</h2>
+              <div className="mountain-season-grid">
+                {seasonNotes.map(note => (
+                  <article key={note.season} className="card card--pad mountain-season-card">
+                    <strong>{note.season}</strong>
+                    <p>{note.body}</p>
+                  </article>
+                ))}
+              </div>
+            </section>
+
+            <section className="card card--pad mountain-checks">
+              <h2 className="h2" style={{ marginBottom: 12 }}>{mountain.name} 안전 체크리스트</h2>
+              <ul>
+                {safetyChecks.checks.map(check => <li key={check}>{check}</li>)}
+              </ul>
+              {safetyChecks.risks.length > 0 && (
+                <div className="mountain-risk-note">
+                  <strong>코스 데이터에 표시된 주의 구간</strong>
+                  <ul>
+                    {safetyChecks.risks.map(risk => <li key={risk}>{risk}</li>)}
+                  </ul>
+                </div>
+              )}
+            </section>
+
+            {/* 코스 비교표 */}
+            {courses.length > 0 && (
+              <section>
+                <h2 className="h2" style={{ marginBottom: 16 }}>{mountain.name} 대표 코스 비교표</h2>
+                <div className="article-table-scroll">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>코스</th>
+                        <th>거리</th>
+                        <th>상행</th>
+                        <th>난이도</th>
+                        <th>접근</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {courses.slice(0, 8).map(c => (
+                        <tr key={c.id}>
+                          <td>{c.name ?? '대표 코스'}</td>
+                          <td>{formatDistance(c.distance)}</td>
+                          <td>{formatDuration(c.duration_up)}</td>
+                          <td>{normalizeDifficulty(c.diff_norm)}</td>
+                          <td>{c.transit ? '대중교통' : '자가용 우선'}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </section>
             )}
 
@@ -218,8 +323,8 @@ export default async function MountainDetailPage({ params }: Props) {
                       </div>
                       <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'center' }}>
                         {c.diff_norm && (
-                          <span className={`diff diff--${DIFF_META[normDiff(c.diff_norm)]?.cls ?? 'mid'}`} style={{ fontSize: 12 }}>
-                            난이도 {normDiff(c.diff_norm)}
+                          <span className={`diff diff--${DIFF_META[normalizeDifficulty(c.diff_norm)]?.cls ?? 'mid'}`} style={{ fontSize: 12 }}>
+                            난이도 {normalizeDifficulty(c.diff_norm)}
                           </span>
                         )}
                         {c.distance != null && c.distance > 0 && (
@@ -233,7 +338,7 @@ export default async function MountainDetailPage({ params }: Props) {
                       </div>
                       {c.risk_note && (
                         <div className="cap" style={{ width: '100%', color: '#8C4E22' }}>
-                          ⚠️ {c.risk_note}
+                          주의: {c.risk_note}
                         </div>
                       )}
                     </div>

@@ -54,8 +54,6 @@
   --sans:  var(--font-pretendard), -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   --serif: var(--font-noto-serif), var(--font-pretendard), serif;
 
-  /* ---- 광고 슬롯 ---- */
-  --ad-line: #D9D2C2;
 }
 
 * { box-sizing: border-box; }
@@ -361,28 +359,6 @@ a { color: inherit; }
   font-size: 12px;
   font-weight: 700;
 }
-.ad,
-.adsbygoogle {
-  display: block;
-  min-height: 120px;
-  margin: 28px auto;
-  border-radius: var(--r);
-}
-.ad {
-  border: 1px dashed var(--ad-line);
-  background: rgba(244, 240, 231, .62);
-  display: grid;
-  place-items: center;
-}
-.ad__label {
-  color: var(--ink-faint);
-  font-size: 12px;
-  font-weight: 700;
-}
-.ad--horizontal { min-height: 96px; }
-.ad--rectangle { min-height: 250px; max-width: 336px; }
-.ad--vertical { min-height: 320px; max-width: 300px; }
-
 /* 스탯 바 */
 .statbar { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; }
 @media (min-width: 520px) { .statbar { grid-template-columns: repeat(4, 1fr); } }
@@ -562,6 +538,122 @@ a { color: inherit; }
   gap: 18px;
 }
 
+/* 산 상세 정보 */
+.mountain-brief {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+  background: #fff;
+  border: 1px solid var(--line-soft);
+  border-radius: var(--r-lg);
+  padding: 22px;
+  box-shadow: var(--sh-1);
+}
+.mountain-brief ul,
+.mountain-access ul,
+.mountain-checks ul {
+  margin: 0;
+  padding-left: 20px;
+  color: var(--ink-soft);
+  line-height: 1.75;
+}
+.mountain-factbox {
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  background: var(--bg-warm);
+  padding: 16px;
+}
+.mountain-factbox strong {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--forest);
+}
+.mountain-factbox dl {
+  display: grid;
+  gap: 9px;
+  margin: 0;
+}
+.mountain-factbox dl > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 1px solid rgba(47,74,60,.12);
+  padding-bottom: 8px;
+}
+.mountain-factbox dl > div:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+.mountain-factbox dt {
+  color: var(--ink-faint);
+  font-size: 13px;
+  font-weight: 700;
+}
+.mountain-factbox dd {
+  margin: 0;
+  color: var(--forest);
+  font-weight: 800;
+  text-align: right;
+}
+.mountain-info-grid,
+.mountain-season-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+.mountain-info-card h3 {
+  margin: 0 0 8px;
+  color: var(--forest);
+  font-size: 17px;
+}
+.mountain-info-card p,
+.mountain-season-card p {
+  margin: 0;
+  color: var(--ink-soft);
+  line-height: 1.65;
+}
+.mountain-season-card {
+  border-top: 3px solid var(--sage);
+}
+.mountain-season-card strong {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--forest);
+}
+.mountain-access strong,
+.mountain-checks strong {
+  color: var(--forest);
+}
+.mountain-risk-note {
+  margin-top: 16px;
+  border-left: 4px solid var(--clay);
+  background: #FFF4E5;
+  border-radius: var(--r-sm);
+  padding: 14px 16px;
+}
+.article-table-scroll {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 1.4em 0;
+}
+.article-table-scroll table {
+  width: 100%;
+  min-width: 620px;
+  border-collapse: collapse;
+  background: #fff;
+}
+.article-table-scroll th,
+.article-table-scroll td {
+  padding: 9px 12px;
+  border: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+.article-table-scroll thead tr {
+  background: var(--bg-warm);
+}
+
 /* 완등 트래커 카드 */
 .tracker-card { background: var(--forest); border: none; }
 .tracker-inner {
@@ -579,12 +671,15 @@ a { color: inherit; }
 
 @media (min-width: 520px) {
   .card-grid { grid-template-columns: 1fr 1fr; }
+  .mountain-season-grid { grid-template-columns: 1fr 1fr; }
 }
 
 @media (min-width: 760px) {
   .hero-grid { grid-template-columns: 1.1fr .9fr; }
   .tracker-inner { grid-template-columns: 1fr auto; align-items: start; }
   .tracker-grid { width: 240px; }
+  .mountain-brief { grid-template-columns: 1fr 280px; align-items: start; }
+  .mountain-info-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
 @media (min-width: 900px) {

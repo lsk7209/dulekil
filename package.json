@@ -11,6 +11,7 @@
     "db:studio": "drizzle-kit studio",
     "db:generate": "drizzle-kit generate",
     "audit:seo": "tsx scripts/audit-seo-content.ts",
+    "audit:mountains": "tsx scripts/audit-mountain-content.ts",
     "collect:seed": "tsx scripts/collect/seed-top100.ts",
     "collect:mountain": "tsx scripts/collect/parse-mountain-zip.ts",
     "collect:durunubi": "tsx scripts/collect/collect-durunubi.ts",
