@@ -11,6 +11,7 @@ import { getRelatedPosts } from '@/lib/mountain-blog-map'
 import { CATS, getPostPath } from '@/lib/posts'
 import {
   buildAccessNotes,
+  buildFallbackRisks,
   buildMountainFitNotes,
   buildMountainSummary,
   buildSafetyChecks,
@@ -91,6 +92,7 @@ export default async function MountainDetailPage({ params }: Props) {
   const accessNotes   = buildAccessNotes(mountain, courses)
   const seasonNotes   = buildSeasonNotes(mountain)
   const safetyChecks  = buildSafetyChecks(courses)
+  const fallbackRisks = buildFallbackRisks(mountain, courses)
 
   const bestDiff  = courses.length > 0
     ? normalizeDifficulty(courseStats.shortest?.diff_norm ?? courseStats.hardest?.diff_norm)
@@ -269,11 +271,11 @@ export default async function MountainDetailPage({ params }: Props) {
               <ul>
                 {safetyChecks.checks.map(check => <li key={check}>{check}</li>)}
               </ul>
-              {safetyChecks.risks.length > 0 && (
+              {[...safetyChecks.risks, ...fallbackRisks].length > 0 && (
                 <div className="mountain-risk-note">
                   <strong>코스 데이터에 표시된 주의 구간</strong>
                   <ul>
-                    {safetyChecks.risks.map(risk => <li key={risk}>{risk}</li>)}
+                    {[...safetyChecks.risks, ...fallbackRisks].map(risk => <li key={risk}>{risk}</li>)}
                   </ul>
                 </div>
               )}

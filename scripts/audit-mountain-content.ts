@@ -1,6 +1,6 @@
 import dotenv from 'dotenv'
 import { getCoursesByMountainId, getMountainsForHub } from '../lib/db/queries'
-import { buildAccessNotes, buildMountainFitNotes, buildMountainSummary, buildSafetyChecks, buildSeasonNotes } from '../lib/mountain-content'
+import { buildAccessNotes, buildMountainFitNotes, buildMountainSummary, buildSafetyChecks, buildSeasonNotes, getMountainFallbackGuide } from '../lib/mountain-content'
 
 dotenv.config({ path: '.env.local', quiet: true })
 
@@ -39,7 +39,9 @@ async function main() {
     if (safety.checks.length < 3) addFinding(mountain.id, mountain.name, 'missing safety checklist')
     if (!access.body) addFinding(mountain.id, mountain.name, 'missing access guidance')
     if (!mountain.description || mountain.description.length < 60) addWarning(mountain.id, mountain.name, 'short mountain description')
-    if (courses.length === 0) addWarning(mountain.id, mountain.name, 'no course rows in Turso')
+    if (courses.length === 0 && !getMountainFallbackGuide(mountain.name)) {
+      addWarning(mountain.id, mountain.name, 'no course rows in Turso and no fallback guide')
+    }
     if (courses.length > 0 && !courses.some(course => course.distance && course.distance > 0)) {
       addWarning(mountain.id, mountain.name, 'course distance values missing')
     }

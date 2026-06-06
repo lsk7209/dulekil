@@ -1,5 +1,5 @@
 import { enhanceArticleBody } from '../lib/article-enhancements'
-import { POSTS, getPostPath } from '../lib/posts'
+import { POSTS, getPostPath, rewriteBlogLinks } from '../lib/posts'
 
 const now = new Date()
 const publishedIds = new Set(POSTS.map(post => post.id))
@@ -33,7 +33,7 @@ function addWarning(id: string, title: string, reason: string) {
 }
 
 for (const post of POSTS) {
-  const body = enhanceArticleBody(post)
+  const body = rewriteBlogLinks(enhanceArticleBody(post))
   const h2s = [...body.matchAll(/<h2[^>]*>([\s\S]*?)<\/h2>/gi)].map(match => stripTags(match[1]))
   for (const h2 of h2s) headingCounts.set(h2, (headingCounts.get(h2) ?? 0) + 1)
 
@@ -56,10 +56,10 @@ for (const post of POSTS) {
   if (!hasCta) addFinding(post.id, post.title, 'missing CTA')
   if (structuredBlocks < 2) addFinding(post.id, post.title, 'fewer than 2 structured blocks')
 
-  for (const link of post.body?.matchAll(/href="\/blog\/([^"#?]+)"/g) ?? []) {
+  for (const link of body.matchAll(/href="\/blog\/([^"#?]+)"/g) ?? []) {
     const target = decodeURIComponent(link[1])
     if (/^p\d+$/.test(target) && !publishedIds.has(target)) {
-      addWarning(post.id, post.title, `raw body links to unpublished internal post: ${target}`)
+      addWarning(post.id, post.title, `rendered body links to unpublished internal post: ${target}`)
     }
   }
 }
