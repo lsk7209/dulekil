@@ -36,6 +36,8 @@ function source(topic: Topic) {
 }
 
 function seoTitle(topic: Topic, index: number) {
+  if (index < 10) return topic.title
+
   const hasMain = topic.title.includes(topic.main)
   const hasExpanded = topic.related.slice(0, 2).some(keyword => topic.title.includes(keyword))
   if (hasMain && hasExpanded) return topic.title
@@ -195,6 +197,106 @@ ${source(topic)}${faq(topic)}`,
   return variants[index % variants.length] + formatBlock(topic, index) + qualityAppendix(topic)
 }
 
+function hasBatchim(text: string) {
+  const ch = text.trim().at(-1)
+  if (!ch) return false
+  const code = ch.charCodeAt(0)
+  if (code < 0xac00 || code > 0xd7a3) return false
+  return (code - 0xac00) % 28 !== 0
+}
+
+function eul(text: string) {
+  return `${text}${hasBatchim(text) ? '을' : '를'}`
+}
+
+function wa(text: string) {
+  return `${text}${hasBatchim(text) ? '과' : '와'}`
+}
+
+function immediateBody(topic: Topic, index: number) {
+  if (index >= 10) return undefined
+
+  const examples = [
+    {
+      answer: '북한산 우이-도봉, 수락산-불암산, 관악산-삼성산처럼 들머리와 하산 교통이 모두 열린 능선부터 고르는 것이 좋습니다.',
+      cases: ['북한산우이역에서 시작해 도봉산역으로 내려오는 능선', '수락산역에서 올라 당고개역으로 내려오는 짧은 연결 산행', '관악산과 삼성산을 잇되 안양 또는 서울대 방향으로 빠지는 코스'],
+      trap: '막차 시간만 보고 능선 중간 탈출로를 확인하지 않는 것',
+      extra: '새벽 출발이라면 첫차 도착 시간, 정오 전 중간 탈출로 통과 여부, 일몰 2시간 전 하산 가능 여부를 한 장의 메모에 적어두세요.',
+    },
+    {
+      answer: '비 온 다음날에는 정상 조망보다 배수 좋은 숲길, 짧은 회귀형 코스, 계곡 횡단이 적은 길을 우선해야 합니다.',
+      cases: ['야자매트나 임도가 섞인 낮은 숲길', '계곡을 따라 걷지만 직접 건너는 지점이 적은 코스', '들머리와 하산지가 같아 중간에 돌아오기 쉬운 회귀형 숲길'],
+      trap: '젖은 데크, 이끼 낀 돌계단, 낙엽 덮인 급경사 하산로를 평소 난이도로 보는 것',
+      extra: '들머리 10분 안쪽에서 신발에 진흙이 두껍게 붙거나 돌계단이 계속 젖어 있으면 목표를 정상에서 숲길 산책으로 낮추는 편이 낫습니다.',
+    },
+    {
+      answer: '단풍 명산은 가장 예쁜 지점보다 사람이 멈추는 병목 구간을 피하는 계획이 중요합니다.',
+      cases: ['정상 왕복 대신 사찰과 숲길을 크게 도는 코스', '절정 주말보다 3-5일 이른 평일 오전 코스', '주차장 한 곳에 몰리지 않는 역방향 하산 코스'],
+      trap: '절정 예보만 보고 주차, 셔틀, 하산 대기 시간을 계산하지 않는 것',
+      extra: '단풍 산행은 오전 7시 이전 입산, 점심 전 주요 포토존 통과, 오후 2시 이전 하산을 기준으로 잡으면 체감 혼잡이 크게 줄어듭니다.',
+    },
+    {
+      answer: '겨울 초보 산행은 고도보다 하산 시간을 먼저 정해야 합니다. 낮은 산을 고르는 이유도 일몰 전 복귀 가능성이 높기 때문입니다.',
+      cases: ['왕복 3시간 이내 원점회귀 코스', '북사면 급경사를 피하고 임도나 계단 우회로가 있는 산', '전철역 또는 버스정류장에서 들머리가 가까운 낮은 산'],
+      trap: '아이젠을 챙겼다는 이유로 결빙 하산로와 짧은 해를 과소평가하는 것',
+      extra: '정상 도착 목표를 정오 전후로 두고, 오후 1시가 넘었는데 정상까지 1시간 이상 남았다면 돌아서는 기준을 미리 정하세요.',
+    },
+    {
+      answer: 'KTX 명산 여행은 열차역에서 끝나는 일정이 아니라 역, 숙소, 들머리, 하산 후 복귀 열차를 하나로 묶는 일정입니다.',
+      cases: ['첫날 저녁 전에 숙소 체크인이 가능한 열차', '역세권보다 다음날 들머리 이동이 쉬운 숙소', '하산 후 샤워와 식사까지 포함해 열차 전 2시간을 비우는 일정'],
+      trap: '역 가까운 숙소만 보고 다음날 아침 들머리 이동 수단을 확인하지 않는 것',
+      extra: '처음에는 역에서 들머리까지 40분 이내인 산부터 고르세요. 택시가 필요하다면 예상 요금과 호출 가능 시간을 전날 확인해야 합니다.',
+    },
+    {
+      answer: '여름 계곡 산행은 물놀이 포인트보다 상류 예보, 계곡 횡단 횟수, 비가 올 때 빠져나갈 탈출로가 먼저입니다.',
+      cases: ['계곡을 보며 걷지만 물을 직접 건너지 않는 길', '오전 안에 마칠 수 있는 짧은 회귀형 코스', '임도나 능선으로 빠지는 우회 탈출로가 표시된 코스'],
+      trap: '내가 있는 곳이 맑다는 이유로 상류 소나기와 시간당 강수량을 무시하는 것',
+      extra: '물이 갑자기 탁해지거나 나뭇가지가 빠르게 떠내려오면 상류 수위가 변하는 신호입니다. 사진을 찍지 말고 높은 길로 이동하세요.',
+    },
+    {
+      answer: '일출 산행 입문 코스는 해 뜨는 장소보다 어두운 시간에도 길이 분명하고 하산이 쉬운 곳이어야 합니다.',
+      cases: ['들머리에서 전망대까지 90분 이내인 코스', '갈림길이 적고 이정표가 자주 나오는 원점회귀 코스', '암릉과 계곡 횡단이 없는 낮은 전망 코스'],
+      trap: '스마트폰 플래시만 믿고 헤드랜턴 없이 출발하는 것',
+      extra: '일출 시각에서 표준 소요시간의 1.3배를 빼서 출발 시간을 잡으세요. 어둠 속에서는 평소보다 속도가 느립니다.',
+    },
+    {
+      answer: '암릉이 부담스럽다면 정상 조망과 바위 통과를 분리해서 봐야 합니다. 우회로와 중간 전망대가 있는 산이 좋습니다.',
+      cases: ['정상 대신 데크 전망대를 목표로 삼는 코스', '난간과 계단이 있어 노출 구간이 짧은 길', '바위 구간 직전에 돌아설 수 있는 갈림길이 있는 산'],
+      trap: '후기 사진의 멋진 바위 조망만 보고 우회로 여부를 확인하지 않는 것',
+      extra: '현장에서 몸이 굳으면 뒤사람을 의식하지 말고 넓은 지점으로 이동하세요. 돌아서는 판단도 산행 실력입니다.',
+    },
+    {
+      answer: '봄꽃 산행은 개화율만 보지 말고 꽃 군락지에서 사람이 멈추는 밀도와 하산 교통을 함께 봐야 합니다.',
+      cases: ['절정 주말 대신 절정 3-5일 전후 평일 코스', '정상 왕복보다 군락지를 크게 도는 회귀 코스', '진달래는 낮은 능선, 철쭉은 늦봄 고도 있는 산으로 나누는 일정'],
+      trap: '포토존 한 곳에 모든 일정을 맞춰 산행 흐름을 잃는 것',
+      extra: '지도에 사진을 찍을 지점을 두 곳만 표시하고 나머지는 걷는 흐름을 유지하면 피로와 대기 시간이 줄어듭니다.',
+    },
+    {
+      answer: '능선 종주 초보는 10km라는 거리보다 누적고도 700m 이하, 중간 탈출로 2곳 이상, 식수 보급 가능성을 먼저 봐야 합니다.',
+      cases: ['8-10km 안에서 끝나는 짧은 연결 능선', '중간에 버스정류장이나 마을로 내려갈 수 있는 코스', '마지막 3km가 급경사 암릉이 아닌 하산로'],
+      trap: '평지 10km 감각으로 산의 10km를 계산하는 것',
+      extra: '고도 그래프에서 작은 봉우리를 여러 번 넘는 코스는 숫자보다 훨씬 힘듭니다. 거리보다 오르내림 총량을 먼저 보세요.',
+    },
+  ][index]
+
+  return `<h2>${topic.main}을 검색한 사람이 바로 알아야 할 결론</h2>
+<p>${examples.answer} ${topic.excerpt} 이 글은 ${topic.reader}가 ${topic.angle}으로 실제 후보를 줄일 수 있도록 만든 실전 기준입니다. ${topic.related.join(', ')} 같은 검색어로 들어온 독자라면 추천 목록보다 먼저 자신의 출발 시간, 하산 가능 시간, 체력 여유를 놓고 판단해야 합니다.</p>
+<div style="border-left:4px solid #2F4A3C;background:#E7F0EA;padding:14px 16px;margin:20px 0;border-radius:6px"><strong style="color:#2F4A3C">핵심 요약</strong><p style="margin:8px 0 0">${examples.extra}</p></div>
+<h2>${topic.main} 후보를 줄이는 실제 기준</h2>
+<p>첫 번째 기준은 <strong>${topic.points[0]}</strong>입니다. 이 조건이 맞지 않으면 아무리 유명한 코스라도 이번 일정에서는 제외하는 것이 좋습니다. 두 번째는 <strong>${topic.points[1]}</strong>입니다. 같은 거리라도 접근 방식과 하산 조건에 따라 피로가 크게 달라집니다. 마지막은 <strong>${topic.points[2]}</strong>입니다. 이 항목은 산행 당일 변수가 생겼을 때 계획을 유지할지 줄일지 결정하는 안전장치입니다.</p>
+<ul><li>${examples.cases[0]}</li><li>${examples.cases[1]}</li><li>${examples.cases[2]}</li></ul>
+<h2>많이 하는 실수: ${examples.trap}</h2>
+<p>${topic.main}에서 가장 위험한 선택은 검색 결과의 추천 순서를 그대로 따라가는 것입니다. 추천 글은 평균적인 조건을 전제로 하지만, 실제 산행은 출발지, 계절, 날씨, 동행자 체력, 대중교통 시간에 따라 완전히 달라집니다. 특히 ${wa(topic.related[0])} ${topic.related[1]} 조건이 동시에 흔들리면 원래 계획보다 짧은 대체 코스로 바꾸는 편이 안전합니다.</p>
+<h2>상황별 선택표</h2>
+<table style="width:100%;border-collapse:collapse;font-size:14px"><thead><tr><th style="padding:8px;border:1px solid var(--line)">상황</th><th style="padding:8px;border:1px solid var(--line)">추천 판단</th></tr></thead><tbody><tr><td style="padding:8px;border:1px solid var(--line)">처음 가는 산</td><td style="padding:8px;border:1px solid var(--line)">거리보다 탈출로와 하산 교통을 우선 확인</td></tr><tr><td style="padding:8px;border:1px solid var(--line)">날씨가 애매함</td><td style="padding:8px;border:1px solid var(--line)">정상 목표보다 짧은 회귀형 코스로 축소</td></tr><tr><td style="padding:8px;border:1px solid var(--line)">동행자 체력 차이 큼</td><td style="padding:8px;border:1px solid var(--line)">가장 느린 사람 기준으로 소요시간 계산</td></tr></tbody></table>
+<h2>출발 전 5분 체크리스트</h2>
+<ol><li>${eul(topic.points[0])} 오늘 일정과 맞춰 확인합니다.</li><li>${eul(topic.points[1])} 기준으로 후보를 2개 이하로 줄입니다.</li><li>${topic.points[2]}에 문제가 생겼을 때 쓸 대체 코스를 정합니다.</li><li>일몰, 막차, 통제, 날씨 정보를 화면 캡처로 저장합니다.</li><li>동행자에게 하산 목표 시간을 공유하고 중간 점검 시간을 정합니다.</li></ol>
+<details open><summary><strong>${topic.main}은 초보도 바로 시도해도 되나요?</strong></summary><p>초보도 가능하지만 조건을 줄여야 합니다. 처음이라면 긴 코스보다 짧은 원점회귀, 정상보다 중간 전망대, 유명도보다 하산이 쉬운 길을 고르세요. ${topic.related[2]} 조건이 불확실하면 다음 기회로 미루는 것이 좋습니다.</p></details>
+<details><summary><strong>${wa(topic.related[0])} ${topic.related[1]} 중 무엇을 먼저 봐야 하나요?</strong></summary><p>당일 실패를 줄이는 기준은 ${topic.related[0]}입니다. 다만 만족도를 높이는 기준은 ${topic.related[1]}이므로, 안전 조건을 먼저 통과한 후보 안에서 비교하는 순서가 좋습니다.</p></details>
+<p>함께 보면 좋은 글은 <a href="${topic.links[0]}">관련 코스 가이드</a>와 <a href="${topic.links[1]}">준비 체크리스트</a>입니다. ${topic.cta}</p>
+${source(topic)}`
+}
+
 const topics: Topic[] = [
   { cat:'코스추천', pal:'forest', title:'새벽 출발 수도권 능선 산행 — 대중교통 막차까지 계산한 당일 코스', excerpt:'수도권 능선 산행을 새벽 출발 기준으로 정리해 들머리, 하산 시간, 막차 리스크를 함께 판단합니다.', main:'수도권 능선 산행', related:['새벽 출발','대중교통 등산','막차 하산'], angle:'교통 시간표와 하산 여유를 동시에 보는 방식', reader:'차 없이 당일 산행을 계획하는 독자', points:['첫차 도착 시간','하산 지점의 막차','능선 탈출로'], source:{label:'기상청 날씨누리',url:'https://www.weather.go.kr'}, links:['/blog/p11','/blog/p5'], cta:'오늘 후보 코스의 막차 시간을 먼저 저장해두세요.' },
   { cat:'코스추천', pal:'sage', title:'비 오는 다음날 걷기 좋은 숲길 — 진흙·계곡·조망 손실을 피하는 선택법', excerpt:'비 온 뒤 산행에서 미끄럼과 진흙을 줄이고 숲길 만족도를 높이는 코스 선택 기준입니다.', main:'비 온 다음날 숲길', related:['젖은 등산로','미끄럼 예방','계곡 수량'], angle:'조망보다 노면과 배수 상태를 우선하는 접근', reader:'비 예보 뒤에도 가벼운 산행을 원하는 독자', points:['배수 좋은 흙길','급경사 우회로','계곡 수위 확인'], source:{label:'국립공원공단',url:'https://www.knps.or.kr'}, links:['/blog/p16','/blog/p17'], cta:'비 온 뒤에는 정상보다 안전한 회귀형 숲길을 우선 후보로 두세요.' },
@@ -304,7 +406,7 @@ export const GENERATED_POSTS_100: Post[] = topics.map((topic, index) => ({
   pal: topic.pal,
   title: seoTitle(topic, index),
   excerpt: seoExcerpt(topic),
-  body: body(topic, index),
+  body: immediateBody(topic, index) ?? body(topic, index),
   publishAt: publishAt(index),
   read: 8 + (index % 5),
   date: dateLabel(index),
