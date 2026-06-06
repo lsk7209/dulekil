@@ -16,7 +16,11 @@ export default function BlogPage() {
   const now = new Date()
   const published = POSTS.filter(p =>
     !p.publishAt || new Date(p.publishAt) <= now
-  )
+  ).sort((a, b) => {
+    const aTime = new Date(a.publishAt ?? a.date.replace(/\./g, '-')).getTime()
+    const bTime = new Date(b.publishAt ?? b.date.replace(/\./g, '-')).getTime()
+    return bTime - aTime
+  })
 
   const jsonLd = {
     '@context': 'https://schema.org',
