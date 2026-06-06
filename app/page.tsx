@@ -52,7 +52,7 @@ export default async function HomePage() {
   const mountains = await getMountainsForHub()
   const now = new Date()
   const publishedPosts = POSTS.filter(p => !p.publishAt || new Date(p.publishAt) <= now)
-  const latestPosts    = publishedPosts.slice(0, 4)
+  const latestPosts    = publishedPosts.slice(0, 4).map(p => ({ ...p, body: undefined }))
   const postCount      = publishedPosts.length
 
   return (

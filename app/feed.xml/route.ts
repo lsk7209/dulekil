@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { POSTS, CATS } from '@/lib/posts'
+import { POSTS, CATS, getPostPath, rewriteBlogLinks } from '@/lib/posts'
 
 const BASE = 'https://dullegilgogo.kr'
 
@@ -13,14 +13,15 @@ export function GET() {
 
   const items = published.slice(0, 20).map(p => {
     const cat     = CATS[p.cat]
-    const content = p.body ?? p.excerpt
+    const content = rewriteBlogLinks(p.body ?? p.excerpt)
+    const link    = `${BASE}${getPostPath(p)}`
     return `
     <item>
       <title><![CDATA[${p.title}]]></title>
       <description><![CDATA[${p.excerpt}]]></description>
       <content:encoded><![CDATA[${content}]]></content:encoded>
-      <link>${BASE}/blog/${p.id}</link>
-      <guid isPermaLink="true">${BASE}/blog/${p.id}</guid>
+      <link>${link}</link>
+      <guid isPermaLink="true">${link}</guid>
       <pubDate>${new Date(p.date.replace(/\./g, '-')).toUTCString()}</pubDate>
       <category><![CDATA[${cat.label}]]></category>
     </item>`

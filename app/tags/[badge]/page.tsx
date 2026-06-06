@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
-import { POSTS, CATS, type CatKey } from '@/lib/posts'
+import { POSTS, CATS, getPostPath, type CatKey } from '@/lib/posts'
 import { ridgeCover } from '@/lib/motif'
 
 export const revalidate = 3600
@@ -63,7 +63,7 @@ export default function TagPage({ params }: Props) {
             '@type': 'ListItem',
             position: i + 1,
             name: p.title,
-            url: `https://dullegilgogo.kr/blog/${p.id}`,
+            url: `https://dullegilgogo.kr${getPostPath(p)}`,
             description: p.excerpt,
           })),
         },
@@ -110,7 +110,7 @@ export default function TagPage({ params }: Props) {
               const cat = CATS[p.cat as CatKey]
               const coverHtml = ridgeCover({ seed: p.title, palette: p.pal, sun: p.pal === 'winter' ? '#C9763D' : null, w: 560, h: 256 })
               return (
-                <Link key={p.id} href={`/blog/${p.id}`} className="card card--hover" style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column' }}>
+                <Link key={p.id} href={getPostPath(p)} className="card card--hover" style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column' }}>
                   {/* 능선 커버 */}
                   <div style={{ position: 'relative', height: 128, overflow: 'hidden' }}>
                     <div style={{ position: 'absolute', inset: 0 }} dangerouslySetInnerHTML={{ __html: coverHtml }} />
@@ -133,9 +133,7 @@ export default function TagPage({ params }: Props) {
                     {p.badges && p.badges.length > 0 && (
                       <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
                         {p.badges.slice(0, 3).map(b => (
-                          <Link key={b} href={`/tags/${encodeURIComponent(b)}`} className="tag" style={{ fontSize: 11 }} onClick={e => e.stopPropagation()}>
-                            {b}
-                          </Link>
+                          <span key={b} className="tag" style={{ fontSize: 11 }}>{b}</span>
                         ))}
                       </div>
                     )}

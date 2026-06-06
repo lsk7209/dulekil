@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { Icon } from '@/components/icon'
 import { ridgeCover, contour } from '@/lib/motif'
-import { CATS, type Post, type CatKey } from '@/lib/posts'
+import { CATS, getPostPath, type Post, type CatKey } from '@/lib/posts'
 
 const ALL_CATS = ['전체', ...Object.keys(CATS)] as const
 type FilterCat = '전체' | CatKey
@@ -59,7 +59,7 @@ function RidgeCover({ seed, pal, sun, height = 150, children }: {
 /* ---- 추천 글 (피처드) ---- */
 function Featured({ p }: { p: Post }) {
   return (
-    <Link href={`/blog/${p.id}`} className="card card--hover featured-post" style={{ textDecoration: 'none' }}>
+    <Link href={getPostPath(p)} className="card card--hover featured-post" style={{ textDecoration: 'none' }}>
       <div className="featured-cover">
         <RidgeCover seed={p.title} pal={p.pal} sun={p.pal === 'winter' || p.pal === 'autumn'} height={320}>
           <div style={{ position: 'absolute', left: 18, top: 18 }}>
@@ -86,7 +86,7 @@ function Featured({ p }: { p: Post }) {
 /* ---- 글 카드 ---- */
 function PostCard({ p }: { p: Post }) {
   return (
-    <Link href={`/blog/${p.id}`} className="card card--hover" style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column' }}>
+    <Link href={getPostPath(p)} className="card card--hover" style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column' }}>
       <RidgeCover seed={p.title} pal={p.pal} sun={p.pal === 'winter'} height={128}>
         <div style={{ position: 'absolute', left: 12, top: 12 }}>
           <CatTag cat={p.cat} solid />

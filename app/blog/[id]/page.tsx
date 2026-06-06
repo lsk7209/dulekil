@@ -1,10 +1,10 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { notFound } from 'next/navigation'
+import { notFound, permanentRedirect } from 'next/navigation'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
 import { Icon } from '@/components/icon'
-import { POSTS, CATS } from '@/lib/posts'
+import { POSTS, CATS, findPostBySlugOrId, getPostPath, getPostSlug, rewriteBlogLinks } from '@/lib/posts'
 import { linkMountainNames } from '@/lib/mountain-link'
 import { ShareButton } from '@/components/share-button'
 
@@ -47,25 +47,26 @@ export function generateStaticParams() {
   const now = new Date()
   return POSTS
     .filter(p => !p.publishAt || new Date(p.publishAt) <= now)
-    .map(p => ({ id: p.id }))
+    .map(p => ({ id: getPostSlug(p) }))
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const post = POSTS.find(p => p.id === params.id)
+  const post = findPostBySlugOrId(params.id)
   if (!post) return {}
   const ogUrl = `/og?title=${encodeURIComponent(post.title)}&type=blog&sub=${encodeURIComponent(post.cat)}`
+  const path = getPostPath(post)
   return {
     title: post.title,
     description: post.excerpt,
     keywords: [...(post.badges ?? []), post.cat, '등산', '100대명산', '둘레길'],
     alternates: {
-      canonical: `https://dullegilgogo.kr/blog/${post.id}`,
+      canonical: `https://dullegilgogo.kr${path}`,
     },
     openGraph: {
       title: post.title,
       description: post.excerpt,
       type: 'article',
-      url: `https://dullegilgogo.kr/blog/${post.id}`,
+      url: `https://dullegilgogo.kr${path}`,
       images: [{ url: ogUrl, width: 1200, height: 630, alt: post.title }],
     },
     twitter: {
@@ -91,9 +92,12 @@ function extractFaqPairs(body: string): { q: string; a: string }[] {
 }
 
 export default function BlogDetailPage({ params }: Props) {
-  const post = POSTS.find(p => p.id === params.id)
+  const post = findPostBySlugOrId(params.id)
   if (!post) notFound()
   if (post.publishAt && new Date(post.publishAt) > new Date()) notFound()
+  if (decodeURIComponent(params.id) !== getPostSlug(post)) {
+    permanentRedirect(encodeURI(getPostPath(post)))
+  }
 
   const cat = CATS[post.cat]
   const relatedPosts = POSTS.filter(p => p.id !== post.id && p.cat === post.cat).slice(0, 3)
@@ -104,7 +108,7 @@ export default function BlogDetailPage({ params }: Props) {
   const prev = idx > 0 ? published[idx - 1] : null
   const next = idx < published.length - 1 ? published[idx + 1] : null
 
-  const postUrl = `https://dullegilgogo.kr/blog/${post.id}`
+  const postUrl = `https://dullegilgogo.kr${getPostPath(post)}`
   const faqPairs = post.body ? extractFaqPairs(post.body) : []
 
   const jsonLd = {
@@ -203,7 +207,7 @@ export default function BlogDetailPage({ params }: Props) {
           })()}
           {post.body ? (
             <div className="prose" dangerouslySetInnerHTML={{ __html: linkMountainNames(
-              post.body.replace(/<h2([^>]*)>([^<]+)<\/h2>/g, (_, attrs, text) => {
+              rewriteBlogLinks(post.body).replace(/<h2([^>]*)>([^<]+)<\/h2>/g, (_, attrs, text) => {
                 const id = text.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^\w가-힣-]/g, '')
                 return `<h2${attrs} id="${id}">${text}</h2>`
               })
@@ -252,13 +256,13 @@ export default function BlogDetailPage({ params }: Props) {
           {(prev || next) && (
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, paddingTop: 24 }}>
               {prev ? (
-                <Link href={`/blog/${prev.id}`} className="card card--hover card--pad" style={{ textDecoration: 'none' }}>
+                <Link href={getPostPath(prev)} className="card card--hover card--pad" style={{ textDecoration: 'none' }}>
                   <span className="cap" style={{ fontSize: 11 }}>← 이전 글</span>
                   <p style={{ margin: '6px 0 0', fontSize: 14, fontWeight: 700, color: 'var(--forest)', lineHeight: 1.4 }}>{prev.title}</p>
                 </Link>
               ) : <div />}
               {next ? (
-                <Link href={`/blog/${next.id}`} className="card card--hover card--pad" style={{ textDecoration: 'none', textAlign: 'right' }}>
+                <Link href={getPostPath(next)} className="card card--hover card--pad" style={{ textDecoration: 'none', textAlign: 'right' }}>
                   <span className="cap" style={{ fontSize: 11 }}>다음 글 →</span>
                   <p style={{ margin: '6px 0 0', fontSize: 14, fontWeight: 700, color: 'var(--forest)', lineHeight: 1.4 }}>{next.title}</p>
                 </Link>
@@ -277,7 +281,7 @@ export default function BlogDetailPage({ params }: Props) {
               {relatedPosts.map(p => (
                 <Link
                   key={p.id}
-                  href={`/blog/${p.id}`}
+                  href={getPostPath(p)}
                   className="card card--hover card--pad"
                   style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column', gap: 8 }}
                 >

@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
 import { BlogClient } from './blog-client'
-import { POSTS } from '@/lib/posts'
+import { POSTS, getPostPath } from '@/lib/posts'
 
 export const revalidate = 3600
 
@@ -21,6 +21,7 @@ export default function BlogPage() {
     const bTime = new Date(b.publishAt ?? b.date.replace(/\./g, '-')).getTime()
     return bTime - aTime
   })
+  const clientPosts = published.map(p => ({ ...p, body: undefined }))
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -37,7 +38,7 @@ export default function BlogPage() {
             '@type': 'ListItem',
             position: i + 1,
             name: p.title,
-            url: `https://dullegilgogo.kr/blog/${p.id}`,
+            url: `https://dullegilgogo.kr${getPostPath(p)}`,
             description: p.excerpt,
           })),
         },
@@ -55,7 +56,7 @@ export default function BlogPage() {
   return (
     <div id="top">
       <SiteHeader active="blog" />
-      <BlogClient posts={published} />
+      <BlogClient posts={clientPosts} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <SiteFooter />
     </div>

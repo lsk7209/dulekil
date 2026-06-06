@@ -1,5 +1,5 @@
 import type { MetadataRoute } from 'next'
-import { POSTS } from '@/lib/posts'
+import { POSTS, getPostPath } from '@/lib/posts'
 import { FILLERS } from '@/lib/fillers-static'
 
 const GUIDE_SLUGS = [
@@ -24,6 +24,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE}/mountains`, lastModified: NOW, changeFrequency: 'weekly', priority: 0.9 },
     { url: `${BASE}/tracker`, lastModified: NOW, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${BASE}/about`,        lastModified: NOW, changeFrequency: 'monthly', priority: 0.3 },
+    { url: `${BASE}/contact`,      lastModified: NOW, changeFrequency: 'monthly', priority: 0.3 },
     { url: `${BASE}/data-license`, lastModified: NOW, changeFrequency: 'monthly', priority: 0.2 },
     { url: `${BASE}/privacy`,      lastModified: NOW, changeFrequency: 'yearly',  priority: 0.2 },
     { url: `${BASE}/terms`,        lastModified: NOW, changeFrequency: 'yearly',  priority: 0.2 },
@@ -33,7 +34,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const blogPages: MetadataRoute.Sitemap = POSTS
     .filter(p => !p.publishAt || new Date(p.publishAt) <= now)
     .map(p => ({
-      url:             `${BASE}/blog/${p.id}`,
+      url:             `${BASE}${getPostPath(p)}`,
       lastModified:    p.date.replace(/\./g, '-'),
       changeFrequency: 'monthly' as const,
       priority:        0.8,

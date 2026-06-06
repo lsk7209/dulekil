@@ -8,7 +8,7 @@ import { getMountainBySlug, getCoursesByMountainId, getMountainsForHub, getRegio
 import { ridgeCover } from '@/lib/motif'
 import { DIFF_META } from '@/lib/mountains-static'
 import { getRelatedPosts } from '@/lib/mountain-blog-map'
-import { CATS } from '@/lib/posts'
+import { CATS, getPostPath } from '@/lib/posts'
 
 export const revalidate = 86400
 
@@ -261,7 +261,7 @@ export default async function MountainDetailPage({ params }: Props) {
                     return (
                       <Link
                         key={post.id}
-                        href={`/blog/${post.id}`}
+                        href={getPostPath(post)}
                         className="card card--hover card--pad"
                         style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column', gap: 8 }}
                       >

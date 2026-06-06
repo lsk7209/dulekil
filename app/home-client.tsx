@@ -8,7 +8,7 @@ import { Icon } from '@/components/icon'
 import { ridgeCover, contour } from '@/lib/motif'
 import { DIFF_META, SEASON_ICON } from '@/lib/mountains-static'
 import type { HubMountain } from '@/lib/db/queries'
-import { CATS, type Post } from '@/lib/posts'
+import { CATS, getPostPath, type Post } from '@/lib/posts'
 import { FILLERS } from '@/lib/fillers-static'
 
 const LS_KEY = 'dulle_done_v1'
@@ -378,7 +378,7 @@ function LatestPosts({ posts }: { posts: Post[] }) {
           return (
             <Link
               key={p.id}
-              href={`/blog/${p.id}`}
+              href={getPostPath(p)}
               className="card card--hover card--pad"
               style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column', gap: 10 }}
             >

@@ -21650,3 +21650,35 @@ const REWRITTEN_POSTS: Post[] = RAW_POSTS.map(post => {
 })
 
 export const POSTS: Post[] = REWRITTEN_POSTS.filter(isHighQualityPost)
+
+function slugifyTitle(title: string) {
+  return title
+    .normalize('NFKC')
+    .toLowerCase()
+    .replace(/['"‘’“”]/g, '')
+    .replace(/[^\p{Letter}\p{Number}]+/gu, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 90)
+    .replace(/-+$/g, '')
+}
+
+export function getPostSlug(post: Post) {
+  const base = slugifyTitle(post.title) || post.id
+  return `${base}-${post.id}`
+}
+
+export function getPostPath(post: Post) {
+  return `/blog/${getPostSlug(post)}`
+}
+
+export function findPostBySlugOrId(value: string) {
+  const decoded = decodeURIComponent(value)
+  return POSTS.find(post => post.id === decoded || getPostSlug(post) === decoded)
+}
+
+export function rewriteBlogLinks(html: string) {
+  return html.replace(/href="\/blog\/([^"#?]+)"/g, (match, id) => {
+    const post = POSTS.find(p => p.id === decodeURIComponent(id))
+    return post ? `href="${getPostPath(post)}"` : 'href="/blog"'
+  })
+}

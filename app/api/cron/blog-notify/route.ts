@@ -1,27 +1,14 @@
-/**
- * Vercel Cron — 5시간마다 실행 (0 0,5,10,15,20 * * *)
- * 새로 공개된 블로그 포스트를 IndexNow(Bing/Naver) + Google Indexing API로 알림
- * + GSC 사이트맵 핑
- */
 import { NextResponse } from 'next/server'
-import { POSTS } from '@/lib/posts'
+import { POSTS, getPostPath } from '@/lib/posts'
 import { notifyIndexNow } from '@/lib/indexnow'
 import { notifyGoogleIndexing } from '@/lib/gsc-indexing'
+import { submitAndVerifyGscSitemap } from '@/lib/gsc-sitemap'
 
-export const runtime     = 'nodejs'
+export const runtime = 'nodejs'
 export const maxDuration = 60
 
-const BASE     = 'https://dullegilgogo.kr'
-const SITEMAP  = `${BASE}/sitemap.xml`
-
-async function pingSitemapToGoogle(): Promise<void> {
-  try {
-    const res = await fetch(`https://www.google.com/ping?sitemap=${encodeURIComponent(SITEMAP)}`)
-    console.log(`[GSC-Sitemap] ping → HTTP ${res.status}`)
-  } catch (e) {
-    console.error('[GSC-Sitemap] ping 실패:', e)
-  }
-}
+const BASE = 'https://dullegilgogo.kr'
+const SITEMAP = `${BASE}/sitemap.xml`
 
 export async function GET(req: Request) {
   const authHeader = req.headers.get('authorization')
@@ -29,9 +16,8 @@ export async function GET(req: Request) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
-  const now      = new Date()
-  const windowMs = 5.5 * 60 * 60 * 1000  // 5.5시간 윈도우
-
+  const now = new Date()
+  const windowMs = 5.5 * 60 * 60 * 1000
   const newlyPublished = POSTS.filter(p => {
     if (!p.publishAt) return false
     const pub = new Date(p.publishAt)
@@ -39,23 +25,27 @@ export async function GET(req: Request) {
   })
 
   if (newlyPublished.length === 0) {
-    return NextResponse.json({ notified: 0, message: '새로 공개된 글 없음' })
+    return NextResponse.json({ notified: 0, message: 'No newly published posts' })
   }
 
-  const urls = newlyPublished.map(p => `${BASE}/blog/${p.id}`)
+  const urls = newlyPublished.map(p => `${BASE}${getPostPath(p)}`)
 
-  // IndexNow (Bing/Naver) + Google Indexing API + GSC 사이트맵 핑 병렬 전송
-  await Promise.allSettled([
+  const [indexnow, googleIndexing, gscSitemap] = await Promise.allSettled([
     notifyIndexNow(urls),
     notifyGoogleIndexing(urls),
-    pingSitemapToGoogle(),
+    submitAndVerifyGscSitemap(),
   ])
 
-  console.log(`[blog-notify] ${urls.length}개 전송:`, urls)
+  console.log(`[blog-notify] submitted ${urls.length} URLs:`, urls)
 
   return NextResponse.json({
     notified: urls.length,
-    posts:    newlyPublished.map(p => p.id),
-    sitemap:  SITEMAP,
+    posts: newlyPublished.map(p => p.id),
+    sitemap: SITEMAP,
+    results: {
+      indexnow,
+      googleIndexing,
+      gscSitemap,
+    },
   })
 }
