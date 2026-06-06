@@ -1,5 +1,5 @@
 import type { MetadataRoute } from 'next'
-import { POSTS, getPostPath } from '@/lib/posts'
+import { CATS, POSTS, getPostModifiedDate, getPostPath } from '@/lib/posts'
 import { FILLERS } from '@/lib/fillers-static'
 
 const GUIDE_SLUGS = [
@@ -35,9 +35,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     .filter(p => !p.publishAt || new Date(p.publishAt) <= now)
     .map(p => ({
       url:             `${BASE}${getPostPath(p)}`,
-      lastModified:    p.date.replace(/\./g, '-'),
+      lastModified:    getPostModifiedDate(p),
       changeFrequency: 'monthly' as const,
       priority:        0.8,
+    }))
+
+  const tagCounts = new Map<string, number>()
+  for (const post of POSTS.filter(p => !p.publishAt || new Date(p.publishAt) <= now)) {
+    for (const badge of post.badges ?? []) tagCounts.set(badge, (tagCounts.get(badge) ?? 0) + 1)
+  }
+
+  const tagPages: MetadataRoute.Sitemap = [...tagCounts]
+    .filter(([, count]) => count > 0)
+    .map(([badge, count]) => ({
+      url:             `${BASE}/tags/${encodeURIComponent(badge)}`,
+      lastModified:    NOW,
+      changeFrequency: 'weekly' as const,
+      priority:        Math.min(0.65, 0.35 + count * 0.02),
     }))
 
   // DB에서 100대 명산 목록 가져오기
@@ -62,6 +76,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority:        0.7,
   }))
 
+  const categoryPages: MetadataRoute.Sitemap = Object.keys(CATS).map(cat => ({
+    url:             `${BASE}/blog/category/${encodeURIComponent(cat)}`,
+    lastModified:    NOW,
+    changeFrequency: 'weekly' as const,
+    priority:        0.7,
+  }))
+
   const fillerPages: MetadataRoute.Sitemap = FILLERS.map(f => ({
     url:             `${BASE}/list/${f.slug}`,
     lastModified:    NOW,
@@ -69,5 +90,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority:        0.75,
   }))
 
-  return [...staticPages, ...blogPages, ...mountainPages, ...guidePages, ...fillerPages]
+  return [...staticPages, ...blogPages, ...tagPages, ...categoryPages, ...mountainPages, ...guidePages, ...fillerPages]
 }

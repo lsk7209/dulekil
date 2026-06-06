@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Icon } from '@/components/icon'
 import { ridgeCover, contour } from '@/lib/motif'
@@ -118,6 +118,7 @@ export function BlogClient({ posts }: { posts: Post[] }) {
   const [cat,   setCat]   = useState<FilterCat>('전체')
   const [query, setQuery] = useState('')
   const [badge, setBadge] = useState('')
+  const [visibleCount, setVisibleCount] = useState(60)
 
   const featured = posts.find((p) => p.featured) ?? posts[0]
   const rest = posts.filter((p) => p.id !== featured?.id)
@@ -131,6 +132,11 @@ export function BlogClient({ posts }: { posts: Post[] }) {
     return true
   })
   const showFeatured = cat === '전체' && !q && !badge
+  const visiblePosts = filtered.slice(0, visibleCount)
+
+  useEffect(() => {
+    setVisibleCount(60)
+  }, [cat, q, badge])
 
   const badges = topBadges(posts)
   const contourSvg = contour({ seed: 'mag', stroke: '#C4D1C7', opacity: 0.5, cx: 0.8, cy: 0.4, rings: 9, w: 1200, h: 360 })
@@ -223,9 +229,22 @@ export function BlogClient({ posts }: { posts: Post[] }) {
             <p>{q ? `"${q}"에 해당하는 글이 없습니다.` : '이 조건의 글이 없습니다.'}</p>
           </div>
         ) : (
-          <div className="post-grid">
-            {filtered.map((p) => <PostCard key={p.id} p={p} />)}
-          </div>
+          <>
+            <div className="post-grid">
+              {visiblePosts.map((p) => <PostCard key={p.id} p={p} />)}
+            </div>
+            {visiblePosts.length < filtered.length && (
+              <div style={{ display: 'flex', justifyContent: 'center', paddingTop: 24 }}>
+                <button
+                  className="btn btn--ghost btn--sm"
+                  onClick={() => setVisibleCount(count => count + 60)}
+                  type="button"
+                >
+                  더 보기 <span className="tnum">{visiblePosts.length}/{filtered.length}</span>
+                </button>
+              </div>
+            )}
+          </>
         )}
       </section>
 

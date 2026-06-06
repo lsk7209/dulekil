@@ -72,6 +72,39 @@ const CAT_COPY: Record<Post['cat'], {
   },
 }
 
+const OFFICIAL_REFS: Record<Post['cat'], { label: string; url: string }[]> = {
+  '코스추천': [
+    { label: '국립공원공단', url: 'https://www.knps.or.kr' },
+    { label: '산림청', url: 'https://www.forest.go.kr' },
+    { label: '기상청 날씨누리', url: 'https://www.weather.go.kr' },
+  ],
+  '가이드': [
+    { label: '산림청', url: 'https://www.forest.go.kr' },
+    { label: '두루누비', url: 'https://www.durunubi.kr' },
+    { label: '국립공원공단', url: 'https://www.knps.or.kr' },
+  ],
+  '안전': [
+    { label: '소방청', url: 'https://www.nfa.go.kr' },
+    { label: '국립공원공단', url: 'https://www.knps.or.kr' },
+    { label: '기상청 날씨누리', url: 'https://www.weather.go.kr' },
+  ],
+  '계절': [
+    { label: '기상청 날씨누리', url: 'https://www.weather.go.kr' },
+    { label: '산림청', url: 'https://www.forest.go.kr' },
+    { label: '국립공원공단', url: 'https://www.knps.or.kr' },
+  ],
+  '장비': [
+    { label: '국립공원공단', url: 'https://www.knps.or.kr' },
+    { label: '기상청 날씨누리', url: 'https://www.weather.go.kr' },
+    { label: '소방청', url: 'https://www.nfa.go.kr' },
+  ],
+  '후기': [
+    { label: '국립공원공단', url: 'https://www.knps.or.kr' },
+    { label: '기상청 날씨누리', url: 'https://www.weather.go.kr' },
+    { label: '산림청', url: 'https://www.forest.go.kr' },
+  ],
+}
+
 function stripTags(html: string) {
   return html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim()
 }
@@ -116,10 +149,49 @@ function insertAfterParagraph(html: string, block: string, index: number) {
   })
 }
 
+function insertAfterHeading(html: string, block: string, index: number) {
+  let count = 0
+  return html.replace(/<\/h2>/gi, match => {
+    count += 1
+    return count === index ? `${match}${block}` : match
+  })
+}
+
 function wrapTables(html: string) {
   return html.replace(/<table(?![^>]*data-enhanced)([\s\S]*?)<\/table>/gi, table => (
     `<div class="article-table-scroll">${table.replace('<table', '<table data-enhanced="true"')}</div>`
   ))
+}
+
+function topicLabel(post: Post) {
+  return post.title
+    .replace(/\s+[—-]\s+.*$/, '')
+    .replace(/[:：].*$/, '')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .slice(0, 28)
+}
+
+function diversifyCommonHeadings(html: string, post: Post, variant: number) {
+  const topic = escapeHtml(topicLabel(post))
+  const faqHeadings = [
+    `${topic} 핵심 질문`,
+    `${topic} 산행 전 Q&A`,
+    `${topic}에서 많이 묻는 점`,
+    `${topic} 선택 전 확인할 질문`,
+    `${topic} 실전 FAQ`,
+  ]
+  const accessHeadings = [
+    `${topic} 교통과 주차 동선`,
+    `${topic} 들머리 접근 전략`,
+    `${topic} 출발지·주차·하산 동선`,
+    `${topic} 대중교통과 차량 접근`,
+    `${topic} 현장 접근 체크`,
+  ]
+
+  return html
+    .replace(/<h2>자주 묻는 질문<\/h2>/g, `<h2>${faqHeadings[variant % faqHeadings.length]}</h2>`)
+    .replace(/<h2>(?:③\s*)?교통·주차·들머리 실전\s*정보<\/h2>/g, `<h2>${accessHeadings[variant % accessHeadings.length]}</h2>`)
 }
 
 function buildSummary(post: Post, variant: number) {
@@ -149,6 +221,11 @@ function buildCallout(post: Post, variant: number) {
 <strong>${label}: ${escapeHtml(copy.label)}</strong>
 <p>${escapeHtml(copy.check)}</p>
 </aside>`
+}
+
+function buildSourceNote(post: Post) {
+  const refs = OFFICIAL_REFS[post.cat]
+  return `<p class="source-note"><strong>공식 확인 출처</strong><br />${refs.map(ref => `<a href="${ref.url}" target="_blank" rel="noopener noreferrer">${escapeHtml(ref.label)}</a>`).join(' · ')}. 산행 전에는 통제, 날씨, 예약, 교통 정보를 최신 공지로 다시 확인하세요.</p>`
 }
 
 function buildDecision(post: Post, body: string, variant: number) {
@@ -189,19 +266,31 @@ function buildCta(post: Post, variant: number) {
 export function enhanceArticleBody(post: Post) {
   let body = polishCommonParticles(post.body ?? post.excerpt)
   const variant = hashId(post.id) % 3
+  const hasSource = body.includes('source-note')
+  const hasExternal = /href="https?:\/\//.test(body)
 
+  body = diversifyCommonHeadings(body, post, variant)
   body = wrapTables(body)
 
   if (!body.includes('article-summary')) {
-    body = `${buildSummary(post, variant)}${body}`
+    const summary = buildSummary(post, variant)
+    body = variant === 0 ? `${summary}${body}` : insertAfterHeading(body, summary, 1)
   }
 
   if (!body.includes('article-callout')) {
-    body = insertAfterParagraph(body, buildCallout(post, variant), 2)
+    body = variant === 1
+      ? insertAfterHeading(body, buildCallout(post, variant), 2)
+      : insertAfterParagraph(body, buildCallout(post, variant), 2)
   }
 
   if (!body.includes('article-decision')) {
-    body = insertAfterParagraph(body, buildDecision(post, body, variant), 4)
+    body = variant === 2
+      ? insertAfterHeading(body, buildDecision(post, body, variant), 3)
+      : insertAfterParagraph(body, buildDecision(post, body, variant), 4)
+  }
+
+  if (!hasSource || !hasExternal) {
+    body = `${body}${buildSourceNote(post)}`
   }
 
   if (!body.includes('article-cta')) {

@@ -20,6 +20,7 @@ export interface Post {
   excerpt: string
   body?: string      // HTML 본문 (없으면 excerpt로 폴백)
   publishAt?: string // ISO datetime — 미래면 목록·색인 숨김, ISR로 자동 공개
+  updatedAt?: string // ISO/date string — 없으면 publishAt/date를 수정일 기준으로 사용
   read: number
   date: string
   featured?: boolean
@@ -21669,6 +21670,14 @@ export function getPostSlug(post: Post) {
 
 export function getPostPath(post: Post) {
   return `/blog/${getPostSlug(post)}`
+}
+
+export function getPostPublishedDate(post: Post) {
+  return (post.publishAt ?? post.date.replace(/\./g, '-')).slice(0, 10)
+}
+
+export function getPostModifiedDate(post: Post) {
+  return (post.updatedAt ?? post.publishAt ?? post.date.replace(/\./g, '-')).slice(0, 10)
 }
 
 export function findPostBySlugOrId(value: string) {

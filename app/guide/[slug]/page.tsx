@@ -196,6 +196,7 @@ export default function GuidePage({ params }: { params: { slug: string } }) {
   if (!guide) notFound()
 
   const guideUrl = `https://dullegilgogo.kr/guide/${params.slug}`
+  const howToEligible = ['one-day-plan', 'safety-checklist'].includes(params.slug)
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -219,7 +220,7 @@ export default function GuidePage({ params }: { params: { slug: string } }) {
           acceptedAnswer: { '@type': 'Answer', text: f.a },
         })),
       },
-      {
+      ...(howToEligible ? [{
         '@type': 'HowTo',
         name: guide.title,
         description: guide.description,
@@ -230,7 +231,7 @@ export default function GuidePage({ params }: { params: { slug: string } }) {
           name: s.heading,
           text: s.body,
         })),
-      },
+      }] : []),
       {
         '@type': 'BreadcrumbList',
         itemListElement: [

@@ -4,7 +4,7 @@ import { notFound, permanentRedirect } from 'next/navigation'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
 import { Icon } from '@/components/icon'
-import { POSTS, CATS, findPostBySlugOrId, getPostPath, getPostSlug, rewriteBlogLinks } from '@/lib/posts'
+import { POSTS, CATS, findPostBySlugOrId, getPostModifiedDate, getPostPath, getPostPublishedDate, getPostSlug, rewriteBlogLinks } from '@/lib/posts'
 import { linkMountainNames } from '@/lib/mountain-link'
 import { enhanceArticleBody } from '@/lib/article-enhancements'
 import { ShareButton } from '@/components/share-button'
@@ -92,6 +92,30 @@ function extractFaqPairs(body: string): { q: string; a: string }[] {
   return pairs
 }
 
+function stripHtml(html: string) {
+  return html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim()
+}
+
+function slugifyHeading(text: string) {
+  return text.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^\w가-힣-]/g, '')
+}
+
+function addHeadingIds(html: string) {
+  const seen = new Map<string, number>()
+  const headings: { text: string; id: string }[] = []
+  const htmlWithIds = html.replace(/<h2([^>]*)>([\s\S]*?)<\/h2>/g, (_match, attrs, inner) => {
+    const text = stripHtml(inner)
+    const base = slugifyHeading(text) || `section-${headings.length + 1}`
+    const count = seen.get(base) ?? 0
+    seen.set(base, count + 1)
+    const id = count === 0 ? base : `${base}-${count + 1}`
+    headings.push({ text, id })
+    const cleanAttrs = String(attrs).replace(/\s+id=(["']).*?\1/g, '')
+    return `<h2${cleanAttrs} id="${id}">${inner}</h2>`
+  })
+  return { html: htmlWithIds, headings }
+}
+
 export default function BlogDetailPage({ params }: Props) {
   const post = findPostBySlugOrId(params.id)
   if (!post) notFound()
@@ -111,19 +135,31 @@ export default function BlogDetailPage({ params }: Props) {
 
   const postUrl = `https://dullegilgogo.kr${getPostPath(post)}`
   const enhancedBody = post.body ? enhanceArticleBody(post) : ''
+  const enhancedArticle = enhancedBody ? addHeadingIds(enhancedBody) : { html: '', headings: [] }
   const faqPairs = enhancedBody ? extractFaqPairs(enhancedBody) : []
 
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'Article',
+        '@type': 'BlogPosting',
         headline: post.title,
         description: post.excerpt,
-        datePublished: post.date.replace(/\./g, '-'),
-        dateModified:  post.date.replace(/\./g, '-'),
+        url: postUrl,
+        inLanguage: 'ko-KR',
+        datePublished: getPostPublishedDate(post),
+        dateModified:  getPostModifiedDate(post),
         author: { '@type': 'Organization', name: '둘레길고고', url: 'https://dullegilgogo.kr' },
-        publisher: { '@type': 'Organization', name: '둘레길고고', url: 'https://dullegilgogo.kr' },
+        publisher: {
+          '@type': 'Organization',
+          name: '둘레길고고',
+          url: 'https://dullegilgogo.kr',
+          logo: {
+            '@type': 'ImageObject',
+            url: 'https://dullegilgogo.kr/icon',
+          },
+        },
+        isPartOf: { '@type': 'Blog', name: '둘레길고고 매거진', url: 'https://dullegilgogo.kr/blog' },
         image: `https://dullegilgogo.kr/og?title=${encodeURIComponent(post.title)}&type=blog&sub=${encodeURIComponent(post.cat)}`,
         mainEntityOfPage: { '@type': 'WebPage', '@id': postUrl },
       },
@@ -191,16 +227,14 @@ export default function BlogDetailPage({ params }: Props) {
         {/* 아티클 본문 */}
         <article className="wrap wrap--narrow" style={{ paddingTop: 28, paddingBottom: 12 }}>
           {post.body && (() => {
-            const toId = (t: string) => t.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^\w가-힣-]/g, '')
-            const matches = [...enhancedBody.matchAll(/<h2[^>]*>([^<]+)<\/h2>/g)]
-            if (matches.length < 2) return null
+            if (enhancedArticle.headings.length < 2) return null
             return (
               <nav style={{ background:'var(--bg-warm)', border:'1px solid var(--line)', borderRadius:'var(--r)', padding:'20px 24px', marginBottom:28 }}>
                 <div style={{ fontWeight:700, fontSize:14, color:'var(--forest)', marginBottom:12, letterSpacing:'.02em' }}>목차</div>
                 <ol style={{ margin:0, padding:'0 0 0 20px', display:'flex', flexDirection:'column', gap:8 }}>
-                  {matches.map((m, i) => (
+                  {enhancedArticle.headings.map((heading, i) => (
                     <li key={i} style={{ fontSize:14.5, lineHeight:1.4 }}>
-                      <a href={`#${toId(m[1])}`} style={{ color:'var(--ink-soft)', textDecoration:'none' }}>{m[1]}</a>
+                      <a href={`#${heading.id}`} style={{ color:'var(--ink-soft)', textDecoration:'none' }}>{heading.text}</a>
                     </li>
                   ))}
                 </ol>
@@ -209,10 +243,7 @@ export default function BlogDetailPage({ params }: Props) {
           })()}
           {post.body ? (
             <div className="prose" dangerouslySetInnerHTML={{ __html: linkMountainNames(
-              rewriteBlogLinks(enhancedBody).replace(/<h2([^>]*)>([^<]+)<\/h2>/g, (_, attrs, text) => {
-                const id = text.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^\w가-힣-]/g, '')
-                return `<h2${attrs} id="${id}">${text}</h2>`
-              })
+              rewriteBlogLinks(enhancedArticle.html)
             ) }} />
           ) : (
             <div style={{ fontSize: 17, lineHeight: 1.8, color: 'var(--ink-soft)' }}>
