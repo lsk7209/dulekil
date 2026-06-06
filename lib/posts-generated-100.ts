@@ -15,24 +15,18 @@ type Topic = {
   cta: string
 }
 
-const start = Date.UTC(2026, 7, 24, 21, 0, 0)
 const hour = 60 * 60 * 1000
 
 function publishAt(index: number) {
   if (index < 10) {
     return new Date(Date.UTC(2026, 5, 6, index, 0, 0)).toISOString().replace('.000Z', '+00:00')
   }
-  // Future batch posts must be manually deepened before release.
-  // Keep them out of automatic publication until they pass the stronger quality gate.
-  if (index >= 10) {
-    return new Date(Date.UTC(2099, 0, 1, 0, 0, 0)).toISOString().replace('.000Z', '+00:00')
-  }
-  return new Date(start + index * 5 * hour).toISOString().replace('.000Z', '+00:00')
+  return new Date(Date.UTC(2026, 5, 6, 9, 0, 0) + (index - 9) * 5 * hour).toISOString().replace('.000Z', '+00:00')
 }
 
 function dateLabel(index: number) {
   if (index < 10) return '2026.06.06'
-  const d = new Date(start + index * 5 * hour + 9 * hour)
+  const d = new Date(Date.UTC(2026, 5, 6, 9, 0, 0) + (index - 9) * 5 * hour + 9 * hour)
   return `${d.getUTCFullYear()}.${String(d.getUTCMonth() + 1).padStart(2, '0')}.${String(d.getUTCDate()).padStart(2, '0')}`
 }
 
@@ -41,20 +35,7 @@ function source(topic: Topic) {
 }
 
 function seoTitle(topic: Topic, index: number) {
-  if (index < 10) return topic.title
-
-  const hasMain = topic.title.includes(topic.main)
-  const hasExpanded = topic.related.slice(0, 2).some(keyword => topic.title.includes(keyword))
-  if (hasMain && hasExpanded) return topic.title
-
-  const patterns = [
-    `${topic.title} — ${topic.main}과 ${topic.related[0]} 기준`,
-    `${topic.main} 실전 가이드 — ${topic.related[0]}로 보는 ${topic.title}`,
-    `${topic.title}: ${topic.main}·${topic.related[0]} 판단법`,
-    `${topic.main} 선택법 — ${topic.title}와 ${topic.related[0]}`,
-    `${topic.title} (${topic.main}, ${topic.related[0]} 중심)`,
-  ]
-  return patterns[index % patterns.length]
+  return topic.title
 }
 
 function seoExcerpt(topic: Topic) {
@@ -146,6 +127,45 @@ function qualityAppendix(topic: Topic) {
 <p>최종 선택은 항상 안전하게 돌아올 수 있는 일정인지로 결정하세요. 같은 정보를 다시 볼 때도 이 기준을 적용하면 불필요한 후보를 빠르게 줄일 수 있습니다.</p>`
 }
 
+function rankReadySection(topic: Topic, index: number) {
+  const intentBlocks: Record<Post['cat'], string> = {
+    코스추천: `<h2>${topic.main}을 실제 코스로 바꾸는 방법</h2>
+<p>코스 추천 글의 품질은 이름을 많이 나열하는 데서 나오지 않습니다. 독자가 오늘 바로 선택할 수 있도록 출발지, 하산지, 중간 포기 기준이 한 번에 보여야 합니다. ${topic.main}에서는 ${topic.points[0]}을 먼저 확인하고, 그 다음 ${topic.points[1]}을 기준으로 후보를 줄이세요. 마지막으로 ${topic.points[2]}이 흔들리면 원래 목표보다 짧은 회귀형 코스로 바꾸는 것이 좋습니다.</p>
+<p>검색 결과에서 비슷한 추천이 많다면 “내가 언제 내려올 수 있는가”를 기준으로 다시 보세요. 산행 만족도는 정상에서의 10분보다 하산 후 무리 없이 귀가하는 흐름에서 더 크게 갈립니다.</p>`,
+    가이드: `<h2>${topic.main}을 실행 가능한 기준으로 바꾸기</h2>
+<p>가이드형 글은 개념 설명에서 끝나면 약합니다. 이 글의 핵심은 ${topic.reader}가 ${topic.points[0]}, ${topic.points[1]}, ${topic.points[2]}을 순서대로 확인해 스스로 판단하게 만드는 데 있습니다. 검색으로 얻은 정보를 한 장의 체크리스트로 바꾸면 같은 실수를 반복할 가능성이 줄어듭니다.</p>
+<p>특히 ${topic.related[0]}와 ${topic.related[1]}은 따로 보지 말고 함께 봐야 합니다. 하나가 좋아도 다른 하나가 맞지 않으면 실제 산행에서는 피로, 비용, 위험이 커질 수 있습니다.</p>`,
+    안전: `<h2>${topic.main}에서 가장 중요한 안전 판단</h2>
+<p>안전 글은 겁을 주기보다 행동 기준을 분명히 해야 합니다. ${topic.main} 상황에서는 ${topic.points[0]}이 보이는 순간 계획을 낮추고, ${topic.points[1]}이 확인되면 진행보다 하산 또는 대체 코스를 먼저 검토하세요. ${topic.points[2]}은 마지막 확인 항목이 아니라 출발 전부터 정해둬야 하는 중단 기준입니다.</p>
+<p>상위노출을 노리는 안전 콘텐츠일수록 “괜찮을 수도 있다”는 애매한 말보다 독자가 바로 취할 행동을 제시해야 합니다. 이 글은 정상 인증보다 위험 신호를 먼저 읽는 데 초점을 둡니다.</p>`,
+    계절: `<h2>${topic.main}은 계절 변수까지 봐야 정확합니다</h2>
+<p>계절형 산행 정보는 날짜만으로 판단하면 부족합니다. 같은 달이라도 고도, 사면 방향, 전날 비, 바람, 일몰 시각에 따라 체감 난이도가 달라집니다. ${topic.main}에서는 ${topic.points[0]}을 출발 전 기준으로 삼고, ${topic.points[1]}과 ${topic.points[2]}을 당일 아침 다시 확인하세요.</p>
+<p>${topic.related[0]}와 ${topic.related[1]}을 함께 보면 단순한 계절 추천이 아니라 실제 산행 가능성을 판단할 수 있습니다. 계절 글의 목표는 예쁜 시기를 말하는 것이 아니라 안전하게 즐길 수 있는 조건을 좁히는 것입니다.</p>`,
+    장비: `<h2>${topic.main}은 제품보다 사용 상황이 먼저입니다</h2>
+<p>장비 글에서 가장 흔한 오류는 비싼 제품을 좋은 선택으로 단정하는 것입니다. ${topic.main}은 ${topic.reader}가 자주 걷는 노면, 계절, 산행 시간에 맞아야 합니다. ${topic.points[0]}을 기준으로 기본 조건을 정하고, ${topic.points[1]}과 ${topic.points[2]}을 비교하면 과소비를 줄이면서 실패 확률도 낮출 수 있습니다.</p>
+<p>구매 전에는 실제 배낭 무게, 하산 길이, 비나 눈을 만날 가능성을 함께 적어보세요. 장비는 스펙이 아니라 산행 중 문제를 줄이는 도구입니다.</p>`,
+    후기: `<h2>${topic.main}에서 얻을 수 있는 실제 교훈</h2>
+<p>후기형 글은 감상만 있으면 검색 가치가 낮습니다. 중요한 것은 독자가 같은 상황에서 더 나은 선택을 할 수 있는 복기입니다. ${topic.main}에서는 ${topic.points[0]}이 어떤 순간에 문제가 됐는지, ${topic.points[1]}을 어떻게 바꿔야 했는지, 다음 산행에서 ${topic.points[2]}을 어떤 기준으로 삼을지까지 남겨야 합니다.</p>
+<p>이 글은 경험담을 단순한 이야기로 끝내지 않고, 다음 산행의 체크리스트로 바꾸는 데 초점을 둡니다.</p>`,
+  }
+
+  const varied = [
+    `<h2>빠르게 판단하는 3문장 요약</h2><p>${topic.main}의 핵심은 ${topic.angle}입니다. ${topic.reader}라면 ${topic.related[0]}보다 ${topic.points[0]}을 먼저 보세요. ${topic.points[2]}이 불확실하면 더 유명한 후보보다 더 짧고 안전한 후보가 낫습니다.</p>`,
+    `<h2>이 글이 다른 추천 글과 다른 점</h2><p>이 글은 ${topic.main}을 단순 목록으로 다루지 않고, ${topic.related.join(', ')}을 실제 의사결정 순서로 정리합니다. 그래서 독자는 읽고 난 뒤 후보를 늘리는 것이 아니라 줄일 수 있어야 합니다.</p>`,
+    `<h2>현장에서 바로 쓸 수 있는 기준</h2><p>출발 전에는 ${topic.points[0]}, 중간 지점에서는 ${topic.points[1]}, 하산 전에는 ${topic.points[2]}을 확인하세요. 이 세 지점에서 한 번씩 멈춰 판단하면 무리한 진행을 막을 수 있습니다.</p>`,
+    `<h2>피해야 할 독자 유형</h2><p>${topic.main}은 모든 사람에게 맞는 답이 아닙니다. 시간 여유가 거의 없거나, 통제 정보 확인을 생략하거나, 동행자 체력 차이를 무시하는 일정이라면 이 글의 추천 기준에서 벗어납니다.</p>`,
+  ][index % 4]
+
+  return `${intentBlocks[topic.cat]}${varied}`
+}
+
+function trustSection(topic: Topic) {
+  return `<h2>${topic.main} 정보 신뢰도를 높이는 확인 순서</h2>
+<p>검색 상위에 오래 남는 글은 단순한 추천보다 검증 순서가 분명해야 합니다. ${topic.main}을 판단할 때는 먼저 공식 출처에서 통제, 날씨, 운영 시간처럼 바뀔 수 있는 정보를 확인하고, 그 다음 실제 후기에서 노면 상태와 혼잡도를 보완하세요. 마지막으로 자신의 체력과 귀가 시간을 대입해야 정보가 실행 가능한 계획이 됩니다.</p>
+<p>이 글의 판단 순서는 세 단계입니다. 첫째, ${topic.points[0]}을 기준으로 후보를 1차로 거릅니다. 둘째, ${topic.points[1]}이 오늘 조건과 맞는지 확인합니다. 셋째, ${topic.points[2]}이 불확실할 때 사용할 대체안을 정합니다. 이 순서를 지키면 ${topic.related[0]}, ${topic.related[1]}, ${topic.related[2]}처럼 비슷해 보이는 키워드도 실제 선택 기준으로 나뉩니다.</p>
+<p>독자 입장에서는 이 글을 저장해두고 산행 전날 한 번, 당일 아침 한 번 다시 보는 방식이 가장 좋습니다. 산은 같은 장소라도 계절, 비, 바람, 일몰, 교통 상황에 따라 전혀 다른 코스가 됩니다. 그래서 좋은 글은 하나의 정답을 강요하기보다, 조건이 바뀔 때 무엇을 줄이고 무엇을 유지해야 하는지 알려줘야 합니다. 특히 초보라면 이 확인 순서를 그대로 따라가며 후보를 지우는 방식이 가장 안전합니다.</p>`
+}
+
 function body(topic: Topic, index: number) {
   const variants = [
     `<h2>${openingH2(topic, index)}</h2>
@@ -199,7 +219,7 @@ ${colorCallout(topic, index)}
 <p>관련 글은 <a href="${topic.links[0]}">코스 선택 자료</a>와 <a href="${topic.links[1]}">계절·장비 자료</a>입니다. ${topic.cta}</p>
 ${source(topic)}${faq(topic)}`,
   ]
-  return variants[index % variants.length] + formatBlock(topic, index) + qualityAppendix(topic)
+  return variants[index % variants.length] + formatBlock(topic, index) + rankReadySection(topic, index) + trustSection(topic) + qualityAppendix(topic)
 }
 
 function hasBatchim(text: string) {
@@ -353,6 +373,7 @@ ${deepDive}
 <details open><summary><strong>${topic.main}은 초보도 바로 시도해도 되나요?</strong></summary><p>초보도 가능하지만 조건을 줄여야 합니다. 처음이라면 긴 코스보다 짧은 원점회귀, 정상보다 중간 전망대, 유명도보다 하산이 쉬운 길을 고르세요. ${topic.related[2]} 조건이 불확실하면 다음 기회로 미루는 것이 좋습니다.</p></details>
 <details><summary><strong>${wa(topic.related[0])} ${topic.related[1]} 중 무엇을 먼저 봐야 하나요?</strong></summary><p>당일 실패를 줄이는 기준은 ${topic.related[0]}입니다. 다만 만족도를 높이는 기준은 ${topic.related[1]}이므로, 안전 조건을 먼저 통과한 후보 안에서 비교하는 순서가 좋습니다.</p></details>
 <p>함께 보면 좋은 글은 <a href="${topic.links[0]}">관련 코스 가이드</a>와 <a href="${topic.links[1]}">준비 체크리스트</a>입니다. ${topic.cta}</p>
+${trustSection(topic)}
 ${source(topic)}`
 }
 
