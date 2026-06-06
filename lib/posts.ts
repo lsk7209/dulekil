@@ -25,7 +25,7 @@ export interface Post {
   badges: string[]
 }
 
-export const POSTS: Post[] = [
+const RAW_POSTS: Post[] = [
   // ── 코스 추천 ───────────────────────────────────────────
   {
     id: 'p1', cat: '코스추천', pal: 'forest',
@@ -21629,3 +21629,18 @@ export const POSTS: Post[] = [
   },
   ...GENERATED_POSTS_100,
 ]
+
+function isHighQualityPost(post: Post) {
+  const body = post.body ?? ''
+  const h2Count = (body.match(/<h2/g) ?? []).length
+  const hasReference = body.includes('source-note') || body.includes('참고') || body.includes('출처')
+  const generatedHighQuality = /^p(4[1-9][4-9]|5[0-1][0-9]|52[0-9])$/.test(post.id)
+
+  return generatedHighQuality || (
+    body.length >= 2500 &&
+    h2Count >= 3 &&
+    hasReference
+  )
+}
+
+export const POSTS: Post[] = RAW_POSTS.filter(isHighQualityPost)

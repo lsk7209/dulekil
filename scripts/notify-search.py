@@ -14,7 +14,7 @@ TOKEN_FILE     = r'D:\env\gsc_token.json'
 SCOPES         = ['https://www.googleapis.com/auth/webmasters']
 SITE_URL       = 'https://dullegilgogo.kr/'
 SITEMAP_URL    = 'https://dullegilgogo.kr/sitemap.xml'
-INDEXNOW_KEY   = '9c202cd9eeb5468db83592b14dbd4b21'  # public/9c202cd9eeb5468db83592b14dbd4b21.txt
+INDEXNOW_KEY   = '0d7b842a4db14d0ea1650b0d99a4a7be6c81213f2a48d4c2a6b0f3e7d9a5c1b0'
 
 # IndexNow 제출 대상 URL 목록 (주요 페이지)
 INDEXNOW_URLS  = [

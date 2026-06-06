@@ -1,8 +1,9 @@
 const HOST = 'dullegilgogo.kr'
 const BASE = `https://${HOST}`
+const INDEXNOW_KEY = '0d7b842a4db14d0ea1650b0d99a4a7be6c81213f2a48d4c2a6b0f3e7d9a5c1b0'
 
 export async function notifyIndexNow(urls: string[]): Promise<void> {
-  const key = process.env.INDEXNOW_KEY
+  const key = INDEXNOW_KEY
   if (!key || urls.length === 0) return
 
   const payload = {
