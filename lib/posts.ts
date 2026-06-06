@@ -1,4 +1,5 @@
 import { GENERATED_POSTS_100 } from './posts-generated-100'
+import { POST_REWRITES } from './post-quality-rewrites'
 
 export const CATS = {
   '코스추천': { label: '코스 추천', c: '#2F4A3C', bg: '#E7EEE6' },
@@ -25,7 +26,7 @@ export interface Post {
   badges: string[]
 }
 
-const RAW_POSTS: Post[] = [
+export const RAW_POSTS: Post[] = [
   // ── 코스 추천 ───────────────────────────────────────────
   {
     id: 'p1', cat: '코스추천', pal: 'forest',
@@ -21643,4 +21644,9 @@ function isHighQualityPost(post: Post) {
   )
 }
 
-export const POSTS: Post[] = RAW_POSTS.filter(isHighQualityPost)
+const REWRITTEN_POSTS: Post[] = RAW_POSTS.map(post => {
+  const rewrite = POST_REWRITES[post.id]
+  return rewrite ? { ...post, ...rewrite } : post
+})
+
+export const POSTS: Post[] = REWRITTEN_POSTS.filter(isHighQualityPost)
