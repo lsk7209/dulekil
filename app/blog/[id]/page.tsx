@@ -6,6 +6,7 @@ import { SiteFooter } from '@/components/site-footer'
 import { Icon } from '@/components/icon'
 import { POSTS, CATS, findPostBySlugOrId, getPostPath, getPostSlug, rewriteBlogLinks } from '@/lib/posts'
 import { linkMountainNames } from '@/lib/mountain-link'
+import { enhanceArticleBody } from '@/lib/article-enhancements'
 import { ShareButton } from '@/components/share-button'
 
 interface Props { params: { id: string } }
@@ -109,7 +110,8 @@ export default function BlogDetailPage({ params }: Props) {
   const next = idx < published.length - 1 ? published[idx + 1] : null
 
   const postUrl = `https://dullegilgogo.kr${getPostPath(post)}`
-  const faqPairs = post.body ? extractFaqPairs(post.body) : []
+  const enhancedBody = post.body ? enhanceArticleBody(post) : ''
+  const faqPairs = enhancedBody ? extractFaqPairs(enhancedBody) : []
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -190,7 +192,7 @@ export default function BlogDetailPage({ params }: Props) {
         <article className="wrap wrap--narrow" style={{ paddingTop: 28, paddingBottom: 12 }}>
           {post.body && (() => {
             const toId = (t: string) => t.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^\w가-힣-]/g, '')
-            const matches = [...post.body!.matchAll(/<h2[^>]*>([^<]+)<\/h2>/g)]
+            const matches = [...enhancedBody.matchAll(/<h2[^>]*>([^<]+)<\/h2>/g)]
             if (matches.length < 2) return null
             return (
               <nav style={{ background:'var(--bg-warm)', border:'1px solid var(--line)', borderRadius:'var(--r)', padding:'20px 24px', marginBottom:28 }}>
@@ -207,7 +209,7 @@ export default function BlogDetailPage({ params }: Props) {
           })()}
           {post.body ? (
             <div className="prose" dangerouslySetInnerHTML={{ __html: linkMountainNames(
-              rewriteBlogLinks(post.body).replace(/<h2([^>]*)>([^<]+)<\/h2>/g, (_, attrs, text) => {
+              rewriteBlogLinks(enhancedBody).replace(/<h2([^>]*)>([^<]+)<\/h2>/g, (_, attrs, text) => {
                 const id = text.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^\w가-힣-]/g, '')
                 return `<h2${attrs} id="${id}">${text}</h2>`
               })
