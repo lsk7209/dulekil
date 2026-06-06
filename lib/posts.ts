@@ -1,3 +1,5 @@
+import { GENERATED_POSTS_100 } from './posts-generated-100'
+
 export const CATS = {
   '코스추천': { label: '코스 추천', c: '#2F4A3C', bg: '#E7EEE6' },
   '가이드':   { label: '가이드',   c: '#5E7E63', bg: '#E7EEE6' },
@@ -21625,4 +21627,5 @@ export const POSTS: Post[] = [
 
 <p>호남정맥 다른 구간 명산 탐방을 계획한다면 <a href="/blog/p35">내장산 등산 완전 가이드</a>에서 내장산 코스와 단풍 명소 정보를 함께 확인해보세요. 전북 남부 오지 산행 경험을 쌓은 뒤 지리산 도전을 계획한다면 <a href="/blog/p4">당일치기 지리산 완전 가이드</a>에서 체력 계획과 코스 선택 방법론을 미리 숙지해두는 것이 좋습니다. 오지 산행 장비 준비가 처음이라면 <a href="/blog/p7">초보 등산객을 위한 장비 기초 가이드</a>도 함께 참고하세요.</p>`,
   },
+  ...GENERATED_POSTS_100,
 ]
