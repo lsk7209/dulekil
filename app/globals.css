@@ -595,6 +595,30 @@ a { color: inherit; }
   font-weight: 800;
   text-align: right;
 }
+.mountain-toc {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 4px 0 2px;
+  scrollbar-width: thin;
+}
+.mountain-toc a {
+  flex: 0 0 auto;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--forest);
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1;
+  padding: 10px 13px;
+  text-decoration: none;
+}
+.mountain-toc a:hover {
+  border-color: var(--sage);
+  background: var(--bg-warm);
+}
 .mountain-deep {
   background: #fff;
   border: 1px solid var(--line-soft);
@@ -635,6 +659,26 @@ a { color: inherit; }
   color: var(--ink-faint);
   font-size: 13px;
   line-height: 1.6;
+}
+.mountain-source-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+.mountain-source-links a {
+  border: 1px solid rgba(47,74,60,.18);
+  border-radius: var(--r-sm);
+  background: var(--bg-warm);
+  color: var(--forest);
+  font-size: 13px;
+  font-weight: 800;
+  padding: 8px 10px;
+  text-decoration: none;
+}
+.mountain-source-links a:hover {
+  border-color: var(--sage);
+  background: #fff;
 }
 .mountain-info-grid,
 .mountain-season-grid {

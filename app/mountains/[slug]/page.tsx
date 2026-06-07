@@ -14,6 +14,8 @@ import {
   buildFallbackRisks,
   buildMountainDeepInfo,
   buildMountainFitNotes,
+  buildMountainMetaDescription,
+  buildMountainQuickFacts,
   buildMountainSummary,
   buildSafetyChecks,
   buildSeasonNotes,
@@ -40,24 +42,27 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const name = decodeURIComponent(params.slug)
   const m = await getMountainBySlug(name)
   if (!m) return {}
+  const courses = await getCoursesByMountainId(m.id)
+  const description = buildMountainMetaDescription(m, courses)
   const ogSub = `${m.region ?? ''} · 해발 ${(m.elev ?? 0).toLocaleString()}m`
   const ogUrl = `/og?title=${encodeURIComponent(m.name)}&type=mountain&sub=${encodeURIComponent(ogSub)}`
   return {
     title: `${m.name} 등산 코스 — 난이도·거리·소요시간`,
-    description: m.description ??
-      `${m.name}(${m.region ?? ''}) 등산 코스 정보. 해발 ${m.elev ?? '?'}m. 공공데이터 기반.`,
+    description,
     alternates: {
       canonical: `https://dullegilgogo.kr/mountains/${encodeURIComponent(m.name)}`,
     },
     openGraph: {
       title: `${m.name} 등산 코스`,
-      description: ogSub,
+      description,
       type: 'article',
       url: `https://dullegilgogo.kr/mountains/${encodeURIComponent(m.name)}`,
       images: [{ url: ogUrl, width: 1200, height: 630, alt: m.name }],
     },
     twitter: {
       card: 'summary_large_image',
+      title: `${m.name} 등산 코스`,
+      description,
       images: [ogUrl],
     },
   }
@@ -89,7 +94,9 @@ export default async function MountainDetailPage({ params }: Props) {
   const relatedPosts  = getRelatedPosts(mountain.name, group)
   const courseStats   = getCourseStats(courses)
   const summary       = buildMountainSummary(mountain, courses)
+  const pageDescription = buildMountainMetaDescription(mountain, courses)
   const deepInfo      = buildMountainDeepInfo(mountain, courses)
+  const quickFacts    = buildMountainQuickFacts(mountain, courses)
   const fitNotes      = buildMountainFitNotes(mountain, courses)
   const accessNotes   = buildAccessNotes(mountain, courses)
   const seasonNotes   = buildSeasonNotes(mountain)
@@ -112,7 +119,7 @@ export default async function MountainDetailPage({ params }: Props) {
       {
         '@type': 'TouristAttraction',
         name: mountain.name,
-        description: mountain.description ?? `${mountain.region}에 위치한 해발 ${mountain.elev}m의 명산.`,
+        description: pageDescription,
         image: `https://dullegilgogo.kr/og?title=${encodeURIComponent(mountain.name)}&type=mountain&sub=${encodeURIComponent(`${mountain.region ?? ''} · 해발 ${(mountain.elev ?? 0).toLocaleString()}m`)}`,
         address: { '@type': 'PostalAddress', addressRegion: mountain.region ?? '', addressCountry: 'KR' },
         ...(mountain.lat && mountain.lng ? {
@@ -223,15 +230,24 @@ export default async function MountainDetailPage({ params }: Props) {
               <div className="mountain-factbox">
                 <strong>빠른 기준</strong>
                 <dl>
-                  <div><dt>추천 난이도</dt><dd>난이도 {bestDiff}</dd></div>
-                  <div><dt>최단 코스</dt><dd>{formatDistance(minDist)}</dd></div>
-                  <div><dt>상행 최대</dt><dd>{formatDuration(maxDur)}</dd></div>
-                  <div><dt>접근성</dt><dd>{hasTransit ? '대중교통 코스 있음' : '자가용 우선 검토'}</dd></div>
+                  <div><dt>추천 난이도</dt><dd>{quickFacts.difficultyLabel}</dd></div>
+                  <div><dt>최단 코스</dt><dd>{quickFacts.distanceLabel}</dd></div>
+                  <div><dt>상행 최대</dt><dd>{quickFacts.durationLabel}</dd></div>
+                  <div><dt>접근성</dt><dd>{quickFacts.accessLabel}</dd></div>
                 </dl>
               </div>
             </section>
 
-            <section className="mountain-deep">
+            <nav className="mountain-toc" aria-label={`${mountain.name} 상세 목차`}>
+              <a href="#mountain-info">산 정보</a>
+              <a href="#mountain-fit">대상별 코스</a>
+              <a href="#mountain-access">교통·들머리</a>
+              <a href="#mountain-season">계절</a>
+              <a href="#mountain-safety">안전</a>
+              <a href="#mountain-faq">FAQ</a>
+            </nav>
+
+            <section id="mountain-info" className="mountain-deep">
               <div className="eyebrow" style={{ marginBottom: 8 }}>산 정보 깊이 보기</div>
               <h2 className="h2" style={{ marginBottom: 12 }}>{mountain.name} 산세·볼거리·산행 계획</h2>
               <p className="body mountain-deep__intro">{deepInfo.intro}</p>
@@ -244,9 +260,18 @@ export default async function MountainDetailPage({ params }: Props) {
                 ))}
               </div>
               <p className="mountain-deep__source">{deepInfo.sourceNote}</p>
+              {deepInfo.sources.length > 0 && (
+                <div className="mountain-source-links" aria-label={`${mountain.name} 공식 확인 링크`}>
+                  {deepInfo.sources.map(source => (
+                    <a key={source.url} href={source.url} target="_blank" rel="noopener noreferrer">
+                      {source.label}
+                    </a>
+                  ))}
+                </div>
+              )}
             </section>
 
-            <section>
+            <section id="mountain-fit">
               <h2 className="h2" style={{ marginBottom: 16 }}>{mountain.name} 추천 대상별 코스 선택</h2>
               <div className="mountain-info-grid">
                 {fitNotes.map(note => (
@@ -258,7 +283,7 @@ export default async function MountainDetailPage({ params }: Props) {
               </div>
             </section>
 
-            <section className="card card--pad mountain-access">
+            <section id="mountain-access" className="card card--pad mountain-access">
               <h2 className="h2" style={{ marginBottom: 12 }}>{accessNotes.title}</h2>
               <p className="body">{accessNotes.body}</p>
               {accessNotes.trailheads.length > 0 && (
@@ -271,7 +296,7 @@ export default async function MountainDetailPage({ params }: Props) {
               )}
             </section>
 
-            <section>
+            <section id="mountain-season">
               <h2 className="h2" style={{ marginBottom: 16 }}>{mountain.name} 계절별 산행 포인트</h2>
               <div className="mountain-season-grid">
                 {seasonNotes.map(note => (
@@ -283,7 +308,7 @@ export default async function MountainDetailPage({ params }: Props) {
               </div>
             </section>
 
-            <section className="card card--pad mountain-checks">
+            <section id="mountain-safety" className="card card--pad mountain-checks">
               <h2 className="h2" style={{ marginBottom: 12 }}>{mountain.name} 안전 체크리스트</h2>
               <ul>
                 {safetyChecks.checks.map(check => <li key={check}>{check}</li>)}
@@ -402,7 +427,7 @@ export default async function MountainDetailPage({ params }: Props) {
             )}
 
             {/* FAQ */}
-            <section className="card card--pad">
+            <section id="mountain-faq" className="card card--pad">
               <h2 className="h2" style={{ marginBottom: 20 }}>자주 묻는 질문</h2>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
                 {[

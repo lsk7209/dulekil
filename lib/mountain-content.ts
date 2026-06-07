@@ -9,10 +9,23 @@ type MountainFallbackGuide = {
   risks?: string[]
 }
 
+export type MountainOfficialSource = {
+  label: string
+  url: string
+}
+
 export type MountainDeepInfo = {
   intro: string
   highlights: { title: string; body: string; tone: 'forest' | 'clay' | 'sky' }[]
   sourceNote: string
+  sources: MountainOfficialSource[]
+}
+
+export type MountainQuickFacts = {
+  difficultyLabel: string
+  distanceLabel: string
+  durationLabel: string
+  accessLabel: string
 }
 
 const FALLBACK_GUIDES: Record<string, MountainFallbackGuide> = {
@@ -328,6 +341,57 @@ const MOUNTAIN_IDENTITY_NOTES: Record<string, string> = {
   '마이산': '마이산은 말의 귀처럼 솟은 독특한 봉우리와 탑사 권역으로 기억되는 산입니다. 짧은 관광 동선과 암마이봉 등정은 성격이 다르므로 계단 피로와 통제 여부를 먼저 확인해야 합니다.',
 }
 
+const OFFICIAL_SOURCES: Record<string, MountainOfficialSource[]> = {
+  '설악산': [
+    { label: '국립공원공단 설악산 탐방예약', url: 'https://reservation.knps.or.kr/contents/T/serviceGuide.do?parkId=B03&prdDvcd=T' },
+    { label: '국립공원공단', url: 'https://www.knps.or.kr' },
+  ],
+  '지리산': [
+    { label: '국립공원공단 지리산 탐방예약', url: 'https://reservation.knps.or.kr/contents/T/serviceGuide.do?parkId=B01&prdDvcd=T' },
+    { label: '국립공원공단', url: 'https://www.knps.or.kr' },
+  ],
+  '덕유산': [
+    { label: '국립공원공단 덕유산 탐방예약', url: 'https://reservation.knps.or.kr/contents/T/serviceGuide.do?parkId=B05&prdDvcd=T' },
+    { label: '국립공원공단', url: 'https://www.knps.or.kr' },
+  ],
+  '한라산': [
+    { label: '한라산국립공원 탐방예약', url: 'https://visithalla.jeju.go.kr' },
+    { label: '제주특별자치도 한라산국립공원', url: 'https://www.jeju.go.kr/hallasan/index.htm' },
+  ],
+}
+
+const NATIONAL_PARK_MOUNTAINS = new Set([
+  '가야산',
+  '계룡산',
+  '내장산',
+  '덕유산',
+  '무등산',
+  '변산',
+  '북한산',
+  '설악산',
+  '소백산',
+  '속리산',
+  '오대산',
+  '월악산',
+  '월출산',
+  '주왕산',
+  '지리산',
+  '치악산',
+  '태백산',
+  '한라산',
+])
+
+export function getMountainOfficialSources(name: string): MountainOfficialSource[] {
+  const sources = OFFICIAL_SOURCES[name] ?? []
+  const common = NATIONAL_PARK_MOUNTAINS.has(name)
+    ? [{ label: '국립공원공단 탐방통제·안전공지', url: 'https://www.knps.or.kr' }]
+    : [{ label: '산림청 100대 명산', url: 'https://www.forest.go.kr' }]
+
+  return [...sources, ...common]
+    .filter((source, index, arr) => arr.findIndex(item => item.url === source.url) === index)
+    .slice(0, 3)
+}
+
 function mountainRegionCharacter(mountain: Mountain) {
   const region = `${mountain.region ?? ''} ${mountain.sigun ?? ''}`
   const elev = mountain.elev ?? 0
@@ -348,6 +412,36 @@ function courseRangeText(courses: Course[]) {
   const min = Math.min(...distances)
   const max = Math.max(...distances)
   return min === max ? `${min.toFixed(1)}km 코스가 확인됩니다` : `${min.toFixed(1)}~${max.toFixed(1)}km 범위의 코스가 확인됩니다`
+}
+
+export function buildMountainQuickFacts(mountain: Mountain, courses: Course[]): MountainQuickFacts {
+  const stats = getCourseStats(courses)
+  const fallback = courses.length === 0 ? getMountainFallbackGuide(mountain.name) : undefined
+  const diff = courses.length > 0
+    ? normalizeDifficulty(stats.shortest?.diff_norm ?? stats.hardest?.diff_norm)
+    : '중'
+
+  return {
+    difficultyLabel: `난이도 ${diff}`,
+    distanceLabel: stats.minDistance != null ? formatDistance(stats.minDistance) : fallback ? '공식 코스 확인' : '현장 확인 필요',
+    durationLabel: stats.maxDuration > 0 ? formatDuration(stats.maxDuration) : fallback ? '일몰 전 하산 기준' : '공식 시간 확인',
+    accessLabel: stats.hasTransit ? '대중교통 코스 있음' : fallback?.access.trailheads[0] ? fallback.access.trailheads[0] : '자가용 우선 검토',
+  }
+}
+
+export function buildMountainMetaDescription(mountain: Mountain, courses: Course[]) {
+  const stats = getCourseStats(courses)
+  const region = [mountain.region, mountain.sigun].filter(Boolean).join(' ')
+  const elevation = mountain.elev ? `${mountain.elev.toLocaleString()}m` : '고도 확인 필요'
+  const diff = courses.length > 0
+    ? normalizeDifficulty(stats.shortest?.diff_norm ?? stats.hardest?.diff_norm)
+    : '중'
+  const courseText = courses.length > 0
+    ? `최단 ${formatDistance(stats.minDistance)}, 난이도 ${diff}`
+    : '대표 들머리와 공식 통제 확인'
+  const raw = `${mountain.name} 등산 코스: ${region || '국내'} 해발 ${elevation}. ${courseText}, 초보·당일치기 계획, 교통·주차, 계절별 준비와 하산 동선까지 한 번에 확인하세요.`
+
+  return raw.length > 155 ? `${raw.slice(0, 154)}…` : raw
 }
 
 export function buildMountainDeepInfo(mountain: Mountain, courses: Course[]): MountainDeepInfo {
@@ -402,6 +496,7 @@ export function buildMountainDeepInfo(mountain: Mountain, courses: Course[]): Mo
       },
     ],
     sourceNote: '산림청 100대 명산, 국립공원공단 탐방로·예약 안내, 지자체 탐방 공지와 현장 이정표를 함께 확인하는 전제로 정리했습니다.',
+    sources: getMountainOfficialSources(mountain.name),
   }
 }
 
