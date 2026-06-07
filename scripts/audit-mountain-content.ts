@@ -1,6 +1,6 @@
 import dotenv from 'dotenv'
 import { getCoursesByMountainId, getMountainsForHub } from '../lib/db/queries'
-import { buildAccessNotes, buildMountainFitNotes, buildMountainSummary, buildSafetyChecks, buildSeasonNotes, getMountainFallbackGuide } from '../lib/mountain-content'
+import { buildAccessNotes, buildMountainDeepInfo, buildMountainFitNotes, buildMountainSummary, buildSafetyChecks, buildSeasonNotes, getMountainFallbackGuide } from '../lib/mountain-content'
 
 dotenv.config({ path: '.env.local', quiet: true })
 
@@ -28,12 +28,16 @@ async function main() {
   for (const mountain of mountains) {
     const courses = await getCoursesByMountainId(mountain.id)
     const summary = buildMountainSummary(mountain, courses)
+    const deepInfo = buildMountainDeepInfo(mountain, courses)
     const fits = buildMountainFitNotes(mountain, courses)
     const access = buildAccessNotes(mountain, courses)
     const seasons = buildSeasonNotes(mountain)
     const safety = buildSafetyChecks(courses)
 
     if (summary.length < 3) addFinding(mountain.id, mountain.name, 'summary has fewer than 3 decision points')
+    if (deepInfo.intro.length < 140) addFinding(mountain.id, mountain.name, 'deep mountain intro is too short')
+    if (deepInfo.highlights.length < 4) addFinding(mountain.id, mountain.name, 'deep mountain guide has fewer than 4 sections')
+    if (deepInfo.highlights.some(item => item.body.length < 170)) addFinding(mountain.id, mountain.name, 'deep mountain guide section is too thin')
     if (fits.length < 3) addFinding(mountain.id, mountain.name, 'missing audience-specific course guidance')
     if (seasons.length < 4) addFinding(mountain.id, mountain.name, 'missing four-season guidance')
     if (safety.checks.length < 3) addFinding(mountain.id, mountain.name, 'missing safety checklist')

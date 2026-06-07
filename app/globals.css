@@ -595,6 +595,47 @@ a { color: inherit; }
   font-weight: 800;
   text-align: right;
 }
+.mountain-deep {
+  background: #fff;
+  border: 1px solid var(--line-soft);
+  border-radius: var(--r-lg);
+  padding: 22px;
+  box-shadow: var(--sh-1);
+}
+.mountain-deep__intro {
+  max-width: 880px;
+  margin-bottom: 18px;
+}
+.mountain-deep__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+.mountain-deep__item {
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--forest);
+  border-radius: var(--r);
+  padding: 16px;
+  background: #fff;
+}
+.mountain-deep__item--clay { border-left-color: var(--clay); background: #FFF8ED; }
+.mountain-deep__item--sky { border-left-color: var(--sky); background: #F1F7F8; }
+.mountain-deep__item h3 {
+  margin: 0 0 8px;
+  color: var(--forest);
+  font-size: 17px;
+}
+.mountain-deep__item p {
+  margin: 0;
+  color: var(--ink-soft);
+  line-height: 1.75;
+}
+.mountain-deep__source {
+  margin: 14px 0 0;
+  color: var(--ink-faint);
+  font-size: 13px;
+  line-height: 1.6;
+}
 .mountain-info-grid,
 .mountain-season-grid {
   display: grid;
@@ -672,6 +713,7 @@ a { color: inherit; }
 @media (min-width: 520px) {
   .card-grid { grid-template-columns: 1fr 1fr; }
   .mountain-season-grid { grid-template-columns: 1fr 1fr; }
+  .mountain-deep__grid { grid-template-columns: 1fr 1fr; }
 }
 
 @media (min-width: 760px) {

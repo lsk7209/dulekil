@@ -12,6 +12,7 @@ import { CATS, getPostPath } from '@/lib/posts'
 import {
   buildAccessNotes,
   buildFallbackRisks,
+  buildMountainDeepInfo,
   buildMountainFitNotes,
   buildMountainSummary,
   buildSafetyChecks,
@@ -88,6 +89,7 @@ export default async function MountainDetailPage({ params }: Props) {
   const relatedPosts  = getRelatedPosts(mountain.name, group)
   const courseStats   = getCourseStats(courses)
   const summary       = buildMountainSummary(mountain, courses)
+  const deepInfo      = buildMountainDeepInfo(mountain, courses)
   const fitNotes      = buildMountainFitNotes(mountain, courses)
   const accessNotes   = buildAccessNotes(mountain, courses)
   const seasonNotes   = buildSeasonNotes(mountain)
@@ -227,6 +229,21 @@ export default async function MountainDetailPage({ params }: Props) {
                   <div><dt>접근성</dt><dd>{hasTransit ? '대중교통 코스 있음' : '자가용 우선 검토'}</dd></div>
                 </dl>
               </div>
+            </section>
+
+            <section className="mountain-deep">
+              <div className="eyebrow" style={{ marginBottom: 8 }}>산 정보 깊이 보기</div>
+              <h2 className="h2" style={{ marginBottom: 12 }}>{mountain.name} 산세·볼거리·산행 계획</h2>
+              <p className="body mountain-deep__intro">{deepInfo.intro}</p>
+              <div className="mountain-deep__grid">
+                {deepInfo.highlights.map(item => (
+                  <article key={item.title} className={`mountain-deep__item mountain-deep__item--${item.tone}`}>
+                    <h3>{item.title}</h3>
+                    <p>{item.body}</p>
+                  </article>
+                ))}
+              </div>
+              <p className="mountain-deep__source">{deepInfo.sourceNote}</p>
             </section>
 
             <section>

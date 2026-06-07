@@ -9,6 +9,12 @@ type MountainFallbackGuide = {
   risks?: string[]
 }
 
+export type MountainDeepInfo = {
+  intro: string
+  highlights: { title: string; body: string; tone: 'forest' | 'clay' | 'sky' }[]
+  sourceNote: string
+}
+
 const FALLBACK_GUIDES: Record<string, MountainFallbackGuide> = {
   '가리산': {
     summary: [
@@ -293,6 +299,109 @@ export function getCourseStats(courses: Course[]) {
     hasGpx: courses.some(course => course.gpx_available),
     minDistance: shortest?.distance ?? null,
     maxDuration: Math.max(0, ...courses.map(course => course.duration_up ?? 0)),
+  }
+}
+
+const MOUNTAIN_IDENTITY_NOTES: Record<string, string> = {
+  '가리산': '홍천 내륙의 1,000m급 산세와 정상부 암릉 조망이 강점입니다. 숲길로 시작해 바위 능선으로 분위기가 바뀌는 산이라, 짧은 원점회귀라도 장갑과 접지 좋은 신발을 준비하는 편이 좋습니다.',
+  '강천산': '순창 강천산은 계곡, 폭포, 사찰, 단풍 탐방을 한 번에 엮기 쉬운 산입니다. 정상 완등보다 강천사와 구장군폭포 일대의 탐방 만족도가 높아 동행자 체력 차이가 큰 팀에도 잘 맞습니다.',
+  '내장산': '내장산은 단풍으로 유명하지만 실제 계획에서는 내장사, 계곡, 능선 조망, 신선봉 완등 중 무엇을 우선할지 먼저 정해야 합니다. 성수기에는 산행 난이도보다 주차와 셔틀 대기 시간이 더 큰 변수가 됩니다.',
+  '덕유산': '덕유산은 향적봉, 구천동 계곡, 백련사, 설천봉 곤돌라가 결합된 고산 산행지입니다. 곤돌라를 쓰면 짧은 고산 조망이 가능하지만, 겨울 능선은 바람과 결빙 때문에 짧아도 체감 난도가 크게 올라갑니다.',
+  '두륜산': '두륜산은 해남 대흥사 문화권과 남도 조망, 케이블카 접근성을 함께 가진 산입니다. 등정형 산행과 관광형 탐방을 모두 설계할 수 있어 가족 여행과 산행을 결합하기 좋습니다.',
+  '변산': '변산은 산과 바다가 가까운 변산반도 권역의 탐방지입니다. 내변산 계곡과 직소폭포를 중심으로 잡으면 여름 숲길의 장점이 살아나고, 해안 여행과 하루 일정으로 묶기 쉽습니다.',
+  '사량도지리산': '사량도지리산은 통영 섬 산행 특유의 바다 조망과 암릉 능선이 핵심입니다. 배 시간, 강풍, 젖은 바위 변수를 함께 계산해야 하므로 일반 내륙 산보다 일정 여유가 더 중요합니다.',
+  '설악산': '설악산은 대청봉, 공룡능선, 울산바위, 비선대, 오색 권역처럼 산행 성격이 크게 갈립니다. 국립공원 탐방로 통제와 낙석 위험, 대피소 운영 여부가 실제 코스 선택을 좌우합니다.',
+  '소백산': '소백산은 비로봉과 연화봉을 잇는 넓은 능선, 철쭉, 겨울 상고대가 강한 산입니다. 능선이 완만해 보여도 바람이 강해 체온 관리가 중요하며, 들머리 선택에 따라 체감 거리가 크게 달라집니다.',
+  '속리산': '속리산은 법주사 문화권, 문장대 조망, 천왕봉 능선을 따로 또는 함께 선택하는 산입니다. 한 번에 모두 욕심내면 길어지므로 초보자는 법주사와 문장대 중심으로 계획하는 편이 안정적입니다.',
+  '월악산': '월악산은 충주호 조망과 영봉 급경사 계단으로 기억되는 산입니다. 거리는 과하게 길지 않아 보여도 오르내림이 강해 무릎 피로와 하산 집중력을 크게 잡아야 합니다.',
+  '월출산': '월출산은 남도 평야 위로 솟은 바위산 이미지가 뚜렷합니다. 천황봉, 구름다리, 도갑사 연계처럼 짧지만 밀도 높은 암릉 산행이 많아 강풍과 비 예보를 특히 보수적으로 봐야 합니다.',
+  '장성축령산': '장성축령산은 편백숲 체류와 완만한 숲길이 강점인 회복형 산행지입니다. 정상 인증보다 숲길 체류, 그늘 휴식, 가족 동행 산책에 초점을 맞추면 만족도가 높습니다.',
+  '장안산': '장안산은 장수 고원의 능선 조망과 바람을 함께 느끼는 산입니다. 고도가 높아 계절보다 기온 차가 크게 체감되므로 여름에도 방풍층을 챙기는 것이 좋습니다.',
+  '치악산': '치악산은 원주 접근성은 좋지만 비로봉 오름과 긴 계단, 급경사 하산 때문에 만만하게 보면 안 됩니다. 구룡사 탐방과 비로봉 완등은 체력 요구치가 다르므로 목표를 분리하는 편이 좋습니다.',
+  '한라산': '한라산은 백록담 정상 탐방 여부가 모든 계획을 바꾸는 산입니다. 성판악과 관음사는 예약, 입산 마감, 하산 시간을 맞춰야 하고, 영실과 어리목은 정상 대신 고지대 풍경을 가볍게 즐기기 좋습니다.',
+  '지리산': '지리산은 여러 도와 시군에 걸친 큰 산악형 국립공원으로, 성삼재 노고단 탐방부터 천왕봉 장거리 산행까지 난이도 폭이 큽니다. 짧은 조망 산행과 종주형 산행을 같은 기준으로 비교하면 안 됩니다.',
+  '북한산': '북한산은 도심 접근성이 뛰어나지만 백운대와 암릉 구간은 주말 혼잡과 노출감이 강합니다. 지하철 접근이 쉬운 만큼 출발은 편하지만, 하산길 선택과 인파 회피가 만족도를 좌우합니다.',
+  '도봉산': '도봉산은 서울 북부의 바위 능선 산행지로, 짧은 접근 시간에 비해 암릉 체감이 강합니다. 초보자는 정상 인증보다 계곡, 사찰, 전망 포인트를 중심으로 코스를 줄이는 편이 안전합니다.',
+  '오대산': '오대산은 월정사 전나무숲, 상원사, 비로봉을 목적에 따라 조합하는 산입니다. 숲길 탐방과 정상 산행의 피로도가 다르므로 사찰 탐방 시간을 산행 시간과 분리해 계산해야 합니다.',
+  '계룡산': '계룡산은 동학사, 갑사, 신원사 권역과 능선 조망을 함께 가진 충청권 대표 산입니다. 사찰 탐방형 코스와 정상 연계 코스의 난도가 크게 달라 들머리부터 목적을 분명히 하는 것이 좋습니다.',
+  '가야산': '가야산은 해인사 문화권과 바위 능선 조망이 결합된 산입니다. 문화 탐방과 정상 산행을 함께 잡으면 시간이 길어지므로 해인사 체류 시간을 별도로 남겨두는 계획이 현실적입니다.',
+  '마이산': '마이산은 말의 귀처럼 솟은 독특한 봉우리와 탑사 권역으로 기억되는 산입니다. 짧은 관광 동선과 암마이봉 등정은 성격이 다르므로 계단 피로와 통제 여부를 먼저 확인해야 합니다.',
+}
+
+function mountainRegionCharacter(mountain: Mountain) {
+  const region = `${mountain.region ?? ''} ${mountain.sigun ?? ''}`
+  const elev = mountain.elev ?? 0
+
+  if (mountain.name.includes('산') && region.includes('제주')) return '화산 지형, 고도 변화, 해안 날씨의 영향을 함께 받는 산입니다.'
+  if (region.includes('서울') || region.includes('인천') || region.includes('경기')) return '수도권에서 접근하기 쉬워 주말 혼잡이 잦고, 짧은 산행에도 하산 동선 선택이 중요합니다.'
+  if (region.includes('강원')) return '강원 내륙과 백두대간권 산세의 영향으로 고도감, 바람, 겨울 결빙 변수가 비교적 큽니다.'
+  if (region.includes('충북') || region.includes('충남')) return '내륙 산행 특성이 강해 계곡, 사찰, 능선 조망을 목적별로 나눠 계획하기 좋습니다.'
+  if (region.includes('전남') || region.includes('전북') || region.includes('광주')) return '호남권 산행지답게 사찰, 계곡, 단풍, 남도 조망을 함께 엮는 일정이 잘 맞습니다.'
+  if (region.includes('경남') || region.includes('경북') || region.includes('대구') || region.includes('울산') || region.includes('부산')) return '영남권의 능선 조망과 바위 구간, 계절별 억새·철쭉·단풍 변화를 함께 보기 좋은 산입니다.'
+  if (elev >= 1400) return '1,400m 이상 고산이라 기온, 바람, 잔설, 일몰 시간을 낮은 산보다 보수적으로 계산해야 합니다.'
+  return '지역 산행지 특성과 계절 변수가 함께 작용하므로 코스 거리만으로 난이도를 판단하지 않는 편이 좋습니다.'
+}
+
+function courseRangeText(courses: Course[]) {
+  const distances = courses.map(course => course.distance).filter((value): value is number => value != null && value > 0)
+  if (distances.length === 0) return '거리 수치가 부족해 공식 안내와 현장 이정표 확인이 필요합니다'
+  const min = Math.min(...distances)
+  const max = Math.max(...distances)
+  return min === max ? `${min.toFixed(1)}km 코스가 확인됩니다` : `${min.toFixed(1)}~${max.toFixed(1)}km 범위의 코스가 확인됩니다`
+}
+
+export function buildMountainDeepInfo(mountain: Mountain, courses: Course[]): MountainDeepInfo {
+  const stats = getCourseStats(courses)
+  const region = [mountain.region, mountain.sigun].filter(Boolean).join(' ')
+  const elevation = mountain.elev ? `${mountain.elev.toLocaleString()}m` : '고도 정보 미확인'
+  const identity = MOUNTAIN_IDENTITY_NOTES[mountain.name] ?? mountainRegionCharacter(mountain)
+  const shortest = stats.shortest
+  const hardest = stats.hardest
+  const longest = stats.longest
+  const diff = normalizeDifficulty(shortest?.diff_norm ?? hardest?.diff_norm)
+  const diffPlanning =
+    diff === '하'
+      ? '난이도는 낮게 잡혀도 초반 페이스를 천천히 잡고, 하산 후 이동 시간을 남겨두면 초보 동행도 안정적으로 움직일 수 있습니다.'
+      : diff === '중'
+        ? '난이도는 중간 수준으로 보되 실제 체감은 계단, 바위, 흙길 미끄럼, 하산 경사에 따라 달라지므로 휴식 간격을 미리 정하는 것이 좋습니다.'
+        : '난이도가 높게 잡히는 산행은 거리보다 노출 구간, 급경사 하산, 기상 변화가 위험을 키우므로 우회 또는 단축 기준을 출발 전에 정해야 합니다.'
+  const trailheads = courses
+    .map(course => course.trailhead?.trim())
+    .filter((value): value is string => Boolean(value))
+    .filter((value, index, arr) => arr.indexOf(value) === index)
+    .slice(0, 4)
+
+  const intro = `${mountain.name}은 ${region || '국내'}에 자리한 해발 ${elevation} 산입니다. ${identity} 산행 계획은 정상 이름만 보고 고르기보다 들머리, 누적 오르막, 하산 교통, 계절 통제 가능성을 함께 보는 방식이 정확합니다.`
+
+  return {
+    intro,
+    highlights: [
+      {
+        title: '산세와 볼거리',
+        tone: 'forest',
+        body: `${mountainRegionCharacter(mountain)} ${mountain.description ? '기본 설명만으로는 부족하므로 조망, 계곡, 사찰, 숲길 중 이번 산행의 우선순위를 먼저 정하세요.' : '현장 탐방 전 지자체와 공식 탐방 안내를 함께 확인하는 편이 좋습니다.'} 해발 ${elevation} 기준으로 봄·가을은 일교차, 여름은 습도와 물 소모, 겨울은 그늘 결빙을 각각 따로 계산해야 합니다. 사진 목적이면 능선과 전망 지점을, 동행자 배려가 우선이면 계곡·숲길·사찰 주변처럼 중간에 쉴 수 있는 구간을 먼저 고르는 방식이 좋습니다.`,
+      },
+      {
+        title: '코스 선택 기준',
+        tone: 'clay',
+        body: courses.length > 0
+          ? `${mountain.name}에는 현재 ${courses.length}개 코스 데이터가 있으며, ${courseRangeText(courses)}. ${shortest ? `처음이라면 ${shortName(shortest)}처럼 짧은 코스를 기준으로 보고,` : '처음이라면 짧은 원점회귀를 기준으로 보고,'} ${hardest ? `${shortName(hardest)}처럼 난이도 ${normalizeDifficulty(hardest.diff_norm)}로 잡힌 코스는 날씨가 나쁘면 한 단계 더 어렵게 판단하세요.` : '난이도 수치가 부족한 코스는 현장 경사와 하산 시간을 더 보수적으로 잡으세요.'} ${diffPlanning}`
+          : `${mountain.name}은 현재 공개 코스 수치가 부족한 산입니다. 정상 완등을 먼저 정하기보다 공식 안내소, 산림청·국립공원·지자체 공지, 현장 이정표를 확인한 뒤 짧은 왕복 동선부터 잡는 편이 안전합니다. 코스명이 비슷해도 실제 들머리와 주차 위치가 다를 수 있으므로 지도 앱 목적지와 현장 탐방로 입구를 따로 확인하세요.`,
+      },
+      {
+        title: '시간과 체력 배분',
+        tone: 'sky',
+        body: stats.maxDuration > 0
+          ? `상행 기준 최대 ${formatDuration(stats.maxDuration)}까지 잡히는 코스가 있어 휴식, 사진 촬영, 식사, 하산 시간을 별도로 더해야 합니다. ${longest ? `긴 코스는 ${shortName(longest)} 기준 ${formatDistance(longest.distance)} 안팎으로 보되,` : '긴 코스는 거리보다 누적 오르막을 우선 보되,'} 일몰 2시간 전에는 하산 흐름에 들어가는 계획이 안정적입니다. 초반 30분에 숨이 차면 전체 속도를 낮추고, 정상 직전보다 하산 후반의 집중력 저하를 더 크게 잡아야 사고 위험을 줄일 수 있습니다.`
+          : '소요시간 수치가 부족하므로 오전 출발, 중간 반환 지점, 일몰 전 하산을 기본값으로 두세요. 산행 앱 기록은 개인 속도 차이가 크기 때문에 공식 탐방 시간과 현장 표지를 함께 보는 편이 안전합니다. 초보자는 정상 도착 시각보다 하산 시작 시각을 먼저 정하고, 물과 간식은 돌아오는 길까지 남기는 방식으로 배분하세요.',
+      },
+      {
+        title: '교통·통제·현장 변수',
+        tone: 'forest',
+        body: `${stats.hasTransit ? '대중교통 접근 표시가 있는 코스가 있으나 배차와 막차는 계절·요일별로 달라집니다.' : '대중교통 정보가 제한적이므로 자가용, 택시, 산악회 버스, 하산 후 차량 회수까지 함께 계산해야 합니다.'} ${trailheads.length > 0 ? `확인된 주요 들머리는 ${trailheads.join(', ')}입니다.` : '들머리 정보가 부족한 산은 내비게이션 목적지와 실제 탐방로 입구가 다를 수 있습니다.'} 국립공원·군립공원·지자체 관리 구역은 낙석, 산불예방, 해빙기, 기상특보에 따라 탐방로가 바뀔 수 있습니다. 특히 비 온 뒤 계곡길, 겨울 북사면, 단풍철 혼잡 구간은 같은 거리라도 소요시간이 늘어나므로 현장 공지를 최종 기준으로 삼으세요.`,
+      },
+    ],
+    sourceNote: '산림청 100대 명산, 국립공원공단 탐방로·예약 안내, 지자체 탐방 공지와 현장 이정표를 함께 확인하는 전제로 정리했습니다.',
   }
 }
 
