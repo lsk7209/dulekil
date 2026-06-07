@@ -28,6 +28,18 @@ export type MountainQuickFacts = {
   accessLabel: string
 }
 
+export type MountainFallbackRoute = {
+  name: string
+  target: string
+  plan: string
+  caution: string
+}
+
+export type MountainFaq = {
+  q: string
+  a: string
+}
+
 const FALLBACK_GUIDES: Record<string, MountainFallbackGuide> = {
   '가리산': {
     summary: [
@@ -442,6 +454,75 @@ export function buildMountainMetaDescription(mountain: Mountain, courses: Course
   const raw = `${mountain.name} 등산 코스: ${region || '국내'} 해발 ${elevation}. ${courseText}, 초보·당일치기 계획, 교통·주차, 계절별 준비와 하산 동선까지 한 번에 확인하세요.`
 
   return raw.length > 155 ? `${raw.slice(0, 154)}…` : raw
+}
+
+export function buildFallbackRoutes(mountain: Mountain, courses: Course[]): MountainFallbackRoute[] {
+  if (courses.length > 0) return []
+
+  const fallback = getMountainFallbackGuide(mountain.name)
+  if (!fallback) return []
+
+  const routeTargets = [
+    { target: '초보·가족', plan: '짧은 왕복 또는 탐방형 동선으로 잡고, 정상 완등보다 하산 여유를 우선합니다.' },
+    { target: '당일치기', plan: '오전 출발, 중간 반환 기준, 일몰 전 하산을 기본값으로 두고 교통 대기 시간을 포함합니다.' },
+    { target: '경험자', plan: '능선·정상 연계를 검토하되, 통제·기상·노면 상태가 나쁘면 코스를 즉시 줄입니다.' },
+    { target: '계절 탐방', plan: '봄·가을 혼잡, 여름 습도, 겨울 결빙을 따로 계산하고 공식 공지를 최종 기준으로 둡니다.' },
+  ]
+  const risks = fallback.risks?.join(' ') || '비, 강풍, 결빙, 낙석, 성수기 혼잡 시 체감 난도를 한 단계 높게 보세요.'
+
+  return fallback.access.trailheads.slice(0, 4).map((trailhead, index) => ({
+    name: trailhead,
+    target: routeTargets[index]?.target ?? '탐방 계획',
+    plan: routeTargets[index]?.plan ?? '공식 안내와 현장 이정표 기준으로 짧은 동선부터 확인합니다.',
+    caution: risks,
+  }))
+}
+
+export function buildMountainFaqs(mountain: Mountain, courses: Course[]): MountainFaq[] {
+  const stats = getCourseStats(courses)
+  const fallback = courses.length === 0 ? getMountainFallbackGuide(mountain.name) : undefined
+  const diff = courses.length > 0
+    ? normalizeDifficulty(stats.shortest?.diff_norm ?? stats.hardest?.diff_norm)
+    : '중'
+  const shortest = stats.shortest
+  const access = buildAccessNotes(mountain, courses)
+  const seasons = buildSeasonNotes(mountain)
+  const winter = seasons.find(item => item.season === '겨울')?.body ?? '겨울에는 결빙과 체감온도 저하를 확인해야 합니다.'
+
+  return [
+    {
+      q: `${mountain.name} 등산 난이도는?`,
+      a: courses.length > 0
+        ? `${mountain.name}에는 총 ${courses.length}개의 등산로 데이터가 있으며, 주요 난이도는 '${diff}'입니다. 다만 실제 체감은 계단, 암릉, 하산 경사, 날씨에 따라 달라집니다.`
+        : `${mountain.name}은 현재 정량 코스 데이터가 부족해 난이도 '${diff}' 기준으로 보수적으로 안내합니다. 공식 탐방 안내와 현장 이정표를 확인한 뒤 짧은 동선부터 선택하세요.`,
+    },
+    {
+      q: `${mountain.name} 초보도 갈 수 있나요?`,
+      a: shortest
+        ? `초보자는 ${shortName(shortest)}처럼 ${formatDistance(shortest.distance)} 안팎의 짧은 코스부터 보는 편이 좋습니다. 정상 인증보다 하산 시간과 무릎 피로를 우선하세요.`
+        : fallback?.fits[0]?.body ?? `${mountain.name}은 초보자가 방문할 때 정상 완등보다 짧은 왕복, 탐방로 상태, 하산 시간을 먼저 확인하는 편이 안전합니다.`,
+    },
+    {
+      q: `${mountain.name} 가장 쉬운 코스는 어떻게 고르나요?`,
+      a: shortest
+        ? `현재 데이터 기준 가장 짧게 비교되는 코스는 ${shortName(shortest)}이며 거리는 ${formatDistance(shortest.distance)}입니다. 쉬운 코스라도 비 온 뒤나 겨울에는 난이도를 높게 판단하세요.`
+        : `현재 거리 수치가 없어 가장 쉬운 코스를 단정하지 않습니다. ${access.trailheads[0] ? `${access.trailheads[0]}처럼 접근이 분명한 들머리` : '공식 안내소가 제시하는 짧은 원점회귀'}를 먼저 확인하세요.`,
+    },
+    {
+      q: `${mountain.name} 대중교통으로 갈 수 있나요?`,
+      a: stats.hasTransit
+        ? '대중교통 접근 표시가 있는 등산로가 있습니다. 다만 산행지는 배차 간격과 막차 시간이 계절·요일별로 달라지므로 최신 시간표를 확인하세요.'
+        : `${access.body} 하산 후 택시 호출 가능 여부와 막차 시간을 출발 전에 같이 확인해야 합니다.`,
+    },
+    {
+      q: `${mountain.name} 겨울 산행은 괜찮나요?`,
+      a: `${winter} 아이젠, 방풍층, 장갑, 헤드랜턴을 기본으로 보고, 강풍·대설·결빙 예보가 있으면 정상보다 안전한 하산을 우선하세요.`,
+    },
+    {
+      q: `${mountain.name} 산행 전 무엇을 확인해야 하나요?`,
+      a: '기상청 예보, 일몰 시간, 국립공원·지자체·산림청 통제 공지, 주차장 위치, 들머리와 하산 지점을 확인하세요. 성수기에는 산행 시간보다 이동·주차 시간이 더 길어질 수 있습니다.',
+    },
+  ]
 }
 
 export function buildMountainDeepInfo(mountain: Mountain, courses: Course[]): MountainDeepInfo {

@@ -12,7 +12,9 @@ import { CATS, getPostPath } from '@/lib/posts'
 import {
   buildAccessNotes,
   buildFallbackRisks,
+  buildFallbackRoutes,
   buildMountainDeepInfo,
+  buildMountainFaqs,
   buildMountainFitNotes,
   buildMountainMetaDescription,
   buildMountainQuickFacts,
@@ -96,6 +98,8 @@ export default async function MountainDetailPage({ params }: Props) {
   const summary       = buildMountainSummary(mountain, courses)
   const pageDescription = buildMountainMetaDescription(mountain, courses)
   const deepInfo      = buildMountainDeepInfo(mountain, courses)
+  const fallbackRoutes = buildFallbackRoutes(mountain, courses)
+  const faqs          = buildMountainFaqs(mountain, courses)
   const quickFacts    = buildMountainQuickFacts(mountain, courses)
   const fitNotes      = buildMountainFitNotes(mountain, courses)
   const accessNotes   = buildAccessNotes(mountain, courses)
@@ -136,23 +140,11 @@ export default async function MountainDetailPage({ params }: Props) {
       },
       {
         '@type': 'FAQPage',
-        mainEntity: [
-          {
-            '@type': 'Question',
-            name: `${mountain.name} 등산 코스 난이도는?`,
-            acceptedAnswer: { '@type': 'Answer', text: `${mountain.name}에는 ${courses.length}개 등산로가 있으며 주요 난이도는 '${bestDiff}'입니다.` },
-          },
-          {
-            '@type': 'Question',
-            name: `${mountain.name} 대중교통 접근이 가능한가요?`,
-            acceptedAnswer: { '@type': 'Answer', text: hasTransit ? '대중교통 접근 가능한 코스가 있습니다.' : '대중교통 접근이 어렵습니다. 자가용을 권장합니다.' },
-          },
-          ...(minDist !== null ? [{
-            '@type': 'Question',
-            name: `${mountain.name} 등산 소요시간은?`,
-            acceptedAnswer: { '@type': 'Answer', text: `최단 거리 ${minDist.toFixed(1)}km 기준 약 ${minutesToHM(maxDur)} 소요됩니다.` },
-          }] : []),
-        ],
+        mainEntity: faqs.map(faq => ({
+          '@type': 'Question',
+          name: faq.q,
+          acceptedAnswer: { '@type': 'Answer', text: faq.a },
+        })),
       },
     ],
   }
@@ -354,6 +346,37 @@ export default async function MountainDetailPage({ params }: Props) {
               </section>
             )}
 
+            {fallbackRoutes.length > 0 && (
+              <section>
+                <h2 className="h2" style={{ marginBottom: 16 }}>{mountain.name} 대표 들머리 계획표</h2>
+                <div className="article-table-scroll">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>대표 들머리</th>
+                        <th>추천 대상</th>
+                        <th>계획 기준</th>
+                        <th>주의</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {fallbackRoutes.map(route => (
+                        <tr key={route.name}>
+                          <td>{route.name}</td>
+                          <td>{route.target}</td>
+                          <td>{route.plan}</td>
+                          <td>{route.caution}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                <p className="cap" style={{ marginTop: -6 }}>
+                  거리·시간 수치가 없는 산은 공식 탐방 안내와 현장 이정표 확인을 전제로 대표 들머리 중심으로 정리했습니다.
+                </p>
+              </section>
+            )}
+
             {/* 등산로 목록 */}
             {courses.length > 0 && (
               <section>
@@ -391,7 +414,7 @@ export default async function MountainDetailPage({ params }: Props) {
               </section>
             )}
 
-            {courses.length === 0 && (
+            {courses.length === 0 && fallbackRoutes.length === 0 && (
               <div className="card card--pad" style={{ textAlign: 'center', color: 'var(--ink-faint)', padding: 32 }}>
                 <p>등산로 데이터를 준비 중입니다.</p>
               </div>
@@ -430,11 +453,7 @@ export default async function MountainDetailPage({ params }: Props) {
             <section id="mountain-faq" className="card card--pad">
               <h2 className="h2" style={{ marginBottom: 20 }}>자주 묻는 질문</h2>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-                {[
-                  { q: `${mountain.name} 등산 난이도는?`, a: `${mountain.name}에는 총 ${courses.length}개의 등산로가 있으며, 주요 난이도는 '${bestDiff}'입니다. 가장 짧은 코스는 ${minDist ? minDist.toFixed(1) + 'km' : '?km'}입니다.` },
-                  { q: `${mountain.name} 대중교통으로 갈 수 있나요?`, a: hasTransit ? '대중교통 접근이 가능한 등산로가 있습니다. 상세 교통편은 최신 시간표를 확인하세요.' : '대중교통 접근이 어렵습니다. 자가용을 이용하거나 관광버스 투어를 알아보세요.' },
-                  { q: `${mountain.name} 등산 소요시간은?`, a: maxDur != null && maxDur > 0 ? `코스에 따라 다르며 상행 기준 약 ${minutesToHM(maxDur)} 소요됩니다. 개인 체력과 휴식 시간에 따라 차이가 있습니다.` : '코스마다 소요시간이 다릅니다. 출발 전 코스별 상세 정보를 확인하세요.' },
-                ].map(faq => (
+                {faqs.map(faq => (
                   <div key={faq.q} style={{ borderBottom: '1px solid var(--line-soft)', paddingBottom: 16 }}>
                     <h3 style={{ margin: '0 0 8px', fontSize: 16, fontWeight: 700, color: 'var(--forest)' }}>Q. {faq.q}</h3>
                     <p style={{ margin: 0, fontSize: 15, lineHeight: 1.65, color: 'var(--ink-soft)' }}>{faq.a}</p>
