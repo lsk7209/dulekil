@@ -25,7 +25,7 @@ const notoSerifKR = Noto_Serif_KR({
 })
 
 const GA_ID      = process.env.NEXT_PUBLIC_GA_ID
-const ADSENSE_ID = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID
+const ADSENSE_ID = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID || 'ca-pub-3050601904412736'
 
 export const metadata: Metadata = {
   title: {
@@ -63,14 +63,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="ko" className={`${pretendard.variable} ${notoSerifKR.variable}`}>
       <head>
         <meta name="theme-color" content="#2F4A3C" />
-        {ADSENSE_ID && (
-          <Script
-            async
-            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_ID}`}
-            crossOrigin="anonymous"
-            strategy="afterInteractive"
-          />
-        )}
+        <script
+          async
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_ID}`}
+          crossOrigin="anonymous"
+        />
       </head>
       <body>
         {children}
