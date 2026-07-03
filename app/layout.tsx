@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Script from 'next/script'
 import localFont from 'next/font/local'
 import { Noto_Serif_KR } from 'next/font/google'
+import CoupangAffiliateBanner from '@/components/affiliate/CoupangAffiliateBanner'
 import './globals.css'
 
 const pretendard = localFont({
@@ -71,6 +72,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         {children}
+        <CoupangAffiliateBanner />
 
         {GA_ID && (
           <>
