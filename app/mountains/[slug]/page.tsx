@@ -32,12 +32,8 @@ export const revalidate = 86400
 interface Props { params: { slug: string } }
 
 export async function generateStaticParams() {
-  const { db } = await import('@/lib/db/index')
-  const { mountains } = await import('@/lib/db/schema')
-  const { eq } = await import('drizzle-orm')
-  const rows = await db.select({ name: mountains.name }).from(mountains)
-    .where(eq(mountains.is_top100, true))
-  return rows.map(r => ({ slug: r.name }))
+  const rows = await getMountainsForHub()
+  return rows.map(r => ({ slug: r.slug || r.name }))
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

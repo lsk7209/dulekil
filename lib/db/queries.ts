@@ -4,6 +4,7 @@
  */
 import { eq, inArray, sql, isNotNull } from 'drizzle-orm'
 import * as schema from './schema'
+import { MOUNTAINS } from '../mountains-static'
 
 // ── 지역 → 그룹 매핑 ──────────────────────────────
 export function getRegionGroup(region: string | null): string {
@@ -58,15 +59,66 @@ export interface HubMountain {
   pop:         number      // elev 기반 proxy
 }
 
+function staticMountainsForHub(): HubMountain[] {
+  return MOUNTAINS.map((m, index) => ({
+    id:          index + 1,
+    name:        m.name,
+    peak:        m.peak,
+    region:      m.region,
+    sigun:       '',
+    group:       m.group,
+    elev:        m.elev,
+    dist:        m.dist,
+    diff:        m.diff as HubMountain['diff'],
+    time:        m.time,
+    gpx:         m.gpx,
+    transit:     m.transit,
+    transitNote: m.transitNote,
+    beginner:    m.beginner,
+    sun:         m.sun,
+    pal:         m.pal,
+    slug:        m.name,
+    description: null,
+    seasons:     m.seasons,
+    tags:        m.tags,
+    pop:         m.pop,
+  }))
+}
+
+function staticMountainBySlug(slug: string) {
+  const decoded = decodeURIComponent(slug)
+  const found = MOUNTAINS.find(m => m.name === decoded || m.id === decoded)
+  if (!found) return null
+
+  return {
+    id:          MOUNTAINS.findIndex(m => m === found) + 1,
+    mntn_code:   null,
+    name:        found.name,
+    name_eng:    null,
+    region:      found.region,
+    sigun:       '',
+    elev:        found.elev,
+    lat:         null,
+    lng:         null,
+    is_top100:   true,
+    pal:         found.pal,
+    slug:        found.name,
+    description: null,
+    created_at:  null,
+    updated_at:  null,
+  }
+}
+
 // ── 100대 명산 허브 데이터 ──────────────────────────
 export async function getMountainsForHub(): Promise<HubMountain[]> {
+  try {
   const { db } = await import('./index')
 
   const mountains = await db.select().from(schema.mountains)
     .where(eq(schema.mountains.is_top100, true))
     .orderBy(schema.mountains.name)
 
-  if (mountains.length === 0) return []
+  if (mountains.length === 0) return staticMountainsForHub()
 
   const ids = mountains.map(m => m.id)
 
@@ -130,6 +182,9 @@ export async function getMountainsForHub(): Promise<HubMountain[]> {
       pop:         elev, // proxy
     }
   })
+  } catch {
+    return staticMountainsForHub()
+  }
 }
 
 // ── 산 상세 페이지용 ──────────────────────────────
@@ -139,28 +194,41 @@ export interface MountainDetail {
 }
 
 export async function getMountainBySlug(slug: string) {
+  try {
   const { db } = await import('./index')
-  return db.query.mountains.findFirst({
+  const mountain = await db.query.mountains.findFirst({
     where: (t, { or, eq }) => or(
       eq(t.slug, slug),
       eq(t.name, slug),
     ),
   })
+  return mountain ?? staticMountainBySlug(slug)
+  } catch {
+    return staticMountainBySlug(slug)
+  }
 }
 
 export async function getCoursesByMountainId(mountainId: number) {
+  try {
   const { db } = await import('./index')
   return db.select().from(schema.courses)
     .where(eq(schema.courses.mountain_id, mountainId))
     .orderBy(schema.courses.distance)
     .limit(20)
+  } catch {
+    return []
+  }
 }
 
 // ── 스탯 (for homepage) ──────────────────────────────
 export async function getSiteStats() {
+  try {
   const { db } = await import('./index')
   const [mCount] = await db.select({ count: sql<number>`COUNT(*)` }).from(schema.mountains)
     .where(eq(schema.mountains.is_top100, true))
   const [cCount] = await db.select({ count: sql<number>`COUNT(*)` }).from(schema.courses)
   return { mountains: mCount?.count ?? 0, courses: cCount?.count ?? 0 }
+  } catch {
+    return { mountains: MOUNTAINS.length, courses: 0 }
+  }
 }
