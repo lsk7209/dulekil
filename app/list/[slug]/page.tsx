@@ -121,7 +121,7 @@ export default async function FillerPage({ params }: Props) {
                         {m.transit && <span className="chip chip--transit">대중교통</span>}
                         {m.gpx && <span className="chip chip--gpx">GPX</span>}
                       </div>
-                      <span className="filler-mountain-dist">{m.dist}km · {m.time}</span>
+                      <span className="filler-mountain-dist">{m.routeMetricSource === 'static' ? '참고 거리' : '등록 최단 거리'} {m.dist === null ? '자료 없음' : `${m.dist}km`} · {m.routeMetricSource === 'static' ? '참고 시간' : '상행 최대 시간'} {m.time}</span>
                     </Link>
                   </li>
                 )

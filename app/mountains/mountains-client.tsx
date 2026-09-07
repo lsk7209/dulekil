@@ -1,4 +1,5 @@
 'use client'
+import { compareHubDistance } from '@/lib/hub-route-metrics'
 
 declare const window: Window & { gtag?: (...args: unknown[]) => void }
 
@@ -84,7 +85,7 @@ export function MountainsClient({ mountains }: Props) {
     if (sort === 'pop')       arr = [...arr].sort((a, b) => b.pop - a.pop)
     if (sort === 'elev_desc') arr = [...arr].sort((a, b) => b.elev - a.elev)
     if (sort === 'elev_asc')  arr = [...arr].sort((a, b) => a.elev - b.elev)
-    if (sort === 'dist_asc')  arr = [...arr].sort((a, b) => a.dist - b.dist)
+    if (sort === 'dist_asc')  arr = [...arr].sort(compareHubDistance)
     return arr
   }, [mountains, group, diff, transit, sort, query])
 
@@ -242,9 +243,10 @@ function HubCard({ m, done, onToggle }: { m: HubMountain; done: boolean; onToggl
         </div>
         <div className="statbar" style={{ border: '1px solid var(--line-soft)', borderRadius: 'var(--r)', marginTop: 'auto' }}>
           <div className="stat"><div className="stat__k">고도</div><div className="stat__v tnum">{m.elev.toLocaleString()}<span className="stat__u">m</span></div></div>
-          <div className="stat"><div className="stat__k">거리</div><div className="stat__v tnum">{m.dist}<span className="stat__u">km</span></div></div>
-          <div className="stat"><div className="stat__k">소요</div><div className="stat__v tnum">{m.time}</div></div>
+          <div className="stat"><div className="stat__k">{m.routeMetricSource === 'static' ? '참고 거리' : '등록 최단 거리'}</div><div className="stat__v tnum">{m.dist === null ? '자료 없음' : <>{m.dist}<span className="stat__u">km</span></>}</div></div>
+          <div className="stat"><div className="stat__k">{m.routeMetricSource === 'static' ? '참고 시간' : '상행 최대 시간'}</div><div className="stat__v tnum">{m.time}</div></div>
         </div>
+        <p className="cap">{m.routeMetricSource === 'static' ? 'DB 연결 없이 표시한 참고 자료입니다.' : '서로 다른 등록 구간의 집계입니다.'} 전체 산행 거리·왕복 시간은 상세 코스와 공식 안내에서 확인하세요.</p>
         <button
           className={'btn btn--sm ' + (done ? 'btn--forest' : 'btn--ghost')}
           style={{ width: '100%', marginTop: 2 }}

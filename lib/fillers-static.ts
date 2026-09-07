@@ -1,4 +1,5 @@
 import type { HubMountain } from '@/lib/db/queries'
+import { compareHubDistance } from './hub-route-metrics'
 
 export interface FillerDef {
   slug:        string
@@ -11,7 +12,7 @@ export interface FillerDef {
 }
 
 const byElev = (a: HubMountain, b: HubMountain) => b.elev - a.elev
-const byDist = (a: HubMountain, b: HubMountain) => a.dist - b.dist
+const byDist = compareHubDistance
 
 export const FILLERS: FillerDef[] = [
   // ── 지역별 ────────────────────────────────────────

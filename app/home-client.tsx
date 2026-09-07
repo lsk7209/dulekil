@@ -98,9 +98,10 @@ function MountainCard({ m, done, onToggle, compact }: {
         </div>
         <div className="statbar" style={{ border: '1px solid var(--line-soft)', borderRadius: 'var(--r)', marginTop: 'auto' }}>
           <div className="stat"><div className="stat__k">고도</div><div className="stat__v tnum">{m.elev.toLocaleString()}<span className="stat__u">m</span></div></div>
-          <div className="stat"><div className="stat__k">거리</div><div className="stat__v tnum">{m.dist}<span className="stat__u">km</span></div></div>
-          <div className="stat"><div className="stat__k">소요</div><div className="stat__v tnum">{m.time}</div></div>
+          <div className="stat"><div className="stat__k">{m.routeMetricSource === 'static' ? '참고 거리' : '등록 최단 거리'}</div><div className="stat__v tnum">{m.dist === null ? '자료 없음' : <>{m.dist}<span className="stat__u">km</span></>}</div></div>
+          <div className="stat"><div className="stat__k">{m.routeMetricSource === 'static' ? '참고 시간' : '상행 최대 시간'}</div><div className="stat__v tnum">{m.time}</div></div>
         </div>
+        <p className="cap">{m.routeMetricSource === 'static' ? 'DB 연결 없이 표시한 참고 자료입니다.' : '서로 다른 등록 구간의 집계입니다.'} 전체 산행 거리·왕복 시간은 상세 코스와 공식 안내에서 확인하세요.</p>
         <button
           className={'btn btn--sm ' + (done ? 'btn--forest' : 'btn--ghost')}
           style={{ width: '100%', marginTop: 2 }}
@@ -479,7 +480,7 @@ export function HomeClient({ mountains, latestPosts, postCount }: { mountains: H
   const featured   = mountains.find(m => m.name === '덕유산') ?? mountains.find(m => m.elev > 1500) ?? mountains[0]
   const beginners  = mountains.filter(m => m.beginner).slice(0, 8)
   const seasonal   = mountains.filter(m => m.seasons.includes('여름') || m.seasons.includes('봄')).slice(0, 8)
-  const totalCourses = mountains.reduce((acc, m) => acc + (m.dist > 0 ? 1 : 0), 0)
+  const totalCourses = mountains.reduce((acc, m) => acc + (m.dist !== null && m.dist > 0 ? 1 : 0), 0)
 
   const goResults = () => {
     window.gtag?.('event', 'search', { search_term: query })

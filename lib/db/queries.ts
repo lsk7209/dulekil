@@ -5,6 +5,7 @@
 import { eq, inArray, sql, isNotNull } from 'drizzle-orm'
 import * as schema from './schema'
 import { MOUNTAINS } from '../mountains-static'
+import { hubDistance, hubDuration } from '../hub-route-metrics'
 
 // ── 지역 → 그룹 매핑 ──────────────────────────────
 export function getRegionGroup(region: string | null): string {
@@ -16,14 +17,6 @@ export function getRegionGroup(region: string | null): string {
   if (/전북|전남|광주/.test(region))    return '호남'
   if (/제주/.test(region))              return '제주'
   return '기타'
-}
-
-// 소요시간 (분 → "H:MM" 형식)
-function minutesToHM(min: number | null): string {
-  if (!min || min <= 0) return '?:??'
-  const h = Math.floor(min / 60)
-  const m = min % 60
-  return `${h}:${String(m).padStart(2, '0')}`
 }
 
 // 난이도 정규화
@@ -43,7 +36,8 @@ export interface HubMountain {
   sigun:       string
   group:       string
   elev:        number
-  dist:        number
+  dist:        number | null
+  routeMetricSource: 'database' | 'static'
   diff:        '하' | '중' | '상' | '매우상'
   time:        string
   gpx:         boolean
@@ -69,6 +63,7 @@ function staticMountainsForHub(): HubMountain[] {
     group:       m.group,
     elev:        m.elev,
     dist:        m.dist,
+    routeMetricSource: 'static',
     diff:        m.diff as HubMountain['diff'],
     time:        m.time,
     gpx:         m.gpx,
@@ -125,8 +120,8 @@ export async function getMountainsForHub(): Promise<HubMountain[]> {
   // 코스 집계 (2번째 쿼리)
   const stats = await db.select({
     mountain_id: schema.courses.mountain_id,
-    min_dist:    sql<number>`MIN(distance)`,
-    dur_up:      sql<number>`MAX(duration_up)`,
+    min_dist:    sql<number | null>`MIN(CASE WHEN distance >= 0 THEN distance END)`,
+    dur_up:      sql<number | null>`MAX(duration_up)`,
     has_transit: sql<number>`MAX(CAST(transit AS INTEGER))`,
     gpx_count:   sql<number>`SUM(CAST(gpx_available AS INTEGER))`,
     course_count: sql<number>`COUNT(*)`,
@@ -162,9 +157,10 @@ export async function getMountainsForHub(): Promise<HubMountain[]> {
       sigun:       m.sigun ?? '',
       group:       getRegionGroup(m.region),
       elev,
-      dist:        parseFloat(((s?.min_dist ?? 5) * 1).toFixed(1)),
+      dist:        hubDistance(s?.min_dist),
+      routeMetricSource: 'database',
       diff,
-      time:        minutesToHM(s?.dur_up ?? null),
+      time:        hubDuration(s?.dur_up),
       gpx:         (s?.gpx_count ?? 0) > 0,
       transit:     s?.has_transit === 1,
       transitNote: s?.has_transit === 1 ? '대중교통 접근 가능' : '자가용 권장',
