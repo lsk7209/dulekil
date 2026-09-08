@@ -1,3 +1,16 @@
+# Current handoff — 2026-09-08 truthful sitemap freshness LOCAL
+
+- Goal: continue the DAU-ranked non-READY AdSense improvement workflow with a source-backed SEO correction; no approval prediction or account action.
+- Source gate: primary `master` and `origin/master` both equal `d1fc68f63f97f595364d9d6ab0a999c34edd5b99`. Existing dirty content, package, UI, generated, browser, and build-info files are preserved and excluded.
+- Defect: `app/sitemap.ts` assigned the sitemap generation timestamp to every static, tag, mountain, guide, category, and filler URL, representing unchanged pages as freshly modified.
+- Repair: those URLs omit optional `lastModified`; published blog entries retain the actual `getPostModifiedDate(p)` value derived from updated/published/source dates.
+- Intended release files: `app/sitemap.ts`, `scripts/verify-sitemap-lastmod.mjs`, and this handoff only.
+- Tests-first evidence: the new regression failed on `const NOW` before repair, then passed. Existing route-metric, distance-SQL, and rendered-card regressions pass; TypeScript passes; final local build compiles and renders 1,305 pages; diff check passes. The build includes pre-existing dirty content, so exact hosted build remains the release gate.
+- Independent review: GO. Next 14 sitemap types make `lastModified` optional; narrow compatibility risk only. Test is source-text based, so public serialized XML must be checked after deployment.
+- Side effects: no database, collection, content publishing, account/CMP, AdSense submission, indexing notification, dependency, or direct Vercel mutation. Attempted isolated worktree creation was denied twice by the repository hook and created nothing; work continued in non-overlapping clean files.
+- Rollback: revert the focused release commit; no data/account rollback is required.
+- Single next step: exact-three-file commit and push, then same-SHA CI/deployment and public sitemap serialization checks.
+
 # Current handoff — 2026-09-07 route summary clarity LOCAL
 
 - Goal: ten-site AdSense quality improvement; selected Dullegilgogo defect is misleading route summaries, not a proven Google rejection reason.
