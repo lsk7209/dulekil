@@ -6,6 +6,11 @@ import { eq, inArray, sql, isNotNull } from 'drizzle-orm'
 import * as schema from './schema'
 import { MOUNTAINS } from '../mountains-static'
 import { hubDistance, hubDuration } from '../hub-route-metrics'
+import { unstable_noStore as noStore } from 'next/cache'
+import { resolveHubDataState, type HubDataState } from '../data-source-state'
+import { loadMountainDetailFromReader } from '../mountain-data-loader'
+import { loadHubDataFromReader } from '../hub-data-loader'
+export type { HubDataState } from '../data-source-state'
 
 // ── 지역 → 그룹 매핑 ──────────────────────────────
 export function getRegionGroup(region: string | null): string {
@@ -53,6 +58,11 @@ export interface HubMountain {
   pop:         number      // elev 기반 proxy
 }
 
+export interface HubMountainSnapshot {
+  mountains: HubMountain[]
+  state: HubDataState
+}
+
 function staticMountainsForHub(): HubMountain[] {
   return MOUNTAINS.map((m, index) => ({
     id:          index + 1,
@@ -66,10 +76,12 @@ function staticMountainsForHub(): HubMountain[] {
     routeMetricSource: 'static',
     diff:        m.diff as HubMountain['diff'],
     time:        m.time,
-    gpx:         m.gpx,
+    // Static rows have no route-level source/review record, so aggregate cards
+    // must not advertise a GPX download or beginner recommendation.
+    gpx:         false,
     transit:     m.transit,
     transitNote: m.transitNote,
-    beginner:    m.beginner,
+    beginner:    false,
     sun:         m.sun,
     pal:         m.pal,
     slug:        m.name,
@@ -105,20 +117,23 @@ function staticMountainBySlug(slug: string) {
 }
 
 // ── 100대 명산 허브 데이터 ──────────────────────────
-export async function getMountainsForHub(): Promise<HubMountain[]> {
-  try {
-  const { db } = await import('./index')
+export async function getMountainsForHubSnapshot(): Promise<HubMountainSnapshot> {
+  const configured = Boolean(process.env.TURSO_DATABASE_URL && process.env.TURSO_AUTH_TOKEN)
+  let db: Awaited<typeof import('./index')>['db'] | null = null
+  const getDb = async () => {
+    if (!db) db = (await import('./index')).db
+    return db
+  }
 
-  const mountains = await db.select().from(schema.mountains)
-    .where(eq(schema.mountains.is_top100, true))
-    .orderBy(schema.mountains.name)
-
-  if (mountains.length === 0) return staticMountainsForHub()
-
-  const ids = mountains.map(m => m.id)
-
-  // 코스 집계 (2번째 쿼리)
-  const stats = await db.select({
+  return loadHubDataFromReader({
+    configured,
+    fallback: staticMountainsForHub,
+    markUncached: noStore,
+    reader: {
+      findMountains: async () => (await getDb()).select().from(schema.mountains)
+        .where(eq(schema.mountains.is_top100, true))
+        .orderBy(schema.mountains.name),
+      findStats: async ids => (await getDb()).select({
     mountain_id: schema.courses.mountain_id,
     min_dist:    sql<number | null>`MIN(CASE WHEN distance >= 0 THEN distance END)`,
     dur_up:      sql<number | null>`MAX(duration_up)`,
@@ -133,13 +148,13 @@ export async function getMountainsForHub(): Promise<HubMountain[]> {
       GROUP BY diff_norm ORDER BY COUNT(*) DESC LIMIT 1
     )`,
     sample_name: sql<string>`MAX(name)`,
-  }).from(schema.courses)
-    .where(inArray(schema.courses.mountain_id, ids))
-    .groupBy(schema.courses.mountain_id)
-
-  const statsMap = new Map(stats.map(s => [s.mountain_id, s]))
-
-  return mountains.map(m => {
+      }).from(schema.courses)
+        .where(inArray(schema.courses.mountain_id, ids))
+        .groupBy(schema.courses.mountain_id),
+    },
+    build: (mountains, stats) => {
+      const statsMap = new Map(stats.map(s => [s.mountain_id, s]))
+      return mountains.map(m => {
     const s      = statsMap.get(m.id)
     const diff   = normDiff(s?.top_diff ?? null)
     const elev   = m.elev ?? 0
@@ -161,10 +176,12 @@ export async function getMountainsForHub(): Promise<HubMountain[]> {
       routeMetricSource: 'database',
       diff,
       time:        hubDuration(s?.dur_up),
-      gpx:         (s?.gpx_count ?? 0) > 0,
+      // Aggregate counts cannot prove that a file belongs to a complete,
+      // reviewed route. GPX is offered only from a course-level policy check.
+      gpx:         false,
       transit:     s?.has_transit === 1,
       transitNote: s?.has_transit === 1 ? '대중교통 접근 가능' : '자가용 권장',
-      beginner:    diff === '하',
+      beginner:    false,
       sun:         elev >= 1500,
       pal:         m.pal ?? 'forest',
       slug:        m.slug ?? m.name,
@@ -173,58 +190,44 @@ export async function getMountainsForHub(): Promise<HubMountain[]> {
       tags:        [
         elev >= 1500 ? '고산' : '',
         s?.has_transit === 1 ? '대중교통' : '',
-        (s?.gpx_count ?? 0) > 0 ? 'GPX' : '',
       ].filter(Boolean),
       pop:         elev, // proxy
     }
+      })
+    },
   })
-  } catch {
-    return staticMountainsForHub()
+}
+
+export async function getMountainDetailSnapshot(slug: string) {
+  const configured = Boolean(process.env.TURSO_DATABASE_URL && process.env.TURSO_AUTH_TOKEN)
+  if (!configured) {
+    noStore()
+    return {
+      mountain: staticMountainBySlug(slug),
+      courses: [] as Array<typeof schema.courses.$inferSelect>,
+      state: resolveHubDataState({ configured: false }),
+    }
   }
-}
 
-// ── 산 상세 페이지용 ──────────────────────────────
-export interface MountainDetail {
-  mountain: NonNullable<Awaited<ReturnType<typeof getMountainBySlug>>>
-  courses:  Awaited<ReturnType<typeof getCoursesByMountainId>>
-}
-
-export async function getMountainBySlug(slug: string) {
   try {
-  const { db } = await import('./index')
-  const mountain = await db.query.mountains.findFirst({
-    where: (t, { or, eq }) => or(
-      eq(t.slug, slug),
-      eq(t.name, slug),
-    ),
-  })
-  return mountain ?? staticMountainBySlug(slug)
+    const { db } = await import('./index')
+    const result = await loadMountainDetailFromReader({
+      findMountain: async value => (await db.query.mountains.findFirst({
+        where: (t, { or, eq }) => or(eq(t.slug, value), eq(t.name, value)),
+      })) ?? null,
+      findCourses: mountainId => db.select().from(schema.courses)
+        .where(eq(schema.courses.mountain_id, mountainId))
+        .orderBy(schema.courses.distance)
+        .limit(20),
+    }, slug, staticMountainBySlug)
+    if (result.state !== 'database') noStore()
+    return result
   } catch {
-    return staticMountainBySlug(slug)
-  }
-}
-
-export async function getCoursesByMountainId(mountainId: number) {
-  try {
-  const { db } = await import('./index')
-  return db.select().from(schema.courses)
-    .where(eq(schema.courses.mountain_id, mountainId))
-    .orderBy(schema.courses.distance)
-    .limit(20)
-  } catch {
-    return []
-  }
-}
-
-// ── 스탯 (for homepage) ──────────────────────────────
-export async function getSiteStats() {
-  try {
-  const { db } = await import('./index')
-  const [mCount] = await db.select({ count: sql<number>`COUNT(*)` }).from(schema.mountains)
-    .where(eq(schema.mountains.is_top100, true))
-  const [cCount] = await db.select({ count: sql<number>`COUNT(*)` }).from(schema.courses)
-  return { mountains: mCount?.count ?? 0, courses: cCount?.count ?? 0 }
-  } catch {
-    return { mountains: MOUNTAINS.length, courses: 0 }
+    noStore()
+    return {
+      mountain: staticMountainBySlug(slug),
+      courses: [] as Array<typeof schema.courses.$inferSelect>,
+      state: resolveHubDataState({ configured: true, failed: true }),
+    }
   }
 }

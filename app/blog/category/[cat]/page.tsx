@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!isCatKey(cat)) return {}
   const label = CATS[cat].label
   return {
-    title: `${label} 등산 글 모음 | 둘레길고고`,
+    title: `${label} 등산 글 모음`,
     description: `${label} 주제의 100대 명산 코스, 준비, 안전 정보를 한곳에서 확인하세요.`,
     alternates: { canonical: `${BASE}/blog/category/${encodeURIComponent(cat)}` },
     openGraph: {

@@ -1,0 +1,89 @@
+import fs from 'node:fs'
+import path from 'node:path'
+import sitemap from '../app/sitemap'
+import { POSTS, getPostPath } from '../lib/posts'
+import { MOUNTAINS } from '../lib/mountains-static'
+import { rankContentRisk } from '../lib/content-review-risk'
+
+const outDir = path.join(process.cwd(), 'reports', 'adsense-remediation')
+fs.mkdirSync(outDir, { recursive: true })
+const observedAt = new Date().toISOString()
+const csv = (value: unknown) => `"${String(value ?? '').replaceAll('"', '""')}"`
+
+async function main() {
+const routes = await sitemap()
+const urlRows = routes.map(entry => ({
+  url: entry.url,
+  page_type: new URL(entry.url).pathname.split('/')[1] || 'home',
+  content_id: '', mountain_id: '', publication_status: 'renderable-local', http_status: '',
+  final_url: '', title: '', h1: '', canonical: '', robots_meta: '', x_robots_tag: '',
+  in_sitemap: true, internal_inlinks: '', observed_at: observedAt,
+  observation_environment: 'local-sitemap-generator',
+}))
+const urlHeaders = Object.keys(urlRows[0])
+fs.writeFileSync(path.join(outDir, 'url-inventory.csv'), [urlHeaders.join(','), ...urlRows.map(row => urlHeaders.map(key => csv(row[key as keyof typeof row])).join(','))].join('\n'))
+
+const riskPattern = /1588-3018|산악구조대|초보|어린이|가족|GPX|막차|배차|주차비|예약|통제|시간당\s*\d+|\d+\s*%/i
+const contentRows = POSTS.map(post => ({
+  id: post.id, url: getPostPath(post), title: post.title,
+  proposed_status: riskPattern.test(`${post.title}\n${post.body}`) ? 'REVISE' : 'NEEDS_SOURCE',
+  risk_signal: riskPattern.test(`${post.title}\n${post.body}`),
+  source_verified: false,
+  review_status: 'UNREVIEWED',
+  reviewer_type: '',
+  reviewed_at: '',
+  evidence_url: '',
+  review_notes: '',
+  reason: riskPattern.test(`${post.title}\n${post.body}`) ? 'safety or volatile fact signal; manual source review required' : 'not source-verified in this run',
+}))
+const contentHeaders = Object.keys(contentRows[0])
+fs.writeFileSync(path.join(outDir, 'content-inventory.csv'), [contentHeaders.join(','), ...contentRows.map(row => contentHeaders.map(key => csv(row[key as keyof typeof row])).join(','))].join('\n'))
+
+const rankedContentRows = rankContentRisk(POSTS, getPostPath)
+const rankedContentHeaders = Object.keys(rankedContentRows[0])
+fs.writeFileSync(path.join(outDir, 'content-risk-ranking.csv'), [rankedContentHeaders.join(','), ...rankedContentRows.map(row => rankedContentHeaders.map(key => csv(row[key as keyof typeof row])).join(','))].join('\n'))
+
+fs.writeFileSync(path.join(outDir, 'data-inventory.json'), JSON.stringify({
+  observed_at: observedAt,
+  environment: 'local; no production DB credentials used',
+  posts: { total: POSTS.length, risk_signal: contentRows.filter(row => row.risk_signal).length },
+  static_mountain_fallback: MOUNTAINS.length,
+  sitemap_urls: routes.length,
+  limitation: 'The production mountain/course counts and source truth require an authorized consistent DB snapshot; live displayed counts are recorded separately in the baseline.',
+}, null, 2))
+
+const findings = [
+  { issue_id: 'P0-SAFETY-001', severity: 'P0', status: 'CONFIRMED', url_or_record_id: '/guide/safety-checklist', file_path: 'app/guide/[slug]/page.tsx', observed_value: 'unverified rescue number and fixed safety thresholds', expected_behavior: 'official 119 guidance and no unsupported go/no-go thresholds', affected_surfaces: ['guide', 'publication pipeline'], proposed_fix: 'remove claims and block recurrence in quality gate', test_case: 'npm run test:publication-safety' },
+  { issue_id: 'P0-ROUTE-001', severity: 'P0', status: 'CONFIRMED', url_or_record_id: '/mountains/지리산', file_path: 'lib/mountain-content.ts', observed_value: '0.8km source segment presented as easiest/beginner whole route', expected_behavior: 'label segments and do not recommend without route identity/evidence', affected_surfaces: ['mountain detail', 'metadata', 'FAQ'], proposed_fix: 'conservative route publication policy and neutral labels', test_case: 'npm run test:publication-policy' },
+  { issue_id: 'P1-COUNT-001', severity: 'P1', status: 'NEEDS_SOURCE', url_or_record_id: '/', file_path: 'lib/db/queries.ts', observed_value: 'live 93 mountains; local fallback 16', expected_behavior: 'official-list membership and physical mountain identity separated', affected_surfaces: ['home', 'hub', 'tracker'], proposed_fix: 'audit authorized DB snapshot against official list', test_case: 'pending DB snapshot' },
+  { issue_id: 'P1-CONTENT-001', severity: 'P1', status: 'NEEDS_SOURCE', url_or_record_id: 'all posts', file_path: 'lib/posts.ts', observed_value: `${POSTS.length} posts classified structurally; no human source verification`, expected_behavior: 'URL-level source and editorial disposition', affected_surfaces: ['blog', 'metadata', 'internal links'], proposed_fix: 'review REVISE rows before lower-risk rows; never bulk unpublish automatically', test_case: 'reports/adsense-remediation/content-inventory.csv' },
+  { issue_id: 'P0-CONTENT-CONTACT-001', severity: 'P0', status: 'LOCALLY_CONTAINED', url_or_record_id: '7 static posts', file_path: 'lib/content-safety.ts', observed_value: 'non-119 rescue alternatives or incomplete placeholder contacts could bypass the DB publication gate through static post rendering', expected_behavior: 'retain source body but replace unsafe rendered claim with 119 and official-site guidance; show unreviewed status on every post', affected_surfaces: ['blog body', 'FAQ structured data', 'quality gate'], proposed_fix: 'bounded semantic contact sanitizer plus shared prepublication detector', test_case: 'npm run test:content-safety-render' },
+  { issue_id: 'P0-CONTENT-FORMULA-001', severity: 'P0', status: 'LOCALLY_CONTAINED', url_or_record_id: 'p78,p173,p335,p407', file_path: 'lib/quality-gate.ts', observed_value: 'four static posts bypassed the prepublication gate and rendered fixed hydration or beginner distance/time claims', expected_behavior: 'retain source body/links but replace the smallest rendered claim block until source and human review', affected_surfaces: ['blog body', 'FAQ structured data', 'quality gate'], proposed_fix: 'reuse blocked-safety rules in the static render path with tag-preserving fallback', test_case: 'npm run test:publication-safety' },
+  { issue_id: 'P0-PUBLISH-001', severity: 'P0', status: 'CONFIRMED', url_or_record_id: 'automatic publisher', file_path: 'app/api/cron/publish/route.ts', observed_value: 'gate_passed and status alone triggered DB writes and indexing', expected_behavior: 'source check and recorded human editorial approval required', affected_surfaces: ['cron publish', 'CLI drip feed', 'indexing APIs'], proposed_fix: 'fail closed until review fields exist', test_case: 'npm run test:publication-policy' },
+  { issue_id: 'P1-FRESHNESS-001', severity: 'P1', status: 'ALREADY_FIXED', url_or_record_id: '/', file_path: 'app/home-client.tsx', observed_value: 'fixed June seasonal label rendered in September', expected_behavior: 'evergreen label unless a current reviewed seasonal package exists', affected_surfaces: ['home'], proposed_fix: 'use evergreen seasonal wording', test_case: 'build plus source assertion' },
+  { issue_id: 'P0-CRON-AUTH-001', severity: 'P0', status: 'ALREADY_FIXED', url_or_record_id: '/api/cron/*', file_path: 'lib/cron-auth.ts', observed_value: 'missing secret could match literal Bearer undefined', expected_behavior: 'missing configuration always denies access', affected_surfaces: ['all cron routes'], proposed_fix: 'central non-empty constant-time bearer validation', test_case: 'npm run test:publication-policy' },
+  { issue_id: 'P1-PUBLISH-URL-001', severity: 'P1', status: 'ALREADY_FIXED', url_or_record_id: 'pages.slug', file_path: 'lib/publication-policy.ts', observed_value: 'mountains-prefixed slug was encoded again into a malformed URL', expected_behavior: 'one normalized /mountains/<encoded-name> path', affected_surfaces: ['cron publish', 'CLI publish', 'indexing'], proposed_fix: 'central pageSlugToPublicPath', test_case: 'npm run test:publication-policy' },
+  { issue_id: 'P1-PUBLISH-RACE-001', severity: 'P1', status: 'PARTIAL_PENDING_SCHEMA', url_or_record_id: 'publish scheduler', file_path: 'app/api/cron/publish/route.ts', observed_value: 'duplicate scheduled owner removed and per-page conditional claim added; daily run idempotency, approval revision binding, and notification outbox still require schema', expected_behavior: 'one scheduled owner plus daily run ledger, immutable approval revision, atomic batch claim, and retryable notification outbox', affected_surfaces: ['cron publish', 'CLI publish'], proposed_fix: 'baseline the restored schema, then add unique KST run key, approval revision predicate, and provider outbox before enabling publication', test_case: 'npm run test:publication-claim plus future restored-DB concurrency integration' },
+  { issue_id: 'P1-PAGE-REGISTRY-001', severity: 'P1', status: 'NEEDS_SOURCE', url_or_record_id: 'mountain rendering', file_path: 'app/mountains/[slug]/page.tsx', observed_value: 'pages registry status is not consulted by render/sitemap queries', expected_behavior: 'central publication state governs all surfaces after evidence migration', affected_surfaces: ['detail', 'hub', 'sitemap', 'metadata'], proposed_fix: 'join reviewed publication state after additive schema design', test_case: 'cross-surface visibility integration test' },
+  { issue_id: 'P0-INDEXNOW-AUTH-001', severity: 'P0', status: 'ALREADY_FIXED', url_or_record_id: '/api/indexnow', file_path: 'app/api/indexnow/route.ts', observed_value: 'unauthenticated callers could trigger external indexing requests for arbitrary URLs', expected_behavior: 'authenticated, same-host, bounded HTTPS URL submissions only', affected_surfaces: ['IndexNow', 'external operations'], proposed_fix: 'shared bearer auth and strict URL normalization', test_case: 'npm run test:indexing-boundaries plus local 401 smoke' },
+  { issue_id: 'P1-MONETIZATION-001', severity: 'P1', status: 'ALREADY_FIXED', url_or_record_id: 'utility and error screens', file_path: 'components/monetization-layer.tsx', observed_value: 'AdSense loaded globally regardless of page purpose', expected_behavior: 'monetization only on content routes and never on noindex/404 screens', affected_surfaces: ['privacy', 'terms', 'contact', 'tracker', '404'], proposed_fix: 'route/noindex-aware monetization layer', test_case: 'npm run test:monetization-policy plus Playwright DOM checks' },
+  { issue_id: 'P1-CONSENT-001', severity: 'P1', status: 'LOCALLY_CONTAINED_NEEDS_RUNTIME_REVIEW', url_or_record_id: 'Google advertising and analytics tags', file_path: 'app/layout.tsx', observed_value: 'no verified visitor-region, ad-mode, certified CMP, Consent Mode, or account-binding evidence', expected_behavior: 'Google tags remain disabled until explicit target-environment CMP readiness and service IDs are verified', affected_surfaces: ['AdSense', 'Google Analytics', 'privacy disclosure'], proposed_fix: 'default-disable tags; verify certified CMP and accept/refuse/withdraw runtime behavior before enabling', test_case: 'npm run test:monetization-policy plus generated-HTML loader absence' },
+  { issue_id: 'P1-DATA-FALLBACK-001', severity: 'P1', status: 'LOCALLY_CONTAINED_NEEDS_RUNTIME_REVIEW', url_or_record_id: 'mountain data consumers', file_path: 'lib/db/queries.ts', observed_value: 'DB no-config, empty, and outage states were silently converted to cacheable static/empty data; detail fallback IDs could load unrelated DB courses', expected_behavior: 'fallback provenance is visible, degraded responses are uncached, and courses never cross mountain identity/source boundaries', affected_surfaces: ['home', 'mountain hub', 'mountain detail', 'list hubs', 'tracker', 'sitemap'], proposed_fix: 'use source-state snapshots and notices; retain DB mountain on course failure; verify sitemap visibility only after restored-data reconciliation', test_case: 'npm run test:data-source-state plus build/runtime degraded-state smoke' },
+  { issue_id: 'P1-SEO-METADATA-001', severity: 'P1', status: 'ALREADY_FIXED', url_or_record_id: 'metadata and guide JSON-LD', file_path: 'app/layout.tsx', observed_value: 'brand duplicated in titles and invented invisible guide dates', expected_behavior: 'one brand suffix and no unsupported structured dates', affected_surfaces: ['titles', 'structured data'], proposed_fix: 'child titles omit brand suffix; unsupported dates removed', test_case: 'npm run test:indexing-boundaries plus browser title check' },
+  { issue_id: 'P1-LLMS-DRIFT-001', severity: 'P1', status: 'ALREADY_FIXED', url_or_record_id: '/llms.txt', file_path: 'app/llms.txt/route.ts', observed_value: 'hardcoded 94 mountains and 7,787 courses contradicted runtime-dependent counts', expected_behavior: 'no volatile unverified count claims', affected_surfaces: ['AI crawler guidance'], proposed_fix: 'remove fixed counts and clarify segment/review state', test_case: 'npm run test:indexing-boundaries' },
+]
+fs.writeFileSync(path.join(outDir, 'findings.json'), JSON.stringify({ observed_at: observedAt, findings }, null, 2))
+console.log(JSON.stringify({
+  urls: routes.length,
+  posts: POSTS.length,
+  contentRiskSignals: contentRows.filter(row => row.risk_signal).length,
+  rankedRiskLevels: Object.fromEntries(['CRITICAL', 'HIGH', 'MEDIUM', 'LOW'].map(level => [level, rankedContentRows.filter(row => row.risk_level === level).length])),
+  topRiskCandidates: rankedContentRows.slice(0, 10).map(row => ({ id: row.id, score: row.risk_score, categories: row.categories })),
+  findings: findings.length,
+}, null, 2))
+}
+
+main().catch(error => {
+  console.error(error)
+  process.exitCode = 1
+})

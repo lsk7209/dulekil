@@ -1,7 +1,7 @@
 "use client";
 
 /* eslint-disable @next/next/no-img-element */
-import { usePathname } from "next/navigation";
+import Script from "next/script";
 
 const DASHBOARD_BASE = "https://multi-dashboard-one.vercel.app";
 const SITE_KEY = "dullegilgogo";
@@ -9,11 +9,8 @@ const SLOT_KEY = "coupang-inline";
 const LABEL = "등산 스틱";
 const DISCLOSURE =
   "이 게시물은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.";
-const HIDDEN_PREFIXES = ["/admin", "/privacy", "/terms", "/contact"];
 
-export default function CoupangAffiliateBanner() {
-  const pathname = usePathname() ?? "/";
-  if (HIDDEN_PREFIXES.some((path) => pathname === path || pathname.startsWith(`${path}/`))) return null;
+export default function CoupangAffiliateBanner({ pathname = "/" }: { pathname?: string }) {
 
   const params = new URLSearchParams({
     siteKey: SITE_KEY,
@@ -31,7 +28,7 @@ export default function CoupangAffiliateBanner() {
       </a>
       <p style={{ color: "#6b7280", fontSize: 12, lineHeight: 1.5, margin: "8px 0 0" }}>{DISCLOSURE}</p>
     </aside>
-    <script src={`${DASHBOARD_BASE}/banner-measurement.js`} defer />
+    <Script id="coupang-banner-measurement" src={`${DASHBOARD_BASE}/banner-measurement.js`} strategy="afterInteractive" />
     </div>
   );
 }

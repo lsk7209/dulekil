@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next'
 import { CATS, POSTS, getPostModifiedDate, getPostPath } from '@/lib/posts'
 import { FILLERS } from '@/lib/fillers-static'
+import { canPublishDatabaseDerivedData } from '@/lib/data-source-publication'
 
 const GUIDE_SLUGS = [
   'beginner-100',
@@ -55,13 +56,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // DB에서 100대 명산 목록 가져오기
   let mountainPages: MetadataRoute.Sitemap = []
   try {
-    const { getMountainsForHub } = await import('@/lib/db/queries')
-    const mountains = await getMountainsForHub()
-    mountainPages = mountains.map(m => ({
-      url:             `${BASE}/mountains/${encodeURIComponent(m.name)}`,
-      changeFrequency: 'weekly' as const,
-      priority:        0.85,
-    }))
+    const { getMountainsForHubSnapshot } = await import('@/lib/db/queries')
+    const snapshot = await getMountainsForHubSnapshot()
+    if (canPublishDatabaseDerivedData(snapshot.state)) {
+      mountainPages = snapshot.mountains.map(m => ({
+        url:             `${BASE}/mountains/${encodeURIComponent(m.name)}`,
+        changeFrequency: 'weekly' as const,
+        priority:        0.85,
+      }))
+    }
   } catch {
     // DB 연결 실패 시 빈 목록
   }

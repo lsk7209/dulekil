@@ -1,0 +1,10 @@
+DROP TABLE IF EXISTS indexing_outbox;
+DROP TABLE IF EXISTS publication_runs;
+DROP TABLE IF EXISTS publication_approvals;
+DROP TABLE IF EXISTS editorial_reviews;
+DROP TABLE IF EXISTS claim_evidence;
+DROP TABLE IF EXISTS hiking_route_segments;
+DROP TABLE IF EXISTS hiking_route_mountains;
+DROP TABLE IF EXISTS hiking_routes;
+DROP TABLE IF EXISTS challenge_memberships;
+DROP TABLE IF EXISTS challenge_lists;

@@ -8,6 +8,8 @@ import { POSTS, CATS, findPostBySlugOrId, getPostModifiedDate, getPostPath, getP
 import { linkMountainNames } from '@/lib/mountain-link'
 import { enhanceArticleBody } from '@/lib/article-enhancements'
 import { ShareButton } from '@/components/share-button'
+import { sanitizeUnreviewedArticleHtml } from '@/lib/content-safety'
+import { sanitizeBlockedPublicSafetyHtml } from '@/lib/quality-gate'
 
 interface Props { params: { id: string } }
 
@@ -135,8 +137,11 @@ export default function BlogDetailPage({ params }: Props) {
 
   const postUrl = `https://dullegilgogo.kr${getPostPath(post)}`
   const enhancedBody = post.body ? enhanceArticleBody(post) : ''
-  const enhancedArticle = enhancedBody ? addHeadingIds(enhancedBody) : { html: '', headings: [] }
-  const faqPairs = enhancedBody ? extractFaqPairs(enhancedBody) : []
+  const contactSafeBody = sanitizeUnreviewedArticleHtml(enhancedBody)
+  const safetySafeBody = sanitizeBlockedPublicSafetyHtml(contactSafeBody.html)
+  const redactedClaimCount = contactSafeBody.redactedClaims + safetySafeBody.redactedClaims
+  const enhancedArticle = safetySafeBody.html ? addHeadingIds(safetySafeBody.html) : { html: '', headings: [] }
+  const faqPairs = safetySafeBody.html ? extractFaqPairs(safetySafeBody.html) : []
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -226,6 +231,13 @@ export default function BlogDetailPage({ params }: Props) {
 
         {/* 아티클 본문 */}
         <article className="wrap wrap--narrow" style={{ paddingTop: 28, paddingBottom: 12 }}>
+          <div className="safety" data-review-status="unreviewed" style={{ margin: '0 0 28px' }}>
+            <div className="safety__icon"><Icon name="warn" size={21} stroke={2} /></div>
+            <div>
+              <h4>출처·사람 검수 대기</h4>
+              <p>이 글은 구조 검사를 거쳤지만 연락처·교통·요금·예약·통제처럼 바뀔 수 있는 사실의 출처 확인과 사람 검수가 완료되지 않았습니다. 방문 전 관련 기관 공식 사이트에서 최신 정보를 확인하세요.{redactedClaimCount > 0 ? ` 안전·긴급 연락처 주장 ${redactedClaimCount}건은 검수 전까지 숨겼습니다.` : ''}</p>
+            </div>
+          </div>
           {post.body && (() => {
             if (enhancedArticle.headings.length < 2) return null
             return (

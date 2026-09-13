@@ -3,6 +3,7 @@ import { POSTS, getPostPath } from '@/lib/posts'
 import { notifyIndexNow } from '@/lib/indexnow'
 import { notifyGoogleIndexing } from '@/lib/gsc-indexing'
 import { submitAndVerifyGscSitemap } from '@/lib/gsc-sitemap'
+import { isAuthorizedCronRequest } from '@/lib/cron-auth'
 
 export const runtime = 'nodejs'
 export const maxDuration = 60
@@ -11,8 +12,7 @@ const BASE = 'https://dullegilgogo.kr'
 const SITEMAP = `${BASE}/sitemap.xml`
 
 export async function GET(req: Request) {
-  const authHeader = req.headers.get('authorization')
-  if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+  if (!isAuthorizedCronRequest(req)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 

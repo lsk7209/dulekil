@@ -1,0 +1,86 @@
+{
+  "target": "dullegilgogo.kr",
+  "schema_version": 3,
+  "mode": "apply",
+  "adsense_readiness": "needs_review",
+  "readiness_scope": "internal_check_only",
+  "external_submission_state": "not_submitted",
+  "publisher_binding": {
+    "status": "unknown",
+    "profile_ref": null,
+    "publisher_id": "pub-3050601904412736",
+    "evidence": ["public/ads.txt and prior source fallback match locally; account ownership was not checked"]
+  },
+  "consent_review": {
+    "applicability": "unknown",
+    "regions": [],
+    "ad_mode": "unknown",
+    "cmp_name": null,
+    "status": "not_verified",
+    "evidence": ["No CMP readiness variable or Google tag IDs are present in the local environment key inventory"]
+  },
+  "policy_review": {
+    "status": "policy_not_fully_assessed",
+    "categories_reviewed": ["Google CMP requirement", "Consent Mode", "non-personalized ads"],
+    "unresolved": ["visitor regions", "ad mode", "CMP certification", "runtime consent signals", "account binding"]
+  },
+  "official_site_status": {
+    "source": "not_checked",
+    "checked_at": null,
+    "account_ref": null,
+    "domain": "dullegilgogo.kr",
+    "lookup_status": "unknown",
+    "list_complete": false,
+    "raw_state": null,
+    "ownership_verification": "unknown",
+    "reason": "Account access and mutation are outside this checkpoint"
+  },
+  "access_review": {
+    "adsense_crawler_access": {"status": "unknown", "checked_at": null, "evidence": []},
+    "search_crawlability": {"status": "observed_local", "checked_at": "2026-09-13", "evidence": ["robots local smoke"]},
+    "search_indexability": {"status": "observed_local", "checked_at": "2026-09-13", "evidence": ["local metadata and sitemap checks"]},
+    "canonical_consolidation": {"status": "observed_local", "checked_at": "2026-09-13", "evidence": ["INDEXING_BOUNDARIES_OK"]},
+    "sitemap_discovery": {"status": "observed_local", "checked_at": "2026-09-13", "evidence": ["1292 sitemap-derived URLs"]}
+  },
+  "blocked": ["Do not enable Google tags until target CMP/account/runtime evidence exists"],
+  "needs_patch": [],
+  "review": ["visitor regions", "ad-serving mode", "CMP certification and runtime choices"],
+  "auto_safe": ["default-disable Google tags without explicit CMP-ready configuration"],
+  "needs_approval": ["production CMP/account/environment changes"],
+  "manual": ["account binding and consent-flow browser verification"],
+  "findings": [
+    {
+      "status": "review",
+      "id": "CONSENT-001",
+      "impact_scope": "ad_serving",
+      "requirement_basis": "official_requirement",
+      "policy_source": "https://support.google.com/adsense/answer/13554020",
+      "source_checked_at": "2026-09-13",
+      "tier": "T2",
+      "action_class": "MANUAL",
+      "evidence_state": "observed",
+      "evidence": "No verified certified CMP configuration; local Google tags now default disabled",
+      "next_verification": "Verify account binding, applicable regions, CMP certification, and accept/refuse/withdraw runtime behavior"
+    }
+  ],
+  "sample_coverage": {
+    "sites_sampled": 1,
+    "pages_sampled": 3,
+    "page_families": ["home", "guide", "privacy"],
+    "failures": [],
+    "coverage_limits": ["local generated HTML only", "no production browser/account evidence"]
+  },
+  "low_value_risk_metrics": {
+    "sample_size": 344,
+    "median_visible_words": "not_checked",
+    "duplicate_h2_sequence_rate": "not_checked",
+    "duplicate_title_tail_rate": "not_checked",
+    "external_source_coverage_rate": "not_checked",
+    "thin_hub_pages": []
+  },
+  "verification": ["MONETIZATION_POLICY_OK", "TypeScript noEmit", "generated HTML sample contains no Google loader URLs"],
+  "dashboard_evidence": {},
+  "snapshot_timestamp": "not_applicable",
+  "connector_status": {},
+  "resubmission": "wait"
+}

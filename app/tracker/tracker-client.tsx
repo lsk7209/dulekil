@@ -8,18 +8,17 @@ import { Icon } from '@/components/icon'
 import { ridgeCover, contour } from '@/lib/motif'
 import { DIFF_META } from '@/lib/mountains-static'
 import type { HubMountain } from '@/lib/db/queries'
-
-const LS_KEY = 'dulle_done_v1'
+import { readCompletionNames, writeCompletionNames } from '@/lib/completion-storage'
 
 function useDone() {
   const [done, setDone] = useState<Set<string>>(() => new Set())
   useEffect(() => {
-    try { setDone(new Set(JSON.parse(localStorage.getItem(LS_KEY) ?? '[]'))) } catch { /* */ }
+    setDone(readCompletionNames(localStorage))
   }, [])
   const toggle = (name: string) => setDone(prev => {
     const n = new Set(prev)
     n.has(name) ? n.delete(name) : n.add(name)
-    localStorage.setItem(LS_KEY, JSON.stringify([...n]))
+    writeCompletionNames(localStorage, n)
     return n
   })
   return [done, toggle] as const
@@ -44,6 +43,12 @@ function DiffBadge({ level }: { level: string }) {
 }
 
 const GROUP_ORDER = ['수도권', '강원', '충청', '영남', '호남', '제주', '기타']
+
+const TRACKER_SOURCES = [
+  ['산림청', 'https://www.forest.go.kr/'],
+  ['국립공원공단', 'https://www.knps.or.kr/'],
+  ['기상청', 'https://www.weather.go.kr/'],
+] as const
 
 export function TrackerClient({ mountains }: { mountains: HubMountain[] }) {
   const [done, toggle] = useDone()
@@ -122,7 +127,32 @@ export function TrackerClient({ mountains }: { mountains: HubMountain[] }) {
           <div className="safety__icon"><Icon name="warn" size={21} stroke={2} /></div>
           <div>
             <h4>완등 기록은 참고용입니다</h4>
-            <p>본 트래커의 기록은 이 브라우저의 localStorage에만 저장되며, 공식 완등 인증과 무관합니다. 공식 100대 명산 완등 인증은 한국산악회 또는 각 산악 단체를 통해 확인하세요.</p>
+            <p>본 트래커의 기록은 이 브라우저의 localStorage에만 저장되며, 공식 완등 인증과 무관합니다. 공식 인증 여부와 절차는 참여하려는 챌린지 운영 주체의 최신 안내에서 확인하세요.</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="wrap" style={{ paddingTop: 24, paddingBottom: 48 }}>
+        <div className="card card--pad">
+          <div className="eyebrow" style={{ marginBottom: 10 }}>기록 전 확인</div>
+          <h2 className="h2" style={{ marginBottom: 14, fontSize: 22 }}>완등 체크 전에 확인할 공식 정보</h2>
+          <div className="body" style={{ display: 'flex', flexDirection: 'column', gap: 12, color: 'var(--ink-soft)' }}>
+            <p>
+              완등 트래커는 내가 오른 산을 잊지 않도록 표시하는 개인 기록 도구입니다. 로그인 계정이나 서버 저장을 사용하지 않기 때문에 브라우저를 바꾸거나 저장 데이터를 삭제하면 기록이 사라질 수 있습니다. 공식 인증서, 산악회 기록, 탐방 예약 내역을 대체하지 않습니다.
+            </p>
+            <p>
+              산을 체크하기 전에는 실제 산행일의 탐방로 개방 여부, 산불조심기간 통제, 기상 특보, 대중교통 막차 시간을 따로 확인하세요. 계절과 들머리에 따라 현장 조건이 달라질 수 있으므로 관리 기관의 최신 안내를 우선하세요.
+            </p>
+            <p>
+              둘레길고고의 산 목록과 등록 구간 표시는 후보 정리를 돕기 위한 참고 자료입니다. 가족 동반, 초보 동행, 야간 하산 가능성이 있는 일정이라면 공식 예상 시간만으로 빠듯하게 계획하지 말고 중간 반환 지점과 비상 여유를 정하세요. 통신이 약한 구간에 대비해 오프라인에서 확인 가능한 지도와 보조 배터리를 준비하세요.
+            </p>
+            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', paddingTop: 4 }}>
+              {TRACKER_SOURCES.map(([label, href]) => (
+                <a key={href} className="tag" href={href} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--forest)', textDecoration: 'none' }}>
+                  {label}
+                </a>
+              ))}
+            </div>
           </div>
         </div>
       </section>

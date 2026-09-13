@@ -10,18 +10,17 @@ import { DIFF_META, SEASON_ICON } from '@/lib/mountains-static'
 import type { HubMountain } from '@/lib/db/queries'
 import { CATS, getPostPath, type Post } from '@/lib/posts'
 import { FILLERS } from '@/lib/fillers-static'
-
-const LS_KEY = 'dulle_done_v1'
+import { readCompletionNames, writeCompletionNames } from '@/lib/completion-storage'
 
 function useDone() {
   const [done, setDone] = useState<Set<string>>(() => new Set())
   useEffect(() => {
-    try { setDone(new Set(JSON.parse(localStorage.getItem(LS_KEY) ?? '[]'))) } catch { /* */ }
+    setDone(readCompletionNames(localStorage))
   }, [])
   const toggle = (key: string) => setDone(prev => {
     const n = new Set(prev)
     n.has(key) ? n.delete(key) : n.add(key)
-    localStorage.setItem(LS_KEY, JSON.stringify([...n]))
+    writeCompletionNames(localStorage, n)
     return n
   })
   return [done, toggle] as const
@@ -65,7 +64,7 @@ function MountainCard({ m, done, onToggle, compact }: {
     <article className="card card--hover" style={{ display: 'flex', flexDirection: 'column', minWidth: compact ? 248 : 0 }}>
       <RidgeCover seed={m.name} pal={m.pal} sun={m.sun} height={compact ? 104 : 124}>
         <div style={{ position: 'absolute', left: 12, top: 12 }}>
-          <span className="tag tag--100" style={{ backdropFilter: 'blur(2px)' }}>100대 명산</span>
+          <span className="tag tag--100" style={{ backdropFilter: 'blur(2px)' }}>명산 목록 후보</span>
         </div>
         {m.gpx && (
           <div style={{ position: 'absolute', right: 12, top: 12 }}>
@@ -153,10 +152,10 @@ function Hero({ query, setQuery, goResults, doneCount, featured, total }: {
       <div className="wrap" style={{ position: 'relative' }}>
         <div className="hero-grid">
           <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
-            <div className="eyebrow">이 달의 능선 · 6월</div>
+            <div className="eyebrow">계절 산행 준비</div>
             <h1 className="h1">100대 명산,<br />어디부터 오를까?</h1>
             <p className="lead" style={{ maxWidth: 440 }}>
-              완등 챌린지의 다음 한 걸음을 고르는 곳. 코스 난이도·거리·들머리 교통을 비교해, 오늘의 나에게 맞는 산을 찾으세요.
+              완등 기록을 보존하면서 산과 등록 등산로 구간을 탐색하세요. 전체 산행 코스·난이도·통제는 관리 기관의 최신 안내에서 다시 확인해야 합니다.
             </p>
             <SearchBar value={query} onChange={setQuery} onSubmit={goResults} />
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, color: 'var(--ink-soft)', fontSize: 14 }}>
@@ -496,7 +495,7 @@ export function HomeClient({ mountains, latestPosts, postCount }: { mountains: H
       <div style={{ background: 'var(--forest-deep)', borderBottom: '1px solid rgba(255,255,255,.08)' }}>
         <div className="wrap" style={{ display: 'flex', gap: 0, overflow: 'auto' }}>
           {[
-            { k: '100대 명산', v: `${total}개` },
+            { k: '현재 등록 산', v: `${total}개` },
             { k: '블로그 글',  v: `${postCount}편` },
             { k: '데이터 출처', v: '산림청·두루누비' },
             { k: '공공누리',   v: '제1유형' },
@@ -522,7 +521,7 @@ export function HomeClient({ mountains, latestPosts, postCount }: { mountains: H
 
       {seasonal.length > 0 && (
         <section className="wrap" style={{ paddingTop: 40, paddingBottom: 8 }}>
-          <SecHead kicker="계절 추천 · 6월" title="숲이 깊어지는 산" more={{ href: '/mountains', label: '더 보기' }} />
+          <SecHead kicker="계절별 탐색" title="출발 전 조건을 확인할 산" more={{ href: '/mountains', label: '더 보기' }} />
           <ScrollRow items={seasonal} done={done} toggle={toggle} />
         </section>
       )}

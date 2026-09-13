@@ -1,0 +1,11 @@
+{
+  "observed_at": "2026-09-13T05:02:19.728Z",
+  "environment": "local; no production DB credentials used",
+  "posts": {
+    "total": 344,
+    "risk_signal": 329
+  },
+  "static_mountain_fallback": 16,
+  "sitemap_urls": 1276,
+  "limitation": "The production mountain/course counts and source truth require an authorized consistent DB snapshot; live displayed counts are recorded separately in the baseline."
+}

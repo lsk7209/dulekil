@@ -120,6 +120,10 @@ export function BlogClient({ posts }: { posts: Post[] }) {
   const [badge, setBadge] = useState('')
   const [visibleCount, setVisibleCount] = useState(60)
 
+  useEffect(() => {
+    setVisibleCount(60)
+  }, [cat, query, badge])
+
   const featured = posts.find((p) => p.featured) ?? posts[0]
   const rest = posts.filter((p) => p.id !== featured?.id)
   if (!featured) return null
@@ -133,10 +137,6 @@ export function BlogClient({ posts }: { posts: Post[] }) {
   })
   const showFeatured = cat === '전체' && !q && !badge
   const visiblePosts = filtered.slice(0, visibleCount)
-
-  useEffect(() => {
-    setVisibleCount(60)
-  }, [cat, q, badge])
 
   const badges = topBadges(posts)
   const contourSvg = contour({ seed: 'mag', stroke: '#C4D1C7', opacity: 0.5, cx: 0.8, cy: 0.4, rings: 9, w: 1200, h: 360 })

@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Script from 'next/script'
 import localFont from 'next/font/local'
 import { Noto_Serif_KR } from 'next/font/google'
-import CoupangAffiliateBanner from '@/components/affiliate/CoupangAffiliateBanner'
+import { MonetizationLayer } from '@/components/monetization-layer'
 import './globals.css'
 
 const pretendard = localFont({
@@ -26,7 +26,10 @@ const notoSerifKR = Noto_Serif_KR({
 })
 
 const GA_ID      = process.env.NEXT_PUBLIC_GA_ID
-const ADSENSE_ID = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID || 'ca-pub-3050601904412736'
+const ADSENSE_ID = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID
+// Enable only after the intended publisher/account binding and applicable CMP
+// behavior have been verified in the target environment.
+const GOOGLE_CMP_READY = process.env.NEXT_PUBLIC_GOOGLE_CMP_READY === 'true'
 
 export const metadata: Metadata = {
   title: {
@@ -62,19 +65,12 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko" className={`${pretendard.variable} ${notoSerifKR.variable}`}>
-      <head>
-        <meta name="theme-color" content="#2F4A3C" />
-        <script
-          async
-          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_ID}`}
-          crossOrigin="anonymous"
-        />
-      </head>
+      <head><meta name="theme-color" content="#2F4A3C" /></head>
       <body>
         {children}
-        <CoupangAffiliateBanner />
+        <MonetizationLayer adsenseClientId={ADSENSE_ID} googleCmpReady={GOOGLE_CMP_READY} />
 
-        {GA_ID && (
+        {GOOGLE_CMP_READY && GA_ID && (
           <>
             <Script
               src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}

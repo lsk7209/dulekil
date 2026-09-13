@@ -22,9 +22,21 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const badge = decodeURIComponent(params.badge)
+  const now = new Date()
+  const hasPublishedPosts = POSTS.some(p =>
+    (!p.publishAt || new Date(p.publishAt) <= now) &&
+    (p.badges ?? []).includes(badge)
+  )
+  if (!hasPublishedPosts) {
+    return {
+      title: '태그를 찾을 수 없습니다',
+      robots: { index: false, follow: false },
+      alternates: { canonical: null },
+    }
+  }
   const ogUrl = `/og?title=${encodeURIComponent('#' + badge + ' 등산 글 모음')}&type=default&sub=둘레길고고+매거진`
   return {
-    title: `#${badge} 등산 관련 글 모음 | 둘레길고고`,
+    title: `#${badge} 등산 관련 글 모음`,
     description: `${badge} 관련 100대 명산 등산 가이드, 코스 추천, 안전 정보를 한곳에서 확인하세요.`,
     openGraph: {
       title: `#${badge} 등산 글 모음`,

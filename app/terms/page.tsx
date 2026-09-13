@@ -3,7 +3,7 @@ import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
 
 export const metadata: Metadata = {
-  title: '이용약관 | 둘레길고고',
+  title: '이용약관',
   description: '둘레길고고 사이트 이용 조건 및 면책 사항에 대한 약관입니다.',
   alternates: { canonical: 'https://dullegilgogo.kr/terms' },
 }

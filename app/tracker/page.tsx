@@ -2,7 +2,8 @@ import type { Metadata } from 'next'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
 import { TrackerClient } from './tracker-client'
-import { getMountainsForHub } from '@/lib/db/queries'
+import { getMountainsForHubSnapshot } from '@/lib/db/queries'
+import { DataSourceNotice } from '@/components/data-source-notice'
 
 export const revalidate = 86400
 
@@ -35,10 +36,12 @@ const jsonLd = {
 }
 
 export default async function TrackerPage() {
-  const mountains = await getMountainsForHub()
+  const mountainSnapshot = await getMountainsForHubSnapshot()
+  const mountains = mountainSnapshot.mountains
   return (
     <div id="top">
       <SiteHeader active="tracker" />
+      <DataSourceNotice state={mountainSnapshot.state} />
       <TrackerClient mountains={mountains} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <SiteFooter />

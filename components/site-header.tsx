@@ -18,7 +18,7 @@ const NAV_LINKS = [
   { label: '명산 허브',   href: '/#explore',  key: 'explore' as NavKey },
   { label: '완등 트래커', href: '/tracker',    key: 'tracker' as NavKey },
   { label: '블로그',      href: '/blog',       key: 'blog'    as NavKey },
-  { label: '가이드',      href: '/#guide',     key: 'guide'   as NavKey, sm: true },
+  { label: '가이드',      href: '/guide',      key: 'guide'   as NavKey, sm: true },
 ]
 
 export function SiteHeader({ active }: SiteHeaderProps) {

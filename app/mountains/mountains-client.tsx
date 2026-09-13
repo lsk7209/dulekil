@@ -9,18 +9,17 @@ import { Icon } from '@/components/icon'
 import { ridgeCover, contour } from '@/lib/motif'
 import { DIFF_META, SEASON_ICON } from '@/lib/mountains-static'
 import type { HubMountain } from '@/lib/db/queries'
-
-const LS_KEY = 'dulle_done_v1'
+import { readCompletionNames, writeCompletionNames } from '@/lib/completion-storage'
 
 function useDone() {
   const [done, setDone] = useState<Set<string>>(() => new Set())
   useEffect(() => {
-    try { setDone(new Set(JSON.parse(localStorage.getItem(LS_KEY) ?? '[]'))) } catch { /* */ }
+    setDone(readCompletionNames(localStorage))
   }, [])
   const toggle = (key: string) => setDone(prev => {
     const n = new Set(prev)
     n.has(key) ? n.delete(key) : n.add(key)
-    localStorage.setItem(LS_KEY, JSON.stringify([...n]))
+    writeCompletionNames(localStorage, n)
     return n
   })
   return [done, toggle] as const
@@ -98,7 +97,7 @@ export function MountainsClient({ mountains }: Props) {
           <div className="eyebrow" style={{ marginBottom: 10 }}>100대 명산 허브</div>
           <h1 className="h1" style={{ maxWidth: 720, marginBottom: 14 }}>어느 산이 나에게 맞을까?</h1>
           <p className="lead" style={{ maxWidth: 540 }}>
-            산림청이 선정한 {mountains.length}개 명산. 난이도·지역·대중교통으로 필터링하고, 오른 산은 완등 체크.
+            현재 등록된 {mountains.length}개 명산 후보를 지역·등록 구간·교통 표시로 탐색하고, 오른 산은 개인 기록에 체크하세요. 공식 목록 소속은 원천별 검증 후 구분합니다.
           </p>
           <div style={{ marginTop: 20, maxWidth: 480 }}>
             <div style={{

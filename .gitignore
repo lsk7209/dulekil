@@ -26,9 +26,18 @@ docs/*.csv
 
 # drizzle generated
 drizzle/
+!drizzle/
+drizzle/*
+!drizzle/additive/
+!drizzle/additive/*.sql
 
 # phase05 extracted data
 scripts/phase05/_tmp_extract/
+
+# local agent/runtime and browser evidence
+.omx/
+.playwright-cli/
+output/
 scripts/phase05/*.bin
 
 # build

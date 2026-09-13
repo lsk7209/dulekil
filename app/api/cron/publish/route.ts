@@ -6,6 +6,8 @@
 import { NextResponse } from 'next/server'
 import { notifyIndexNow } from '@/lib/indexnow'
 import { notifyGoogleIndexing } from '@/lib/gsc-indexing'
+import { automaticPublicationBlockReason, pageSlugToPublicPath } from '@/lib/publication-policy'
+import { isAuthorizedCronRequest } from '@/lib/cron-auth'
 
 export const runtime    = 'nodejs'
 export const maxDuration = 300
@@ -13,14 +15,13 @@ export const maxDuration = 300
 const BASE = 'https://dullegilgogo.kr'
 
 export async function GET(req: Request) {
-  const authHeader = req.headers.get('authorization')
-  if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+  if (!isAuthorizedCronRequest(req)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
   try {
     const { db }     = await import('@/lib/db/index')
-    const { pages }  = await import('@/lib/db/schema')
+    const { pages, publishLog }  = await import('@/lib/db/schema')
     const { eq, and } = await import('drizzle-orm')
 
     const toPublish = await db
@@ -32,6 +33,15 @@ export async function GET(req: Request) {
       ))
       .limit(20)
 
+    const eligible = toPublish.filter(page => automaticPublicationBlockReason(page) === null)
+    if (toPublish.length > 0 && eligible.length === 0) {
+      return NextResponse.json({
+        published: 0,
+        blocked: toPublish.length,
+        reason: 'source and human-review fields are not present in the current publication record',
+      }, { status: 409 })
+    }
+
     if (toPublish.length === 0) {
       return NextResponse.json({ published: 0, message: '발행 대기 없음' })
     }
@@ -39,15 +49,29 @@ export async function GET(req: Request) {
     const now = new Date()
     const publishedUrls: string[] = []
 
-    for (const page of toPublish) {
-      await db
-        .update(pages)
-        .set({ status: 'published', published_at: now })
-        .where(eq(pages.id, page.id))
+    const claimedPages = []
+    for (const page of eligible) {
+      const claimed = await db.transaction(async tx => {
+        const rows = await tx
+          .update(pages)
+          .set({ status: 'published', published_at: now, updated_at: now })
+          .where(and(
+            eq(pages.id, page.id),
+            eq(pages.status, 'quality_passed'),
+            eq(pages.gate_passed, true),
+          ))
+          .returning({ id: pages.id })
 
-      if (page.slug) {
-        publishedUrls.push(`${BASE}/mountains/${encodeURIComponent(page.slug)}`)
-      }
+        if (rows.length !== 1) return false
+        await tx.insert(publishLog).values({ page_id: page.id, channel: 'vercel-cron' })
+        return true
+      })
+
+      if (!claimed) continue
+      claimedPages.push(page)
+
+      const publicPath = page.slug ? pageSlugToPublicPath(page.slug) : null
+      if (publicPath) publishedUrls.push(`${BASE}${publicPath}`)
     }
 
     // IndexNow + Google Indexing API 병렬 전송
@@ -57,8 +81,9 @@ export async function GET(req: Request) {
     ])
 
     return NextResponse.json({
-      published: toPublish.length,
-      slugs:     toPublish.map(p => p.slug),
+      published: claimedPages.length,
+      skippedConcurrent: eligible.length - claimedPages.length,
+      slugs:     claimedPages.map(p => p.slug),
       indexnow:  publishedUrls.length,
     })
   } catch (e) {

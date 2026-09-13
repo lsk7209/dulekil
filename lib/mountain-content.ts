@@ -503,15 +503,11 @@ function courseRangeText(courses: Course[]) {
 export function buildMountainQuickFacts(mountain: Mountain, courses: Course[]): MountainQuickFacts {
   const stats = getCourseStats(courses)
   const fallback = courses.length === 0 ? getMountainFallbackGuide(mountain.name) : undefined
-  const diff = courses.length > 0
-    ? normalizeDifficulty(stats.shortest?.diff_norm ?? stats.hardest?.diff_norm)
-    : '중'
-
   return {
-    difficultyLabel: `난이도 ${diff}`,
-    distanceLabel: stats.minDistance != null ? formatDistance(stats.minDistance) : fallback ? '공식 코스 확인' : '현장 확인 필요',
-    durationLabel: stats.maxDuration > 0 ? formatDuration(stats.maxDuration) : fallback ? '일몰 전 하산 기준' : '공식 시간 확인',
-    accessLabel: stats.hasTransit ? '대중교통 코스 있음' : fallback?.access.trailheads[0] ? fallback.access.trailheads[0] : '자가용 우선 검토',
+    difficultyLabel: courses.length > 0 ? '등록 구간값 별도 확인' : '공식 코스 확인',
+    distanceLabel: stats.minDistance != null ? `${formatDistance(stats.minDistance)} (구간 최솟값)` : fallback ? '공식 코스 확인' : '자료 확인 필요',
+    durationLabel: stats.maxDuration > 0 ? `${formatDuration(stats.maxDuration)} (상행 최댓값)` : '공식 시간 확인',
+    accessLabel: stats.hasTransit ? '원천에 대중교통 표시 있음' : '최신 교통편 확인',
   }
 }
 
@@ -519,13 +515,10 @@ export function buildMountainMetaDescription(mountain: Mountain, courses: Course
   const stats = getCourseStats(courses)
   const region = [mountain.region, mountain.sigun].filter(Boolean).join(' ')
   const elevation = mountain.elev ? `${mountain.elev.toLocaleString()}m` : '고도 확인 필요'
-  const diff = courses.length > 0
-    ? normalizeDifficulty(stats.shortest?.diff_norm ?? stats.hardest?.diff_norm)
-    : '중'
   const courseText = courses.length > 0
-    ? `최단 ${formatDistance(stats.minDistance)}, 난이도 ${diff}`
+    ? '원천에 등록된 등산로 구간값을 전체 정상 코스와 구분해 제공'
     : '대표 들머리와 공식 통제 확인'
-  const raw = `${mountain.name} 등산 코스: ${region || '국내'} 해발 ${elevation}. ${courseText}, 초보·당일치기 계획, 교통·주차, 계절별 준비와 하산 동선까지 한 번에 확인하세요.`
+  const raw = `${mountain.name} 산행 정보: ${region || '국내'} 해발 ${elevation}. ${courseText}. 원천 구간과 전체 산행 코스를 구분하고 교통·통제·계절별 확인 사항을 안내합니다.`
 
   return raw.length > 155 ? `${raw.slice(0, 154)}…` : raw
 }
@@ -555,9 +548,6 @@ export function buildFallbackRoutes(mountain: Mountain, courses: Course[]): Moun
 export function buildMountainFaqs(mountain: Mountain, courses: Course[]): MountainFaq[] {
   const stats = getCourseStats(courses)
   const fallback = courses.length === 0 ? getMountainFallbackGuide(mountain.name) : undefined
-  const diff = courses.length > 0
-    ? normalizeDifficulty(stats.shortest?.diff_norm ?? stats.hardest?.diff_norm)
-    : '중'
   const shortest = stats.shortest
   const access = buildAccessNotes(mountain, courses)
   const seasons = buildSeasonNotes(mountain)
@@ -574,19 +564,19 @@ export function buildMountainFaqs(mountain: Mountain, courses: Course[]): Mounta
     {
       q: `${mountain.name} 등산 난이도는?`,
       a: courses.length > 0
-        ? `${mountain.name}에는 총 ${courses.length}개의 등산로 데이터가 있으며, 주요 난이도는 '${diff}'입니다. 다만 실제 체감은 계단, 암릉, 하산 경사, 날씨에 따라 달라집니다.`
-        : `${mountain.name}은 현재 정량 코스 데이터가 부족해 난이도 '${diff}' 기준으로 보수적으로 안내합니다. 공식 탐방 안내와 현장 이정표를 확인한 뒤 짧은 동선부터 선택하세요.`,
+        ? `${mountain.name}에는 ${courses.length}개의 등록 구간 자료가 있지만, 아직 완결된 산행 route와 사람 검수 기록이 연결되지 않아 산 전체 난이도를 단정하지 않습니다. 관리 기관의 최신 코스 안내를 확인하세요.`
+        : `${mountain.name}은 현재 검수된 완결 코스 자료가 없어 난이도를 단정하지 않습니다. 관리 기관의 최신 탐방 안내와 현장 이정표를 확인하세요.`,
     },
     {
       q: `${mountain.name} 초보도 갈 수 있나요?`,
       a: shortest
-        ? `초보자는 ${shortName(shortest)}처럼 ${formatDistance(shortest.distance)} 안팎의 짧은 코스부터 보는 편이 좋습니다. 정상 인증보다 하산 시간과 무릎 피로를 우선하세요.`
+        ? `${shortName(shortest)} ${formatDistance(shortest.distance)} 값은 등록 구간 자료이며, 초보 적합이나 정상까지의 전체 코스를 뜻하지 않습니다. 공식 관리기관의 완결된 코스를 별도로 확인하세요.`
         : fallback?.fits[0]?.body ?? `${mountain.name}은 초보자가 방문할 때 정상 완등보다 짧은 왕복, 탐방로 상태, 하산 시간을 먼저 확인하는 편이 안전합니다.`,
     },
     {
       q: `${mountain.name} 가장 쉬운 코스는 어떻게 고르나요?`,
       a: shortest
-        ? `현재 데이터 기준 가장 짧게 비교되는 코스는 ${shortName(shortest)}이며 거리는 ${formatDistance(shortest.distance)}입니다. 쉬운 코스라도 비 온 뒤나 겨울에는 난이도를 높게 판단하세요.`
+        ? `현재 가장 짧은 값은 ${shortName(shortest)} ${formatDistance(shortest.distance)}이지만 등록 구간의 최솟값입니다. 이 값만으로 가장 쉬운 전체 코스를 정하지 않습니다.`
         : `현재 거리 수치가 없어 가장 쉬운 코스를 단정하지 않습니다. ${access.trailheads[0] ? `${access.trailheads[0]}처럼 접근이 분명한 들머리` : '공식 안내소가 제시하는 짧은 원점회귀'}를 먼저 확인하세요.`,
     },
     {
@@ -678,10 +668,10 @@ export function buildMountainSummary(mountain: Mountain, courses: Course[]) {
   return [
     `${mountain.name}은 ${region || '국내'}에 있는 해발 ${elevation} 산입니다.`,
     courses.length > 0
-      ? `현재 비교 가능한 등산로는 ${courses.length}개이며, 최단 코스는 ${formatDistance(stats.minDistance)} 기준입니다.`
+      ? `현재 등록 등산로 구간은 ${courses.length}개이며, 최솟값은 ${formatDistance(stats.minDistance)}입니다. 전체 정상 코스 거리로 사용하지 않습니다.`
       : '현재 코스 데이터가 충분하지 않아 공식 안내와 현장 표지 확인이 필요합니다.',
     diff === '하'
-      ? '처음 방문한다면 최단 코스와 하산 교통을 먼저 확인하는 방식이 안정적입니다.'
+      ? '등록 구간 난이도가 낮더라도 초보 추천 근거로 사용하지 않으며, 완결된 공식 코스와 통제를 별도로 확인해야 합니다.'
       : diff === '중'
         ? '초보자는 거리보다 누적 피로와 하산 시간을 보수적으로 잡는 편이 좋습니다.'
         : '암릉, 급경사, 긴 하산이 겹칠 수 있으므로 경험자 동행과 기상 확인을 전제로 잡으세요.',
@@ -698,9 +688,9 @@ export function buildMountainFitNotes(mountain: Mountain, courses: Course[]) {
 
   return [
     {
-      title: '초보·가족 산행',
+      title: '초보·가족 산행 확인',
       body: shortest
-        ? `${shortName(shortest)}처럼 ${formatDistance(shortest.distance)} 안팎의 짧은 코스부터 보세요. 난이도는 ${normalizeDifficulty(shortest.diff_norm)} 기준이며, 실제 체감은 계단과 하산 경사에 따라 달라집니다.`
+        ? `${shortName(shortest)} ${formatDistance(shortest.distance)}은 등록 구간 값입니다. 짧다는 이유만으로 초보·가족 코스로 추천하지 않으며 공식 전체 코스, 경사, 하산, 통제 정보를 확인해야 합니다.`
         : `${mountain.name}은 현재 최단 코스 수치가 부족합니다. 초보자는 공식 안내소나 지자체 탐방 안내에서 짧은 원점회귀 코스를 먼저 확인하세요.`,
     },
     {

@@ -3,7 +3,7 @@ import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
 
 export const metadata: Metadata = {
-  title: '문의하기 | 둘레길고고',
+  title: '문의하기',
   description:
     '둘레길고고의 코스 정보 오류 제보, 데이터 출처 정정, 광고 및 제휴 문의, 개인정보 관련 요청을 안내합니다.',
   alternates: { canonical: 'https://dullegilgogo.kr/contact' },

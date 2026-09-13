@@ -11,7 +11,7 @@ const FOOTER_LINKS = [
     ['명산 허브',   '/#explore'],
     ['완등 트래커', '/tracker'],
     ['블로그',      '/blog'],
-    ['가이드',      '/#guide'],
+    ['가이드',      '/guide'],
   ]],
   ['정보', [
     ['소개',              '/about'],
@@ -19,6 +19,12 @@ const FOOTER_LINKS = [
     ['개인정보처리방침',   '/privacy'],
     ['이용약관',          '/terms'],
   ]],
+] as const
+
+const OFFICIAL_SOURCES = [
+  ['data.go.kr', 'https://www.data.go.kr/'],
+  ['산림청', 'https://www.forest.go.kr/'],
+  ['한국관광공사', 'https://knto.or.kr/'],
 ] as const
 
 export function SiteFooter() {
@@ -51,7 +57,14 @@ export function SiteFooter() {
 
       <div style={{ borderTop: '1px solid rgba(255,255,255,.1)' }}>
         <div className="wrap" style={{ paddingTop: 16, paddingBottom: 22, fontSize: 12.5, color: '#8DA197', lineHeight: 1.7 }}>
-          출처: data.go.kr · 산림청 · 한국관광공사 (공공누리 제1유형). 본 사이트는 공공데이터를 가공해 제작되었으며, 일부 설명은 AI 보조로 자동 생성된 데이터 가공물입니다. 코스·통제 정보는 공식 기관 고지를 우선 확인하세요.
+          출처:{' '}
+          {OFFICIAL_SOURCES.map(([label, href], index) => (
+            <span key={href}>
+              {index > 0 ? ' · ' : ''}
+              <a href={href} target="_blank" rel="noopener noreferrer" style={{ color: '#C9D3CB' }}>{label}</a>
+            </span>
+          ))}{' '}
+          (공공누리 제1유형). 본 사이트는 공공데이터를 가공해 제작되었으며, 일부 설명은 AI 보조로 자동 생성된 데이터 가공물입니다. 코스·통제 정보는 공식 기관 고지를 우선 확인하세요.
         </div>
       </div>
     </footer>

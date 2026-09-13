@@ -3,7 +3,9 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
-import { getMountainsForHub } from '@/lib/db/queries'
+import { getMountainsForHubSnapshot } from '@/lib/db/queries'
+import { DataSourceNotice } from '@/components/data-source-notice'
+import { canPublishDatabaseDerivedData } from '@/lib/data-source-publication'
 import { FILLERS, getFillerBySlug } from '@/lib/fillers-static'
 import { DIFF_META } from '@/lib/mountains-static'
 
@@ -20,7 +22,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!filler) return {}
   const ogUrl = `/og?title=${encodeURIComponent(filler.title)}&type=mountain&sub=100대+명산+모음`
   return {
-    title: `${filler.title} | 둘레길고고`,
+    title: filler.title,
     description: filler.description,
     openGraph: {
       title: filler.title,
@@ -38,7 +40,8 @@ export default async function FillerPage({ params }: Props) {
   const filler = getFillerBySlug(params.slug)
   if (!filler) notFound()
 
-  const all = await getMountainsForHub()
+  const mountainSnapshot = await getMountainsForHubSnapshot()
+  const all = mountainSnapshot.mountains
   const mountains = filler.sortBy
     ? all.filter(filler.filter).sort(filler.sortBy)
     : all.filter(filler.filter)
@@ -75,11 +78,14 @@ export default async function FillerPage({ params }: Props) {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      {canPublishDatabaseDerivedData(mountainSnapshot.state) && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      )}
       <SiteHeader />
+      <DataSourceNotice state={mountainSnapshot.state} />
       <main id="main-content" className="filler-page">
         {/* ── 브레드크럼 ── */}
         <nav className="breadcrumb" aria-label="breadcrumb">

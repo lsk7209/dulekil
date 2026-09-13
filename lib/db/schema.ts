@@ -1,6 +1,6 @@
 import { sql } from 'drizzle-orm'
 import {
-  text, integer, real, index,
+  text, integer, real, index, uniqueIndex,
   sqliteTable as table,
 } from 'drizzle-orm/sqlite-core'
 
@@ -197,9 +197,161 @@ export const collectCheckpoints = table('collect_checkpoints', {
 })
 
 // ──────────────────────────────────────────────
+// 검증 레이어 (기존 원천/URL/트래커 식별자는 변경하지 않음)
+// ──────────────────────────────────────────────
+export const challengeLists = table('challenge_lists', {
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  key: text('key').notNull().unique(),
+  name: text('name').notNull(),
+  publisher: text('publisher').notNull(),
+  version_label: text('version_label'),
+  source_url: text('source_url').notNull(),
+  source_checked_at: integer('source_checked_at', { mode: 'timestamp' }),
+  created_at: integer('created_at', { mode: 'timestamp' }).default(sql`(unixepoch())`),
+})
+
+export const challengeMemberships = table('challenge_memberships', {
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  challenge_list_id: integer('challenge_list_id').notNull().references(() => challengeLists.id, { onDelete: 'cascade' }),
+  mountain_id: integer('mountain_id').notNull().references(() => mountains.id, { onDelete: 'restrict' }),
+  source_item_name: text('source_item_name').notNull(),
+  source_record_id: text('source_record_id'),
+  match_status: text('match_status').notNull().default('candidate'), // candidate/matched/disputed/rejected
+  match_basis: text('match_basis'),
+  created_at: integer('created_at', { mode: 'timestamp' }).default(sql`(unixepoch())`),
+}, t => ({
+  uniqMembership: uniqueIndex('uq_challenge_membership').on(t.challenge_list_id, t.mountain_id),
+  idxMembershipStatus: index('idx_challenge_membership_status').on(t.match_status),
+}))
+
+export const hikingRoutes = table('hiking_routes', {
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  route_key: text('route_key').notNull().unique(),
+  name: text('name').notNull(),
+  route_type: text('route_type').notNull(), // one_way/round_trip/loop/traverse
+  trailhead: text('trailhead').notNull(),
+  endpoint: text('endpoint').notNull(),
+  trailhead_id: text('trailhead_id'),
+  endpoint_id: text('endpoint_id'),
+  distance_km: real('distance_km'),
+  duration_minutes: integer('duration_minutes'),
+  duration_scope: text('duration_scope'), // ascent/descent/total/estimated
+  elevation_gain_m: integer('elevation_gain_m'),
+  difficulty: text('difficulty'),
+  difficulty_source: text('difficulty_source'),
+  source_ids: text('source_ids'), // JSON array; populated only from retained source records
+  source_updated_at: integer('source_updated_at', { mode: 'timestamp' }),
+  review_status: text('review_status').notNull().default('unverified'),
+  source_checked_at: integer('source_checked_at', { mode: 'timestamp' }),
+  last_human_reviewed_at: integer('last_human_reviewed_at', { mode: 'timestamp' }),
+  created_at: integer('created_at', { mode: 'timestamp' }).default(sql`(unixepoch())`),
+  updated_at: integer('updated_at', { mode: 'timestamp' }).default(sql`(unixepoch())`),
+}, t => ({
+  idxRouteReview: index('idx_hiking_route_review').on(t.review_status),
+}))
+
+export const hikingRouteMountains = table('hiking_route_mountains', {
+  route_id: integer('route_id').notNull().references(() => hikingRoutes.id, { onDelete: 'cascade' }),
+  mountain_id: integer('mountain_id').notNull().references(() => mountains.id, { onDelete: 'restrict' }),
+  sequence: integer('sequence').notNull().default(0),
+}, t => ({
+  uniqRouteMountain: uniqueIndex('uq_hiking_route_mountain').on(t.route_id, t.mountain_id),
+}))
+
+export const hikingRouteSegments = table('hiking_route_segments', {
+  route_id: integer('route_id').notNull().references(() => hikingRoutes.id, { onDelete: 'cascade' }),
+  course_id: integer('course_id').notNull().references(() => courses.id, { onDelete: 'restrict' }),
+  sequence: integer('sequence').notNull(),
+  direction: text('direction').notNull(),
+}, t => ({
+  uniqRouteSequence: uniqueIndex('uq_hiking_route_segment_sequence').on(t.route_id, t.sequence),
+  uniqRouteCourseDirection: uniqueIndex('uq_hiking_route_course_direction').on(t.route_id, t.course_id, t.direction),
+}))
+
+export const claimEvidence = table('claim_evidence', {
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  entity_type: text('entity_type').notNull(),
+  entity_id: text('entity_id').notNull(),
+  field_name: text('field_name').notNull(),
+  normalized_value: text('normalized_value'),
+  source_url: text('source_url').notNull(),
+  source_title: text('source_title'),
+  source_authority: text('source_authority'),
+  source_updated_at: integer('source_updated_at', { mode: 'timestamp' }),
+  retrieved_at: integer('retrieved_at', { mode: 'timestamp' }).notNull(),
+  source_checked_at: integer('source_checked_at', { mode: 'timestamp' }),
+  checked_by_type: text('checked_by_type').notNull().default('unverified'), // unverified/automated/human
+  conflict_status: text('conflict_status').notNull().default('none'),
+  valid_until: integer('valid_until', { mode: 'timestamp' }),
+}, t => ({
+  idxClaimEntity: index('idx_claim_evidence_entity').on(t.entity_type, t.entity_id, t.field_name),
+  idxClaimValidity: index('idx_claim_evidence_validity').on(t.valid_until),
+}))
+
+export const editorialReviews = table('editorial_reviews', {
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  entity_type: text('entity_type').notNull(),
+  entity_id: text('entity_id').notNull(),
+  review_status: text('review_status').notNull(), // approved/rejected/needs_source/disputed
+  reviewer_type: text('reviewer_type').notNull(), // human only authorizes publication
+  reviewed_at: integer('reviewed_at', { mode: 'timestamp' }).notNull(),
+  source_snapshot_hash: text('source_snapshot_hash'),
+  notes: text('notes'),
+}, t => ({
+  uniqCurrentReview: uniqueIndex('uq_editorial_review_snapshot').on(t.entity_type, t.entity_id, t.source_snapshot_hash),
+  idxReviewStatus: index('idx_editorial_review_status').on(t.review_status, t.reviewer_type),
+}))
+
+// Publication-control additions are schema design only until an isolated
+// restored database proves an additive migration. Do not apply the generated
+// full-schema 0000 baseline to an existing database.
+export const publicationApprovals = table('publication_approvals', {
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  page_id: integer('page_id').notNull().references(() => pages.id, { onDelete: 'restrict' }),
+  revision: integer('revision').notNull(),
+  source_snapshot_hash: text('source_snapshot_hash').notNull(),
+  reviewer_type: text('reviewer_type').notNull(),
+  review_status: text('review_status').notNull(),
+  reviewed_at: integer('reviewed_at', { mode: 'timestamp' }).notNull(),
+  created_at: integer('created_at', { mode: 'timestamp' }).default(sql`(unixepoch())`),
+}, t => ({
+  uniqApprovalRevision: uniqueIndex('uq_publication_approval_revision').on(t.page_id, t.revision),
+  idxApprovalSnapshot: index('idx_publication_approval_snapshot').on(t.page_id, t.source_snapshot_hash),
+}))
+
+export const publicationRuns = table('publication_runs', {
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  run_key_kst: text('run_key_kst').notNull().unique(), // YYYY-MM-DD; one allocation per KST day
+  status: text('status').notNull().default('started'), // started/completed/failed
+  requested_limit: integer('requested_limit').notNull(),
+  claimed_count: integer('claimed_count').notNull().default(0),
+  started_at: integer('started_at', { mode: 'timestamp' }).default(sql`(unixepoch())`),
+  completed_at: integer('completed_at', { mode: 'timestamp' }),
+})
+
+export const indexingOutbox = table('indexing_outbox', {
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  page_id: integer('page_id').notNull().references(() => pages.id, { onDelete: 'restrict' }),
+  approval_revision: integer('approval_revision').notNull(),
+  provider: text('provider').notNull(), // indexnow/google
+  url: text('url').notNull(),
+  status: text('status').notNull().default('pending'), // pending/sending/sent/failed
+  attempt_count: integer('attempt_count').notNull().default(0),
+  next_attempt_at: integer('next_attempt_at', { mode: 'timestamp' }),
+  last_error: text('last_error'),
+  created_at: integer('created_at', { mode: 'timestamp' }).default(sql`(unixepoch())`),
+  sent_at: integer('sent_at', { mode: 'timestamp' }),
+}, t => ({
+  uniqOutboxDelivery: uniqueIndex('uq_indexing_outbox_delivery').on(t.page_id, t.approval_revision, t.provider, t.url),
+  idxOutboxRetry: index('idx_indexing_outbox_retry').on(t.status, t.next_attempt_at),
+}))
+
+// ──────────────────────────────────────────────
 // 타입 exports
 // ──────────────────────────────────────────────
 export type Mountain = typeof mountains.$inferSelect
 export type Course   = typeof courses.$inferSelect
 export type Trail    = typeof trails.$inferSelect
 export type Page     = typeof pages.$inferSelect
+export type HikingRoute = typeof hikingRoutes.$inferSelect
+export type ClaimEvidence = typeof claimEvidence.$inferSelect

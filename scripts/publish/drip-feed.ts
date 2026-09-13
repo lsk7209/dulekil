@@ -6,6 +6,7 @@
 import { db, schema } from '../collect/db-client'
 import { eq, and } from 'drizzle-orm'
 import { notifyIndexNow } from '../../lib/indexnow'
+import { automaticPublicationBlockReason, pageSlugToPublicPath } from '../../lib/publication-policy'
 
 const DAILY_LIMIT = 20
 const BASE        = 'https://dullegilgogo.kr'
@@ -28,24 +29,46 @@ async function main() {
   }
 
   console.log(`발행 대기: ${toPublish.length}건`)
+  const eligible = toPublish.filter(page => automaticPublicationBlockReason(page) === null)
+  if (eligible.length === 0) {
+    console.error('발행 차단: 현재 pages 레코드에는 출처 확인 및 사람 승인 필드가 없습니다.')
+    console.error('DB 쓰기와 IndexNow 전송 없이 종료합니다.')
+    process.exit(2)
+  }
   const now = new Date()
   const publishedUrls: string[] = []
 
-  for (const page of toPublish) {
-    await db
-      .update(schema.pages)
-      .set({ status: 'published', published_at: now })
-      .where(eq(schema.pages.id, page.id))
+  let publishedCount = 0
+  for (const page of eligible) {
+    const claimed = await db.transaction(async tx => {
+      const rows = await tx
+        .update(schema.pages)
+        .set({ status: 'published', published_at: now, updated_at: now })
+        .where(and(
+          eq(schema.pages.id, page.id),
+          eq(schema.pages.status, 'quality_passed'),
+          eq(schema.pages.gate_passed, true),
+        ))
+        .returning({ id: schema.pages.id })
 
-    await db.insert(schema.publishLog).values({ page_id: page.id, channel: 'actions' })
+      if (rows.length !== 1) return false
+      await tx.insert(schema.publishLog).values({ page_id: page.id, channel: 'actions' })
+      return true
+    })
+
+    if (!claimed) {
+      console.log(`  - 건너뜀(다른 실행기가 선점): ${page.slug}`)
+      continue
+    }
+
+    publishedCount += 1
     console.log(`  ✓ ${page.slug}`)
 
-    if (page.slug) {
-      publishedUrls.push(`${BASE}/mountains/${encodeURIComponent(page.slug)}`)
-    }
+    const publicPath = page.slug ? pageSlugToPublicPath(page.slug) : null
+    if (publicPath) publishedUrls.push(`${BASE}${publicPath}`)
   }
 
-  console.log(`\n✅ ${toPublish.length}건 발행 완료`)
+  console.log(`\n✅ ${publishedCount}건 발행 완료`)
 
   // IndexNow 자동 전송
   if (publishedUrls.length > 0) {

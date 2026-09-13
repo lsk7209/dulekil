@@ -1,10 +1,14 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { cache } from 'react'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
 import { Icon } from '@/components/icon'
-import { getMountainBySlug, getCoursesByMountainId, getMountainsForHub, getRegionGroup } from '@/lib/db/queries'
+import { getMountainDetailSnapshot, getMountainsForHubSnapshot, getRegionGroup } from '@/lib/db/queries'
+import { DataSourceNotice } from '@/components/data-source-notice'
+import { canPublishDatabaseDerivedData } from '@/lib/data-source-publication'
+import { canOfferGpx } from '@/lib/publication-policy'
 import { ridgeCover } from '@/lib/motif'
 import { DIFF_META } from '@/lib/mountains-static'
 import { getRelatedPosts } from '@/lib/mountain-blog-map'
@@ -30,28 +34,28 @@ import {
 export const revalidate = 86400
 
 interface Props { params: { slug: string } }
+const getMountainDetail = cache(getMountainDetailSnapshot)
 
 export async function generateStaticParams() {
-  const rows = await getMountainsForHub()
-  return rows.map(r => ({ slug: r.slug || r.name }))
+  const snapshot = await getMountainsForHubSnapshot()
+  return snapshot.mountains.map(r => ({ slug: r.slug || r.name }))
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const name = decodeURIComponent(params.slug)
-  const m = await getMountainBySlug(name)
+  const { mountain: m, courses } = await getMountainDetail(name)
   if (!m) return {}
-  const courses = await getCoursesByMountainId(m.id)
   const description = buildMountainMetaDescription(m, courses)
-  const ogSub = `${m.region ?? ''} · 해발 ${(m.elev ?? 0).toLocaleString()}m`
+  const ogSub = [m.region, m.elev != null ? `등록 고도 ${m.elev.toLocaleString()}m` : null].filter(Boolean).join(' · ')
   const ogUrl = `/og?title=${encodeURIComponent(m.name)}&type=mountain&sub=${encodeURIComponent(ogSub)}`
   return {
-    title: `${m.name} 등산 코스 — 난이도·거리·소요시간`,
+    title: `${m.name} 산행 정보 — 등록 구간·공식 확인 안내`,
     description,
     alternates: {
       canonical: `https://dullegilgogo.kr/mountains/${encodeURIComponent(m.name)}`,
     },
     openGraph: {
-      title: `${m.name} 등산 코스`,
+      title: `${m.name} 산행 정보`,
       description,
       type: 'article',
       url: `https://dullegilgogo.kr/mountains/${encodeURIComponent(m.name)}`,
@@ -59,7 +63,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${m.name} 등산 코스`,
+      title: `${m.name} 산행 정보`,
       description,
       images: [ogUrl],
     },
@@ -82,11 +86,13 @@ function RidgeCoverImg({ name, pal, height }: { name: string; pal: string; heigh
 
 export default async function MountainDetailPage({ params }: Props) {
   const name    = decodeURIComponent(params.slug)
-  const mountain = await getMountainBySlug(name)
+  const mountainSnapshot = await getMountainDetail(name)
+  const mountain = mountainSnapshot.mountain
   if (!mountain) notFound()
 
-  const courses       = await getCoursesByMountainId(mountain.id)
-  const allMtns       = await getMountainsForHub()
+  const courses       = mountainSnapshot.courses
+  const allMountainSnapshot = await getMountainsForHubSnapshot()
+  const allMtns       = canPublishDatabaseDerivedData(allMountainSnapshot.state) ? allMountainSnapshot.mountains : []
   const group         = getRegionGroup(mountain.region)
   const nearby        = allMtns.filter(x => x.name !== mountain.name && x.group === group).slice(0, 3)
   const relatedPosts  = getRelatedPosts(mountain.name, group)
@@ -103,13 +109,8 @@ export default async function MountainDetailPage({ params }: Props) {
   const safetyChecks  = buildSafetyChecks(courses)
   const fallbackRisks = buildFallbackRisks(mountain, courses)
 
-  const bestDiff  = courses.length > 0
-    ? normalizeDifficulty(courseStats.shortest?.diff_norm ?? courseStats.hardest?.diff_norm)
-    : '중'
-  const cls       = DIFF_META[bestDiff]?.cls ?? 'mid'
-
   const hasTransit = courseStats.hasTransit
-  const hasGpx     = courseStats.hasGpx
+  const hasGpx     = courses.some(course => canOfferGpx(course))
   const minDist    = courseStats.minDistance
   const maxDur     = courseStats.maxDuration
 
@@ -148,6 +149,7 @@ export default async function MountainDetailPage({ params }: Props) {
   return (
     <div id="top">
       <SiteHeader active="explore" />
+      <DataSourceNotice state={canPublishDatabaseDerivedData(mountainSnapshot.state) ? allMountainSnapshot.state : mountainSnapshot.state} />
       <main id="main-content">
         {/* 히어로 커버 */}
         <div style={{ position: 'relative' }}>
@@ -159,14 +161,14 @@ export default async function MountainDetailPage({ params }: Props) {
           }}>
             <div style={{ maxWidth: 1140, margin: '0 auto' }}>
               <div style={{ display: 'flex', gap: 6, marginBottom: 8 }}>
-                {mountain.is_top100 && <span className="tag tag--100">100대 명산</span>}
+                {mountain.is_top100 && <span className="tag tag--100">명산 목록 원천 확인 중</span>}
                 {hasGpx && <span className="tag tag--gpx"><Icon name="route" size={13} stroke={2.2} />GPX</span>}
               </div>
               <h1 style={{ margin: 0, fontSize: 'clamp(28px,6vw,48px)', fontWeight: 800, color: '#fff', lineHeight: 1.1, letterSpacing: '-.02em' }}>
                 {mountain.name}
               </h1>
               <p style={{ margin: '6px 0 0', color: 'rgba(255,255,255,.8)', fontSize: 16 }}>
-                {mountain.region}{mountain.sigun ? ` ${mountain.sigun}` : ''} · 해발 {(mountain.elev ?? 0).toLocaleString()}m
+                {mountain.region}{mountain.sigun ? ` ${mountain.sigun}` : ''}{mountain.elev != null ? ` · 해발 ${mountain.elev.toLocaleString()}m` : ' · 고도 자료 확인 중'}
               </p>
             </div>
           </div>
@@ -176,26 +178,22 @@ export default async function MountainDetailPage({ params }: Props) {
         <div style={{ background: '#fff', borderBottom: '1px solid var(--line)' }}>
           <div className="wrap">
             <div className="statbar" style={{ maxWidth: 640 }}>
-              <div className="stat">
-                <div className="stat__k">고도</div>
-                <div className="stat__v tnum">{(mountain.elev ?? 0).toLocaleString()}<span className="stat__u">m</span></div>
-              </div>
+              {mountain.elev != null && <div className="stat">
+                <div className="stat__k">등록 고도</div>
+                <div className="stat__v tnum">{mountain.elev.toLocaleString()}<span className="stat__u">m</span></div>
+              </div>}
               {minDist !== null && (
                 <div className="stat">
-                  <div className="stat__k">최단 거리</div>
+                  <div className="stat__k">등록 구간 최단</div>
                   <div className="stat__v tnum">{minDist.toFixed(1)}<span className="stat__u">km</span></div>
                 </div>
               )}
               {maxDur !== null && maxDur > 0 && (
                 <div className="stat">
-                  <div className="stat__k">소요</div>
+                  <div className="stat__k">등록 상행 최대</div>
                   <div className="stat__v tnum">{minutesToHM(maxDur)}</div>
                 </div>
               )}
-              <div className="stat">
-                <div className="stat__k">난이도</div>
-                <div><span className={`diff diff--${cls}`} style={{ fontSize: 12 }}>난이도 {bestDiff}</span></div>
-              </div>
             </div>
           </div>
         </div>
@@ -209,7 +207,7 @@ export default async function MountainDetailPage({ params }: Props) {
                 <div className="eyebrow" style={{ marginBottom: 8 }}>코스 선택 요약</div>
                 <h2 className="h2" style={{ marginBottom: 12 }}>{mountain.name} 등산 전 핵심 판단</h2>
                 <p className="body" style={{ marginBottom: 14 }}>
-                  {mountain.description ?? summary[0]}
+                  {summary[0]}
                 </p>
                 <ul>
                   {summary.map(item => <li key={item}>{item}</li>)}
@@ -218,8 +216,8 @@ export default async function MountainDetailPage({ params }: Props) {
               <div className="mountain-factbox">
                 <strong>빠른 기준</strong>
                 <dl>
-                  <div><dt>추천 난이도</dt><dd>{quickFacts.difficultyLabel}</dd></div>
-                  <div><dt>최단 코스</dt><dd>{quickFacts.distanceLabel}</dd></div>
+                  <div><dt>등록 난이도</dt><dd>{quickFacts.difficultyLabel}</dd></div>
+                  <div><dt>구간 최단</dt><dd>{quickFacts.distanceLabel}</dd></div>
                   <div><dt>상행 최대</dt><dd>{quickFacts.durationLabel}</dd></div>
                   <div><dt>접근성</dt><dd>{quickFacts.accessLabel}</dd></div>
                 </dl>
@@ -260,7 +258,7 @@ export default async function MountainDetailPage({ params }: Props) {
             </section>
 
             <section id="mountain-fit">
-              <h2 className="h2" style={{ marginBottom: 16 }}>{mountain.name} 추천 대상별 코스 선택</h2>
+                <h2 className="h2" style={{ marginBottom: 16 }}>{mountain.name} 대상별 확인 사항</h2>
               <div className="mountain-info-grid">
                 {fitNotes.map(note => (
                   <article key={note.title} className="card card--pad mountain-info-card">
@@ -314,7 +312,8 @@ export default async function MountainDetailPage({ params }: Props) {
             {/* 코스 비교표 */}
             {courses.length > 0 && (
               <section>
-                <h2 className="h2" style={{ marginBottom: 16 }}>{mountain.name} 대표 코스 비교표</h2>
+                <h2 className="h2" style={{ marginBottom: 16 }}>{mountain.name} 등록 등산로 구간표</h2>
+                <p className="cap">각 행은 원천 데이터의 등산로 구간입니다. 정상까지의 전체 산행 코스나 추천 경로로 검증된 값이 아닙니다.</p>
                 <div className="article-table-scroll">
                   <table>
                     <thead>
@@ -397,7 +396,7 @@ export default async function MountainDetailPage({ params }: Props) {
                           <span className="tag"><Icon name="clock" size={12} stroke={1.8} />{minutesToHM(c.duration_up)}</span>
                         )}
                         {c.transit && <span className="tag"><Icon name="bus" size={12} stroke={1.8} />대중교통</span>}
-                        {c.gpx_available && <span className="tag tag--gpx" style={{ fontSize: 11 }}>GPX</span>}
+                        {canOfferGpx(c) && <span className="tag tag--gpx" style={{ fontSize: 11 }}>검증 GPX</span>}
                       </div>
                       {c.risk_note && (
                         <div className="cap" style={{ width: '100%', color: '#8C4E22' }}>
@@ -499,7 +498,9 @@ export default async function MountainDetailPage({ params }: Props) {
         </div>
       </main>
 
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      {canPublishDatabaseDerivedData(mountainSnapshot.state) && (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      )}
       <SiteFooter />
     </div>
   )

@@ -5,7 +5,7 @@ import { SiteFooter } from '@/components/site-footer'
 const OG_URL = '/og?title=둘레길고고+소개&type=default&sub=100대+명산+정보+사이트'
 
 export const metadata: Metadata = {
-  title: '사이트 소개 | 둘레길고고',
+  title: '사이트 소개',
   description: '둘레길고고 — 한국 100대 명산 완등 챌린지를 위한 코스·둘레길 정보 사이트 소개',
   alternates: { canonical: 'https://dullegilgogo.kr/about' },
   openGraph: {

@@ -1,5 +1,5 @@
 import dotenv from 'dotenv'
-import { getCoursesByMountainId, getMountainsForHub } from '../lib/db/queries'
+import { getMountainDetailSnapshot, getMountainsForHubSnapshot } from '../lib/db/queries'
 import { buildAccessNotes, buildFallbackRoutes, buildMountainDeepInfo, buildMountainFaqs, buildMountainFitNotes, buildMountainMetaDescription, buildMountainSummary, buildSafetyChecks, buildSeasonNotes, getMountainFallbackGuide, hasMountainIdentityNote } from '../lib/mountain-content'
 
 dotenv.config({ path: '.env.local', quiet: true })
@@ -23,10 +23,22 @@ function addWarning(id: number, name: string, reason: string) {
 }
 
 async function main() {
-  const mountains = await getMountainsForHub()
+  const snapshot = await getMountainsForHubSnapshot()
+  if (snapshot.state !== 'database') {
+    console.error(`[audit-mountain-content] aborted: mountain source state=${snapshot.state}`)
+    process.exitCode = 2
+    return
+  }
+  const mountains = snapshot.mountains
 
   for (const mountain of mountains) {
-    const courses = await getCoursesByMountainId(mountain.id)
+    const detail = await getMountainDetailSnapshot(mountain.slug || mountain.name)
+    if (detail.state !== 'database' || !detail.mountain || detail.mountain.id !== mountain.id) {
+      console.error(`[audit-mountain-content] aborted: inconsistent detail source for mountain id=${mountain.id}`)
+      process.exitCode = 2
+      return
+    }
+    const courses = detail.courses
     const summary = buildMountainSummary(mountain, courses)
     const deepInfo = buildMountainDeepInfo(mountain, courses)
     const fallbackRoutes = buildFallbackRoutes(mountain, courses)

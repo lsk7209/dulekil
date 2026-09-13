@@ -4,8 +4,15 @@ import { SiteFooter } from '@/components/site-footer'
 
 const OG_URL = '/og?title=데이터+출처·라이선스&type=default&sub=공공데이터+공공누리+제1유형'
 
+const SOURCE_LINKS = [
+  ['공공데이터포털', 'https://www.data.go.kr/'],
+  ['산림청', 'https://www.forest.go.kr/'],
+  ['한국관광공사', 'https://knto.or.kr/'],
+  ['두루누비', 'https://www.durunubi.kr/'],
+] as const
+
 export const metadata: Metadata = {
-  title: '데이터 출처·라이선스 | 둘레길고고',
+  title: '데이터 출처·라이선스',
   description: '둘레길고고 사이트에서 사용하는 공공데이터 출처 및 라이선스 정보',
   alternates: { canonical: 'https://dullegilgogo.kr/data-license' },
   openGraph: {
@@ -50,6 +57,13 @@ export default function DataLicensePage() {
           <section>
             <h2 className="h3" style={{ marginBottom: 12 }}>출처 표기</h2>
             <p>본 사이트의 코스·등산로 정보는 <b>data.go.kr, 산림청, 한국관광공사</b> 공공데이터를 가공해 제작되었습니다. 공공누리 제1유형에 따라 출처를 표기합니다.</p>
+            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 12 }}>
+              {SOURCE_LINKS.map(([label, href]) => (
+                <a key={href} className="tag" href={href} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--forest)', textDecoration: 'none' }}>
+                  {label}
+                </a>
+              ))}
+            </div>
           </section>
 
           <section>
@@ -58,8 +72,18 @@ export default function DataLicensePage() {
           </section>
 
           <section>
-            <h2 className="h3" style={{ marginBottom: 12 }}>삭제 요청</h2>
-            <p>데이터 오류 또는 삭제 요청은 <a href="mailto:lsk7209@gmail.com" style={{ color: 'var(--clay-deep)' }}>lsk7209@gmail.com</a>으로 연락해 주세요.</p>
+            <h2 className="h3" style={{ marginBottom: 12 }}>정보 검증과 이용 한계</h2>
+            <p>
+              둘레길고고는 공공데이터를 바탕으로 산 이름, 지역, 높이, 난이도, 교통 접근성, 코스 설명을 정리하지만 실시간 운영 정보를 보장하지 않습니다. 탐방로 폐쇄, 산불방지 입산통제, 폭우·폭설 이후 복구 공사, 주차장 운영, 대중교통 시간표는 현장과 공식 기관 공지가 우선합니다.
+            </p>
+            <p style={{ marginTop: 10 }}>
+              안전과 비용이 걸린 의사결정에는 이 사이트의 요약만 사용하지 말고 산림청, 국립공원공단, 지자체, 기상청, 교통 사업자의 최신 공지를 함께 확인해 주세요. 공개 데이터의 구조가 바뀌거나 원천 기관이 항목을 수정하면 사이트의 설명도 순차적으로 재가공합니다.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="h3" style={{ marginBottom: 12 }}>정정·삭제 요청</h2>
+            <p>데이터 오류, 출처 표기 누락, 삭제 요청, 안전상 위험한 표현은 <a href="mailto:lsk7209@gmail.com" style={{ color: 'var(--clay-deep)' }}>lsk7209@gmail.com</a>으로 연락해 주세요. 요청 시 산 이름, 페이지 주소, 오류로 보이는 문장, 참고 가능한 공식 출처를 함께 보내주시면 더 빠르게 확인할 수 있습니다.</p>
           </section>
         </div>
       </main>
