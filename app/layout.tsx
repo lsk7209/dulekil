@@ -1,3 +1,4 @@
+import AffiliateFleetScript from 'next/script';
 import type { Metadata } from 'next'
 import Script from 'next/script'
 import localFont from 'next/font/local'
@@ -84,6 +85,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             `}</Script>
           </>
         )}
+      <AffiliateFleetScript id="affiliate-os-fleet" src="https://multi-dashboard-one.vercel.app/fleet-widget.js" strategy="afterInteractive" />
       </body>
     </html>
   )
