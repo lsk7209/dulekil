@@ -3,7 +3,7 @@
 /* eslint-disable @next/next/no-img-element */
 import Script from "next/script";
 
-const DASHBOARD_BASE = "https://multi-dashboard-one.vercel.app";
+const DASHBOARD_BASE = "https://dashboard.item79.com";
 const SITE_KEY = "dullegilgogo";
 const SLOT_KEY = "coupang-inline";
 const LABEL = "등산 스틱";
